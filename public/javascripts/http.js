@@ -3,7 +3,7 @@ $(document).ready(function(){
 
  $('#btnAnalize').on('click',function(){
     var cadenaArchivo = document.getElementById("fileContent").value;
-    console.log(cadenaArchivo);
+    //console.log(cadenaArchivo);
    
     $.ajax(
       {
