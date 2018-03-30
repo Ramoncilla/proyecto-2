@@ -3,9 +3,10 @@ var parseFile = require("../Analizador/Arbol/Archivo");
 var listaClase=[];
  
 exports.parse_string = function(req, res) {
-    var a = req.params.string_file;
-
-    res.send("holaaa " + a);
+    var a = req.body.string_file;
+    console.log(a);
+   //console.dir(req);
+    res.send("holaaa ");
     //var a = grammar.parse(req.string);
     /*if(a instanceof Archivo)
     {

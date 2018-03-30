@@ -7,8 +7,8 @@ $(document).ready(function(){
    
     $.ajax(
       {
-        type:"GET",
-        url:"/parser",
+        type:"POST",
+        url:" http://localhost:3000/parser",
         data:{string_file: cadenaArchivo},
         success: function(data){
           console.log(data);
