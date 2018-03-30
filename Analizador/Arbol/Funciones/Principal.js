@@ -16,3 +16,4 @@ Principal.prototype.getSentencias = function() {
 	// body...
 	return Principal.prototype.sentencias;
 };
+module.exports=Principal;

@@ -41,3 +41,4 @@ Constructor.prototype.getSentencias = function() {
 	// body...
 	return Constructor.prototype.sentencias;
 };
+module.exports=Constructor;

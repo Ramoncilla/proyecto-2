@@ -32,4 +32,5 @@ AsignaDecla.prototype.getTipo = function() {
 	return AsignaDecla.prototype.tipo;
 };
 
+module.exports=AsignaDecla;
   

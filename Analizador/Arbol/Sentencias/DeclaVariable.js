@@ -21,3 +21,4 @@ DeclaVariable.prototype.getNombre= function(){
 	return DeclaVariable.prototype.nombreVariable;
 };
 
+module.exports=DeclaVariable;

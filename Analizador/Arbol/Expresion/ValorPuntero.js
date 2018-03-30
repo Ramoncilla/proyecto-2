@@ -21,3 +21,5 @@ ValorPuntero.prototype.getId= function(){
 ValorPuntero.prototype.getValores= function(){
 	return ValorPuntero.prototype.valoresEstructura;
 };
+
+module.exports=ValorPuntero;

@@ -24,6 +24,7 @@ Unario.prototype.getOperador= function(){
 	return Unario.prototype.operador;
 };
 
+module.exports=Unario;
 
 
 

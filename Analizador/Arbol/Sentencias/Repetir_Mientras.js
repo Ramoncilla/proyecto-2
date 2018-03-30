@@ -19,3 +19,4 @@ Repetir_Mientras.prototype.getExpresion= function(){
 Repetir_Mientras.prototype.getCuerpo= function(){
 	return Repetir_Mientras.prototype.cuerpo;
 };
+module.exports=Repetir_Mientras;

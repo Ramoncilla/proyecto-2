@@ -29,3 +29,4 @@ Relacional.prototype.getOperador= function(){
 	return Relacional.prototype.operador;
 };
 
+module.exports=Relacional;

@@ -25,3 +25,4 @@ Si.prototype.getVerdaderas= function(){
 Si.prototype.getFalsas= function(){
 	return Si.prototype.sentF;
 };
+module.exports=Si;

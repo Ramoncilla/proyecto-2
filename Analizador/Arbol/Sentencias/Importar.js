@@ -16,3 +16,4 @@ Importar.prototype.getRuta = function() {
 	// body...
 	return Importar.prototype.ruta;
 };
+module.exports=Importar;

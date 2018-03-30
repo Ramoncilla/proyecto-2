@@ -14,7 +14,7 @@ Negativo.prototype.getExpresion= function(){
 	return Negativo.prototype.expresion;
 };
 
-
+module.exports=Negativo;
 
 
 

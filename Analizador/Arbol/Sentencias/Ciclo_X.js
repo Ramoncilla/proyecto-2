@@ -27,3 +27,5 @@ Ciclo_X.prototype.getExpresion1= function(){
 Ciclo_X.prototype.getCuerpo= function(){
 	return Ciclo_X.prototype.cuerpo;
 };
+
+module.exports=Ciclo_X;

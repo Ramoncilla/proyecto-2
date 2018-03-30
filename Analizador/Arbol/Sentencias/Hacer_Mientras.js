@@ -19,3 +19,4 @@ Hacer_Mientras.prototype.getExpresion= function(){
 Hacer_Mientras.prototype.getCuerpo= function(){
 	return Hacer_Mientras.prototype.cuerpo;
 };
+module.exports=Hacer_Mientras;

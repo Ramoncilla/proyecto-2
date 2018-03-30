@@ -4,11 +4,12 @@ $(document).ready(function(){
  $('#btnAnalize').on('click',function(){
     var cadenaArchivo = document.getElementById("fileContent").value;
     console.log(cadenaArchivo);
+   
     $.ajax(
       {
         type:"GET",
         url:"/parser",
-        data:{string: cadenaArchivo},
+        data:{string_file: cadenaArchivo},
         success: function(data){
           console.log(data);
         },
@@ -18,6 +19,26 @@ $(document).ready(function(){
   
       }
     )
+
+  /*
+    $.ajax(
+      {
+        type:"GET",
+        url:"/parser",
+        data:JSON.stringify(cadenaArchivo),
+        success: function(data){
+          console.log(data);
+        },
+        error: function(data){
+          console.dir(data);
+        }
+  
+      }
+    )
+*/
+
+   
+
  });
 
     document.getElementById("openFile").addEventListener('change', function(){

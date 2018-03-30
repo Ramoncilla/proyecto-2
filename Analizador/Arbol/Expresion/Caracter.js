@@ -18,4 +18,4 @@ Caracter.prototype.getEnteroCaracter= function(){
 Caracter.prototype.getCadenaCaracter= function(){
 	return Caracter.prototype.valorCadenaCaracter;
 }
-
+module.exports=Caracter;

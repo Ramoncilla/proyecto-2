@@ -15,3 +15,4 @@ ReservarMemoria.prototype.getExpresion = function() {
 
 	return ReservarMemoria.prototype.expresion;
 };
+module.exports=ReservarMemoria;

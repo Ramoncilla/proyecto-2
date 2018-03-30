@@ -39,3 +39,5 @@ Asignacion.prototype.getTipo = function() {
 	return Asignacion.prototype.tipoAsignacion;
 };
 
+module.exports=Asignacion;
+

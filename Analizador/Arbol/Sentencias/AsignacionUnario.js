@@ -32,3 +32,4 @@ AsignacionUnario.prototype.getTipo = function() {
 	return AsignacionUnario.prototype.tipoAsignacionUnario;
 };
 
+module.exports=AsignacionUnario;

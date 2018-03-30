@@ -3,8 +3,9 @@ var parseFile = require("../Analizador/Arbol/Archivo");
 var listaClase=[];
  
 exports.parse_string = function(req, res) {
-    
-    var a = grammar.parse(req.string);
+  
+    res.send("holaaaa" +req.string_file);
+    //var a = grammar.parse(req.string);
     /*if(a instanceof Archivo)
     {
     	var sentenciasArchivo = a.getSentencias();
@@ -29,7 +30,7 @@ exports.parse_string = function(req, res) {
 
       
     }*/
-    res.send('NOT IMPLEMENTED: Author list');
+    //res.send('NOT IMPLEMENTED: Author list');
 
 
 };

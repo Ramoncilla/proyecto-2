@@ -20,3 +20,4 @@ DeclaPila.prototype.getTipo= function(){
 DeclaPila.prototype.getNombre= function(){
 	return DeclaPila.prototype.nombrePila;
 };
+module.exports=DeclaPila;

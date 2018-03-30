@@ -15,3 +15,5 @@ obtenerDireccion.prototype.getExpresion = function() {
 
 	return obtenerDireccion.prototype.expresion;
 };
+
+module.exports=obtenerDireccion;

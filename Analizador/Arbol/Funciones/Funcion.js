@@ -62,3 +62,4 @@ Funcion.prototype.getSentencias = function() {
 	// body...
 	return Funcion.prototype.sentencias;
 };
+module.exports=Funcion;

@@ -19,3 +19,4 @@ t_id.prototype.getValorId = function() {
 
 
 
+module.exports=t_id;

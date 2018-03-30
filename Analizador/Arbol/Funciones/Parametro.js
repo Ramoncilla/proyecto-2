@@ -30,3 +30,4 @@ Parametro.prototype.getNombre= function(){
 	return Parametro.prototype.nombreParametro;
 };
 
+module.exports=Parametro;

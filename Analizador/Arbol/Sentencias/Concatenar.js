@@ -33,3 +33,5 @@ Concatenar.prototype.getExpresion2= function(){
 Concatenar.prototype.getTipo= function(){
 	return Concatenar.prototype.tipo;
 };
+
+module.exports=Concatenar;

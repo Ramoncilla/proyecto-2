@@ -13,4 +13,4 @@ Decimal.prototype.getNumero= function(){
 	return Decimal.prototype.valorDecimal;
 };
 
-
+module.exports=Decimal;

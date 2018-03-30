@@ -39,3 +39,5 @@ Puntero.prototype.getTipoPuntero = function() {
 	// body...
 	return Puntero.prototype.tipoPuntero;
 };
+
+module.exports=Puntero;

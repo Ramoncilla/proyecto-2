@@ -46,3 +46,5 @@ AsignacionArreglo.prototype.getDimensiones = function() {
 	// body...
 	return AsignacionArreglo.prototype.dimensiones;
 };
+
+module.exports=AsignacionArreglo;

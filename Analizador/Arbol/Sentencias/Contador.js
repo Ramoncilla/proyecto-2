@@ -20,3 +20,4 @@ Contador.prototype.getExpresion= function(){
 Contador.prototype.getCuerpo= function(){
 	return Contador.prototype.cuerpo;
 };
+module.exports=Contador;

@@ -29,3 +29,5 @@ Aritmetica.prototype.getOperador= function(){
 	return Aritmetica.prototype.operador;
 };
 
+module.exports=Aritmetica;
+

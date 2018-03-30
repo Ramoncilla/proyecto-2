@@ -30,3 +30,4 @@ Instancia.prototype.getParametros= function(){
 	return Instancia.prototype.parametrosInstancia;
 };
 
+module.exports=Instancia;

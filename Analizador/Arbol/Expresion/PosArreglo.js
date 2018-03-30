@@ -29,3 +29,4 @@ PosArreglo.prototype.getPosicionesArreglo = function() {
 };
 
 
+module.exports=PosArreglo;

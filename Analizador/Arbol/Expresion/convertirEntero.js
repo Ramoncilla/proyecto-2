@@ -16,5 +16,5 @@ convertirEntero.prototype.getExpresionEntero = function() {
 	return convertirEntero.prototype.expresionEntero;
 };
 
-
+module.exports=convertirEntero;
 

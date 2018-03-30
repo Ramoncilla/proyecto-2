@@ -20,3 +20,5 @@ Caso.prototype.getExpresion= function(){
 Caso.prototype.getCuerpo= function(){
 	return Caso.prototype.cuerpo;
 };
+
+module.exports=Caso;

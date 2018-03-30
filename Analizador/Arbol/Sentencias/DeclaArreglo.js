@@ -32,3 +32,5 @@ DeclaArreglo.prototype.getNombre= function(){
 DeclaArreglo.prototype.getDimension= function(){
 	return DeclaArreglo.prototype.dimensionesArreglo;
 }; 
+
+module.exports=DeclaArreglo;

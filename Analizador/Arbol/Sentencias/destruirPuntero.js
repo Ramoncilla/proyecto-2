@@ -15,3 +15,4 @@ destruirPuntero.prototype.getExpresion = function() {
 
 	return destruirPuntero.prototype.expresion;
 };
+module.exports=destruirPuntero;

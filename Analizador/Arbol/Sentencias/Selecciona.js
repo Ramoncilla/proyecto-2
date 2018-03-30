@@ -25,3 +25,4 @@ Selecciona.prototype.getCasos= function(){
 Selecciona.prototype.getDefecto= function(){
 	return Selecciona.prototype.defecto;
 };
+module.exports=Selecciona;

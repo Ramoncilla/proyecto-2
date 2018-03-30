@@ -21,5 +21,5 @@ Estructura.prototype.getDeclas= function(){
 	return Estructura.prototype.declaracionesEstructura;
 };
 
-
+module.exports=Estructura;
 

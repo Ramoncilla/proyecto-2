@@ -12,3 +12,4 @@ Imprimir.prototype.setExpresion = function(exp) {
 Imprimir.prototype.getExpresion= function(){
 	return Imprimir.prototype.expresionImprimir;
 };
+module.exports=Imprimir;

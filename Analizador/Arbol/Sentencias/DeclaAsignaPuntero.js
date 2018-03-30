@@ -23,3 +23,4 @@ DeclaAsignaPuntero.prototype.getPuntero= function(){
 	return DeclaAsignaPuntero.prototype.puntero;
 };
 
+module.exports=DeclaAsignaPuntero;

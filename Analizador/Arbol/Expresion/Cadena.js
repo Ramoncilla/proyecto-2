@@ -14,3 +14,4 @@ Cadena.prototype.getCadena= function(){
 };
 
 
+module.exports=Cadena;

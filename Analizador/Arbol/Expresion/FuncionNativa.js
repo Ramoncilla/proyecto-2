@@ -29,3 +29,5 @@ FuncionNativa.prototype.getExpresion = function() {
 	// body...
 };
 
+module.exports=FuncionNativa;
+

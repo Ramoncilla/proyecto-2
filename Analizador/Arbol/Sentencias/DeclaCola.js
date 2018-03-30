@@ -20,3 +20,4 @@ DeclaCola.prototype.getTipo= function(){
 DeclaCola.prototype.getNombre= function(){
 	return DeclaCola.prototype.nombreCola;
 };
+module.exports=DeclaCola;

@@ -20,6 +20,7 @@ LeerTeclado.prototype.getNombre= function(){
 LeerTeclado.prototype.getExpresion= function(){
 	return LeerTeclado.prototype.expresionCadena;
 };
+module.exports=LeerTeclado;
 
 
 

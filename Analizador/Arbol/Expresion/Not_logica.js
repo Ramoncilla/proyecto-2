@@ -14,6 +14,6 @@ Not_logica.prototype.getExpresion= function(){
 	return Not_logica.prototype.expresion;
 };
 
-
+module.exports=Not_logica;
 
 

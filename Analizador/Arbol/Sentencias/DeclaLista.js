@@ -21,3 +21,4 @@ DeclaLista.prototype.getNombre= function(){
 	return DeclaLista.prototype.nombreLista;
 };
 
+module.exports=DeclaLista;

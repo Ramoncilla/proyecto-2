@@ -12,3 +12,4 @@ Retorno.prototype.setExpresion = function(exp) {
 Retorno.prototype.getExpresion= function(){
 	return Retorno.prototype.expresionRetorno;
 };
+module.exports=Retorno;

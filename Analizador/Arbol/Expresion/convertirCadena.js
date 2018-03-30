@@ -16,7 +16,7 @@ convertirCadena.prototype.getExpresionCadena = function() {
 	return convertirCadena.prototype.expresionACadena;
 };
 
-
+module.exports=convertirCadena;
 
 
 

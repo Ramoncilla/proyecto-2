@@ -16,3 +16,5 @@ Este.prototype.getElemento = function() {
 	// body...
 	return Este.prototype.elemento;
 };
+
+module.exports=Este;

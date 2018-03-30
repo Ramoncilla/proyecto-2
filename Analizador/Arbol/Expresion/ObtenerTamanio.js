@@ -15,3 +15,5 @@ ObtenerTamanio.prototype.getExpresion = function() {
 
 	return ObtenerTamanio.prototype.expresion;
 };
+
+module.exports=ObtenerTamanio;

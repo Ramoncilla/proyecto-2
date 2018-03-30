@@ -20,5 +20,5 @@ Atributo.prototype.getDecla= function(){
 	return Atributo.prototype.declaracion;
 };
 
-
+module.exports=Atributo;
  

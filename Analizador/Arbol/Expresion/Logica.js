@@ -30,6 +30,6 @@ Logica.prototype.getOperador= function(){
 };
 
 
-
+module.exports=Logica;
 
 

@@ -19,3 +19,4 @@ Repetir.prototype.getExpresion= function(){
 Repetir.prototype.getCuerpo= function(){
 	return Repetir.prototype.cuerpo;
 };
+module.exports=Repetir;

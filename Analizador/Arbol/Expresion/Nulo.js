@@ -13,3 +13,4 @@ Nulo.prototype.getNulo= function(){
 	return  Nulo.prototype.valorNulo;
 };
 
+module.exports=Nulo;

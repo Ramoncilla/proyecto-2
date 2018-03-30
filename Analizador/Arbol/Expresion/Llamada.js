@@ -29,3 +29,4 @@ Llamada.prototype.getParametros = function() {
 	// body...
 };
 
+module.exports=Llamada;

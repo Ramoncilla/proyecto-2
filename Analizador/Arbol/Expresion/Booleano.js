@@ -24,5 +24,6 @@ Booleano.prototype.getEnteroBooleano= function(){
 
 Booleano.prototype.getCadenaBooleano= function(){
 	return Booleano.prototype.valorCadenaBooleano;
-}
+};
 
+module.exports=Booleano;

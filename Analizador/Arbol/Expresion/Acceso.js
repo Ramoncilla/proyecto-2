@@ -28,3 +28,4 @@ Acceso.prototype.getelementosAcceso = function() {
 	// body...
 };
 
+module.exports=Acceso;

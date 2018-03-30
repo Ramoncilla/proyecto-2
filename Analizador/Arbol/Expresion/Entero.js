@@ -16,3 +16,4 @@ Entero.prototype.getNumero= function(){
 };
 
 
+module.exports=Entero;

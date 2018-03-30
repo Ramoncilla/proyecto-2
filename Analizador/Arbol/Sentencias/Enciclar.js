@@ -19,3 +19,5 @@ Enciclar.prototype.getId= function(){
 Enciclar.prototype.getCuerpo= function(){
 	return Enciclar.prototype.cuerpo;
 };
+
+module.exports=Enciclar;

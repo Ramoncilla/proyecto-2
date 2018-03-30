@@ -34,3 +34,4 @@ Repetir_Contando.prototype.getExpresionDesde= function(){
 Repetir_Contando.prototype.getCuerpo= function(){
 	return Repetir_Contando.prototype.cuerpo;
 };
+module.exports=Repetir_Contando;
