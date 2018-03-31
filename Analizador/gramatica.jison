@@ -4,72 +4,72 @@
 	var listaPrueba =[];
 	var Clase = require("./Arbol/Clase");
 	var arreglin = require("./Arbol/arreglo");
-    var Atributo = require("./Arbol/Atributo.js");
-    var Archivo = require("./Arbol/Archivo.js");
+    var Atributo = require("./Arbol/Atributo");
+    var Archivo = require("./Arbol/Archivo");
     
-    var  Acceso = require("./Arbol/Expresion/Acceso.js");
-    var Aritmetica = require("./Arbol/Expresion/Aritmetica.js");
-    var Booleano = require("./Arbol/Expresion/Booleano.js");
-    var Cadena = require("./Arbol/Expresion/Cadena.js");
-    var Caracter = require("./Arbol/Expresion/Caracter.js");
-    var convertirCadena = require("./Arbol/Expresion/convertirCadena.js");
-    var convertirEntero = require("./Arbol/Expresion/convertirEntero.js");
-    var Decimal = require("./Arbol/Expresion/Decimal.js");
-    var Entero = require("./Arbol/Expresion/Entero.js");
-    var Este = require("./Arbol/Expresion/Este.js");
-    var FuncionNativa = require("./Arbol/Expresion/FuncionNativa.js");
-    var Instancia = require("./Arbol/Expresion/Instancia.js");
-    var  Llamada = require("./Arbol/Expresion/Llamada.js");
-    var  Logica = require("./Arbol/Expresion/Logica.js");
-    var  Negativo = require("./Arbol/Expresion/Negativo.js");
-    var  Not_logica= require("./Arbol/Expresion/Not_logica.js");
-    var  Nulo= require("./Arbol/Expresion/Nulo.js");
-    var  obtenerDireccion= require("./Arbol/Expresion/obtenerDireccion.js");
-    var  ObtenerTamanio= require("./Arbol/Expresion/ObtenerTamanio.js");
-    var  PosArreglo= require("./Arbol/Expresion/PosArreglo.js");
-    var  Relacional= require("./Arbol/Expresion/Relacional.js");
-    var  ReservarMemoria= require("./Arbol/Expresion/ReservarMemoria.js");
-    var  t_id= require("./Arbol/Expresion/t_id.js");
-    var  Unario= require("./Arbol/Expresion/Unario.js");
-    var  ValorPuntero= require("./Arbol/Expresion/ValorPuntero.js");
+    var  Acceso = require("./Arbol/Expresion/Acceso");
+    var Aritmetica = require("./Arbol/Expresion/Aritmetica");
+    var Booleano = require("./Arbol/Expresion/Booleano");
+    var Cadena = require("./Arbol/Expresion/Cadena");
+    var Caracter = require("./Arbol/Expresion/Caracter");
+    var convertirCadena = require("./Arbol/Expresion/convertirCadena");
+    var convertirEntero = require("./Arbol/Expresion/convertirEntero");
+    var Decimal = require("./Arbol/Expresion/Decimal");
+    var Entero = require("./Arbol/Expresion/Entero");
+    var Este = require("./Arbol/Expresion/Este");
+    var FuncionNativa = require("./Arbol/Expresion/FuncionNativa");
+    var Instancia = require("./Arbol/Expresion/Instancia");
+    var  Llamada = require("./Arbol/Expresion/Llamada");
+    var  Logica = require("./Arbol/Expresion/Logica");
+    var  Negativo = require("./Arbol/Expresion/Negativo");
+    var  Not_logica= require("./Arbol/Expresion/Not_logica");
+    var  Nulo= require("./Arbol/Expresion/Nulo");
+    var  obtenerDireccion= require("./Arbol/Expresion/obtenerDireccion");
+    var  ObtenerTamanio= require("./Arbol/Expresion/ObtenerTamanio");
+    var  PosArreglo= require("./Arbol/Expresion/PosArreglo");
+    var  Relacional= require("./Arbol/Expresion/Relacional");
+    var  ReservarMemoria= require("./Arbol/Expresion/ReservarMemoria");
+    var  t_id= require("./Arbol/Expresion/t_id");
+    var  Unario= require("./Arbol/Expresion/Unario");
+    var  ValorPuntero= require("./Arbol/Expresion/ValorPuntero");
 
 
-    var  Constructor = require("./Arbol/Funciones/Constructor.js");
-    var  Funcion = require("./Arbol/Funciones/Funcion.js");
-    var  Parametro = require("./Arbol/Funciones/Parametro.js");
-    var  Principal = require("./Arbol/Funciones/Principal.js");
+    var  Constructor = require("./Arbol/Funciones/Constructor");
+    var  Funcion = require("./Arbol/Funciones/Funcion");
+    var  Parametro = require("./Arbol/Funciones/Parametro");
+    var  Principal = require("./Arbol/Funciones/Principal");
 
-    var Asignacion = require("./Arbol/Sentencias/Asignacion.js");
-    var  AsignacionArreglo= require("./Arbol/Sentencias/AsignacionArreglo.js");
-    var AsignacionUnario = require("./Arbol/Sentencias/AsignacionUnario.js");
-    var AsignaDecla = require("./Arbol/Sentencias/AsignaDecla.js");
-    var  Caso= require("./Arbol/Sentencias/Caso.js");
-    var  Ciclo_X= require("./Arbol/Sentencias/Ciclo_X.js");
-    var Concatenar = require("./Arbol/Sentencias/Concatenar.js");
-    var  Contador= require("./Arbol/Sentencias/Contador.js");
-    var Continuar = require("./Arbol/Sentencias/Continuar.js");
-    var  DeclaArreglo= require("./Arbol/Sentencias/DeclaArreglo.js");
-    var  DeclaAsignaPuntero= require("./Arbol/Sentencias/DeclaAsignaPuntero.js");
-    var  DeclaCola= require("./Arbol/Sentencias/DeclaCola.js");
-    var  DeclaLista= require("./Arbol/Sentencias/DeclaLista.js");
-    var DeclaPila = require("./Arbol/Sentencias/DeclaPila.js");
-    var  DeclaPuntero = require("./Arbol/Sentencias/DeclaPuntero.js");
-    var  DeclaVariable= require("./Arbol/Sentencias/DeclaVariable.js");
-    var  destruirPuntero= require("./Arbol/Sentencias/destruirPuntero.js");
-    var  Enciclar= require("./Arbol/Sentencias/Enciclar.js");
-    var  Estructura= require("./Arbol/Sentencias/Estructura.js");
-    var  Hacer_Mientras= require("./Arbol/Sentencias/Hacer_Mientras.js");
-    var  Importar= require("./Arbol/Sentencias/Importar.js");
-    var  Imprimir= require("./Arbol/Sentencias/Imprimir.js");
-    var  Leer_Teclado= require("./Arbol/Sentencias/LeerTeclado.js");
-    var  Puntero= require("./Arbol/Sentencias/Puntero.js");
-    var  Repetir= require("./Arbol/Sentencias/Repetir.js");
-    var  Repetir_Contando= require("./Arbol/Sentencias/Repetir_Contando.js");
-    var  Repetir_Mientras= require("./Arbol/Sentencias/Repetir_Mientras.js");
-    var  Retorno= require("./Arbol/Sentencias/Retorno.js");
-    var  Romper= require("./Arbol/Sentencias/Romper.js");
-    var  Selecciona= require("./Arbol/Sentencias/Selecciona.js");
-    var  Si= require("./Arbol/Sentencias/Si.js");
+    var Asignacion = require("./Arbol/Sentencias/Asignacion");
+    var  AsignacionArreglo= require("./Arbol/Sentencias/AsignacionArreglo");
+    var AsignacionUnario = require("./Arbol/Sentencias/AsignacionUnario");
+    var AsignaDecla = require("./Arbol/Sentencias/AsignaDecla");
+    var  Caso= require("./Arbol/Sentencias/Caso");
+    var  Ciclo_X= require("./Arbol/Sentencias/Ciclo_X");
+    var Concatenar = require("./Arbol/Sentencias/Concatenar");
+    var  Contador= require("./Arbol/Sentencias/Contador");
+    var Continuar = require("./Arbol/Sentencias/Continuar");
+    var  DeclaArreglo= require("./Arbol/Sentencias/DeclaArreglo");
+    var  DeclaAsignaPuntero= require("./Arbol/Sentencias/DeclaAsignaPuntero");
+    var  DeclaCola= require("./Arbol/Sentencias/DeclaCola");
+    var  DeclaLista= require("./Arbol/Sentencias/DeclaLista");
+    var DeclaPila = require("./Arbol/Sentencias/DeclaPila");
+    var  DeclaPuntero = require("./Arbol/Sentencias/DeclaPuntero");
+    var  DeclaVariable= require("./Arbol/Sentencias/DeclaVariable");
+    var  destruirPuntero= require("./Arbol/Sentencias/destruirPuntero");
+    var  Enciclar= require("./Arbol/Sentencias/Enciclar");
+    var  Estructura= require("./Arbol/Sentencias/Estructura");
+    var  Hacer_Mientras= require("./Arbol/Sentencias/Hacer_Mientras");
+    var  Importar= require("./Arbol/Sentencias/Importar");
+    var  Imprimir= require("./Arbol/Sentencias/Imprimir");
+    var  Leer_Teclado= require("./Arbol/Sentencias/LeerTeclado");
+    var  Puntero= require("./Arbol/Sentencias/Puntero");
+    var  Repetir= require("./Arbol/Sentencias/Repetir");
+    var  Repetir_Contando= require("./Arbol/Sentencias/Repetir_Contando");
+    var  Repetir_Mientras= require("./Arbol/Sentencias/Repetir_Mientras");
+    var  Retorno= require("./Arbol/Sentencias/Retorno");
+    var  Romper= require("./Arbol/Sentencias/Romper");
+    var  Selecciona= require("./Arbol/Sentencias/Selecciona");
+    var  Si= require("./Arbol/Sentencias/Si");
    
 %}
 
@@ -284,13 +284,29 @@ CUERPO_CLASE: abreLlave SENTENCIAS_CLASE cierraLlave {$$= $2;}
 
 SENTENCIAS_CLASE: SENTENCIA_CLASE
 		{
-			$$=[];
+			$$= [];
+			$$.unshift($1);
+			//$$.insertar($1);
+			/*$$=[];
 			$$.push($1);
+				for(var i=0; i<$$.length;i++){
+				var t =$$[i];
+				if(t instanceof Atributo){
+					console.log("Atributo--> "+ t.getVisibilidad());
+				}
+				if(t instanceof Funcion){
+					console.log("Funcion-->" + t.getVisibilidad() +" "+ t.getNombreFuncion());
+				}
+
+
+			}*/
 			
 		} 
 	|SENTENCIAS_CLASE SENTENCIA_CLASE
 		{
-			var c = $1;
+			$$=$1;
+			$$.push($2);
+			/*var c = $1;
 			$$=[];
 			for(var i = 0; i<c.length;i++){
 				var t = c[i];
@@ -301,9 +317,14 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 			for(var i=0; i<$$.length;i++){
 				var t =$$[i];
 				if(t instanceof Atributo){
-					console.log("mierdadd "+ t.getVisibilidad());
+					console.log("Atributo--> "+ t.getVisibilidad());
 				}
-			}
+				if(t instanceof Funcion){
+					console.log("Funcion-->" + t.getVisibilidad() +" "+ t.getNombreFuncion());
+				}
+
+
+			}*/
 		};
 
 
