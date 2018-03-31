@@ -52,7 +52,7 @@ function generarImportaciones(listaImport){
     var simbolosClase = [];
     for (var i = 0; i < listaClase.length; i++) {
       claseTemporal = listaClase[i];
-      simbolosClase=claseTemporal.generarSimbolosAtributos();
+      simbolosClase=claseTemporal.generarSimbolosClase();
       console.log("Tamanio  Atributos "+ simbolosClase.length); 
     }
   

@@ -1,6 +1,6 @@
 
 function Simbolo(){
-	this.visibilidad="noTiene";
+	this.visibilidad="NO_TIENE";
 	this.nombreCorto ="";
 	this.tipoSimbolo="";//arreglo, puntero, var , obj, edd
 	this.tipoElemento="";//entero, persona, char, dcimal
@@ -31,6 +31,8 @@ function Simbolo(){
  
  
  Simbolo.prototype.setValoresVariable = function(nombreC, tipoSimb, tipoElemento, ambito, rol, apu, size ) {
+   // Simbolo simClase = new Simbolo(Constantes.noTieneVisi, this.nombre, this.nombre, Constantes.clase, Constantes.noTieneVisi, Constantes.clase, -1, this.tamanho);
+
  	 this.nombreCorto= nombreC;
  	 this.tipoSimbolo= tipoSimb;
  	 this.tipoElemento= tipoElemento;
@@ -125,5 +127,20 @@ Simbolo.prototype.getHTMLSimbolo = function() {
 
 
 };
+
+Simbolo.prototype.setValoresFuncion= function(nombreC, tipo, tipoS,ambito,rol,apuntador,tamanio,noPar,cadenParametros,nombreFun){
+    this.nombreCorto= nombreC;
+    this.tipoElemento=tipo;
+    this.tipoSimbolo = tipoS;
+    this.ambito= ambito;
+    this.rol = rol;
+    this.apuntador= apuntador;
+    this.tamanio = tamanio;
+    this.noParametros= noPar;
+    this.parametrosFuncionCadena= cadenParametros;
+    this.nombreFuncion= nombreFun;
+
+};
+
 
 module.exports=Simbolo;

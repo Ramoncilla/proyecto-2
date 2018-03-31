@@ -213,6 +213,28 @@ Clase.prototype.generarSimbolosAtributos = function() {
 };
 
 
+Clase.prototype.generarSimbolosClase= function(){
+	//agregar constructor por defecto
+
+	//1. Crear el simbolo de la clase 
+	var retornoSimbolos =[];
+	var simbClase = new Simbolo();
+	simbClase.setValoresVariable(this.nombre,this.nombre,"CLASE","NO_TIENE","CLASE",-1,this.atributos.length);
+	retornoSimbolos.push(simbClase);
+	/* 2. Agregar simbolos de los atributos  */
+	var simbAtributos= this.generarSimbolosAtributos();
+	for(var i=0; i<simbAtributos.length;i++){
+		retornoSimbolos.push(simbAtributos[i]);
+	}
+
+
+
+
+	return retornoSimbolos;
+
+};
+
+
 
 
 Clase.prototype.obtenerTipoSimbolo = function(tipo) {
