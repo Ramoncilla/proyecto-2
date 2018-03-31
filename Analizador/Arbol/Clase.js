@@ -1,3 +1,18 @@
+var Atributo = require("./Atributo");
+var Funcion = require("./Funciones/Funcion");
+var Constructor = require("./Funciones/Constructor");
+var Principal= require("./Funciones/Principal");
+var Parametro = require("./Funciones/Parametro");
+var AsignaDecla = require("./Sentencias/AsignaDecla");
+var DeclaArreglo = require("./Sentencias/DeclaArreglo");
+var DeclaAsignaPuntero = require("./Sentencias/DeclaAsignaPuntero");
+var DeclaCola = require("./Sentencias/DeclaCola");
+var DeclaPila = require("./Sentencias/DeclaPila");
+var DeclaLista = require("./Sentencias/DeclaLista");
+var DeclaPuntero= require("./Sentencias/DeclaPuntero");
+var DeclaVariable = require("./Sentencias/DeclaVariable");
+var Simbolo = require("../Codigo3D/Simbolo");
+
 
 function Clase(){
 	this.nombre ="";
@@ -26,7 +41,10 @@ Clase.prototype.setValores = function(nombre, here, sent) {
 
 
 Clase.prototype.iniciarValores = function() {
-
+	
+Clase.prototype.funciones=[];
+Clase.prototype.atributos=[];
+Clase.prototype.principal_met=null;
 var temporal;
 	for (var i = 0; i < Clase.prototype.sentencias.length; i++) {
 	 	temporal = Clase.prototype.sentencias[i];

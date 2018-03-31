@@ -140,3 +140,4 @@ Simbolo.prototype.getHTMLSimbolo = function() {
 
 };
 
+module.exports=Simbolo;

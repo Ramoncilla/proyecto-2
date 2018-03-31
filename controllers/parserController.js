@@ -1,50 +1,50 @@
 var grammar = require("../Analizador/gramatica");
 var parseFile = require("../Analizador/Arbol/Archivo");
+var class_ = require("../Analizador/Arbol/Clase");
+var import_ = require("../Analizador/Arbol/Sentencias/Importar");
 var listaClase=[];
  
 exports.parse_string = function(req, res) {
-    var a = req.body.string_file;
-    console.log(a);
-   //console.dir(req);
-    res.send("holaaa ");
-    //var a = grammar.parse(req.string);
-    /*if(a instanceof Archivo)
+    var cadenaArchivo = req.body.string_file;
+    var a = grammar.parse(cadenaArchivo);
+    var cadenaTabla="";
+    var stringImport="";
+    if(a instanceof parseFile)
     {
     	var sentenciasArchivo = a.getSentencias();
     	console.log("Sentencias en el archivo " + sentenciasArchivo.length);
       var importaciones =[];
-      
       for (var i = 0; i < sentenciasArchivo.length; i++) {
         var temporal= sentenciasArchivo[i];
-        if(temporal instanceof Clase){
+        if(temporal instanceof class_){
           listaClase.push(temporal);
         }
-        if(temporal instanceof Importar){
+        if(temporal instanceof import_){
           importaciones.push(temporal);
         }
 
       }
       
-      generarImportaciones(importaciones);
-      generarSimbolosClase();
-
-
-
+      stringImport = generarImportaciones(importaciones);
+      cadenaTabla = generarSimbolosClase();
       
-    }*/
-    //res.send('NOT IMPLEMENTED: Author list');
-
-
+    }
+    //console.log(stringImport);
+    //console.log(cadenaTabla);
+    res.send(cadenaTabla);
 };
 
 
 function generarImportaciones(listaImport){
     var nombreTemporal;
+    var nameImport="";
     for (var i = 0; i < listaImport.length; i++) {
       nombreTemporal= listaImport[i];
+      nameImport+=nombreTemporal+"\n";
       console.log("importando " + nombreTemporal);
     }
   
+    return nameImport;
   }
   
   function generarSimbolosClase(){
@@ -56,7 +56,7 @@ function generarImportaciones(listaImport){
       console.log("Tamanio  Atributos "+ simbolosClase.length); 
     }
   
-    var encabezado="<tr>"
+    var encabezado="<table border =1><tr>"
               +"<th> Ambito</th>"
               +"<th>Tipo Simbolo </th>"
               +"<th> Rol </th>"
@@ -76,4 +76,7 @@ function generarImportaciones(listaImport){
       temporal = simbolosClase[i];
       cuerpo +=temporal.getHTMLSimbolo();
     }
+    var tabla =encabezado + cuerpo+"</table>";
+     console.log(tabla);
+    return tabla;
   }  
