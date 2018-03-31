@@ -6,45 +6,41 @@ function AsignacionArreglo(){
 	this.valorAsignacionArreglo=null;
 	this.tipoAsignacionArreglo =0;
 }
-AsignacionArreglo.prototype.elementoAsignacionArreglo=null;
-AsignacionArreglo.prototype.dimensiones=[];
-AsignacionArreglo.prototype.simboloIgual="";
-AsignacionArreglo.prototype.valorAsignacionArreglo=null;
-AsignacionArreglo.prototype.tipoAsignacionArreglo=0;
+
 
 
 AsignacionArreglo.prototype.setValores = function(elemento,dimensiones,igual,valor,tipo) {
-	AsignacionArreglo.prototype.elementoAsignacionArreglo= elemento;
-	AsignacionArreglo.prototype.simboloIgual=igual;
-	AsignacionArreglo.prototype.valorAsignacionArreglo=valor;
-	AsignacionArreglo.prototype.tipoAsignacionArreglo=tipo;
-	AsignacionArreglo.prototype.dimensiones=dimensiones;
+	this.elementoAsignacionArreglo= elemento;
+	this.simboloIgual=igual;
+	this.valorAsignacionArreglo=valor;
+	this.tipoAsignacionArreglo=tipo;
+	this.dimensiones=dimensiones;
 
 };
 
 AsignacionArreglo.prototype.getElemento = function() {
 	// body...
-	return AsignacionArreglo.prototype.elementoAsignacionArreglo;
+	return this.elementoAsignacionArreglo;
 };
 
 AsignacionArreglo.prototype.getSimbolo = function() {
 	// body...
-	return AsignacionArreglo.prototype.simboloIgual;
+	return this.simboloIgual;
 };
 
 AsignacionArreglo.prototype.getValor = function() {
 	// body...
-	return AsignacionArreglo.prototype.valorAsignacionArreglo;
+	return this.valorAsignacionArreglo;
 };
 
 AsignacionArreglo.prototype.getTipo = function() {
 	// body...
-	return AsignacionArreglo.prototype.tipoAsignacionArreglo;
+	return this.tipoAsignacionArreglo;
 };
 
 AsignacionArreglo.prototype.getDimensiones = function() {
 	// body...
-	return AsignacionArreglo.prototype.dimensiones;
+	return this.dimensiones;
 };
 
 module.exports=AsignacionArreglo;

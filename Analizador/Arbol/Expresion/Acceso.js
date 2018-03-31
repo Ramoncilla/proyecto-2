@@ -5,26 +5,25 @@ function Acceso(){
 }
 
 
-Acceso.prototype.objeto="";
-Acceso.prototype.elementosAcceso=[];
+
 
 
 
 Acceso.prototype.setValores= function(obj, elementosAcceso) {
 	// body...
-	Acceso.prototype.objeto = obj;
-	Acceso.prototype.elementosAcceso=elementosAcceso;
+	this.objeto = obj;
+	this.elementosAcceso=elementosAcceso;
 };
 
 
 Acceso.prototype.getobjeto = function() {
-	return Acceso.prototype.objeto;
+	return this.objeto;
 	// body...
 };
 
 
 Acceso.prototype.getelementosAcceso = function() {
-	return Acceso.prototype.elementosAcceso;
+	return this.elementosAcceso;
 	// body...
 };
 

@@ -2,22 +2,21 @@ function Enciclar(){
 	this.id = null;
 	this.cuerpo=[];
 }
-Enciclar.prototype.id=null;
-Enciclar.prototype.cuerpo=[];
+
 
 
 Enciclar.prototype.setValores = function(exp, sent) {
-	Enciclar.prototype.id= exp;
-	Enciclar.prototype.cuerpo= sent;
+	this.id= exp;
+	this.cuerpo= sent;
 
 };
 
 Enciclar.prototype.getId= function(){
-	return Enciclar.prototype.id;
+	return this.id;
 };
 
 Enciclar.prototype.getCuerpo= function(){
-	return Enciclar.prototype.cuerpo;
+	return this.cuerpo;
 };
 
 module.exports=Enciclar;

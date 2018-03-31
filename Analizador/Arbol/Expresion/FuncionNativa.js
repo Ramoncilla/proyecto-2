@@ -6,15 +6,14 @@ function FuncionNativa(){
 }
 
 
-FuncionNativa.prototype.nombreFuncion="";
-FuncionNativa.prototype.expresion=null;
+
 
 
 
 FuncionNativa.prototype.setValores= function(nombre, exp) {
 	// body...
 	FuncionNativa.prototype.nombreFuncion = nombre;
-	FuncionNativa.prototype.expresion=exp;
+	this.expresion=exp;
 };
 
 
@@ -25,7 +24,7 @@ FuncionNativa.prototype.getNombreFuncion = function() {
 
 
 FuncionNativa.prototype.getExpresion = function() {
-	return FuncionNativa.prototype.expresion;
+	return this.expresion;
 	// body...
 };
 

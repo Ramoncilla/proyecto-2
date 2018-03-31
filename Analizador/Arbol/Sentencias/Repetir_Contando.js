@@ -4,27 +4,24 @@ function Repetir_Contando(){
 	this.expresionHasta = null;
 	this.cuerpo=[];
 }
-Repetir_Contando.prototype.declaracion = null;
-Repetir_Contando.prototype.expresionDesde=null;
-Repetir_Contando.prototype.expresionHasta=null;
-Repetir_Contando.prototype.cuerpo=[];
+
 
 
 Repetir_Contando.prototype.setValores = function(decla,expD,expH,sent) {
-	Repetir_Contando.prototype.declaracion=decla;
-	Repetir_Contando.prototype.expresionDesde=expD;
-	Repetir_Contando.prototype.expresionHasta=expH;
-	Repetir_Contando.prototype.cuerpo= sent;
+	this.declaracion=decla;
+	this.expresionDesdeexpD;
+	this.expresionHasta=expH;
+	this.cuerpo= sent;
 
 };
 
 Repetir_Contando.prototype.getDeclaracion= function(){
-	return Repetir_Contando.prototype.declaracion;
+	return this.declaracion;
 };
 
 
 Repetir_Contando.prototype.getExpresionHasta= function(){
-	return Repetir_Contando.prototype.expresionHasta;
+	return this.expresionHasta;
 };
 
 Repetir_Contando.prototype.getExpresionDesde= function(){
@@ -32,6 +29,6 @@ Repetir_Contando.prototype.getExpresionDesde= function(){
 };
 
 Repetir_Contando.prototype.getCuerpo= function(){
-	return Repetir_Contando.prototype.cuerpo;
+	return this.cuerpo;
 };
 module.exports=Repetir_Contando;

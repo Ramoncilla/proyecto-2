@@ -3,23 +3,22 @@ function ValorPuntero(){
 	this.valoresEstructura=[];
 }
 
-ValorPuntero.prototype.estructuraId="";
-ValorPuntero.prototype.valoresEstructura=[];
+
 
 
 ValorPuntero.prototype.setValores = function(id, arrValores) {
 	// body...
-	ValorPuntero.prototype.estructuraId= id;
-	ValorPuntero.prototype.valoresEstructura=arrValores;
+	this.estructuraId= id;
+	this.valoresEstructura=arrValores;
 };
 
 
 ValorPuntero.prototype.getId= function(){
-	return ValorPuntero.prototype.estructuraId;
+	return this.estructuraId;
 };
 
 ValorPuntero.prototype.getValores= function(){
-	return ValorPuntero.prototype.valoresEstructura;
+	return this.valoresEstructura;
 };
 
 module.exports=ValorPuntero;

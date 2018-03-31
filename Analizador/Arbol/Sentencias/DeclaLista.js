@@ -2,23 +2,22 @@ function DeclaLista(){
 	this.tipoLista ="";
 	this.nombreLista = "";
 }
-DeclaLista.prototype.tipoLista="";
-DeclaLista.prototype.nombreLista="";
+
 
 
 DeclaLista.prototype.setValores = function(nombre, tipo) {
-	DeclaLista.prototype.tipoLista= tipo;
-	DeclaLista.prototype.nombreLista= nombre;
+	this.tipoLista= tipo;
+	this.nombreLista= nombre;
 
 };
 
 DeclaLista.prototype.getTipo= function(){
-	return DeclaLista.prototype.tipoLista;
+	return this.tipoLista;
 };
 
 
 DeclaLista.prototype.getNombre= function(){
-	return DeclaLista.prototype.nombreLista;
+	return this.nombreLista;
 };
 
 module.exports=DeclaLista;

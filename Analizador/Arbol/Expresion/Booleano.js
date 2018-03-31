@@ -4,26 +4,24 @@ function Booleano(){
 	this.valorEnteroBooleano=0;
 }
 
-Booleano.prototype.valorCadenaBooleano="false";
-Booleano.prototype.valorEnteroBooleano=0;
 
 
 Booleano.prototype.setValorBooleano = function(valor) {
-	Booleano.prototype.valorCadenaBooleano = valor;
+	this.valorCadenaBooleano = valor;
 	
 	if(valor.toUpperCase() == "TRUE"){
-		Booleano.prototype.valorEnteroBooleano=1;
+		this.valorEnteroBooleano=1;
 	}else{
-		Booleano.prototype.valorEnteroBooleano=0;
+		this.valorEnteroBooleano=0;
 	}
 };
 
 Booleano.prototype.getEnteroBooleano= function(){
-	return Booleano.prototype.valorEnteroBooleano;
+	return this.valorEnteroBooleano;
 };
 
 Booleano.prototype.getCadenaBooleano= function(){
-	return Booleano.prototype.valorCadenaBooleano;
+	return this.valorCadenaBooleano;
 };
 
 module.exports=Booleano;

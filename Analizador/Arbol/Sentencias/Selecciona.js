@@ -3,14 +3,12 @@ function Selecciona(){
 	this.casos=[];
 	this.defecto = [];
 }
-Selecciona.prototype.expresion=null;
-Selecciona.prototype.casos=[];
-Selecciona.prototype.defecto=[];
+
 
 Selecciona.prototype.setValores = function(exp,cas, def) {
-	Selecciona.prototype.expresion= exp;
-	Selecciona.prototype.casos= cas;
-	Selecciona.prototype.defecto= def;
+	this.expresion =exp;
+	this.casos= cas;
+	this.defecto= def;
 
 };
 
@@ -19,10 +17,10 @@ Selecciona.prototype.getExpresion= function(){
 };
 
 Selecciona.prototype.getCasos= function(){
-	return Selecciona.prototype.casos;
+	return this.casos;
 };
 
 Selecciona.prototype.getDefecto= function(){
-	return Selecciona.prototype.defecto;
+	return this.defecto;
 };
 module.exports=Selecciona;

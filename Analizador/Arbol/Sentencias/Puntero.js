@@ -5,39 +5,36 @@ function Puntero(){
 
 }
 
-Puntero.prototype.nombrePuntero="";
-Puntero.prototype.valorPuntero=-1;
-Puntero.prototype.tipoPuntero="";
 
 
 
 Puntero.prototype.setValores = function(tipo, id) {
 	// body...
-	Puntero.prototype.tipoPuntero= tipo;
-	Puntero.prototype.nombrePuntero=id;
+	this.tipoPuntero= tipo;
+	this.nombrePuntero=id;
 };
 
 Puntero.prototype.agregarDireccion= function(valor){
-	Puntero.prototype.valorPuntero= valor;
+	this.valorPuntero= valor;
 };
 
 Puntero.prototype.destruirPuntero= function(){
-	Puntero.prototype.valorPuntero=-1;
+	this.valorPuntero=-1;
 };
 
 Puntero.prototype.getNombrePuntero = function() {
 	// body...
-	return Puntero.prototype.nombrePuntero;
+	return this.nombrePuntero;
 };
 
 Puntero.prototype.getValorPuntero = function() {
 	// body...
-	return Puntero.prototype.valorPuntero;
+	return this.valorPuntero;
 };
 
 Puntero.prototype.getTipoPuntero = function() {
 	// body...
-	return Puntero.prototype.tipoPuntero;
+	return this.tipoPuntero;
 };
 
 module.exports=Puntero;

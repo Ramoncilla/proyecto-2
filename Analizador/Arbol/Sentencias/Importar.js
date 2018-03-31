@@ -3,17 +3,17 @@ function Importar(){
 
 }
 
-Importar.prototype.ruta="";
+
 
 
 Importar.prototype.setValores = function(ruta) {
-	Importar.prototype.ruta=ruta;
+	this.ruta=ruta;
 
 };
 
 
 Importar.prototype.getRuta = function() {
 	// body...
-	return Importar.prototype.ruta;
+	return this.ruta;
 };
 module.exports=Importar;

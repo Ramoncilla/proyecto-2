@@ -2,21 +2,20 @@ function Hacer_Mientras(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-Hacer_Mientras.prototype.expresion=null;
-Hacer_Mientras.prototype.cuerpo=[];
+
 
 
 Hacer_Mientras.prototype.setValores = function(sent, exp) {
-	Hacer_Mientras.prototype.expresion= exp;
-	Hacer_Mientras.prototype.cuerpo= sent;
+	this.expresion= exp;
+	this.cuerpo= sent;
 
 };
 
 Hacer_Mientras.prototype.getExpresion= function(){
-	return Hacer_Mientras.prototype.expresion;
+	return this.expresion;
 };
 
 Hacer_Mientras.prototype.getCuerpo= function(){
-	return Hacer_Mientras.prototype.cuerpo;
+	return this.cuerpo;
 };
 module.exports=Hacer_Mientras;

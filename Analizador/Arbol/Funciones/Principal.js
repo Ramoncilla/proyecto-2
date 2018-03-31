@@ -3,17 +3,17 @@ function Principal(){
 
 }
 
-Principal.prototype.sentencias=[];
+
 
 
 Principal.prototype.setValores = function(sent) {
-	Principal.prototype.sentencias=sent;
+	this.sentencias=sent;
 
 };
 
 
 Principal.prototype.getSentencias = function() {
 	// body...
-	return Principal.prototype.sentencias;
+	return this.sentencias;
 };
 module.exports=Principal;

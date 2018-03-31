@@ -3,18 +3,16 @@ function Archivo(){
 
 }
 
-Archivo.prototype.sentencias=[];
-
 
 Archivo.prototype.setValores = function(sent) {
-	Archivo.prototype.sentencias=sent;
+	this.sentencias=sent;
 
 };
 
 
 Archivo.prototype.getSentencias = function() {
 	// body...
-	return Archivo.prototype.sentencias;
+	return this.sentencias;
 };
 
 module.exports=Archivo;

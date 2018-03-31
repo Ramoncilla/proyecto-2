@@ -3,18 +3,17 @@ function Este(){
 
 }
 
-Este.prototype.elemento=null;
 
 
 Este.prototype.setValores = function(valor) {
-	Este.prototype.elemento=valor;
+	this.elemento=valor;
 
 };
 
 
 Este.prototype.getElemento = function() {
 	// body...
-	return Este.prototype.elemento;
+	return this.elemento;
 };
 
 module.exports=Este;

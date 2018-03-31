@@ -2,28 +2,27 @@ function DeclaVariable(){
 	this.tipoVariable ="";
 	this.nombreVariable = "";
 }
-DeclaVariable.prototype.tipoVariable="";
-DeclaVariable.prototype.nombreVariable="";
+
 
 DeclaVariable.prototype.setValores = function(tipo, nombre) {
-	DeclaVariable.prototype.tipoVariable= tipo;
-	DeclaVariable.prototype.nombreVariable= nombre;
+	this.tipoVariable= tipo;
+	this.nombreVariable= nombre;
 };
 
 
 
 DeclaVariable.prototype.getTipo= function(){
-	return DeclaVariable.prototype.tipoVariable;
+	return this.tipoVariable;
 };
 
 
 DeclaVariable.prototype.getNombre= function(){
-	return DeclaVariable.prototype.nombreVariable;
+	return this.nombreVariable;
 };
 
 DeclaVariable.prototype.clonar=function(){
-	 var tipo = DeclaVariable.prototype.tipoVariable;
-	 var nombre = DeclaVariable.prototype.nombreVariable;
+	 var tipo = this.tipoVariable;
+	 var nombre = this.nombreVariable;
 	 var nuevaVar = new DeclaVariable();
 	 nuevaVar.setValores(tipo,nombre);
 	 return nuevaVar;

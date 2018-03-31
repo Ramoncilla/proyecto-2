@@ -3,26 +3,23 @@ function Si(){
 	this.sentV=[];
 	this.sentF = [];
 }
-Si.prototype.expresion=null;
-Si.prototype.sentV=[];
-Si.prototype.sentF=[];
 
 Si.prototype.setValores = function(exp,verdaderas,falsas) {
-	Si.prototype.expresion= exp;
-	Si.prototype.sentV= verdaderas;
-	Si.prototype.sentF= falsas;
+	this.expresion= exp;
+	this.sentV= verdaderas;
+	this.sentF= falsas;
 
 };
 
 Si.prototype.getExpresion= function(){
-	return Si.prototype.expresion;
+	return this.expresion;
 };
 
 Si.prototype.getVerdaderas= function(){
-	return Si.prototype.sentV;
+	return this.sentV;
 };
 
 Si.prototype.getFalsas= function(){
-	return Si.prototype.sentF;
+	return this.sentF;
 };
 module.exports=Si;

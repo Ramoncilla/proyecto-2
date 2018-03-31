@@ -3,22 +3,21 @@ function LeerTeclado(){
 	this.expresionCadena = null;
 	this.nombreVarible="";
 }
-LeerTeclado.prototype.expresionCadena=null;
-LeerTeclado.prototype.nombreVarible="";
+
 
 
 LeerTeclado.prototype.setValores = function(expresion, id) {
-	LeerTeclado.prototype.expresionCadena= expresion;
-	LeerTeclado.prototype.nombreVarible= id;
+	this.expresionCadena= expresion;
+	this.nombreVariable= id;
 
 };
 
 LeerTeclado.prototype.getNombre= function(){
-	return LeerTeclado.prototype.nombreVarible;
+	return this.nombreVariable;
 };
 
 LeerTeclado.prototype.getExpresion= function(){
-	return LeerTeclado.prototype.expresionCadena;
+	return this.expresionCadena;
 };
 module.exports=LeerTeclado;
 

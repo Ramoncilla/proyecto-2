@@ -5,38 +5,34 @@ function Asignacion(){
 	this.valorAsignacion=null;
 	this.tipoAsignacion =0;
 }
-Asignacion.prototype.elementoAsignacion=null;
-Asignacion.prototype.simboloIgual="";
-Asignacion.prototype.valorAsignacion=null;
-Asignacion.prototype.tipoAsignacion=0;
 
 
 Asignacion.prototype.setValores = function(elemento, igual,valor,tipo) {
-	Asignacion.prototype.elementoAsignacion= elemento;
-	Asignacion.prototype.simboloIgual=igual;
-	Asignacion.prototype.valorAsignacion=valor;
-	Asignacion.prototype.tipoAsignacion=tipo;
+	this.elementoAsignacion= elemento;
+	this.simboloIgual=igual;
+	this.valorAsignacion=valor;
+	this.tipoAsignacion=tipo;
 
 };
 
 Asignacion.prototype.getElemento = function() {
 	// body...
-	return Asignacion.prototype.elementoAsignacion;
+	return this.elementoAsignacion;
 };
 
 Asignacion.prototype.getSimbolo = function() {
 	// body...
-	return Asignacion.prototype.simboloIgual;
+	return this.simboloIgual;
 };
 
 Asignacion.prototype.getValor = function() {
 	// body...
-	return Asignacion.prototype.valorAsignacion;
+	return this.valorAsignacion;
 };
 
 Asignacion.prototype.getTipo = function() {
 	// body...
-	return Asignacion.prototype.tipoAsignacion;
+	return this.tipoAsignacion;
 };
 
 module.exports=Asignacion;

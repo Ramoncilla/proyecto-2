@@ -1,15 +1,15 @@
 function Imprimir(){
 	this.expresion = null;
 }
-Imprimir.prototype.expresion=null;
+
 
 
 Imprimir.prototype.setExpresion = function(exp) {
-	Imprimir.prototype.expresionImprimir= exp;
+	this.expresionImprimir= exp;
 };
 
 
 Imprimir.prototype.getExpresion= function(){
-	return Imprimir.prototype.expresionImprimir;
+	return this.expresionImprimir;
 };
 module.exports=Imprimir;

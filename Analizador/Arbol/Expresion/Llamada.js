@@ -6,26 +6,25 @@ function Llamada(){
 }
 
 
-Llamada.prototype.nombreFuncion="";
-Llamada.prototype.parametros=[];
+
 
 
 
 Llamada.prototype.setValoresLlamada= function(nombre, parametros) {
 	// body...
-	Llamada.prototype.nombreFuncion = nombre;
-	Llamada.prototype.parametros=parametros;
+	this.nombreFuncion = nombre;
+	this.parametros=parametros;
 };
 
 
 Llamada.prototype.getNombreFuncion = function() {
-	return Llamada.prototype.nombreFuncion;
+	return this.nombreFuncion;
 	// body...
 };
 
 
 Llamada.prototype.getParametros = function() {
-	return Llamada.prototype.parametros;
+	return this.parametros;
 	// body...
 };
 

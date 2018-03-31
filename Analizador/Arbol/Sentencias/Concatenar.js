@@ -5,33 +5,29 @@ function Concatenar(){
 	this.tipo=0;
 }
 
-Concatenar.prototype.expresion1=null;
-Concatenar.prototype.expresion2=null;
-Concatenar.prototype.nombreVariable="";
-Concatenar.prototype.tipo=0;
 
 Concatenar.prototype.setValores = function(nombre, exp1,exp2,tipo) {
-	Concatenar.prototype.nombreVariable= nombre;
-	Concatenar.prototype.expresion1= exp1;
-	Concatenar.prototype.expresion2= exp2;
-	Concatenar.prototype.tipo=tipo;
+	this.nombreVariable= nombre;
+	this.expresion1= exp1;
+	this.expresion2= exp2;
+	this.tipo=tipo;
 };
 
 
 Concatenar.prototype.getNombreVariable= function(){
-	return Concatenar.prototype.nombreVariable;
+	return this.nombreVariable;
 };
 
 Concatenar.prototype.getExpresion1= function(){
-	return Concatenar.prototype.expresion1;
+	return this.expresion1;
 };
 
 Concatenar.prototype.getExpresion2= function(){
-	return Concatenar.prototype.expresion2;
+	return this.expresion2;
 };
 
 Concatenar.prototype.getTipo= function(){
-	return Concatenar.prototype.tipo;
+	return this.tipo;
 };
 
 module.exports=Concatenar;

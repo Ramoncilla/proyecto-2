@@ -2,18 +2,18 @@ function obtenerDireccion(){
 	this.expresion = "";
 }
 
-obtenerDireccion.prototype.expresion= "";
+
 
 obtenerDireccion.prototype.setValores = function(exp) {
 	// body...
 
-	obtenerDireccion.prototype.expresion=exp;
+	this.expresion=exp;
 };
 
 obtenerDireccion.prototype.getExpresion = function() {
 	// body...
 
-	return obtenerDireccion.prototype.expresion;
+	return this.expresion;
 };
 
 module.exports=obtenerDireccion;

@@ -6,39 +6,34 @@ function Constructor(){
 
 }
 
-Constructor.prototype.visibilidad="publico";
-Constructor.prototype.nombreConstructor="";
-Constructor.prototype.parametros=[];
-Constructor.prototype.sentencias=[];
-
 
 Constructor.prototype.setValores = function(visib, nombre,para,sent) {
-	Constructor.prototype.visibilidad= visib;
-	Constructor.prototype.nombreConstructor= nombre;
-	Constructor.prototype.parametros=para;
-	Constructor.prototype.sentencias=sent;
+	this.visibilidad= visib;
+	this.nombreConstructor= nombre;
+	this.parametros=para;
+	this.sentencias=sent;
 
 };
 
 
 Constructor.prototype.getVisibilidad = function() {
 	// body...
-	return Constructor.prototype.visibilidad;
+	return this.visibilidad;
 };
 
 
 Constructor.prototype.getNombreConstructor = function() {
 	// body...
-	return Constructor.prototype.nombreConstructor;
+	return this.nombreConstructor;
 };
 
 Constructor.prototype.getParametros = function() {
 	// body...
-	return Constructor.prototype.parametros;
+	return this.parametros;
 };
 
 Constructor.prototype.getSentencias = function() {
 	// body...
-	return Constructor.prototype.sentencias;
+	return this.sentencias;
 };
 module.exports=Constructor;

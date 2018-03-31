@@ -2,21 +2,19 @@ function Repetir(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-Repetir.prototype.expresion=null;
-Repetir.prototype.cuerpo=[];
 
 
 Repetir.prototype.setValores = function(sent, exp) {
-	Repetir.prototype.expresion= exp;
-	Repetir.prototype.cuerpo= sent;
+	this.expresion= exp;
+	this.cuerpo= sent;
 
 };
 
 Repetir.prototype.getExpresion= function(){
-	return Repetir.prototype.expresion;
+	return this.expresion;
 };
 
 Repetir.prototype.getCuerpo= function(){
-	return Repetir.prototype.cuerpo;
+	return this.cuerpo;
 };
 module.exports=Repetir;

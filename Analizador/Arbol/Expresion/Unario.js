@@ -3,25 +3,23 @@ function Unario(){
 	this.operador="";
 }
 
-Unario.prototype.expresion=null;
-Unario.prototype.operador="";
 
 
 Unario.prototype.setValores= function(exp1, op) {
 	// body...
-	Unario.prototype.expresion = exp1;
-	Unario.prototype.operador = op;
+	this.expresion = exp1;
+	this.operador = op;
 };
 
 Unario.prototype.getExpresion= function(){
-	return Unario.prototype.expresion;
+	return this.expresion;
 };
 
 
 
 
 Unario.prototype.getOperador= function(){
-	return Unario.prototype.operador;
+	return this.operador;
 };
 
 module.exports=Unario;

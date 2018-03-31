@@ -3,22 +3,21 @@ function Caso(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-Caso.prototype.expresion=null;
-Caso.prototype.cuerpo=[];
+
 
 
 Caso.prototype.setValores = function(exp,sent) {
-	Caso.prototype.expresion= exp;
-	Caso.prototype.cuerpo= sent;
+	this.expresion= exp;
+	this.cuerpo= sent;
 
 };
 
 Caso.prototype.getExpresion= function(){
-	return Caso.prototype.expresion;
+	return this.expresion;
 };
 
 Caso.prototype.getCuerpo= function(){
-	return Caso.prototype.cuerpo;
+	return this.cuerpo;
 };
 
 module.exports=Caso;

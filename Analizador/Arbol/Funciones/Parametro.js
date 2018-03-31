@@ -4,30 +4,28 @@ function Parametro(){
 	this.nombreParametro = "";
 }
 
-Parametro.prototype.tipoParametro="";
-Parametro.prototype.nombreParametro="";
-Parametro.prototype.pasoParametro=0;
+
 
 
 Parametro.prototype.setValores = function(tipo,paso,nombre) {
-	Parametro.prototype.tipoParametro= tipo;
-	Parametro.prototype.nombreParametro= nombre;
-	Parametro.prototype.pasoParametro=paso;
+	this.tipoParametro= tipo;
+	this.nombreParametro= nombre;
+	this.pasoParametro=paso;
 
 };
 
 Parametro.prototype.getPaso= function(){
-	return Parametro.prototype.pasoParametro;
+	return this.pasoParametro;
 };
 
 
 Parametro.prototype.getTipo= function(){
-	return Parametro.prototype.tipoParametro;
+	return this.tipoParametro;
 };
 
 
 Parametro.prototype.getNombre= function(){
-	return Parametro.prototype.nombreParametro;
+	return this.nombreParametro;
 };
 
 module.exports=Parametro;

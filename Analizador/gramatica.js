@@ -137,10 +137,8 @@ this.$=[];
 break;
 case 11:
 
-			this.$= [];
-			this.$.unshift($$[$0]);
-			//this.$.insertar($$[$0]);
-			/*this.$=[];
+			
+			this.$=[];
 			this.$.push($$[$0]);
 				for(var i=0; i<this.$.length;i++){
 				var t =this.$[i];
@@ -152,7 +150,7 @@ case 11:
 				}
 
 
-			}*/
+			}
 			
 		
 break;
@@ -160,13 +158,7 @@ case 12:
 
 			this.$=$$[$0-1];
 			this.$.push($$[$0]);
-			/*var c = $$[$0-1];
-			this.$=[];
-			for(var i = 0; i<c.length;i++){
-				var t = c[i];
-				this.$.push(t);
-			}
-			this.$.push($$[$0]);
+			
 
 			for(var i=0; i<this.$.length;i++){
 				var t =this.$[i];
@@ -178,7 +170,7 @@ case 12:
 				}
 
 
-			}*/
+			}
 		
 break;
 case 18:

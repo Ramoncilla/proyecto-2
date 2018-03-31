@@ -284,10 +284,8 @@ CUERPO_CLASE: abreLlave SENTENCIAS_CLASE cierraLlave {$$= $2;}
 
 SENTENCIAS_CLASE: SENTENCIA_CLASE
 		{
-			$$= [];
-			$$.unshift($1);
-			//$$.insertar($1);
-			/*$$=[];
+			
+			$$=[];
 			$$.push($1);
 				for(var i=0; i<$$.length;i++){
 				var t =$$[i];
@@ -299,20 +297,14 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 				}
 
 
-			}*/
+			}
 			
 		} 
 	|SENTENCIAS_CLASE SENTENCIA_CLASE
 		{
 			$$=$1;
 			$$.push($2);
-			/*var c = $1;
-			$$=[];
-			for(var i = 0; i<c.length;i++){
-				var t = c[i];
-				$$.push(t);
-			}
-			$$.push($2);
+			
 
 			for(var i=0; i<$$.length;i++){
 				var t =$$[i];
@@ -324,7 +316,7 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 				}
 
 
-			}*/
+			}
 		};
 
 

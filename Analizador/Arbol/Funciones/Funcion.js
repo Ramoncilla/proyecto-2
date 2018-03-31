@@ -8,58 +8,52 @@ function Funcion(){
 	this.sentencias =[];
 
 }
-Funcion.prototype.sobreEscrita=false;
-Funcion.prototype.visibilidad="publico";
-Funcion.prototype.tipo="";
-Funcion.prototype.nombreFuncion="";
-Funcion.prototype.parametros=[];
-Funcion.prototype.sentencias=[];
 
 
 Funcion.prototype.setValores = function(visib, tipo, nombre,para,sent) {
-	Funcion.prototype.visibilidad= visib;
-	Funcion.prototype.tipo=tipo;
-	Funcion.prototype.nombreFuncion= nombre;
-	Funcion.prototype.parametros=para;
-	Funcion.prototype.sentencias=sent;
-	Funcion.prototype.sobreEscrita=false;
+	this.visibilidad= visib;
+	this.tipo=tipo;
+	this.nombreFuncion= nombre;
+	this.parametros=para;
+	this.sentencias=sent;
+	this.sobreEscrita=false;
 };
 
 
 Funcion.prototype.setSobreEscrita = function(val) {
 	// body...
-	Funcion.prototype.sobreEscrita=val;
+	this.sobreEscrita=val;
 };
 
 
 Funcion.prototype.getSobreEscrita = function() {
 	// body...
-	return Funcion.prototype.sobreEscrita;
+	return this.sobreEscrita;
 };
 
 Funcion.prototype.getVisibilidad = function() {
 	// body...
-	return Funcion.prototype.visibilidad;
+	return this.visibilidad;
 };
 
 Funcion.prototype.getTipo = function() {
 	// body...
-	return Funcion.prototype.tipo;
+	return this.tipo;
 };
 
 
 Funcion.prototype.getNombreFuncion = function() {
 	// body...
-	return Funcion.prototype.nombreFuncion;
+	return this.nombreFuncion;
 };
 
 Funcion.prototype.getParametros = function() {
 	// body...
-	return Funcion.prototype.parametros;
+	return this.parametros;
 };
 
 Funcion.prototype.getSentencias = function() {
 	// body...
-	return Funcion.prototype.sentencias;
+	return this.sentencias;
 };
 module.exports=Funcion;

@@ -3,22 +3,21 @@ function Estructura(){
 	this.nombreEstructura = "";
 	this.declaracionesEstructura=[];
 }
-Estructura.prototype.nombreEstructura="";
-Estructura.prototype.declaracionesEstructura=[];
+
 
 
 Estructura.prototype.setValores = function(nombre, declas) {
-	Estructura.prototype.nombreEstructura= nombre;
-	Estructura.prototype.declaracionesEstructura= declas;
+	this.nombreEstructura= nombre;
+	this.declaracionesEstructura= declas;
 
 };
 
 Estructura.prototype.getNombre= function(){
-	return Estructura.prototype.nombreEstructura;
+	return this.nombreEstructura;
 };
 
 Estructura.prototype.getDeclas= function(){
-	return Estructura.prototype.declaracionesEstructura;
+	return this.declaracionesEstructura;
 };
 
 module.exports=Estructura;

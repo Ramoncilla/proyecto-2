@@ -24,67 +24,64 @@ function Clase(){
 	this.atributos=[];
 }
 
-Clase.prototype.nombre="";
-Clase.prototype.herencia="";
-Clase.prototype.sentencias=[];
-Clase.prototype.funciones=[];
-Clase.prototype.principal_met=null;
-Clase.prototype.atributos=[];
-
-
 
 Clase.prototype.setValores = function(nombre, here, sent) {
-	Clase.prototype.nombre= nombre;
-	Clase.prototype.herencia= here;
-	Clase.prototype.sentencias=sent;//.getLista();
-     for(var i =0; i<Clase.prototype.sentencias.length; i++){
-		 var temp= Clase.prototype.sentencias[i];
+	this.nombre= nombre;
+	this.herencia= here;
+	this.sentencias=sent;//.getLista();
+	console.log(this.sentencias.length +"este es el numero de senteicas");
+	if(this.sentencias!=null){ 
+	for(var i =0; i<this.sentencias.length; i++){
+		 var temp= this.sentencias[i];
 		 if(temp instanceof Atributo){
 			 console.log("Atributo :(  "+ temp.getVisibilidad());
 		 }
 	 }
-
-	Clase.prototype.iniciarValores();
+	}
+	this.iniciarValores();
 };
 
 
 Clase.prototype.iniciarValores = function() {
 	
-Clase.prototype.funciones=[];
-Clase.prototype.atributos=[];
-Clase.prototype.principal_met=null;
+this.funciones=[];
+this.atributos=[];
+this.principal_met=null;
 var temporal;
-	for (var i = 0; i < Clase.prototype.sentencias.length; i++) {
-	 	temporal = Clase.prototype.sentencias[i];
+if(this.sentencias!=null){
+	for (var i = 0; i < this.sentencias.length; i++) {
+	 	temporal = this.sentencias[i];
 	 	if(temporal instanceof Atributo){
-	 		Clase.prototype.atributos.push(temporal);
+	 		this.atributos.push(temporal);
 	 	}
 
 	 	if((temporal instanceof Funcion) ||
 	 		(temporal instanceof Constructor))
 	 	{
-	 		Clase.prototype.funciones.push(temporal);
+	 		this.funciones.push(temporal);
 	 	}
 
 	 	if(temporal instanceof Principal){
-	 		Clase.prototype.principal_met= temporal;
+	 		this.principal_met= temporal;
 	 	}
-	 } 
+	 }} else{
+		 console.log("las senticas son nulas");
+	 }
 };
 
 
 Clase.prototype.getNombre= function(){
-	return Clase.prototype.nombre;
+	return this.nombre;
 };
 
 
 Clase.prototype.getHerencia= function(){
-	return Clase.prototype.herencia;
+	return this.herencia;
 };
 
 
 Clase.prototype.getSentencias= function(){
-	return Clase.prototype.sentencias;
+	return this.sentencias;
 };
 
 Clase.prototype.getSimbolosClase = function() {
@@ -95,25 +92,25 @@ Clase.prototype.generarSimbolosAtributos = function() {
 	var apuntador=0;
 	var listaRetorno=[];
     var temporal, tipoDeclaracion;
-	for (var i = 0; i < Clase.prototype.atributos.length; i++) {
-		temporal = Clase.prototype.atributos[i];
+	for (var i = 0; i < this.atributos.length; i++) {
+		temporal = this.atributos[i];
 		var declaracionAtributo = temporal.getDecla();
 		var visibilidadAtributo = temporal.getVisibilidad();
 		console.log(visibilidadAtributo +"visiiii");
-		tipoDeclaracion= Clase.prototype.obtenerTipoDeclaracion(declaracionAtributo);
+		tipoDeclaracion= this.obtenerTipoDeclaracion(declaracionAtributo);
 			 switch(tipoDeclaracion) {
 				    
 				    case 1: //asignaDecla
 				    	var declaracionElemento = declaracionAtributo.getDecla();
-				    	var enteroDecla = Clase.prototype.obtenerTipoDeclaracion(declaracionElemento);
+				    	var enteroDecla = this.obtenerTipoDeclaracion(declaracionElemento);
 
 				    	if(enteroDecla == 8){
 				    		//puede ser una variable o un objeto con instancia
 				    		var nombreC= declaracionElemento.getNombre();
 				    		var tipoElemento = declaracionElemento.getTipo();
-				    		var tipoSimb = Clase.prototype.obtenerTipoSimbolo(tipoElemento);
+				    		var tipoSimb = this.obtenerTipoSimbolo(tipoElemento);
 				    		var nuevoSimbolo= new Simbolo();
-				    		nuevoSimbolo.setValoresVariable(nombreC, tipoSimb,tipoElemento,Clase.prototype.nombre,"ATRIBUTO",apuntador,1);
+				    		nuevoSimbolo.setValoresVariable(nombreC, tipoSimb,tipoElemento,this.nombre,"ATRIBUTO",apuntador,1);
 				    		var asignacion = declaracionElemento.getAsigna();
 				    		var expresion = asignacion.getValor();
 				    		nuevoSimbolo.setVisibilidad(visibilidadAtributo);
@@ -128,7 +125,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    		var dimensionesArreglo = declaracionElemento.getDimension();
 				    		var noDim= dimensionesArreglo.length;
 				    		var nuevoSimbolo= new Simbolo();
-				    		nuevoSimbolo.setValoresArreglo(nombreArreglo,"ARREGLO",tipoArreglo,Clase.prototype.nombre,"ATRIBUTO",apuntador,1,noDim,dimensionesArreglo);
+				    		nuevoSimbolo.setValoresArreglo(nombreArreglo,"ARREGLO",tipoArreglo,this.nombre,"ATRIBUTO",apuntador,1,noDim,dimensionesArreglo);
 				    		var asignacion = declaracionElemento.getAsigna();
 				    		var expresion = asignacion.getValor();
 				    		nuevoSimbolo.setVisibilidad(visibilidadAtributo);
@@ -146,7 +143,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 						var dimensionesArreglo = declaracionAtributo.getDimension();
 						var noDim = dimensionesArreglo.length;
 						var nuevoSimbolo = new Simbolo();
-						nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo,Clase.prototype.nombre,"ATRIBUTO",apuntador,1,noDim,dimensionesArreglo);
+						nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo,this.nombre,"ATRIBUTO",apuntador,1,noDim,dimensionesArreglo);
 						nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 						listaRetorno.push(nuevoSimbolo);
 						apuntador++;
@@ -160,7 +157,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    	var nombreCola = declaracionAtributo.getNombre();
 				    	var tipoCola = declaracionAtributo.getTipo();
 				    	var nuevoSimbolo = new Simbolo();
-				    	nuevoSimbolo.setValoresCola(nombreCola, "COLA", tipoCola, Clase.prototype.nombre, "ATRIBUTO",apuntador, 1);
+				    	nuevoSimbolo.setValoresCola(nombreCola, "COLA", tipoCola, this.nombre, "ATRIBUTO",apuntador, 1);
 				    	nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 				    	listaRetorno.push(nuevoSimbolo);
 				    	apuntador++;
@@ -170,7 +167,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    	var nombreLista = declaracionAtributo.getNombre();
 				    	var tipoLista = declaracionAtributo.getTipo();
 				    	var nuevoSimbolo = new Simbolo();
-				    	nuevoSimbolo.setValoresLista(nombreLista,"LISTA",tipoLista,Clase.prototype.nombre,"ATRIBUTO",apuntador,1);
+				    	nuevoSimbolo.setValoresLista(nombreLista,"LISTA",tipoLista,this.nombre,"ATRIBUTO",apuntador,1);
 				    	nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 				    	listaRetorno.push(nuevoSimbolo);
 				    	apuntador++;
@@ -180,7 +177,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    	var nombrePila = declaracionAtributo.getNombre();
 				    	var tipoPila = declaracionAtributo.getTipo();
 				    	var nuevoSimbolo = new Simbolo();
-				    	nuevoSimbolo.setValoresPila(nombrePila, "PILA",tipoPila,Clase.prototype.nombre, "ATRIBUTO",apuntador, 1);
+				    	nuevoSimbolo.setValoresPila(nombrePila, "PILA",tipoPila,this.nombre, "ATRIBUTO",apuntador, 1);
 				    	nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 				    	listaRetorno.push(nuevoSimbolo);
 				    	apuntador++;
@@ -191,7 +188,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    	var nombrePuntero = puntero.getNombrePuntero();
 				    	var tipoPuntero = puntero.getTipoPuntero();
 				    	var nuevoSimbolo= new Simbolo();
-				    	nuevoSimbolo.setValoresPuntero(nombrePuntero,"PUNTERO",tipoPuntero,Clase.prototype.nombre,"ATRIBUTO",apuntador, 1);
+				    	nuevoSimbolo.setValoresPuntero(nombrePuntero,"PUNTERO",tipoPuntero,this.nombre,"ATRIBUTO",apuntador, 1);
 				    	nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 				    	listaRetorno.push(nuevoSimbolo);
 				    	apuntador++;
@@ -200,9 +197,9 @@ Clase.prototype.generarSimbolosAtributos = function() {
 				    case 8: //decla varaible
 				        var nombreC= declaracionAtributo.getNombre();
 				        var tipoVar= declaracionAtributo.getTipo();
-				        var tipoSimb= Clase.prototype.obtenerTipoSimbolo(tipoVar);
+				        var tipoSimb= this.obtenerTipoSimbolo(tipoVar);
 				        var nuevoSimbolo= new Simbolo();
-				        nuevoSimbolo.setValoresVariable(nombreC, tipoSimb,tipoVar, Clase.prototype.nombre,"ATRIBUTO",apuntador,1);
+				        nuevoSimbolo.setValoresVariable(nombreC, tipoSimb,tipoVar, this.nombre,"ATRIBUTO",apuntador,1);
 				        nuevoSimbolo.setVisibilidad(visibilidadAtributo);
 				        listaRetorno.push(nuevoSimbolo);
 				        apuntador++;

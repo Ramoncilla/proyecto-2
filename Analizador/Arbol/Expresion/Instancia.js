@@ -4,15 +4,13 @@ function Instancia(){
 	this.parametrosInstancia=[];
 }
 
-Instancia.prototype.tipoObjeto="";
-Instancia.prototype.nombreInstancia="";
-Instancia.prototype.parametrosInstancia=[];
+
 
 
 Instancia.prototype.setValores = function(tipo, nombre, parametros) {
-	Instancia.prototype.tipoObjeto= tipo;
-	Instancia.prototype.nombreInstancia= nombre;
-	Instancia.prototype.parametrosInstancia=parametros;
+	this.tipoObjeto= tipo;
+	this.nombreInstancia = nombre;
+	this.parametrosInstancia=parametros;
 
 };
 
@@ -22,12 +20,12 @@ Instancia.prototype.getTipo= function(){
 
 
 Instancia.prototype.getNombre= function(){
-	return Instancia.prototype.nombreInstancia;
+	return this.nombreInstancia ;
 };
 
 
 Instancia.prototype.getParametros= function(){
-	return Instancia.prototype.parametrosInstancia;
+	return this.parametrosInstancia;
 };
 
 module.exports=Instancia;

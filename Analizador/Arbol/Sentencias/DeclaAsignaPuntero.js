@@ -3,24 +3,22 @@ function DeclaAsignaPuntero(){
 	this.expresion = null;
 }
 
-DeclaAsignaPuntero.prototype.puntero=null;
-DeclaAsignaPuntero.prototype.expresion=null;
 
 DeclaAsignaPuntero.prototype.setValores = function(p, exp) {
 
-	DeclaAsignaPuntero.prototype.puntero= p;
-	DeclaAsignaPuntero.prototype.expresion= exp;
+	this.puntero= p;
+	this.expresion= exp;
 };
 
 
 DeclaAsignaPuntero.prototype.getExpresion = function() {
 	// body...
-	return DeclaAsignaPuntero.prototype.expresion;
+	return this.expresion;
 };
 
 
 DeclaAsignaPuntero.prototype.getPuntero= function(){
-	return DeclaAsignaPuntero.prototype.puntero;
+	return this.puntero;
 };
 
 module.exports=DeclaAsignaPuntero;
