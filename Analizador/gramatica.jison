@@ -1,6 +1,9 @@
 
 %{
+	
+	var listaPrueba =[];
 	var Clase = require("./Arbol/Clase");
+	var arreglin = require("./Arbol/arreglo");
     var Atributo = require("./Arbol/Atributo.js");
     var Archivo = require("./Arbol/Archivo.js");
     
@@ -281,18 +284,26 @@ CUERPO_CLASE: abreLlave SENTENCIAS_CLASE cierraLlave {$$= $2;}
 
 SENTENCIAS_CLASE: SENTENCIA_CLASE
 		{
-			var a = [];
-			a.push($1);
-			if($1 instanceof Atributo){
-			console.log("visiblidad   "+ $1.getVisibilidad());
-			}
-			$$=a;
+			$$=[];
+			$$.push($1);
+			
 		} 
 	|SENTENCIAS_CLASE SENTENCIA_CLASE
 		{
-			var a = $1;
-			a.push($2);
-			$$=a;
+			var c = $1;
+			$$=[];
+			for(var i = 0; i<c.length;i++){
+				var t = c[i];
+				$$.push(t);
+			}
+			$$.push($2);
+
+			for(var i=0; i<$$.length;i++){
+				var t =$$[i];
+				if(t instanceof Atributo){
+					console.log("mierdadd "+ t.getVisibilidad());
+				}
+			}
 		};
 
 
@@ -317,7 +328,6 @@ ATRIBUTO: VISIBILIDAD DECLARACION
 		{
 			var a = new Atributo();
 			a.setValores("publico",$1);
-			console.log(a.getVisibilidad()+"<----");
 			$$=a;
 		}
 	|DECLA_LISTA
@@ -689,14 +699,14 @@ DEFECTO: defecto dosPuntos SENTENCIAS {$$= $3};
 
 LISTA_CASOS: CASO
 		{
-			console.log("hola1");
+			
 			var a = []; 
 			a.push($1);
 			$$=a;
 		}
 	|LISTA_CASOS CASO
 		{
-			console.log("hola");
+			
 			var a = $1;
 			a.push($2);
 			$$=a;
@@ -916,9 +926,9 @@ VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|nulo {var n = new Nulo(); n.setNulo(); $$=n;}
 	|CONVERTIR_CADENA{$$=S1;}
 	|CONVERTIR_ENTERO{$$=$1;}
-	|id {console.log($1); var idNuevo = new t_id(); idNuevo.setValorId($1); $$= idNuevo;}
+	|id { var idNuevo = new t_id(); idNuevo.setValorId($1); $$= idNuevo;}
 	|id COL_ARREGLO{var i = new PosArreglo(); i.setValores($1, $2); $$=i;}
-	|id PARAMETROS_LLAMADA {var i = new Llamada(); i.setValoresLlamada($1, $2); $$= i; console.log(i.getNombreFuncion()); console.log(i.getParametros());}
+	|id PARAMETROS_LLAMADA {var i = new Llamada(); i.setValoresLlamada($1, $2); $$= i;}
 	|ACCESO {$$=$1;}
 	|ESTE {$$=$1;}
 	|CUERPO_ARREGLO{$$=$1;}

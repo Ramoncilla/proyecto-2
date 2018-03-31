@@ -98,7 +98,7 @@ case 2:
 			this.$=a;
 		
 break;
-case 3: case 12: case 52:
+case 3: case 52:
 
 			var a = $$[$0-1];
 			a.push($$[$0]);
@@ -137,12 +137,27 @@ this.$=[];
 break;
 case 11:
 
-			var a = [];
-			a.push($$[$0]);
-			if($$[$0] instanceof Atributo){
-			console.log("visiblidad   "+ $$[$0].getVisibilidad());
+			this.$=[];
+			this.$.push($$[$0]);
+			
+		
+break;
+case 12:
+
+			var c = $$[$0-1];
+			this.$=[];
+			for(var i = 0; i<c.length;i++){
+				var t = c[i];
+				this.$.push(t);
 			}
-			this.$=a;
+			this.$.push($$[$0]);
+
+			for(var i=0; i<this.$.length;i++){
+				var t =this.$[i];
+				if(t instanceof Atributo){
+					console.log("mierdadd "+ t.getVisibilidad());
+				}
+			}
 		
 break;
 case 18:
@@ -161,15 +176,7 @@ case 21: case 27: case 28: case 29: case 30: case 31:
 			this.$=a;
 		
 break;
-case 22:
-
-			var a = new Atributo();
-			a.setValores("publico",$$[$0]);
-			console.log(a.getVisibilidad()+"<----");
-			this.$=a;
-		
-break;
-case 23: case 24: case 25: case 26: case 32:
+case 22: case 23: case 24: case 25: case 26: case 32:
 
 			var a = new Atributo();
 			a.setValores("publico",$$[$0]);
@@ -489,7 +496,7 @@ this.$= $$[$0]
 break;
 case 121:
 
-			console.log("hola1");
+			
 			var a = []; 
 			a.push($$[$0]);
 			this.$=a;
@@ -497,7 +504,7 @@ case 121:
 break;
 case 122:
 
-			console.log("hola");
+			
 			var a = $$[$0-1];
 			a.push($$[$0]);
 			this.$=a;
@@ -747,13 +754,13 @@ case 189:
 this.$=S1;
 break;
 case 191:
-console.log($$[$0]); var idNuevo = new t_id(); idNuevo.setValorId($$[$0]); this.$= idNuevo;
+ var idNuevo = new t_id(); idNuevo.setValorId($$[$0]); this.$= idNuevo;
 break;
 case 192:
 var i = new PosArreglo(); i.setValores($$[$0-1], $$[$0]); this.$=i;
 break;
 case 193:
-var i = new Llamada(); i.setValoresLlamada($$[$0-1], $$[$0]); this.$= i; console.log(i.getNombreFuncion()); console.log(i.getParametros());
+var i = new Llamada(); i.setValoresLlamada($$[$0-1], $$[$0]); this.$= i;
 break;
 case 201:
 
@@ -1091,7 +1098,10 @@ parse: function parse(input) {
     return true;
 }};
 
+	
+	var listaPrueba =[];
 	var Clase = require("./Arbol/Clase");
+	var arreglin = require("./Arbol/arreglo");
     var Atributo = require("./Arbol/Atributo.js");
     var Archivo = require("./Arbol/Archivo.js");
     

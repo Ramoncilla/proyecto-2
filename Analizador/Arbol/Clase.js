@@ -12,6 +12,7 @@ var DeclaLista = require("./Sentencias/DeclaLista");
 var DeclaPuntero= require("./Sentencias/DeclaPuntero");
 var DeclaVariable = require("./Sentencias/DeclaVariable");
 var Simbolo = require("../Codigo3D/Simbolo");
+var arreglo = require("./arreglo");
 
 
 function Clase(){
@@ -35,7 +36,14 @@ Clase.prototype.atributos=[];
 Clase.prototype.setValores = function(nombre, here, sent) {
 	Clase.prototype.nombre= nombre;
 	Clase.prototype.herencia= here;
-	Clase.prototype.sentencias=sent;
+	Clase.prototype.sentencias=sent;//.getLista();
+     for(var i =0; i<Clase.prototype.sentencias.length; i++){
+		 var temp= Clase.prototype.sentencias[i];
+		 if(temp instanceof Atributo){
+			 console.log("Atributo :(  "+ temp.getVisibilidad());
+		 }
+	 }
+
 	Clase.prototype.iniciarValores();
 };
 
@@ -91,6 +99,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 		temporal = Clase.prototype.atributos[i];
 		var declaracionAtributo = temporal.getDecla();
 		var visibilidadAtributo = temporal.getVisibilidad();
+		console.log(visibilidadAtributo +"visiiii");
 		tipoDeclaracion= Clase.prototype.obtenerTipoDeclaracion(declaracionAtributo);
 			 switch(tipoDeclaracion) {
 				    

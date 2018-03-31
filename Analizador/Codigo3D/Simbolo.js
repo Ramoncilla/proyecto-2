@@ -34,7 +34,8 @@ function Simbolo(){
 
  
  Simbolo.prototype.setVisibilidad = function(vis) {
- 	// body...
+     // body...
+     console.log("entradno  "+ vis);
  	Simbolo.prototype.visibilidad=vis;
  };
 
@@ -124,7 +125,7 @@ Simbolo.prototype.getHTMLSimbolo = function() {
             +"<td>"+Simbolo.prototype.ambito +"</td>"
             +"<td>"+Simbolo.prototype.tipoSimbolo +"</td>"
             +"<td>"+Simbolo.prototype.rol +"</td>"
-            +"<td>"+Simbolo.prototype.Visibilidad +"</td>"
+            +"<td>"+Simbolo.prototype.visibilidad +"</td>"
             +"<td>"+Simbolo.prototype.nombreCorto+"</td>"
             +"<td>"+Simbolo.prototype.tipoElemento +"</td>"
             +"<td>"+Simbolo.prototype.apuntador +"</td>"
