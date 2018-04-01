@@ -323,8 +323,8 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 SENTENCIA_CLASE: ATRIBUTO{$$=$1;}
 	|FUNCION{$$=$1;}
 	|FUNCION_SOBRE{$$=$1;}
-	|PRINCIPAL{$$=$1;}
-	|CONSTRUCTOR{$$=$1;};
+	|PRINCIPAL{$$=$1;};
+	//|CONSTRUCTOR{$$=$1;};
 
 
 VISIBILIDAD: publico {$$="publico";}
@@ -439,20 +439,25 @@ FUNCION: VISIBILIDAD TIPO_DECLARACION id  LISTA_PARAMETROS  CUERPO_FUNCION
 			//function(visib, tipo, nombre,para,sent) 
 			a.setValores("publico","vacio",$2,$3,$4);
 			$$=a;
-		};
-
-CONSTRUCTOR: VISIBILIDAD id  LISTA_PARAMETROS  CUERPO_FUNCION
+		}
+	| VISIBILIDAD id  LISTA_PARAMETROS  CUERPO_FUNCION
 		{
-			var a = new Constructor();
+			var a = new Funcion();
+			a.setValores($1,"vacio",$2,$3,$4);
+			a.cambiarAConstructor();
+			//var a = new Constructor();
 			//function(visib, nombre,para,sent) 
-			a.setValores($1,$2,$3,$4);
+			//a.setValores($1,$2,$3,$4);
 			$$=a;
 		}
 	|id LISTA_PARAMETROS CUERPO_FUNCION
 		{
-			var a = new Constructor();
+			var a = new Funcion();
+			a.cambiarAConstructor();
+			a.setValores("publico","vacio",$1,$2,$3);
+			//var a = new Constructor();
 			//function(visib, nombre,para,sent) 
-			a.setValores("publico",$1,$2,$3);
+			//a.setValores("publico",$1,$2,$3);
 			$$=a;
 		};
 	

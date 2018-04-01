@@ -10,8 +10,12 @@ function Funcion(){
 	this.sentencias =[];
 	this.parametros = new listaParametros();
 	this.nombreClase ="";
+	this.esConstructor=false;
 }
 
+Funcion.prototype.cambiarAConstructor= function(){
+	this.esConstructor=true;
+};
 
 Funcion.prototype.setNombreClase= function(clase){
     console.log(clase + "sjfdshfkjdsfdsfddddddddddddddddddddddd");
