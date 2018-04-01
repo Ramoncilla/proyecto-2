@@ -15,6 +15,10 @@ var Simbolo = require("../Codigo3D/Simbolo");
 var arreglo = require("./arreglo");
 var listaFunciones = require("./listaFunciones");
 var Ambito = require("../Codigo3D/Ambito");
+var Error = require("../Errores/Error");
+var listaErrores = require("../Errores/listaErrores");
+
+var lErrores = new listaErrores();
 
 
 function Clase() {
@@ -49,8 +53,7 @@ Clase.prototype.iniciarValores = function() {
                 this.atributos.push(temporal);
             }
 
-            if ((temporal instanceof Funcion)){ //||
-               // (temporal instanceof Constructor)) {
+            if ((temporal instanceof Funcion)){ 
 					temporal.setNombreClase(this.nombre);
 					this.funciones.insertarFuncion(temporal);
 					
@@ -61,6 +64,7 @@ Clase.prototype.iniciarValores = function() {
             }
         }
     } else {
+        lErrores.insertarError("Semantico","Hubo un error al crear el arbol de analisis");
         console.log("las senticas son nulas");
     }
 };
@@ -80,9 +84,6 @@ Clase.prototype.getSentencias = function() {
     return this.sentencias;
 };
 
-Clase.prototype.getSimbolosClase = function() {
-    // body...
-};
 
 Clase.prototype.generarSimbolosAtributos = function() {
     var apuntador = 0;
@@ -116,6 +117,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         apuntador++;
 
                     } else {
+                        lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreC);
 						console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
                     }
                 } else if (enteroDecla == 2) {
@@ -136,6 +138,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         apuntador++;
 
                     } else {
+                        lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreArreglo);
 						console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
                     }
 
@@ -159,6 +162,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreArreglo);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
                 }
 
@@ -181,6 +185,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreCola);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreCola);
                 }
 
@@ -199,6 +204,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreLista);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreLista);
                 }
 
@@ -216,6 +222,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePila);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePila);
                 }
 
@@ -235,6 +242,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePuntero);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
 
                 }
@@ -253,6 +261,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     apuntador++;
 
                 } else {
+                    lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreC);
                     console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
                 }
                 break;
@@ -304,7 +313,7 @@ Clase.prototype.generarSimbolosClase = function() {
 	for(var i = 0; i<this.funciones.funciones.length;i++){
 		funTemporal = this.funciones.funciones[i];
 		var noPametros =0;
-
+        var banderaConstructor=funTemporal.esConstructor;
 		ambitos = new Ambito();
 		console.log(funTemporal.obtenerFirma());
 		ambitos.addAmbito(funTemporal.obtenerFirma());
@@ -320,7 +329,8 @@ Clase.prototype.generarSimbolosClase = function() {
 
 		  var simbParametros =[];
 		  var simbTemporal;
-		  var parTemp;
+          var parTemp;
+          
 		  for(var j = 0; j<funTemporal.parametros.parametros.length;j++){
 			  noPametros++;
 			  parTemp= funTemporal.parametros.parametros[j];
@@ -341,19 +351,32 @@ Clase.prototype.generarSimbolosClase = function() {
 		  var sizeFun = 1+simbParametros.length+1;
 		 
 		//Simbolo.prototype.setValoresFuncion= function(nombreC, tipo, tipoS,ambito,rol,apuntador,tamanio,noPar,cadenParametros,nombreFun)
-		simbTemporal = new Simbolo();
-		simbTemporal.setValoresFuncion(funTemporal.obtenerFirma(),funTemporal.getTipo(),"FUNCION",this.nombre,"FUNCION",-1,sizeFun,funTemporal.obtenerNoParametros(),funTemporal.obtenerCadenaParametros(), funTemporal.getNombreFuncion());
+        simbTemporal = new Simbolo();
+        
+        if(!banderaConstructor){
+            simbTemporal.setValoresFuncion(funTemporal.obtenerFirma(),funTemporal.getTipo(),"FUNCION",this.nombre,"FUNCION",-1,sizeFun,funTemporal.obtenerNoParametros(),funTemporal.obtenerCadenaParametros(), funTemporal.getNombreFuncion());
 		var visiFuncion = funTemporal.getVisibilidad();
-		console.log("ESTAAAAAAAAAAAAAAAAA  "+ visiFuncion);
 		simbTemporal.setVisibilidad(visiFuncion);
-		retornoSimbolos.push(simbTemporal);
+
+        }else{
+            simbTemporal.setValoresFuncion(funTemporal.obtenerFirma(),funTemporal.getTipo(),"CONSTRUCTOR",this.nombre,"CONSTRUCTOR",-1,sizeFun,funTemporal.obtenerNoParametros(),funTemporal.obtenerCadenaParametros(), funTemporal.getNombreFuncion());
+		var visiFuncion = funTemporal.getVisibilidad();
+		simbTemporal.setVisibilidad(visiFuncion);
+
+        }
+		
+        
+        
+        retornoSimbolos.push(simbTemporal);
 		retornoSimbolos.push(thisTemporal);
 
 		//insertamos parametros
 		for(var j = 0; j<simbParametros.length;j++){
-			retornoSimbolos.push(simbParametros[j]);
+            if(!this.existeSimbolo(retornoSimbolos,simbParametros[j])){
+                retornoSimbolos.push(simbParametros[j]);
+            }
+			
 		}
-
 		//insetamos los demas simbolos
 
 		retornoSimbolos.push(returnTemporal);
@@ -365,7 +388,20 @@ Clase.prototype.generarSimbolosClase = function() {
 
 };
 
-
+Clase.prototype.existeSimbolo = function(lista, simb){
+    var nombre = simb.getNombreCorto().toUpperCase();
+    var ambito = simb.getAmbito().toUpperCase();
+    var temporal;
+    for(var i=0; i<lista.length; i++){
+        temporal = lista[i];
+        if(temporal.getNombreCorto().toUpperCase() == nombre &&
+            temporal.getAmbito().toUpperCase()== ambito ){
+                lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un simbolo "+ nombre+", en el ambito "+ambito);
+                return true;
+            }
+    }
+    return false;
+};
 
 
 Clase.prototype.obtenerTipoSimbolo = function(tipo) {

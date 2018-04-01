@@ -13,12 +13,13 @@ function Funcion(){
 	this.esConstructor=false;
 }
 
+
+
 Funcion.prototype.cambiarAConstructor= function(){
 	this.esConstructor=true;
 };
 
 Funcion.prototype.setNombreClase= function(clase){
-    console.log(clase + "sjfdshfkjdsfdsfddddddddddddddddddddddd");
 	this.nombreClase= clase;
 };
 

@@ -47,13 +47,14 @@ function generarImportaciones(listaImport){
     return nameImport;
   }
   
+  
   function generarSimbolosClase(){
     var claseTemporal;
     var simbolosClase = [];
     for (var i = 0; i < listaClase.length; i++) {
       claseTemporal = listaClase[i];
       simbolosClase=claseTemporal.generarSimbolosClase();
-      console.log("Tamanio  Atributos "+ simbolosClase.length); 
+      console.log("Tamanho de simbolos en clase  "+ simbolosClase.length); 
     }
   
     var encabezado="<table border =1><tr>"
@@ -69,6 +70,7 @@ function generarImportaciones(listaImport){
               +"<th> Cadena Parametros </th>"
               +"<th> Nombre Funcion </th>"
               +"<th> No. Dimensiones </th>"
+              +"<th> Paso de referencia </th>"
               +"</tr>";
      var cuerpo ="";
     var temporal;          
@@ -77,6 +79,5 @@ function generarImportaciones(listaImport){
       cuerpo +=temporal.getHTMLSimbolo();
     }
     var tabla =encabezado + cuerpo+"</table>";
-     console.log(tabla);
     return tabla;
   }  

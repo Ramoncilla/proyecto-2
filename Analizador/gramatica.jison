@@ -287,7 +287,7 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 			
 			$$=[];
 			$$.push($1);
-				for(var i=0; i<$$.length;i++){
+				/*for(var i=0; i<$$.length;i++){
 				var t =$$[i];
 				if(t instanceof Atributo){
 					console.log("Atributo--> "+ t.getVisibilidad());
@@ -297,7 +297,7 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 				}
 
 
-			}
+			}*/
 			
 		} 
 	|SENTENCIAS_CLASE SENTENCIA_CLASE
@@ -306,7 +306,7 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 			$$.push($2);
 			
 
-			for(var i=0; i<$$.length;i++){
+		/*	for(var i=0; i<$$.length;i++){
 				var t =$$[i];
 				if(t instanceof Atributo){
 					console.log("Atributo--> "+ t.getVisibilidad());
@@ -316,7 +316,7 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 				}
 
 
-			}
+			}*/
 		};
 
 

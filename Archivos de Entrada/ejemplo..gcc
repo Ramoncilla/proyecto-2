@@ -1,0 +1,208 @@
+
+importar ("/home/ramonella/Documentos/Repositorios/Gcc-Compiler/Archivos de Entrada/Individuo.gcc");
+
+clase Persona hereda_de individuo{
+  publico caracter nombre[100];
+  privado entero edad;
+  protegido caracter profesion[100];
+  publico booleano bandera =true;
+  privado decimal salario =1000.52;
+  lista listaEjemplo = nuevo lisTa(entero);
+  lista lista2 = nuevo lISta(caracter);
+   
+
+ peRsona(caracter nombre[100], caracter punTeRo profesion[100], entero edad){
+
+      esTe.nombre= nombre;
+      eStE.profesion = profesion;
+      ESTE.edad=edad;
+
+ }
+  
+  publico vacio cumpleAnios(){
+   estE.edad++;
+  }
+
+@sobreEscRIBir
+publico vacio cantar(){
+	imprimir("persona canta");
+}
+
+  publico ENTero obtenerEdad(){
+   	retorno esTE.edad;
+  } 
+
+
+   protegido vacio pruebaEstructuras(){
+   lista l = nuevo lista(decimal);
+    decimal a = 10;
+    a+=120.36;
+   l.insertar(a);
+    l.obtener(5);
+    entero a = l.buscar(7);
+    a = arreglo.tamanio;
+
+    pila p = nuevo pila(DeciMal);
+    p.apilar(5);
+    p.desapilar();
+
+     cola a = nuevo cola(caracter);
+     a.encolar('a');
+     a.desencolar();
+    listaEjemplo.insertar(32);
+    a *= a[10]*hola(1,j[2],3*56/120)+i;
+
+   }
+
+   principal(){
+   imprimir("hola");
+   }
+
+   privado persona prubea(entero a, caracter j, booleano h, pesona puntero d[1], persona puntero j){
+    imprimir (a);
+    concatenar(a,"fgisdff #E",5);
+    concatenar (b,"esto es b");
+
+   }
+
+
+   publico vacio probarEstructuras(){
+      a = hola.hola.hola.hoa.gdg(1,2,3).popo[2];
+      hola.hola.hola /= 6;
+      hola.hola.o.a=nuevo indivi(6,7,8);
+      este.hh[8]*=este.h[3].hol(2.4).popo;
+
+      si(!(5<10 && 8>9 || 89??89))
+      {
+      	es_falso
+      	{
+      		si(o<10)
+      		{
+      			es_verdadero
+      			{
+      		 		si(o!=10)
+      		 		{
+      		 			es_falso
+      		 			{
+      		 				si(popo<8)
+      		 					{
+
+      		 					}
+
+      		 			}
+      		 			es_verdadero
+      		 			{
+      		 				imprimir(10);
+      		 			}
+      				}
+      			}
+      			es_falso
+      			{
+
+      			}
+      		}
+      	}
+
+      }
+
+evaluar_si(5*10+20-3)
+	{
+		es_igual_a 10:
+			imprimir(5*10);
+			si(7<0)
+				{
+					es_verdadero
+					{
+						imprimir(10);
+						repetir_mientras(i<10){
+							imprimir(o);
+							romper;
+						}
+
+					}
+
+				}
+
+		es_igual_a 11:
+			imprimir(2);
+			romper;
+
+		defecto:
+			imprimir("fsdfds");
+			a[5][5]="fsdfd";
+			romper;
+	}
+
+
+	estructura p [
+
+	entero a;
+	entero c;
+	perona p;
+
+	];
+
+romper;
+continuar;
+
+
+hacer{
+	imprimir("fdsfdsfds");
+}mientras(5<10);
+
+
+ciclo_doble_condicion(6<10, 7&&p<11){
+	imprimir(g);
+	leer_teclado("dgdgdfgfd", a);
+	retorno;
+	retorno 10;
+}
+
+
+
+enciclar a{
+	retorno;
+	romper;
+	repetir_contando (variable:g; desde: 10; hasta:89){
+	imprimir("cuerpo");
+	si(h<10){
+
+	}
+	repetir{
+	imprimir(a);
+	retorno;
+}hasta_que(6<10);
+
+
+}
+
+
+}
+
+ }
+
+
+
+
+
+}
+
+
+clase popito{
+	protegido caracter fechaNacimiento[20]={{1,2,3},{1,2,3}};
+	publico caracter sexO;
+	privado EntEro dpi;
+
+
+
+	public individuo(){
+		este.sexo='f';
+		este.dpi=2133710810101;
+	}
+
+   public individuo(entErO dpi, caRacter sexo){
+     este.sexo = sexo;
+     este.dpi=dpi;
+   }
+
+}

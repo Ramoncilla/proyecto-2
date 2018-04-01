@@ -1,3 +1,5 @@
+var listaErrores= require("../Errores/listaErrores");
+var lErrores = new listaErrores();
 
 function listaFunciones(){
     this.funciones =[];
@@ -5,18 +7,34 @@ function listaFunciones(){
 
 listaFunciones.prototype.existeFuncion = function(nuevaFunc){
     var firmaNueva = nuevaFunc.obtenerFirma();
-    var temporalFunc, temporalFirma;
-    for(var i=0; i<this.funciones.length;i++){
-        temporalFunc= this.funciones[i];
-        temporalFirma= temporalFunc.obtenerFirma();
-        if(temporalFirma.toUpperCase() == firmaNueva.toUpperCase()){
+    var temporalFunc, temporalFirma;  
+    if(nuevaFunc.esConstructor){
+        if(nuevaFunc.nombreFuncion.toUpperCase() == nuevaFunc.nombreClase.toUpperCase()){
+            for(var i=0; i<this.funciones.length;i++){
+                temporalFunc= this.funciones[i];
+                temporalFirma= temporalFunc.obtenerFirma();
+                if(temporalFirma.toUpperCase() == firmaNueva.toUpperCase()){
+                    return true;
+                }
+            }
+
+        }else{
+            lErrores.insertarError("Semantico","Constructor no valido, "+ nuevaFunc.nombreFuncion+", debe llamarse "+ nuevaFunc.nombreClase);
+            console.log("constructor no valido ");
             return true;
         }
+
+    }else{
+        for(var i=0; i<this.funciones.length;i++){
+            temporalFunc= this.funciones[i];
+            temporalFirma= temporalFunc.obtenerFirma();
+            if(temporalFirma.toUpperCase() == firmaNueva.toUpperCase()){
+                return true;
+            }
+        }
+        return false;
+
     }
-
-
-    return false;
-
 };
 
 listaFunciones.prototype.insertarFuncion = function(nuevaFunc){
@@ -25,8 +43,9 @@ listaFunciones.prototype.insertarFuncion = function(nuevaFunc){
         this.funciones.push(nuevaFunc);
         console.log("se ha guardado la funcion " + nuevaFunc.obtenerFirma());
     }else{
-        console.log("Error, la funcion con el nombre ya existe");
-    }
+        lErrores.insertarError("Semantico","Ha ocurrido un error, no se ha podido guardar la funcion  "+nuevaFunc.nombreFuncion);
+        console.log("Error, la funcion con el nombre ya existe "+ nuevaFunc.obtenerFirma());
+    } 
    
 
 

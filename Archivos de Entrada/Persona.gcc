@@ -1,0 +1,27 @@
+clase persona{
+  protegido entero sexo;
+  publico caracter sexO;
+  privado EntEro dpi;
+  publico caracter estado;
+  publico booleano dpi;
+
+  persona(entero v){
+}
+ POPO (entero g){
+}
+
+  ENTERO individuo(){
+    este.sexo='f';
+    este.dpi=2133710810101;
+  }
+
+   CARACTER individuo(entErO dpi, caRacter sexo){
+     este.sexo = sexo;
+     este.dpi=dpi;
+   }
+
+   publico vacio cantar(){
+      imprimir("individuo Canta");
+   }
+
+}

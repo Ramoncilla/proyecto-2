@@ -24,6 +24,10 @@ Simbolo.prototype.setPasoReferencia= function(val){
 Simbolo.prototype.getNombreCorto= function(){
     return this.nombreCorto;
 };
+
+Simbolo.prototype.getAmbito= function(){
+    return this.ambito;
+};
  
  Simbolo.prototype.setVisibilidad= function(vis) {
      // body...

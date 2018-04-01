@@ -140,7 +140,7 @@ case 11:
 			
 			this.$=[];
 			this.$.push($$[$0]);
-				for(var i=0; i<this.$.length;i++){
+				/*for(var i=0; i<this.$.length;i++){
 				var t =this.$[i];
 				if(t instanceof Atributo){
 					console.log("Atributo--> "+ t.getVisibilidad());
@@ -150,7 +150,7 @@ case 11:
 				}
 
 
-			}
+			}*/
 			
 		
 break;
@@ -160,7 +160,7 @@ case 12:
 			this.$.push($$[$0]);
 			
 
-			for(var i=0; i<this.$.length;i++){
+		/*	for(var i=0; i<this.$.length;i++){
 				var t =this.$[i];
 				if(t instanceof Atributo){
 					console.log("Atributo--> "+ t.getVisibilidad());
@@ -170,7 +170,7 @@ case 12:
 				}
 
 
-			}
+			}*/
 		
 break;
 case 17:

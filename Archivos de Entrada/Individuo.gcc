@@ -1,0 +1,22 @@
+clase individuo{
+	protegido caracter fechaNacimiento[20]={{1,2,3},{1,2,3}};
+	publico caracter sexO;
+	privado EntEro dpi;
+
+
+
+	public individuo(){
+		este.sexo='f';
+		este.dpi=2133710810101;
+	}
+
+   public individuo(entErO dpi, caRacter sexo){
+     este.sexo = sexo;
+     este.dpi=dpi;
+   }
+
+   publico vacio cantar(){
+    	imprimir("individuo Canta");
+   }
+
+}
