@@ -14,13 +14,19 @@ function Simbolo(){
     this.nombreFuncion="";
     this.expresionAtributo=null;//pubico entero a =5;	
     this.noDimensiones=0;
+    this.pasoReferencia ="NO_TIENE";
 }
- 
 
+Simbolo.prototype.setPasoReferencia= function(val){
+    this.pasoReferencia=val;
+};
  
- Simbolo.prototype.setVisibilidad = function(vis) {
+Simbolo.prototype.getNombreCorto= function(){
+    return this.nombreCorto;
+};
+ 
+ Simbolo.prototype.setVisibilidad= function(vis) {
      // body...
-     console.log("entradno  "+ vis);
  	this.visibilidad=vis;
  };
 
@@ -121,6 +127,7 @@ Simbolo.prototype.getHTMLSimbolo = function() {
             +"<td>"+this.parametrosFuncionCadena +"</td>"
             +"<td>"+this.nombreFuncion +"</td>"
             +"<td>"+this.noDimensiones +"</td>"
+            +"<td>"+this.pasoReferencia +"</td>"
             +"</tr>";
 
             return cadenaSimbolo;

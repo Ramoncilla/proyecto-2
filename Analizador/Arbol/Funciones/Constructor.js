@@ -15,6 +15,10 @@ Constructor.prototype.setValores = function(visib, nombre,para,sent) {
 
 };
 
+Constructor.prototype.setNombreClase= function(clase){
+
+	this.nombreClase= clase;
+};
 
 Constructor.prototype.getVisibilidad = function() {
 	// body...

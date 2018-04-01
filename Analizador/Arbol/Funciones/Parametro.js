@@ -15,7 +15,11 @@ Parametro.prototype.setValores = function(tipo,paso,nombre) {
 };
 
 Parametro.prototype.getPaso= function(){
-	return this.pasoParametro;
+	if(this.pasoParametro==2){
+		return "SI";
+	}else{
+		return "NO";
+	}
 };
 
 

@@ -441,14 +441,6 @@ FUNCION: VISIBILIDAD TIPO_DECLARACION id  LISTA_PARAMETROS  CUERPO_FUNCION
 			$$=a;
 		};
 
-
-PRINCIPAL: principal abrePar cierraPar CUERPO_FUNCION
-	{
-		var a = new Principal();
-		a.setValores($4);
-		$$=a;
-	};
-
 CONSTRUCTOR: VISIBILIDAD id  LISTA_PARAMETROS  CUERPO_FUNCION
 		{
 			var a = new Constructor();
@@ -464,6 +456,18 @@ CONSTRUCTOR: VISIBILIDAD id  LISTA_PARAMETROS  CUERPO_FUNCION
 			$$=a;
 		};
 	
+
+
+
+
+PRINCIPAL: principal abrePar cierraPar CUERPO_FUNCION
+	{
+		var a = new Principal();
+		a.setValores($4);
+		$$=a;
+	};
+
+
 
 LISTA_PARAMETROS : abrePar PARAMETROS cierraPar {$$=$2;}
 	|abrePar  cierraPar {$$=[];};

@@ -14,87 +14,93 @@ function Ambito(){
 	this.valContador=0;
 }
 
-
-    Ambito.prototype.ambitos =[];
-	Ambito.prototype.valEstructura=0;
-	Ambito.prototype.valSi=0;
-	Ambito.prototype.valElse=0;
-	Ambito.prototype.valCaso=0;
-	Ambito.prototype.valDefecto=0;
-	Ambito.prototype.valRepetirMientras=0;
-	Ambito.prototype.valHacerMientras=0;
-	Ambito.prototype.valCicloX=0;
-	Ambito.prototype.valRepetir=0;
-	Ambito.prototype.valRepetirContando=0;
-	Ambito.prototype.valEnciclar=0;
-	Ambito.prototype.valContador=0;
-
+Ambito.prototype.addAmbito= function(ambi){
+	this.ambitos.unshift(ambi);
+};
 
 Ambito.prototype.addEstructura = function() {
-	Ambito.prototype.valEstructura++;
-	Ambito.prototype.ambitos.push("ESTRUCTURA"+Ambito.prototype.valEstructura);
+	this.valEstructura++;
+	this.ambitos.unshift("ESTRUCTURA"+this.valEstructura);
 };
 
 Ambito.prototype.addSi = function() {
-	Ambito.prototype.valSi++;
-	Ambito.prototype.ambitos.push("SI"+Ambito.prototype.valSi);
+	this.valSi++;
+	this.ambitos.unshift("SI"+this.valSi);
 };
 
 Ambito.prototype.addElse = function() {
-	Ambito.prototype.valElse++;
-	Ambito.prototype.ambitos.push("ELSE"+Ambito.prototype.valElse);
+	this.valElse++;
+	this.ambitos.unshift("ELSE"+this.valElse);
 };
 
 
 Ambito.prototype.addCaso = function() {
-	Ambito.prototype.valCaso++;
-	Ambito.prototype.ambitos.push("CASO"+Ambito.prototype.valCaso);
+	this.valCaso++;
+	this.ambitos.unshift("CASO"+this.valCaso);
 };
 
 
 Ambito.prototype.addDefecto = function() {
-	Ambito.prototype.valDefecto++;
-	Ambito.prototype.ambitos.push("DEFECTO"+Ambito.prototype.valDefecto);
+	this.valDefecto++;
+	this.ambitos.unshift("DEFECTO"+this.valDefecto);
 };
 
 
 
 Ambito.prototype.addRepetirMientras = function() {
 	Ambito.prototype.valMientras++;
-	Ambito.prototype.ambitos.push("REPETIR_MIENTRAS"+Ambito.prototype.valMientras);
+	this.ambitos.unshift("REPETIR_MIENTRAS"+Ambito.prototype.valMientras);
 };
 
 
 Ambito.prototype.addHacerMientras = function() {
-	Ambito.prototype.valHacerMientras++;
-	Ambito.prototype.ambitos.push("HACER_MIENTRAS"+Ambito.prototype.valHacerMientras);
+	this.valHacerMientras++;
+	this.ambitos.unshift("HACER_MIENTRAS"+this.valHacerMientras);
 };
 
 
 Ambito.prototype.addCicloX= function() {
-	Ambito.prototype.valCicloX++;
-	Ambito.prototype.ambitos.push("CICLO_X"+Ambito.prototype.valCicloX);
+	this.valCicloX++;
+	this.ambitos.unshift("CICLO_X"+this.valCicloX);
 };
 
 
 Ambito.prototype.addRepetir = function() {
-	Ambito.prototype.valRepetir++;
-	Ambito.prototype.ambitos.push("REPETIR"+Ambito.prototype.valRepetir);
+	this.valRepetir++;
+	this.ambitos.unshift("REPETIR"+this.valRepetir);
 };
 
 
 Ambito.prototype.addRepetirContando = function() {
-	Ambito.prototype.valRepetirContando++;
-	Ambito.prototype.ambitos.push("REPETIR_CONTANDO"+Ambito.prototype.valRepetirContando);
+	this.valRepetirContando++;
+	this.ambitos.unshift("REPETIR_CONTANDO"+this.valRepetirContando);
 };
 
 Ambito.prototype.addEnciclar= function() {
-	Ambito.prototype.valEnciclar++;
-	Ambito.prototype.ambitos.push("ENCICLAR"+Ambito.prototype.valEnciclar);
+	this.valEnciclar++;
+	this.ambitos.unshift("ENCICLAR"+this.valEnciclar);
 };
 
 Ambito.prototype.addContador = function() {
-	Ambito.prototype.valContador++;
-	Ambito.prototype.ambitos.push("CONTADOR"+Ambito.prototype.valContador);
+	this.valContador++;
+	this.ambitos.unshift("CONTADOR"+this.valContador);
 };
 
+Ambito.prototype.getAmbitos= function(){
+	var contexto ="";
+	var valTemporal;
+	for(var i =this.ambitos.length-1; i>=0;i--){
+		valTemporal= this.ambitos[i];
+		if(i==0){
+			contexto +=valTemporal;
+		}else{
+			contexto+=valTemporal+"_";
+		}
+	}
+
+	return contexto;
+
+};
+
+
+module.exports=Ambito;
