@@ -362,7 +362,10 @@ break;
 case 82:
 
 		var decla = new  DeclaArreglo(); decla.setValores($$[$0-5],$$[$0-4], $$[$0-3]);
-		var asigna = new AsignacionArreglo(); asigna.setValores($$[$0-4],$$[$0-3],$$[$0-2],$$[$0-1],7);	
+		var idA= new t_id();
+		idA.setValorId($$[$0-4]);
+		var asigna = new AsignacionArreglo(); asigna.setValores(idA,$$[$0-3],$$[$0-2],$$[$0-1],7);	 //setValores = function(elemento,dimensiones,igual,valor,tipo)
+		console.dir(asigna);
 		var asigDec= new AsignaDecla(); asigDec.setValores(decla,asigna,2);
 		this.$= asigDec;
 	

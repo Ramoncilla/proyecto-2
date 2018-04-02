@@ -1,27 +1,24 @@
-clase persona{
-  protegido entero sexo;
-  publico caracter sexO;
-  privado EntEro dpi;
+clase persona {
+
+
   publico caracter estado;
   publico booleano dpi;
 
   persona(entero v){
+     entero valor;
+     ciclo_doble_condicion(5<7, 5>8){
+	entero i;
+	caracter popo;
+ciclo_doble_condicion(5<7, 5>8){
+	entero i2;
+	caracter popo2;
+	}
+	}
+	entero pipi;
 }
- POPO (entero g){
+
+ 
 }
 
-  ENTERO individuo(){
-    este.sexo='f';
-    este.dpi=2133710810101;
-  }
 
-   CARACTER individuo(entErO dpi, caRacter sexo){
-     este.sexo = sexo;
-     este.dpi=dpi;
-   }
 
-   publico vacio cantar(){
-      imprimir("individuo Canta");
-   }
-
-}

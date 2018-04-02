@@ -5,10 +5,10 @@ function AsignaDecla(){
 	this.tipo=0;
 }
 
-
+ 
 AsignaDecla.prototype.setValores = function(decla, asigna, tipo) {
 	this.declaracionE= decla;
-	AsignaDecla.prototype.asigna=asigna;
+	this.asignacionE=asigna;
 	this.tipo=tipo;
 
 };

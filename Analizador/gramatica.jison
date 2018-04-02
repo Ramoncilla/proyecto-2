@@ -610,7 +610,10 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 	|TIPO_DECLARACION id COL_ARREGLO igual EXPRESION puntoComa //2
 	{
 		var decla = new  DeclaArreglo(); decla.setValores($1,$2, $3);
-		var asigna = new AsignacionArreglo(); asigna.setValores($2,$3,$4,$5,7);	
+		var idA= new t_id();
+		idA.setValorId($2);
+		var asigna = new AsignacionArreglo(); asigna.setValores(idA,$3,$4,$5,7);	 //setValores = function(elemento,dimensiones,igual,valor,tipo)
+		console.dir(asigna);
 		var asigDec= new AsignaDecla(); asigDec.setValores(decla,asigna,2);
 		$$= asigDec;
 	}

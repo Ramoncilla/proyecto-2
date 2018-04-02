@@ -12,15 +12,27 @@ var DeclaLista = require("./Sentencias/DeclaLista");
 var DeclaPuntero = require("./Sentencias/DeclaPuntero");
 var DeclaVariable = require("./Sentencias/DeclaVariable");
 var Simbolo = require("../Codigo3D/Simbolo");
-var arreglo = require("./arreglo");
 var listaFunciones = require("./listaFunciones");
 var Ambito = require("../Codigo3D/Ambito");
 var Error = require("../Errores/Error");
 var listaErrores = require("../Errores/listaErrores");
 
+var Caso = require("../Arbol/Sentencias/Caso");
+var Ciclo_X= require("../Arbol/Sentencias/Ciclo_X");
+var Contador = require("../Arbol/Sentencias/Contador");
+var Enciclar = require("../Arbol/Sentencias/Enciclar");
+var Estructura = require("../Arbol/Sentencias/Estructura");
+var Hacer_Mientras = require("../Arbol/Sentencias/Hacer_Mientras");
+var Repetir_Contando = require("../Arbol/Sentencias/Repetir_Contando");
+var Repetir_Mientras = require("../Arbol/Sentencias/Repetir_Mientras");
+var Repetir = require("../Arbol/Sentencias/Repetir");
+var Selecciona = require("../Arbol/Sentencias/Selecciona");
+var Si = require("../Arbol/Sentencias/Si");
+
+
 var lErrores = new listaErrores();
-
-
+var apuntador = 0;
+var lista2=[];
 function Clase() {
     this.nombre = "";
     this.herencia = "";
@@ -70,6 +82,36 @@ Clase.prototype.iniciarValores = function() {
 };
 
 
+Clase.prototype.insertarAtributoHeredado= function(atri){
+    this.atributos.unshift(atri);
+};
+
+Clase.prototype.insertarFuncionHeredada= function(func){
+    this.funciones.insertarFuncionHeredada(func, this.nombre);
+};
+
+
+Clase.prototype.obtenerAtributosValidosHerencia = function(){
+
+    var retorno =[];
+    var temporal;
+    for(var i =0; i<this.atributos.length; i++){
+        temporal = this.atributos[i];
+        if(temporal.visibilidad.toUpperCase() == "PUBLICO"){
+            retorno.push(temporal);
+        } 
+    }
+    return retorno;
+};
+
+Clase.prototype.obtenerFuncionesValidasHerencia = function(){
+    
+    return this.funciones.obtenerFuncionesPublicas();
+    
+};
+
+
+
 Clase.prototype.getNombre = function() {
     return this.nombre;
 };
@@ -86,7 +128,6 @@ Clase.prototype.getSentencias = function() {
 
 
 Clase.prototype.generarSimbolosAtributos = function() {
-    var apuntador = 0;
     var listaRetorno = [];
     var temporal, tipoDeclaracion;
     for (var i = 0; i < this.atributos.length; i++) {
@@ -98,6 +139,8 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
             case 1: //asignaDecla
                 var declaracionElemento = declaracionAtributo.getDecla();
+                console.log("esteee ");
+                console.dir(declaracionElemento);
                 var enteroDecla = this.obtenerTipoDeclaracion(declaracionElemento);
 
                 if (enteroDecla == 8) {
@@ -109,7 +152,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var tipoSimb = this.obtenerTipoSimbolo(tipoElemento);
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresVariable(nombreC, tipoSimb, tipoElemento, this.nombre, "ATRIBUTO", apuntador, 1);
-                        var asignacion = declaracionElemento.getAsigna();
+                        var asignacion = declaracionAtributo.getAsigna();
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
                         nuevoSimbolo.setExpresionAtributo(expresion);
@@ -130,7 +173,10 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var noDim = dimensionesArreglo.length;
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, this.nombre, "ATRIBUTO", apuntador, 1, noDim, dimensionesArreglo);
-                        var asignacion = declaracionElemento.getAsigna();
+                        var asignacion = declaracionAtributo.getAsigna();
+                        console.dir(declaracionAtributo);
+                        console.log("aquiiii");
+                        console.dir(asignacion); 
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
                         nuevoSimbolo.setExpresionAtributo(expresion);
@@ -295,7 +341,6 @@ Clase.prototype.generarSimbolosClase = function() {
     var retornoSimbolos = [];
     var simbAtributos = this.generarSimbolosAtributos();
     var simbClase = new Simbolo();
-    //simbClase.setValoresVariable(this.nombre,this.nombre, "CLASE", "NO_TIENE", "CLASE", -1, simbAtributos.length);
     simbClase.setValoresVariable(this.nombre,"CLASE",this.nombre,"NO_TIENE","CLASE",-1,simbAtributos.length);
     retornoSimbolos.push(simbClase);
     /* 2. Agregar simbolos de los atributos  */
@@ -309,7 +354,7 @@ Clase.prototype.generarSimbolosClase = function() {
 	var thisTemporal;
 	var returnTemporal;
 	var ambitos ;
-	var apuntador =0;
+    apuntador =0;
 
 	for(var i = 0; i<this.funciones.funciones.length;i++){
 		funTemporal = this.funciones.funciones[i];
@@ -343,14 +388,21 @@ Clase.prototype.generarSimbolosClase = function() {
 			  simbParametros.push(simbTemporal);
 
 		  }
-		  //aqui se genera los simbolos de las sentencias de la funcion
+          //aqui se genera los simbolos de las sentencias de la funcion
+          var sentFuncion = funTemporal.getSentencias();
+          lista2=[];
+          console.log("esta funcion tiene  "+ sentFuncion.length+" SENTENCIAS");
+          this.obtenerSimbolosMetodo(sentFuncion,ambitos);
+         
+
+
 
 		  //creamos simbolo del return
 		  returnTemporal= new Simbolo();
 		  returnTemporal.setValoresVariable("RETORNO","RETORNO","RETORNO",ambitos.getAmbitos(),"RETORNO",apuntador,1);
 		  apuntador++;
 
-		  var sizeFun = 1+simbParametros.length+1;
+		  var sizeFun = 1+simbParametros.length+lista2.length+1;
 		 
 		//Simbolo.prototype.setValoresFuncion= function(nombreC, tipo, tipoS,ambito,rol,apuntador,tamanio,noPar,cadenParametros,nombreFun)
         simbTemporal = new Simbolo();
@@ -379,7 +431,16 @@ Clase.prototype.generarSimbolosClase = function() {
             }
 			
 		}
-		//insetamos los demas simbolos
+        //insetamos los demas simbolos
+       
+            for (var j =0; j<lista2.length;j++){
+                if(!this.existeSimbolo(retornoSimbolos,lista2[j])){
+                    retornoSimbolos.push(lista2[j]);
+                }
+            }
+
+        
+        
 
 		retornoSimbolos.push(returnTemporal);
 		ambitos.ambitos.shift();
@@ -453,6 +514,42 @@ Clase.prototype.obtenerTipoDeclaracion = function(decla) {
 
     if (decla instanceof DeclaVariable) {
         return 8;
+    }
+
+};
+
+
+Clase.prototype.obtenerSimbolosMetodo = function(sents, ambitos){
+  
+    for(var i = 0; i<sents.length; i++){
+       var sentTemporal = sents[i];
+       this.simbMet(sentTemporal,ambitos);
+    }//fin ciclo de control de sentencias
+};
+
+
+
+Clase.prototype.simbMet= function(sent, ambitos){
+
+    if(sent instanceof Ciclo_X){
+        console.log("entre a un ciclox");
+        ambitos.addCicloX();
+        var sentencias = sent.getCuerpo();
+        for(var j =0; j<sentencias.length;j++){
+            console.dir(sentencias[j]);
+            this.simbMet(sentencias[j],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof DeclaVariable){
+        var nombreC = sent.getNombre();
+        var tipoVar = sent.getTipo();
+        var tipoSimb = this.obtenerTipoSimbolo(tipoVar);
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresVariable(nombreC,tipoSimb,tipoVar,ambitos.getAmbitos(),"VAR_LOCAl",apuntador,1);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
     }
 
 

@@ -119,11 +119,12 @@ Simbolo.prototype.setValoresPuntero = function(nombreC, tipoSimb, tipoElemento, 
 Simbolo.prototype.getHTMLSimbolo = function() {
 
         var cadenaSimbolo= "<tr>"
+        +"<td>"+this.nombreCorto+"</td>"
             +"<td>"+this.ambito +"</td>"
             +"<td>"+this.tipoSimbolo +"</td>"
             +"<td>"+this.rol +"</td>"
             +"<td>"+this.visibilidad +"</td>"
-            +"<td>"+this.nombreCorto+"</td>"
+            
             +"<td>"+this.tipoElemento +"</td>"
             +"<td>"+this.apuntador +"</td>"
             +"<td>"+this.tamanio +"</td>"

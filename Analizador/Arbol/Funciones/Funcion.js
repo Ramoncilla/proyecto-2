@@ -1,6 +1,7 @@
 var listaParametros = require("./listaParametros");
 var Parametro = require("./Parametro");
 
+
 function Funcion(){
 	this.sobreEscrita=false;
 	this.visibilidad ="";
@@ -12,8 +13,6 @@ function Funcion(){
 	this.nombreClase ="";
 	this.esConstructor=false;
 }
-
-
 
 Funcion.prototype.cambiarAConstructor= function(){
 	this.esConstructor=true;
@@ -43,6 +42,17 @@ Funcion.prototype.setValores = function(visib, tipo, nombre,para,sent) {
 
 Funcion.prototype.obtenerFirma= function(){
 	var firma=this.nombreClase+"_"+this.tipo+"_"+this.nombreFuncion;
+	var temporal;
+	for(var i=0; i<this.parametros.parametros.length;i++){
+		temporal = this.parametros.parametros[i];
+		firma+="_"+temporal.getTipo();
+	}
+	return firma;
+};
+
+
+Funcion.prototype.obtenerFirmaSinClase= function(){
+	var firma=this.tipo+"_"+this.nombreFuncion;
 	var temporal;
 	for(var i=0; i<this.parametros.parametros.length;i++){
 		temporal = this.parametros.parametros[i];
@@ -98,4 +108,8 @@ Funcion.prototype.getSentencias = function() {
 	// body...
 	return this.sentencias;
 };
+
+
+
+
 module.exports=Funcion;

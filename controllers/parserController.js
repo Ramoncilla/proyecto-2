@@ -2,9 +2,12 @@ var grammar = require("../Analizador/gramatica");
 var parseFile = require("../Analizador/Arbol/Archivo");
 var class_ = require("../Analizador/Arbol/Clase");
 var import_ = require("../Analizador/Arbol/Sentencias/Importar");
+var listaErrores = require("../Analizador/Errores/listaErrores");
+var errores= new listaErrores();
 var listaClase=[];
  
 exports.parse_string = function(req, res) {
+    listaClase=[];
     var cadenaArchivo = req.body.string_file;
     var a = grammar.parse(cadenaArchivo);
     var cadenaTabla="";
@@ -29,10 +32,54 @@ exports.parse_string = function(req, res) {
       cadenaTabla = generarSimbolosClase();
       
     }
-    //console.log(stringImport);
-    //console.log(cadenaTabla);
     res.send(cadenaTabla);
 };
+
+
+function agregarHerenciaClases(){
+  var claseTemporal;
+  var atributosHeredados=[];
+  var funcionesHeredadas=[];
+  for(var i=0; i<listaClase.length;i++){
+    claseTemporal= listaClase[i];
+    if(claseTemporal.herencia !=""){
+      var clasePadre = obtenerClasePadre(claseTemporal.herencia);
+      if(clasePadre!=null){
+        console.log("si existe la clase padre");
+        atributosHeredados= clasePadre.obtenerAtributosValidosHerencia();
+        funcionesHeredadas= clasePadre.obtenerFuncionesValidasHerencia();
+       
+        //insertando atributos 
+        for(var j =0; j<atributosHeredados.length;j++){
+          listaClase[i].insertarAtributoHeredado(atributosHeredados[j]);
+        }
+
+        //insertando funciones 
+        for(var j =0; j<funcionesHeredadas.length;j++){
+          listaClase[i].insertarFuncionHeredada(funcionesHeredadas[j]);
+        }
+
+      }
+      console.log(claseTemporal.nombre +", posee herencia de "+ claseTemporal.herencia);
+    }else{
+      console.log(claseTemporal.nombre+", no posee herencia");
+    }
+  }
+}
+
+
+function obtenerClasePadre(nombre){
+  var claseTemporal;
+  for(var i=0; i<listaClase.length;i++){
+    claseTemporal = listaClase[i];
+    if(claseTemporal.nombre.toUpperCase() == nombre.toUpperCase()){
+      return claseTemporal;
+    }
+  }
+  errores.insertarError("Semantico","No existe la clase "+ nombre);
+  console.log("no existe la clase "+nombre+" hrencia");
+  return null;
+}
 
 
 function generarImportaciones(listaImport){
@@ -49,20 +96,27 @@ function generarImportaciones(listaImport){
   
   
   function generarSimbolosClase(){
+    agregarHerenciaClases();
     var claseTemporal;
     var simbolosClase = [];
+    var simbolosClase2=[];
     for (var i = 0; i < listaClase.length; i++) {
       claseTemporal = listaClase[i];
-      simbolosClase=claseTemporal.generarSimbolosClase();
-      console.log("Tamanho de simbolos en clase  "+ simbolosClase.length); 
+      simbolosClase2=claseTemporal.generarSimbolosClase();
+      for(var j = 0; j<simbolosClase2.length;j++){
+        simbolosClase.push(simbolosClase2[j]);
+      }
+
+      
     }
-  
+    console.log("Tamanho de simbolos en clase  "+ simbolosClase.length); 
     var encabezado="<table border =1><tr>"
+    +"<th>Nombre</th>"
               +"<th> Ambito</th>"
               +"<th>Tipo Simbolo </th>"
               +"<th> Rol </th>"
               +"<th>Visibilidad</th>"
-              +"<th>Nombre</th>"
+              
               +"<th>Tipo Elemento </th>"
               +"<th> Apuntador</th>"
               +"<th> Tamanio </th>"

@@ -1,16 +1,22 @@
 clase individuo{
 	protegido caracter fechaNacimiento[20]={{1,2,3},{1,2,3}};
-	publico caracter sexO;
-	privado EntEro dpi;
+	publico booleano sexO;
+	privado booelano dpi;
 
 
 
-	public individuo(){
+publico vacio esteSi(){
+
+  imprimir("holaaa");
+}
+
+
+	publico individuo(){
 		este.sexo='f';
 		este.dpi=2133710810101;
 	}
 
-   public individuo(entErO dpi, caRacter sexo){
+   publico individuo(entErO dpi, caRacter sexo){
      este.sexo = sexo;
      este.dpi=dpi;
    }
@@ -18,5 +24,6 @@ clase individuo{
    publico vacio cantar(){
     	imprimir("individuo Canta");
    }
+
 
 }

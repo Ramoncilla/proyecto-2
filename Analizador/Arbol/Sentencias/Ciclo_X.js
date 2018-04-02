@@ -13,7 +13,7 @@ Ciclo_X.prototype.setValores = function(exp1,exp2,sent) {
 
 };
 
-
+ 
 Ciclo_X.prototype.getExpresion2= function(){
 	return this.expresion2;
 };
