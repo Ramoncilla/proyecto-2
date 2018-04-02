@@ -295,7 +295,8 @@ Clase.prototype.generarSimbolosClase = function() {
     var retornoSimbolos = [];
     var simbAtributos = this.generarSimbolosAtributos();
     var simbClase = new Simbolo();
-    simbClase.setValoresVariable(this.nombre, this.nombre, "CLASE", "NO_TIENE", "CLASE", -1, simbAtributos.length);
+    //simbClase.setValoresVariable(this.nombre,this.nombre, "CLASE", "NO_TIENE", "CLASE", -1, simbAtributos.length);
+    simbClase.setValoresVariable(this.nombre,"CLASE",this.nombre,"NO_TIENE","CLASE",-1,simbAtributos.length);
     retornoSimbolos.push(simbClase);
     /* 2. Agregar simbolos de los atributos  */
     for (var i = 0; i < simbAtributos.length; i++) {
@@ -335,8 +336,9 @@ Clase.prototype.generarSimbolosClase = function() {
 			  noPametros++;
 			  parTemp= funTemporal.parametros.parametros[j];
 			  simbTemporal= new Simbolo();
-			  simbTemporal.setValoresVariable(parTemp.getNombre(),parTemp.getTipo(),this.obtenerTipoSimbolo(parTemp.getTipo()),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
-			  simbTemporal.setPasoReferencia(parTemp.getPaso());
+			 // simbTemporal.setValoresVariable(parTemp.getNombre(),parTemp.getTipo(),this.obtenerTipoSimbolo(parTemp.getTipo()),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
+              simbTemporal.setValoresVariable(parTemp.getNombre(),this.obtenerTipoSimbolo(parTemp.getTipo()),parTemp.getTipo(),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
+              simbTemporal.setPasoReferencia(parTemp.getPaso());
 			  apuntador++;
 			  simbParametros.push(simbTemporal);
 
