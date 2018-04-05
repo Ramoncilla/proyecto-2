@@ -14,6 +14,10 @@ function Ambito(){
 	this.valContador=0;
 }
 
+Ambito.prototype.setAmbitos = function(arr){
+	this.ambitos=arr;
+};
+
 Ambito.prototype.addAmbito= function(ambi){
 	this.ambitos.unshift(ambi);
 };
@@ -58,7 +62,7 @@ Ambito.prototype.addHacerMientras = function() {
 	this.ambitos.unshift("HACER_MIENTRAS"+this.valHacerMientras);
 };
 
-
+ 
 Ambito.prototype.addCicloX= function() {
 	this.valCicloX++;
 	this.ambitos.unshift("CICLO_X"+this.valCicloX);
@@ -97,7 +101,7 @@ Ambito.prototype.getAmbitos= function(){
 			contexto+=valTemporal+"_";
 		}
 	}
-
+   
 	return contexto;
 
 };

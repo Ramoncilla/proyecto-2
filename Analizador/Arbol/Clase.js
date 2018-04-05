@@ -139,8 +139,6 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
             case 1: //asignaDecla
                 var declaracionElemento = declaracionAtributo.getDecla();
-                console.log("esteee ");
-                console.dir(declaracionElemento);
                 var enteroDecla = this.obtenerTipoDeclaracion(declaracionElemento);
 
                 if (enteroDecla == 8) {
@@ -153,6 +151,8 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresVariable(nombreC, tipoSimb, tipoElemento, this.nombre, "ATRIBUTO", apuntador, 1);
                         var asignacion = declaracionAtributo.getAsigna();
+                        console.dir(declaracionAtributo);
+                        console.dir(asignacion);
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
                         nuevoSimbolo.setExpresionAtributo(expresion);
@@ -174,9 +174,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, this.nombre, "ATRIBUTO", apuntador, 1, noDim, dimensionesArreglo);
                         var asignacion = declaracionAtributo.getAsigna();
-                        console.dir(declaracionAtributo);
-                        console.log("aquiiii");
-                        console.dir(asignacion); 
+                        
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
                         nuevoSimbolo.setExpresionAtributo(expresion);
@@ -452,6 +450,7 @@ Clase.prototype.generarSimbolosClase = function() {
 };
 
 Clase.prototype.existeSimbolo = function(lista, simb){
+    
     var nombre = simb.getNombreCorto().toUpperCase();
     var ambito = simb.getAmbito().toUpperCase();
     var temporal;
@@ -528,32 +527,360 @@ Clase.prototype.obtenerSimbolosMetodo = function(sents, ambitos){
 };
 
 
-
 Clase.prototype.simbMet= function(sent, ambitos){
 
+    
+    if(sent instanceof Estructura){
+        var declaraciones = sent.Declas();
+        var nombreEd = sent.geNombre();
+        ambitos.addAmbito(nombreEd);
+        for(var i =0; i<declaraciones.length; i++){
+            this.simbMet(declaraciones[i],ambitos);
+        }
+        ambitos.ambito.shift();
+    }
+    
+    if(sent instanceof Si){
+        var verdaderas = sent.getVerdaderas();
+        var falsas = sent.getFalsas();
+        ambitos.addSi();
+        for(var i=0; i<verdaderas.length;i++){
+            this.simbMet(verdaderas[i],ambitos);
+        }  
+        ambitos.ambitos.shift();
+        ambitos.addElse();
+        for(var i=0; i<falsas.length;i++){
+            this.simbMet(falsas[i],ambitos);
+        }  
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof Repetir_Mientras){
+        var cuerpo = sent.getCuerpo();
+        ambitos.ambitos.addRepetirMientras();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof Hacer_Mientras){
+        var cuerpo = sent.getCuerpo();
+        ambitos.addHacerMientras();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof Repetir){
+        var cuerpo = sent.getCuerpo();
+        ambitos.addRepetir();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof Repetir_Contando){
+        var cuerpo = sent.getCuerpo();
+        ambitos.addRepetirContando();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+
+    if(sent instanceof Enciclar){
+        var cuerpo = sent.getCuerpo();
+        ambitos.addEnciclar();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+
+    if(sent instanceof Contador){
+        var cuerpo = sent.getCuerpo();
+        ambitos.addContador();
+        for(var i =0; i< cuerpo.length; i++){
+            this.simbMet(cuerpo[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+
+    if(sent instanceof Selecciona){
+        var casos = sent.getCasos();
+        var defec = sent.getDefecto();
+        
+        for(var i =0; i<casos.length; i++){
+            this.simbMet(casos[i],ambitos);
+        }
+     
+        ambitos.addDefecto();
+        for(var i =0; i<defec.length; i++){
+            this.simbMet(defec[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
+    if(sent instanceof Caso){
+        var snts = sent.getCuerpo();
+        ambitos.addCaso();
+        for(var i =0; i<snts.length; i++){
+            this.simbMet(snts[i],ambitos);
+        }
+        ambitos.ambitos.shift();
+    }
+
     if(sent instanceof Ciclo_X){
-        console.log("entre a un ciclox");
         ambitos.addCicloX();
         var sentencias = sent.getCuerpo();
         for(var j =0; j<sentencias.length;j++){
-            console.dir(sentencias[j]);
             this.simbMet(sentencias[j],ambitos);
         }
         ambitos.ambitos.shift();
     }
 
+
     if(sent instanceof DeclaVariable){
         var nombreC = sent.getNombre();
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
         var tipoVar = sent.getTipo();
         var tipoSimb = this.obtenerTipoSimbolo(tipoVar);
         var nuevoSimbolo = new Simbolo();
-        nuevoSimbolo.setValoresVariable(nombreC,tipoSimb,tipoVar,ambitos.getAmbitos(),"VAR_LOCAl",apuntador,1);
+        nuevoSimbolo.setValoresVariable(nombreC,tipoSimb,tipoVar,ambitos.getAmbitos(),"VAR_LOCAL",apuntador,1);
         lista2.push(nuevoSimbolo);
         apuntador++;
+
+        }else{
+            lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
+            console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+        }
+         
+        
     }
 
 
+    if (sent instanceof DeclaArreglo) {
+        var nombreArreglo = sent.getNombre();
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreArreglo);
+        
+        if(cont==0){
+        var tipoArreglo = sent.getTipo();
+        var dimensionesArreglo = sent.getDimension();
+        var noDim = dimensionesArreglo.length;
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, ambitos.getAmbitos(), "ARREGLO_LOCAL", apuntador, 1, noDim, dimensionesArreglo);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
+    }else{
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
+        console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
+    }
+
+    }
+
+    if (sent instanceof DeclaAsignaPuntero) {
+        return 3;
+    }
+
+    if (sent instanceof DeclaCola) {
+        var nombreCola = sent.getNombre();
+
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreCola);
+        
+        if(cont==0){
+
+        var tipoCola = sent.getTipo();
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresCola(nombreCola, "COLA", tipoCola,ambitos.getAmbitos(), "COLA_LOCAL", apuntador, 1);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
+    }else{
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreCola+", debido a que existe en el ambito actual");
+        console.log("No se ha podido crear el simbolo "+nombreCola+", ya existe en el ambito actual");
+    }
+    }
+
+    if (sent instanceof DeclaLista) {
+        var nombreLista = sent.getNombre();
+
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
+        var tipoLista = sent.getTipo();
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresLista(nombreLista, "LISTA", tipoLista, ambitos.getAmbitos(), "LISTA_LOCAL", apuntador, 1);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
+    }else{
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreLista+", debido a que existe en el ambito actual");
+            console.log("No se ha podido crear el simbolo "+nombreLista+", ya existe en el ambito actual");
+        }
+    }
+
+    if (sent instanceof DeclaPila) {
+        var nombrePila = sent.getNombre();
+
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
+        var tipoPila = sent.getTipo();
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresPila(nombrePila, "PILA", tipoPila, ambitos.getAmbitos(), "PILA_LOCAL", apuntador, 1);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
+    }else{
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePila+", debido a que existe en el ambito actual");
+            console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+        }
+    }
+
+  if(sent instanceof DeclaAsignaPuntero){
+    var asignPunt = sent.getPuntero();
+    var expPuntero = sent.getExpresion();
+
+
+    var puntero = asignPunt.getPuntero();
+    var nombrePuntero = puntero.getNombrePuntero();
+
+    var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+    
+    if(cont==0){
+    var tipoPuntero = puntero.getTipoPuntero();
+    var nuevoSimbolo = new Simbolo();
+    nuevoSimbolo.setValoresPuntero(nombrePuntero, "PUNTERO", tipoPuntero, ambitos.getAmbitos(), "PUNTERO_LOCAL", apuntador, 1);
+    nuevoSimbolo.setExpresionAtributo(expPuntero);
+    lista2.push(nuevoSimbolo);
+    apuntador++;
+}else{
+    lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
+    console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
+}
+  }
+
+
+    if (sent instanceof DeclaPuntero) {
+        var puntero = sent.getPuntero();
+        var nombrePuntero = puntero.getNombrePuntero();
+
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
+        var tipoPuntero = puntero.getTipoPuntero();
+        var nuevoSimbolo = new Simbolo();
+        nuevoSimbolo.setValoresPuntero(nombrePuntero, "PUNTERO", tipoPuntero, ambitos.getAmbitos(), "PUNTERO_LOCAL", apuntador, 1);
+        lista2.push(nuevoSimbolo);
+        apuntador++;
+    }else{
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
+        console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
+    }
+    }
+
+    if (sent instanceof AsignaDecla) {
+        var declaracionElemento = sent.getDecla();
+        var enteroDecla = this.obtenerTipoDeclaracion(declaracionElemento);
+        if (enteroDecla == 8) {
+            var nombreC = declaracionElemento.getNombre();
+
+            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
+                var tipoElemento = declaracionElemento.getTipo();
+                var tipoSimb = this.obtenerTipoSimbolo(tipoElemento);
+                var nuevoSimbolo = new Simbolo();
+                nuevoSimbolo.setValoresVariable(nombreC, tipoSimb, tipoElemento, ambitos.getAmbitos(), "VARIABLE_LOCAL", apuntador, 1);
+                var asignacion = sent.getAsigna();
+                var expresion = asignacion.getValor();
+                nuevoSimbolo.setExpresionAtributo(expresion);
+                lista2.push(nuevoSimbolo);
+                apuntador++;
+            }else{
+                lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
+                console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+            }
+        
+            
+        } else if (enteroDecla == 2) {
+            //es un arreglo
+            var nombreArreglo = declaracionElemento.getNombre();
+
+            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        
+        if(cont==0){
+            var tipoArreglo = declaracionElemento.getTipo();
+             var dimensionesArreglo = declaracionElemento.getDimension();
+             var noDim = dimensionesArreglo.length;
+             var nuevoSimbolo = new Simbolo();
+             nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, ambitos.getAmbitos(), "ARREGLO_LOCAL", apuntador, 1, noDim, dimensionesArreglo);
+             var asignacion = sent.getAsigna(); 
+             var expresion = asignacion.getValor();
+            nuevoSimbolo.setExpresionAtributo(expresion);
+            lista2.push(nuevoSimbolo);
+            apuntador++;
+        }else{
+            lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
+            console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
+        }
+        }
+
+
+    }
 
 };
+
+
+
+Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre){
+    var ambitoTemporal = new Ambito();
+    var arr= ambitos.ambitos.slice();
+    ambitoTemporal.setAmbitos(arr);
+    var cont =0;
+    var temporal;
+    var cadenaAmbito="";
+    if(lista == 0){
+        return 0;
+    }
+ else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        console.log("ambito a analizar "+ cadenaAmbito);
+
+        cont=cont + this.existeLista(cadenaAmbito,nombre,lista);
+        ambitoTemporal.ambitos.shift();
+    }
+    console.log(cont+"<----- Contador para la vairable " + nombre);
+    return cont;
+
+ }
+    
+
+};
+
+
+Clase.prototype.existeLista = function(cadenaAmbito, nombre , lista){
+    var simTemporal;
+    var cont =0;
+    for (var i =0; i<lista.length; i++){
+        simTemporal  = lista[i];
+        if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+            if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+                console.log("existe el simbolo "+nombre);
+                cont++;
+            }
+        }
+    }
+return cont;
+};
+
+
+
 
 module.exports = Clase;

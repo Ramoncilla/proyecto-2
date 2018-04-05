@@ -91,7 +91,8 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 %%
 
 \s+                   /* skip whitespace */
-
+[//].* 				  /* skip whitespace */
+"/*"."*/" 			 / *skip whitespace */
 "crearPuntero" return 'crearPuntero'
 "obtenerDireccion" return 'obtenerDireccion'
 "reservarMemoria" return 'reservarMemoria'
@@ -621,7 +622,7 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 	{
 		var decla = new  DeclaVariable(); decla.setValores($1,$2);
 		var a = new Asignacion(); a.setValores($2,$3,$4,4);	
-		var asigDec= new AsignaDecla(); asigDec.setValores(decla,asigna,3);
+		var asigDec= new AsignaDecla(); asigDec.setValores(decla,a,3);
 		$$= asigDec;
 	};
 

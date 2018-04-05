@@ -374,7 +374,7 @@ case 83:
 
 		var decla = new  DeclaVariable(); decla.setValores($$[$0-4],$$[$0-3]);
 		var a = new Asignacion(); a.setValores($$[$0-3],$$[$0-2],$$[$0-1],4);	
-		var asigDec= new AsignaDecla(); asigDec.setValores(decla,asigna,3);
+		var asigDec= new AsignaDecla(); asigDec.setValores(decla,a,3);
 		this.$= asigDec;
 	
 break;
@@ -1521,216 +1521,220 @@ var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:/* skip whitespace */
 break;
-case 1:return 183
+case 1:/* skip whitespace */
 break;
-case 2:return 184
+case 2:/ *skip whitespace */
 break;
-case 3:return 185
+case 3:return 183
 break;
-case 4:return 186
+case 4:return 184
 break;
-case 5:return 187
+case 5:return 185
 break;
-case 6:return 189
+case 6:return 186
 break;
-case 7:return 175
+case 7:return 187
 break;
-case 8:return 100
+case 8:return 189
 break;
-case 9:return 101
+case 9:return 175
 break;
-case 10:return 102
+case 10:return 100
 break;
-case 11:return 103
+case 11:return 101
 break;
-case 12:return 104
+case 12:return 102
 break;
-case 13:return 105
+case 13:return 103
 break;
-case 14:return 106
+case 14:return 104
 break;
-case 15:return 107
+case 15:return 105
 break;
-case 16:return 108
+case 16:return 106
 break;
-case 17:return 109
+case 17:return 107
 break;
-case 18:return 110
+case 18:return 108
 break;
-case 19:return 111
+case 19:return 109
 break;
-case 20:return 112
+case 20:return 110
 break;
-case 21:return 99
+case 21:return 111
 break;
-case 22:return 94
+case 22:return 112
 break;
-case 23:return 97
+case 23:return 99
 break;
-case 24:return 89
+case 24:return 94
 break;
-case 25:return 91
+case 25:return 97
 break;
-case 26:return 92
+case 26:return 89
 break;
-case 27:return 69
+case 27:return 91
 break;
-case 28:return 72
+case 28:return 92
 break;
-case 29:return 73
+case 29:return 69
 break;
-case 30:return 167
+case 30:return 72
 break;
-case 31:return 173
+case 31:return 73
 break;
-case 32:return 174
+case 32:return 167
 break;
-case 33:return 171
+case 33:return 173
 break;
-case 34:return 172
+case 34:return 174
 break;
-case 35:return 9
+case 35:return 171
 break;
-case 36:return 37
+case 36:return 172
 break;
-case 37:return 38
+case 37:return 9
 break;
-case 38:return 115
+case 38:return 37
 break;
-case 39:return 48
+case 39:return 38
 break;
-case 40:return 182
+case 40:return 115
 break;
-case 41:return 180
+case 41:return 48
 break;
-case 42:return 116
+case 42:return 182
 break;
-case 43:return 117
+case 43:return 180
 break;
-case 44:return 118
+case 44:return 116
 break;
-case 45:return 43
+case 45:return 117
 break;
-case 46:return 71
+case 46:return 118
 break;
-case 47:return 27
+case 47:return 43
 break;
-case 48:return 28
+case 48:return 71
 break;
-case 49:return 29
+case 49:return 27
 break;
-case 50:return 119
+case 50:return 28
 break;
-case 51:return 157
+case 51:return 29
 break;
-case 52:return 157
+case 52:return 119
 break;
-case 53:'nulo'
+case 53:return 157
 break;
-case 54:return 137
+case 54:return 157
 break;
-case 55:return 138
+case 55:'nulo'
 break;
-case 56:return 139
+case 56:return 137
 break;
-case 57:return 140
+case 57:return 138
 break;
-case 58:return 142
+case 58:return 139
 break;
-case 59:return 141
+case 59:return 140
 break;
-case 60:return 17
+case 60:return 142
 break;
-case 61:return 14
+case 61:return 141
 break;
-case 62:return 79
+case 62:return 17
 break;
-case 63:return 46
+case 63:return 14
 break;
-case 64:return 42
+case 64:return 79
 break;
-case 65:return 156
+case 65:return 46
 break;
-case 66:return 156 
+case 66:return 42
 break;
-case 67:return 120
+case 67:return 156
 break;
-case 68:return 80
+case 68:return 156 
 break;
-case 69:return 122
+case 69:return 120
 break;
-case 70:return 123
+case 70:return 80
 break;
-case 71:return 125
+case 71:return 122
 break;
-case 72:return 124
+case 72:return 123
 break;
-case 73:return 84
+case 73:return 125
 break;
-case 74:return 85
+case 74:return 124
 break;
-case 75:return 86
+case 75:return 84
 break;
-case 76:return 87
+case 76:return 85
 break;
-case 77:return 70
+case 77:return 86
 break;
-case 78:return 77
+case 78:return 87
 break;
-case 79:return 78
+case 79:return 70
 break;
-case 80:return 146
+case 80:return 77
 break;
-case 81:return 148
+case 81:return 78
 break;
-case 82:return 145
+case 82:return 146
 break;
-case 83:return 143
+case 83:return 148
 break;
-case 84:return 150
+case 84:return 145
 break;
-case 85:return 10
+case 85:return 143
 break;
-case 86:return 12
+case 86:return 150
 break;
-case 87:return 18
+case 87:return 10
 break;
-case 88:return 20
+case 88:return 12
 break;
-case 89:return 113
+case 89:return 18
 break;
-case 90:return 114
+case 90:return 20
 break;
-case 91:return 127
+case 91:return 113
 break;
-case 92:return 131
+case 92:return 114
 break;
-case 93:return 129
+case 93:return 127
 break;
-case 94:return 133
+case 94:return 131
 break;
-case 95:return 13
+case 95:return 129
 break;
-case 96:return 95
+case 96:return 133
 break;
-case 97:return 11;
+case 97:return 13
 break;
-case 98:return 15
+case 98:return 95
 break;
-case 99:return 154
+case 99:return 11;
 break;
-case 100:return 153
+case 100:return 15
 break;
-case 101:return 155
+case 101:return 154
 break;
-case 102:return 5
+case 102:return 153
 break;
-case 103:return 'INVALID'
+case 103:return 155
+break;
+case 104:return 5
+break;
+case 105:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:\/=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103],"inclusive":true}}
+rules: [/^(?:\s+)/i,/^(?:[\/\/].*)/i,/^(?:\/\*.\*\/)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:\/=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105],"inclusive":true}}
 });
 return lexer;
 })();

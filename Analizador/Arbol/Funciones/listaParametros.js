@@ -1,5 +1,7 @@
 var Parametro = require("./Parametro");
+var listaErrores= require("../../Errores/listaErrores");
 
+var lErrores = new listaErrores();
 function listaParametros(){
     this.parametros =[];
 }
@@ -21,6 +23,8 @@ listaParametros.prototype.insertarParametro= function(nuevoParametro){
 
     if(!(this.existeParametro(nuevoParametro))){
         this.parametros.push(nuevoParametro);
+    }else{
+        lErrores.insertarError("Semantica", "Ya existe un parametro con ese nombre");
     }
 };
 

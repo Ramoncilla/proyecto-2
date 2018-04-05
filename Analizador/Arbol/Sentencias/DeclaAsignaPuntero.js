@@ -2,7 +2,7 @@ function DeclaAsignaPuntero(){
 	this.puntero = null;
 	this.expresion = null;
 }
-
+ 
 
 DeclaAsignaPuntero.prototype.setValores = function(p, exp) {
 

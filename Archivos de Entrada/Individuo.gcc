@@ -27,3 +27,15 @@ publico vacio esteSi(){
 
 
 }
+
+
+ /*si(10>12 && 30<50){
+	    es_VERdaDeRo{
+        entero o;
+        caracter popo;	
+      }es_falsO{
+        imprimir("holis");
+        entero o;
+    }
+
+	}*/

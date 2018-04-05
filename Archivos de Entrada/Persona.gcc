@@ -1,24 +1,14 @@
 clase persona {
 
-
   publico caracter estado;
+  publico popo nuevoPpop = nuevo popo(5,5*10);
   publico booleano dpi;
 
   persona(entero v){
-     entero valor;
-     ciclo_doble_condicion(5<7, 5>8){
-	entero i;
-	caracter popo;
-ciclo_doble_condicion(5<7, 5>8){
-	entero i2;
-	caracter popo2;
-	}
-	}
-	entero pipi;
-}
-
+ 
  
 }
 
+}
 
 
