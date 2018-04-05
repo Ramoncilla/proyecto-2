@@ -20,22 +20,6 @@ $(document).ready(function(){
       }
     )
 
-  /*
-    $.ajax(
-      {
-        type:"GET",
-        url:"/parser",
-        data:JSON.stringify(cadenaArchivo),
-        success: function(data){
-          console.log(data);
-        },
-        error: function(data){
-          console.dir(data);
-        }
-  
-      }
-    )
-*/
 
    
 

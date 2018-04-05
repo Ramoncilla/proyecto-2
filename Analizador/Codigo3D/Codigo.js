@@ -4,24 +4,25 @@ function Codigo(){
 	this.contTemporales=0;
 }
 
-Codigo.prototype.codigo3D="";
-Codigo.prototype.contEtiquetas=0;
-Codigo.prototype.contTemporales=0;
-
-
 Codigo.prototype.getEtiqueta = function() {
 	// body...
-	Codigo.prototype.contEtiquetas++;
-	return "L"+Codigo.prototype.contEtiquetas;
+	this.contEtiquetas++;
+	return "L"+this.contEtiquetas;
 };
 
 Codigo.prototype.getTemporal = function() {
 	// body...
-	Codigo.prototype.contTemporales++;
-	return "t"+Codigo.prototype.contTemporales;
+	this.contTemporales++;
+	return "t"+this.contTemporales;
 };
 
 Codigo.prototype.addCodigo = function(val) {
 	// body...
-	Codigo.prototype.codigo3D+=val+"\n";
+	this.codigo3D+=val+"\n";
 };
+
+Codigo.prototype.getCodigo3D= function(){
+	return this.codigo3D;
+};
+
+module.exports= Codigo;

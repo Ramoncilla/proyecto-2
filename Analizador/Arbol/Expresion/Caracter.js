@@ -4,7 +4,7 @@ function Caracter(){
 }
 
 
-
+ 
 Caracter.prototype.setValorCaracter = function(valor) {
 	this.valorEnteroCaracter= valor.charCodeAt(1);
     this.valorCadenaCaracter= valor.charAt(1);

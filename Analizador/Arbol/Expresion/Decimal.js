@@ -2,7 +2,7 @@ function Decimal(){
 	this.valorDecimal = 0;
 }
 
-
+ 
 
 Decimal.prototype.setNumero = function(valor) {
 	this.valorDecimal= parseFloat(valor);

@@ -5,7 +5,7 @@ function Entero(){
 }
 
 
-
+ 
 Entero.prototype.setNumero = function(valor) {
 	this.valorEntero= parseInt(valor);
 

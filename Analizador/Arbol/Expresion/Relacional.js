@@ -5,7 +5,7 @@ function Relacional(){
 }
 
 
-
+ 
 
 Relacional.prototype.setValores= function(exp1, exp2, op) {
 	// body...

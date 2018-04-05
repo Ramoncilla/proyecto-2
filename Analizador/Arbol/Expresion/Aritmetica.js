@@ -4,7 +4,7 @@ function Aritmetica(){
 	this.operador="";
 }
 
-
+ 
 
 Aritmetica.prototype.setValores= function(exp1, exp2, op) {
 	// body...
