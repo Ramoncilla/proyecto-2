@@ -11,7 +11,7 @@ $(document).ready(function(){
         url:" http://localhost:3000/parser",
         data:{string_file: cadenaArchivo},
         success: function(data){
-          console.log(data);
+          console.dir(data);
         },
         error: function(data){
           console.dir(data);

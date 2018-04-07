@@ -390,10 +390,8 @@ Clase.prototype.generarSimbolosClase = function() {
           var sentFuncion = funTemporal.getSentencias();
           lista2=[];
           console.log("esta funcion tiene  "+ sentFuncion.length+" SENTENCIAS");
-          this.obtenerSimbolosMetodo(sentFuncion,ambitos);
+          this.obtenerSimbolosMetodo(sentFuncion,ambitos,simbParametros);
          
-
-
 
 		  //creamos simbolo del return
 		  returnTemporal= new Simbolo();
@@ -402,7 +400,7 @@ Clase.prototype.generarSimbolosClase = function() {
 
 		  var sizeFun = 1+simbParametros.length+lista2.length+1;
 		 
-		//Simbolo.prototype.setValoresFuncion= function(nombreC, tipo, tipoS,ambito,rol,apuntador,tamanio,noPar,cadenParametros,nombreFun)
+
         simbTemporal = new Simbolo();
         
         if(!banderaConstructor){
@@ -417,8 +415,6 @@ Clase.prototype.generarSimbolosClase = function() {
 
         }
 		
-        
-        
         retornoSimbolos.push(simbTemporal);
 		retornoSimbolos.push(thisTemporal);
 
@@ -437,13 +433,35 @@ Clase.prototype.generarSimbolosClase = function() {
                 }
             }
 
-        
-        
-
 		retornoSimbolos.push(returnTemporal);
 		ambitos.ambitos.shift();
 
-	}
+    }
+    
+    //insertamos los simbolos del principal
+
+    if(this.principal_met!=null){
+        ambitos= new Ambito();
+        ambitos.addAmbito(this.nombre+"_PRINCIPAL");
+        apuntador=0;
+        lista2=[];
+        var sentTemporal;
+        this.obtenerSimbolosMetodo(this.principal_met.sentencias,ambitos,[]);
+        var siz = 0;
+        if(lista2!=0){
+            siz=lista2.length;
+        }
+        simbTemporal = new Simbolo();
+        simbTemporal.setValoresFuncion(this.nombre+"_PRINCIPAL","PRINCIPAL","PRINCIPAL",this.nombre,"PRINCIPAL",-1,siz,0,"","PRINCIPAL");
+        retornoSimbolos.push(simbTemporal);
+        for (var j =0; j<lista2.length;j++){
+            if(!this.existeSimbolo(retornoSimbolos,lista2[j])){
+                retornoSimbolos.push(lista2[j]);
+            }
+        }
+    ambitos.ambitos.shift();
+
+    }
 
     return retornoSimbolos;
 
@@ -518,16 +536,16 @@ Clase.prototype.obtenerTipoDeclaracion = function(decla) {
 };
 
 
-Clase.prototype.obtenerSimbolosMetodo = function(sents, ambitos){
+Clase.prototype.obtenerSimbolosMetodo = function(sents, ambitos, parametros){
   
     for(var i = 0; i<sents.length; i++){
        var sentTemporal = sents[i];
-       this.simbMet(sentTemporal,ambitos);
+       this.simbMet(sentTemporal,ambitos,parametros);
     }//fin ciclo de control de sentencias
 };
 
 
-Clase.prototype.simbMet= function(sent, ambitos){
+Clase.prototype.simbMet= function(sent, ambitos, parametros){
 
     
     if(sent instanceof Estructura){
@@ -535,7 +553,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var nombreEd = sent.geNombre();
         ambitos.addAmbito(nombreEd);
         for(var i =0; i<declaraciones.length; i++){
-            this.simbMet(declaraciones[i],ambitos);
+            this.simbMet(declaraciones[i],ambitos,parametros);
         }
         ambitos.ambito.shift();
     }
@@ -545,12 +563,12 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var falsas = sent.getFalsas();
         ambitos.addSi();
         for(var i=0; i<verdaderas.length;i++){
-            this.simbMet(verdaderas[i],ambitos);
+            this.simbMet(verdaderas[i],ambitos, parametros);
         }  
         ambitos.ambitos.shift();
         ambitos.addElse();
         for(var i=0; i<falsas.length;i++){
-            this.simbMet(falsas[i],ambitos);
+            this.simbMet(falsas[i],ambitos, parametros);
         }  
         ambitos.ambitos.shift();
     }
@@ -559,7 +577,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.ambitos.addRepetirMientras();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos,parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -568,7 +586,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.addHacerMientras();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos,parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -577,7 +595,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.addRepetir();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos,parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -586,7 +604,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.addRepetirContando();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -596,7 +614,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.addEnciclar();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -606,7 +624,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var cuerpo = sent.getCuerpo();
         ambitos.addContador();
         for(var i =0; i< cuerpo.length; i++){
-            this.simbMet(cuerpo[i],ambitos);
+            this.simbMet(cuerpo[i],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -617,12 +635,12 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var defec = sent.getDefecto();
         
         for(var i =0; i<casos.length; i++){
-            this.simbMet(casos[i],ambitos);
+            this.simbMet(casos[i],ambitos, parametros);
         }
      
         ambitos.addDefecto();
         for(var i =0; i<defec.length; i++){
-            this.simbMet(defec[i],ambitos);
+            this.simbMet(defec[i],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -631,7 +649,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         var snts = sent.getCuerpo();
         ambitos.addCaso();
         for(var i =0; i<snts.length; i++){
-            this.simbMet(snts[i],ambitos);
+            this.simbMet(snts[i],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -640,7 +658,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         ambitos.addCicloX();
         var sentencias = sent.getCuerpo();
         for(var j =0; j<sentencias.length;j++){
-            this.simbMet(sentencias[j],ambitos);
+            this.simbMet(sentencias[j],ambitos, parametros);
         }
         ambitos.ambitos.shift();
     }
@@ -648,7 +666,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
 
     if(sent instanceof DeclaVariable){
         var nombreC = sent.getNombre();
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC, parametros);
         
         if(cont==0){
         var tipoVar = sent.getTipo();
@@ -669,7 +687,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
 
     if (sent instanceof DeclaArreglo) {
         var nombreArreglo = sent.getNombre();
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreArreglo);
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreArreglo, parametros);
         
         if(cont==0){
         var tipoArreglo = sent.getTipo();
@@ -693,7 +711,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
     if (sent instanceof DeclaCola) {
         var nombreCola = sent.getNombre();
 
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreCola);
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreCola,parametros);
         
         if(cont==0){
 
@@ -711,7 +729,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
     if (sent instanceof DeclaLista) {
         var nombreLista = sent.getNombre();
 
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreLista,parametros);
         
         if(cont==0){
         var tipoLista = sent.getTipo();
@@ -728,7 +746,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
     if (sent instanceof DeclaPila) {
         var nombrePila = sent.getNombre();
 
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePila,parametros);
         
         if(cont==0){
         var tipoPila = sent.getTipo();
@@ -738,7 +756,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePila+", debido a que existe en el ambito actual");
-            console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+            console.log("No se ha podido crear el simbolo "+nombrePila+", ya existe en el ambito actual");
         }
     }
 
@@ -750,7 +768,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
     var puntero = asignPunt.getPuntero();
     var nombrePuntero = puntero.getNombrePuntero();
 
-    var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+    var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePuntero, parametros);
     
     if(cont==0){
     var tipoPuntero = puntero.getTipoPuntero();
@@ -769,8 +787,9 @@ Clase.prototype.simbMet= function(sent, ambitos){
     if (sent instanceof DeclaPuntero) {
         var puntero = sent.getPuntero();
         var nombrePuntero = puntero.getNombrePuntero();
-
-        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+        console.log(nombrePuntero);
+        console.dir(sent);
+         var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePuntero,parametros);
         
         if(cont==0){
         var tipoPuntero = puntero.getTipoPuntero();
@@ -790,7 +809,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         if (enteroDecla == 8) {
             var nombreC = declaracionElemento.getNombre();
 
-            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
+            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC,parametros);
         
         if(cont==0){
                 var tipoElemento = declaracionElemento.getTipo();
@@ -811,9 +830,7 @@ Clase.prototype.simbMet= function(sent, ambitos){
         } else if (enteroDecla == 2) {
             //es un arreglo
             var nombreArreglo = declaracionElemento.getNombre();
-
-            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreC);
-        
+            var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreArreglo, parametros);       
         if(cont==0){
             var tipoArreglo = declaracionElemento.getTipo();
              var dimensionesArreglo = declaracionElemento.getDimension();
@@ -837,16 +854,35 @@ Clase.prototype.simbMet= function(sent, ambitos){
 };
 
 
-
-Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre){
+Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre, parametros){
     var ambitoTemporal = new Ambito();
     var arr= ambitos.ambitos.slice();
     ambitoTemporal.setAmbitos(arr);
+
+
+    var ambitoTemporal2 = new Ambito();
+    var arr2= ambitos.ambitos.slice();
+    ambitoTemporal2.setAmbitos(arr2);
+
     var cont =0;
     var temporal;
     var cadenaAmbito="";
+    if(parametros == 0){
+        cont+=0;
+    }else{
+
+        for(var i =0; i<ambitos.ambitos.length; i++){
+            cadenaAmbito = ambitoTemporal2.getAmbitos();
+            console.log("ambito a analizar de los prametros "+ cadenaAmbito);
+            cont=cont + this.existeLista(cadenaAmbito,nombre,parametros);
+            ambitoTemporal2.ambitos.shift();
+        }
+
+
+    }
+     
     if(lista == 0){
-        return 0;
+        cont+=0;
     }
  else{
     for(var i =0; i<ambitos.ambitos.length; i++){
@@ -857,10 +893,10 @@ Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre){
         ambitoTemporal.ambitos.shift();
     }
     console.log(cont+"<----- Contador para la vairable " + nombre);
-    return cont;
+    
 
  }
-    
+ return cont;
 
 };
 
@@ -879,8 +915,6 @@ Clase.prototype.existeLista = function(cadenaAmbito, nombre , lista){
     }
 return cont;
 };
-
-
 
 
 module.exports = Clase;

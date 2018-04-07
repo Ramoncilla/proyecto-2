@@ -9,7 +9,7 @@ function Principal(){
 Principal.prototype.setValores = function(sent) {
 	this.sentencias=sent;
 
-};
+}; 
 
 
 Principal.prototype.getSentencias = function() {

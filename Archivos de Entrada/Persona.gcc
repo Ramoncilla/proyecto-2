@@ -1,12 +1,18 @@
 clase persona {
 
   publico caracter estado;
-  publico popo nuevoPpop = nuevo popo(5,5*10);
+  publico popo nuevoPpop ;
   publico booleano dpi;
 
-  persona(entero v){
  
- 
+
+
+principal(){
+  entero estado;
+  estado =100-100*25;
+  
+
+  
 }
 
 }
