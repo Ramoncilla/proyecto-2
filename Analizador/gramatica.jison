@@ -627,7 +627,9 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 	};
 
 ASIGNACION: id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
-	|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
+
+	|id igual INSTANCIA 
+	{ var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
 	|ACCESO SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,3); $$=a;} //3
 	|ACCESO igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,4); $$=a;}//4
 	|id masMas {var a = new AsignacionUnario(); a.setValores($1,"++",5); $$=a; }//5
@@ -663,7 +665,12 @@ DECLA_PUNTERO: CREAR_PUNTERO igual EXPRESION
 		};
 
 	
-INSTANCIA: nuevo id PARAMETROS_LLAMADA {$$= $3;};
+INSTANCIA: nuevo id PARAMETROS_LLAMADA 
+	{
+		var nodoI = new Instancia();
+		nodoI.setValores($2,$3);
+		$$ = nodoI;
+	};
 
 SIMB_IGUAL: igual{$$="=";}
 	|masIgual {$$="=+";}

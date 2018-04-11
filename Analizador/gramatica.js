@@ -373,7 +373,7 @@ break;
 case 83:
 
 		var decla = new  DeclaVariable(); decla.setValores($$[$0-4],$$[$0-3]);
-		var a = new Asignacion(); a.setValores($$[$0-3],$$[$0-2],$$[$0-1],4);	
+		var a = new Asignacion(); a.setValores($$[$0-3],$$[$0-2],$$[$0-1],2);	
 		var asigDec= new AsignaDecla(); asigDec.setValores(decla,a,3);
 		this.$= asigDec;
 	
@@ -449,8 +449,12 @@ case 104:
 			this.$=a;
 		
 break;
-case 105: case 111: case 112:
-this.$= $$[$0];
+case 105:
+
+		var nodoI = new Instancia();
+		nodoI.setValores($$[$0-1],$$[$0]);
+		this.$ = nodoI;
+	
 break;
 case 106:
 this.$="=";
@@ -466,6 +470,9 @@ this.$="=*";
 break;
 case 110:
 this.$="=/";
+break;
+case 111: case 112:
+this.$= $$[$0];
 break;
 case 113:
 

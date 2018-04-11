@@ -13,7 +13,7 @@ Asignacion.prototype.setValores = function(elemento, igual,valor,tipo) {
 	this.valorAsignacion=valor;
 	this.tipoAsignacion=tipo;
 
-};
+}; 
 
 Asignacion.prototype.getElemento = function() {
 	// body...

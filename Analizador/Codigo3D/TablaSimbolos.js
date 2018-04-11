@@ -1,7 +1,7 @@
+var Ambito = require("./Ambito");
 function TablaSimbolos(){
 	this.listaSimbolos=[];
 }
-
 
 
 TablaSimbolos.prototype.insertarSimbolosClase = function(simbolos) {
@@ -9,6 +9,166 @@ TablaSimbolos.prototype.insertarSimbolosClase = function(simbolos) {
 		this.listaSimbolos.push(simbolos[i]);
 	}
 };
+
+
+
+
+
+TablaSimbolos.prototype.obtenerTipo= function (nombre, ambitos){
+   
+  var ambitoTemporal;
+  var simbTemporal;  
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+   // console.log("Ambito : "+ambitoTemporal );
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+    //  console.log("Simbolo  --------> "+ simbTemporal.nombreCorto + "       Ambito -----------> "+ simbTemporal.ambito);
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           return simbTemporal.tipoElemento;
+         }
+    }
+
+  }
+
+  return "";
+
+};
+
+
+TablaSimbolos.prototype.obtenerPosLocal= function (nombre, ambitos){
+   
+  var ambitoTemporal;
+  var simbTemporal;  
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+      if(i != ambitos.ambitos.length -1){
+
+        ambitoTemporal = ambitos.ambitos[i];
+      for(var j =0; j< this.listaSimbolos.length; j++){
+        simbTemporal = this.listaSimbolos[j];
+        if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+          simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+            return simbTemporal.apuntador;
+          }
+      }
+
+    }
+  }
+
+  return -1;
+
+};
+
+
+TablaSimbolos.prototype.obtenerPosAtributo= function (nombre, ambitos){
+   
+  var ambitoTemporal;
+  var simbTemporal;  
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+      if(i == ambitos.ambitos.length -1){
+
+        ambitoTemporal = ambitos.ambitos[i];
+      for(var j =0; j< this.listaSimbolos.length; j++){
+        simbTemporal = this.listaSimbolos[j];
+        if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+          simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+            return simbTemporal.apuntador;
+          }
+      }
+
+    }
+
+    
+
+  }
+
+  return -1;
+
+};
+
+
+TablaSimbolos.prototype.esAtributo = function(nombre, ambitos){
+  var ambitoTemporal;
+  var simbTemporal;  
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()=="ATRIBUTO")
+              return true;
+            else
+              return false;
+         }
+    }
+
+  }
+
+  return null;
+
+
+};
+
+
+TablaSimbolos.prototype.SizeClase = function(nombre) {
+  var simbTemporal;
+  for(var i = 0; i<this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.rol.toUpperCase() == "CLASE" && 
+       simbTemporal.tipoSimbolo.toUpperCase() == "CLASE" &&
+      simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+        return simbTemporal.tamanio;
+      }
+
+  }
+
+  return -1;
+
+};
+
+
+TablaSimbolos.prototype.obtenerFirmaMetodo = function(nombreClase, noParametros, nombreFuncion){
+
+  var temp;
+  //console.log(nombreClase + " " + noParametros + "  " + nombreFuncion);
+  //console.log("Aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+  for(var i =0; i<this.listaSimbolos.length; i++){
+    temp= this.listaSimbolos[i];
+   // console.log(temp.ambito + " " + temp.noParametros + "  " + temp.nombreFuncion);
+    if(temp.ambito.toUpperCase() == nombreClase.toUpperCase() &&
+       temp.noParametros == noParametros &&
+       temp.nombreFuncion.toUpperCase() == nombreFuncion.toUpperCase()){
+         return temp.nombreCorto;
+       }
+
+  }
+
+  return "";
+
+};
+
+
+
+
+TablaSimbolos.prototype.sizeFuncion = function(nombreClase, firmaMetodo){
+
+  var item;
+  for(var i =0; i<this.listaSimbolos.length; i++){
+    item = this.listaSimbolos[i];
+    if(item.ambito.toUpperCase() == nombreClase.toUpperCase() &&
+       item.nombreCorto.toUpperCase() == firmaMetodo.toUpperCase()){
+         return item.tamanio;
+       }
+
+  }
+
+  return -1;
+
+};
+
+
 
 TablaSimbolos.prototype.obtenerHTMLTabla= function(){
 

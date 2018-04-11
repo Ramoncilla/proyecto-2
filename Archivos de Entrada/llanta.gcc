@@ -1,56 +1,64 @@
-clase llanta {
-
-entero valor1;
-entero valor2;
 
 
-publico llanta(entero val1 ){
-    valor1= val1;
-    valor2= val1*10;
-}
-
-pubico getValor1(){
-     retorno valor1;
-}
 
 
-}
 
 
-clase carro{
-
-publico llanta lla1;
-publico llanta lla2;
-publico llanta lla3;
-publico llanta lla4;
-publico llanta repuesto= nuevo llanta(15);
-publico entero color;
-
-publico carro(){
-    lla1= nuevo llanta(1);
-    lla2 = nuevo llanta(2);
-    lla3 = nuevo llanta(3);
-    lla4 = nuevo llanta(4);
-    color =11;
-}
 
 
-}
+
+
+
+
+
+
 
 clase persona {
 
-    entero edad;
-    entero dpi;
+  publico caracter estado;
+  publico popo nuevoPpop ;
+  publico booleano dpi;
 
-    persona(entero edad, entero dpi)
-    {
-        este.edad = edad;
-        este.dpi= dpi;
-    }
+ 
 
-    principal(){
-        persona p1 = nuevo persona(25,2133);
-        persona p2 = nuevo persona(51,1792);
-    }
 
+principal(){
+  entero estado;
+  
+  a= 10/11.2;
+  a= 12.5/5;
+  a= 15.6/'a';
+  a= 'a'/8.3;
+  a= true/15.2;
+  a= 10.2/true;
+  a= 11.1/8.2;
+  a= 5/'z';
+  a= 'l'/2;
+  a= true/5;
+  a= 2/false;
+  a= 10/2;
+
+
+
+
+
+
+
+
+
+  
+
+  
 }
+}
+
+
+
+
+
+
+
+
+
+
+

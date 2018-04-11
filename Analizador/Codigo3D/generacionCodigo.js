@@ -1,3 +1,4 @@
+var fs = require("fs");
 var elementoSentencia = require("./sentenciaNombre");
 var elementoCodigo = require("./Codigo");
 var nodoCondicion = require("./nodoCondicion");
@@ -8,6 +9,7 @@ var tabla_Simbolos= require("../Codigo3D/TablaSimbolos");
 var listaErrores = require("../Errores/listaErrores");
 var Ambito = require("../Codigo3D/Ambito");
 var EleRetorno = require("./retorno");
+
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
 
@@ -25,6 +27,13 @@ generacionCodigo.prototype.setValores = function(sentAr){
 	this.sentenciasArchivo = sentAr;
 
 };
+
+
+
+
+
+
+
 
 /*---------------------------- Generacion del Codigo 3D ---------------------------- */
 
@@ -55,12 +64,18 @@ generacionCodigo.prototype.generar3D= function(){
 			nombreFuncion = "PRINCIPAL";
 			var nombreAmb= nombreClase+"_PRINCIPAL";
 			ambitos.addAmbito(nombreAmb);
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+nombreAmb);
+			this.c3d.addCodigo("");
 			for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
 				sentTemporal = claseTemporal.principal_met.sentencias[j];
-				//this.escribir3D(sentTemporal, ambitos, nombreClase, nombreFuncion);
+				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreFuncion);
 			}
+			this.c3d.addCodigo("");
 			this.c3d.addCodigo("end, , "+nombreAmb);
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
 		}
 		//2. Traducimos funcion por funcion
@@ -68,18 +83,28 @@ generacionCodigo.prototype.generar3D= function(){
 		for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
 			funTemporal = claseTemporal.funciones.funciones[j];
 			ambitos.addAmbito(funTemporal.obtenerFirma());
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
+			this.c3d.addCodigo("");
 			for(var k =0; k<funTemporal.sentencias.length; k++){
 				sentTemporal = funTemporal.sentencias[k];
-				//this.escribir3D(sentTemporal,ambitos,nombreClase,nombreFuncion);
+				this.escribir3D(sentTemporal,ambitos,nombreClase,nombreFuncion);
 			}
+			this.c3d.addCodigo("");
 			this.c3d.addCodigo("end, , "+funTemporal.obtenerFirma());
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
 		}
 
 		ambitos.ambitos.shift();
 	}
 
+	
+   // console.log("--------------------------------------------------------------------");
+//	console.log(this.c3d.codigo3D);
+	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
 	return this.tablaSimbolos.obtenerHTMLTabla();
 
 };
@@ -183,27 +208,217 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	
 	 var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
+	 
+	 
 
 	switch(nombreSentecia.toUpperCase()){
 
 		case "ASIGNACION":{
-			var expresionAsig = nodo.getValor();
-			var a = this.resolverExpresion (expresionAsig, ambitos, clase, metodo);
+
+			/*var a = this.resolverExpresion (expresionAsig, ambitos, clase, metodo);
 			console.log("Resultado   ");
 			console.dir(a);
 			console.log(this.c3d.getCodigo3D());
+			var expresionAsig = nodo.getValor();*/
+			var tipoAsignacion = nodo.getTipo();
+			switch (tipoAsignacion){
+
+				case 1:{
+					//id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
+
+
+
+					break;
+				}
+
+				case 2:{
+					//|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
+					//INSTANCIA: nuevo id PARAMETROS_LLAMADA {$$= $3;};
+					/*LISTA_EXPRESIONES: EXPRESION { var arreglo = []; var g= arreglo.push($1); console.log("size "+ g); $$= arreglo;}
+	|LISTA_EXPRESIONES coma EXPRESION{var arreglo = $1; var g= arreglo.push($3); console.log("size "+ g);; $$= arreglo;};
+}
+
+
+PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
+	|abrePar LISTA_EXPRESIONES cierraPar{$$=$2; console.log($2);};
+}
+ */
+					var nombreVar = nodo.getElemento();
+					var tipoVar = this.tablaSimbolos.obtenerTipo(nombreVar,ambitos); 
+					var nodoInstancia = nodo.getValor();
+					var nombreClaseInstanciar = nodoInstancia.getTipo();
+					var parametrosInstancia = nodoInstancia.getParametros();
+					var noParametros =0;
+					console.dir(parametrosInstancia);
+					if(parametrosInstancia==0){
+						noParametros=0;
+					}else{
+						noParametros= parametrosInstancia.length;
+					}
+
+					var firmMetodo = this.tablaSimbolos.obtenerFirmaMetodo(nombreClaseInstanciar,noParametros,nombreClaseInstanciar);
+					console.log("CLASE "+ nombreClaseInstanciar + "  No Parametros  "+ noParametros +"  Nombre Clase a  Instancia  "+ nombreClaseInstanciar);
+					console.log("Nombre del metodo "+ firmMetodo);
+
+					if(tipoVar.toUpperCase() == nombreClaseInstanciar.toUpperCase() && firmMetodo!=""){
+						//console.log("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+						var sizeClase = this.tablaSimbolos.SizeClase(nombreClaseInstanciar);
+						var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
+						if(esAtributo!=null){
+							if(esAtributo){
+								// se realizara una instancia de un atributo
+								console.log("INSTSNAIAL DE ATRIBUTO");
+								var posVar = this.tablaSimbolos.obtenerPosAtributo(nombreVar,ambitos);
+								if(posVar!= -1){
+									var temp = this.c3d.getTemporal();
+									var l1 = "+, p, 0, "+temp+"// pos this de "+nombreVar;
+									var temp2 = this.c3d.getTemporal();
+									var l2= "=>, "+temp+", "+temp2+", stack //apuntador del heap de "+ nombreVar;
+									var temp3 = this.c3d.getTemporal();
+									var l3 = "=>, "+temp2+", "+temp3+", heap //posicion real del heap donde inicia "+nombreVar;
+									var temp4= this.c3d.getTemporal();
+									var l4 ="+, "+temp3+", "+posVar+", "+temp4+" //pos real del atributo "+nombreVar;
+									var l5 ="<=, "+temp4+", h, heap //guardando la pos real donde inicia el objeto "+nombreVar;
+									var l6 ="+, h, "+sizeClase+", h // reservando el espacio de memoria para el nuevo objeto "+ nombreVar;
+
+									var l7="// Guardando la referencia al this del objeto para la llamada al constructor "+nombreVar;
+									var temp5 = this.c3d.getTemporal();
+									var l8 = "+, p, 0, "+ temp5;
+									var temp6 = this.c3d.getTemporal();
+									var l9 = "=>, "+temp5+", "+ temp6+", stack //apuntador al heap de "+ nombreVar;
+									var temp7 = this.c3d.getTemporal();
+									var l10 = "=>, "+temp6+", "+temp7+", heap //posicion real donde incia el objeto "+nombreVar;
+									var temp8 = this.c3d.getTemporal();
+									var l11= "+, "+temp7+", "+posVar+", "+ temp8+" // pos real donde incial el objeto "+ nombreVar;
+									var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
+									var temp9 = this.c3d.getTemporal();
+
+									var l12 = "+, p, "+temp8+", "+temp9+" // tamanho de la funcion actual "+ metodo;
+									var temp10 = this.c3d.getTemporal();
+									var l13 = "+, "+temp9+", 0, "+temp10 +" // pos del this para la nueva instancia de "+ nombreVar;
+									var l14 = "<=, "+temp10+", "+temp8+", stack //guaradndo el puntero del this en el stack ";
+									
+									this.c3d.addCodigo(l1);
+									this.c3d.addCodigo(l2);
+									this.c3d.addCodigo(l3);
+									this.c3d.addCodigo(l4);
+									this.c3d.addCodigo(l5);
+									this.c3d.addCodigo(l6);
+								    this.c3d.addCodigo("");
+									this.c3d.addCodigo(l7);
+									this.c3d.addCodigo(l8);
+									this.c3d.addCodigo(l9);
+									this.c3d.addCodigo(l10);
+									this.c3d.addCodigo(l11);
+									this.c3d.addCodigo("");
+									this.c3d.addCodigo(l12);
+									this.c3d.addCodigo(l13);
+									this.c3d.addCodigo(l14);
+									this.c3d.addCodigo("");
+
+									// Verificar si posee parametros
+									 
+
+									if(parametrosInstancia!=0){
+										this.c3d.addCodigo("// No posee parametros ");
+
+									}else{
+										this.c3d.addCodigo("// posee parametros ");
+										
+
+									}
+
+                                   
+									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
+									var l16 = "call, , , "+firmMetodo;
+									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
+
+									this.c3d.addCodigo(l15);
+									this.c3d.addCodigo(l16);
+									this.c3d.addCodigo(l17);
+									this.c3d.addCodigo("");
+								}
+								
+
+
+
+
+							}else{
+								// se realizara una instancia de una vairable local
+								console.log("INSATANCIA DE VAIRABLEA LOCAL");
+
+
+
+							}
+
+						}else{
+							errores.insertarError("Semantico", "No existe "+nombreVar);
+						}
+					}else{
+
+						console.log("La variable  "+ nombreVar+", es de tipo "+tipoVar+", imposible de instanciar con tipo "+ nombreClaseInstanciar);
+						errores.insertarError("Semantico", "La variable  "+ nombreVar+", es de tipo "+tipoVar+", imposible de instanciar con tipo "+ nombreClaseInstanciar);
+
+					}
+	
+					break;
+				}
+
+
+				case 3:{
+					//|ACCESO SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,3); $$=a;} //3
+
+
+					break;
+				}
+
+				case 4:{
+					//|ACCESO igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,4); $$=a;}//4
+
+					break;
+				}
+
+				case 8:{
+					//|este punto id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($3,$4,$5,8); $$=a;}//8
+
+
+					break;
+				}
+
+				case 9:{
+					//|este punto id igual INSTANCIA { var a = new Asignacion(); a.setValores($3,$4,$5,9); $$=a;}//9
+
+					break;
+				}
+
+				case 10:{
+
+					//|este punto ACCESO SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($3,$4,$5,10); $$=a;}//10
+
+					break;
+				}
+
+				case 11:{
+					//|este punto ACCESO igual INSTANCIA { var a = new Asignacion(); a.setValores($3,$4,$5,11); $$=a;}//11
+
+					break;
+				}
+
+				case 15:{
+					//|VALOR_PUNTERO igual EXPRESION //15 { var a = new Asignacion(); a.setValores($1,$2,$3,15); $$=a;} ;
+
+					break;
+				}
+
+			}
+
+
+			
 
 			break;
-		}
+		}//fin asignacion
 
-		
-
-
-
-
-
-
-	}
+	}//fin switch sentencia
 };
 
 
@@ -214,6 +429,11 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 /* ================================================ Resolver Expresiones ===================================================== */
+
+generacionCodigo.prototype.resolverInstancia = function(){
+
+};
+
 
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
 

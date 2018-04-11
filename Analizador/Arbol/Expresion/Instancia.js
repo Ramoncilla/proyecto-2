@@ -1,27 +1,20 @@
 function Instancia(){
 	this.tipoObjeto ="";
-	this.nombreInstancia = "";
 	this.parametrosInstancia=[];
 }
 
 
-
-
-Instancia.prototype.setValores = function(tipo, nombre, parametros) {
+  
+Instancia.prototype.setValores = function(tipo, parametros) {
 	this.tipoObjeto= tipo;
-	this.nombreInstancia = nombre;
 	this.parametrosInstancia=parametros;
 
 };
 
 Instancia.prototype.getTipo= function(){
-	return Instancia.prototype.tipoInstancia;
+	return this.tipoObjeto;
 };
 
-
-Instancia.prototype.getNombre= function(){
-	return this.nombreInstancia ;
-};
 
 
 Instancia.prototype.getParametros= function(){

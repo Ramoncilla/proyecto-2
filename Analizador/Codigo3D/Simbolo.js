@@ -16,7 +16,7 @@ function Simbolo(){
     this.noDimensiones=0;
     this.pasoReferencia ="NO_TIENE";
 }
-
+ 
 Simbolo.prototype.setPasoReferencia= function(val){
     this.pasoReferencia=val;
 };

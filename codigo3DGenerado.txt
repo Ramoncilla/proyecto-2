@@ -1,0 +1,48 @@
+
+
+begin, , , llanta_vacio_llanta
+
+
+end, , llanta_vacio_llanta
+
+
+
+
+begin, , , llanta_vacio_getValor1
+
+
+end, , llanta_vacio_getValor1
+
+
+
+
+begin, , , carro_vacio_carro
+
+
+end, , carro_vacio_carro
+
+
+
+
+begin, , , persona_PRINCIPAL
+
+
+end, , persona_PRINCIPAL
+
+
+
+
+begin, , , persona_vacio_persona_entero_entero
+
+
+end, , persona_vacio_persona_entero_entero
+
+
+
+
+begin, , , persona_vacio_persona
+
+
+end, , persona_vacio_persona
+
+
