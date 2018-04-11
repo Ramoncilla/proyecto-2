@@ -9,7 +9,7 @@ publico llanta(entero val1 ){
     valor2= val1*10;
 }
 
-publico vacio getValor1(){
+pubico getValor1(){
      retorno valor1;
 }
 

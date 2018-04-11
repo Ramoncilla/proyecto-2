@@ -129,6 +129,7 @@ Clase.prototype.getSentencias = function() {
 
 Clase.prototype.generarSimbolosAtributos = function() {
     var listaRetorno = [];
+    apuntador=0;
     var temporal, tipoDeclaracion;
     for (var i = 0; i < this.atributos.length; i++) {
         temporal = this.atributos[i];
@@ -353,7 +354,7 @@ Clase.prototype.generarSimbolosClase = function() {
 	var returnTemporal;
 	var ambitos ;
     apuntador =0;
-
+ 
 	for(var i = 0; i<this.funciones.funciones.length;i++){
 		funTemporal = this.funciones.funciones[i];
 		var noPametros =0;

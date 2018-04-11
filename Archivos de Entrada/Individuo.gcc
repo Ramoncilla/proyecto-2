@@ -39,3 +39,74 @@ publico vacio esteSi(){
     }
 
 	}*/
+
+
+clase persona {
+
+  publico caracter estado;
+  publico popo nuevoPpop = nuevo popo(5,5*10);
+  publico booleano dpi;
+
+  persona(entero v){
+
+    caracter hola=10;
+    caracter v;
+    entero holis=10*15;
+    crearPunTEro(caracter,pedrito);
+}
+
+
+principal(){
+  entero estado =100;
+  entero a=10;
+
+  imprimir(estado);
+}
+
+}
+
+
+ estado =10+15.25;
+  estado = 11.25+10;
+  estado = 10.25+'a';
+  estado = 'b'+13.2;
+  estado = false+true+11.2+true;
+  estado = 98.9+false;
+  estado= 25.5+25.5;
+
+  estado = 10+'a';
+  a= 'a'+11;
+  a=false+true;
+a= 12+false;
+a=25+25;
+c=true+false;
+
+a = 10-11.2;
+a=11.2-5;
+a= 'a'-11.2;
+a= true-false;
+a=121.2-true;
+a=true-11.2;
+a=12.1-5.3;
+
+a=10-5.3;
+a='n'-9.3;
+a=true-1;
+a=12-false;
+a=12-12;
+
+
+a= 10*11.1;
+  a= 12.2*2;
+  a=11.2*'a';
+  a='a'*98.2;
+  a= 12.5*false;
+  a=10.3*10.2;
+
+  a=12*'a';
+  a='b'*10;
+  a=true*10;
+  a= 5*false;
+  a=12*12;
+
+ 

@@ -12,6 +12,27 @@ var  Romper= require("../Arbol/Sentencias/Romper");
 var  Retorno = require("../Arbol/Sentencias/Retorno");
 var  Continuar = require("../Arbol/Sentencias/Continuar");
 var Asignacion = require("../Arbol/Sentencias/Asignacion");
+
+
+
+var Acceso = require("../Arbol/Expresion/Acceso");
+var convertirCadena = require("../Arbol/Expresion/convertirCadena");
+var convertirEntero = require("../Arbol/Expresion/convertirEntero");
+var Este = require("../Arbol/Expresion/Este");
+var funNativa = require("../Arbol/Expresion/FuncionNativa");
+var Instancia = require("../Arbol/Expresion/Instancia");
+var llamada = require("../Arbol/Expresion/Llamada");
+var Logica = require("../Arbol/Expresion/Logica");
+var Negativo = require("../Arbol/Expresion/Negativo");
+var notLogica = require("../Arbol/Expresion/Not_logica");
+var nulo = require("../Arbol/Expresion/Nulo");
+var obtenerDireccion = require("../Arbol/Expresion/obtenerDireccion");
+var obtenerTamanio = require("../Arbol/Expresion/ObtenerTamanio");
+var posArreglo = require("../Arbol/Expresion/PosArreglo");
+var ReservarMemoria = require("../Arbol/Expresion/ReservarMemoria");
+var unario = require("../Arbol/Expresion/Unario");
+var valorPuntero = require("../Arbol/Expresion/ValorPuntero");
+
 /*
 
 var  = require("../Arbol/Sentencias");
@@ -61,6 +82,79 @@ function sentenciaNombre(){
 
 sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
+   
+
+
+    if(sent instanceof obtenerDireccion){
+        return "obtenerDireccion";
+    }
+
+    if(sent instanceof obtenerTamanio){
+        return "obtenerTamanio";
+    }
+
+    if(sent instanceof posArreglo){
+        return "posArreglo";
+    }
+
+    if(sent instanceof ReservarMemoria){
+        return "reservarMemoria";
+    }
+
+    if(sent instanceof unario){
+        return "unario";
+    }
+
+    if(sent instanceof valorPuntero){
+        return "valorPuntero";
+    }
+
+    if(sent instanceof Instancia){
+        return "instancia";
+    }
+
+    if(sent instanceof llamada){
+        return "llamada";
+    }
+    if(sent instanceof Logica){
+        return "logica";
+    }
+
+    if(sent instanceof Negativo){
+        return "negativo";
+    }
+
+    if(sent instanceof notLogica){
+        return "notLogica";
+    }
+
+    if(sent instanceof nulo){
+        return "nulo";
+    }
+
+    if(sent instanceof convertirEntero){
+        return "convertirEntero";
+    }
+
+    if(sent instanceof Este){
+        return "este";
+    }
+
+    if(sent instanceof funNativa){
+        return "funNativa";
+    }
+
+
+    if(sent instanceof Acceso){
+        return "acceso";
+    }
+
+    if(sent instanceof convertirCadena){
+        return "convertirCadena";
+    }
+
+
+
     if(sent instanceof entero){
         return "ENTERO";
     }
@@ -93,7 +187,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
 
-    return "popis";
+    
 
 
 };

@@ -89,7 +89,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 
 
 %%
-
+"/"                   return 'division'
 \s+                   /* skip whitespace */
 [//].* 				  /* skip whitespace */
 "/*"."*/" 			 / *skip whitespace */
@@ -182,7 +182,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "--" 	return 'menosMenos'
 	       
 "*"                   return 'por'
-"/"                   return 'division'
+
 "-"                   return 'menos'
 "+"                   return 'mas'
 "^"                   return 'potencia'
@@ -621,7 +621,7 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 	|TIPO_DECLARACION id igual INSTANCIA puntoComa//3
 	{
 		var decla = new  DeclaVariable(); decla.setValores($1,$2);
-		var a = new Asignacion(); a.setValores($2,$3,$4,4);	
+		var a = new Asignacion(); a.setValores($2,$3,$4,2);	
 		var asigDec= new AsignaDecla(); asigDec.setValores(decla,a,3);
 		$$= asigDec;
 	};
