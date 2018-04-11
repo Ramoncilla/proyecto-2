@@ -1,5 +1,5 @@
 var Error = require("./Error");
-
+var salto ="\n";
 
 function listaErrores(){
     this.errores =[];
@@ -17,5 +17,30 @@ listaErrores.prototype.insertarError= function(tipo, desc){
 listaErrores.prototype.obtenerLista= function(){
     return listaErrores.prototype.errores;
 };
+
+listaErrores.prototype.obtenerErroresHTML = function(){
+    var tabla= "<table border =1><tr>"
+                    +"<th> Tipo de Error </th>"
+                    +"<th> Descripcion </th>"
+                    +"<th> Columna </th>"
+                    +"<th> Fila </th>"
+                    +"</tr>";
+
+    var errorTemporal;
+    for(var i =0; i< listaErrores.prototype.errores.length; i++){
+        errorTemporal = listaErrores.prototype.errores[i];
+        tabla +=errorTemporal.getHTML();
+    }
+    tabla +="</table>";
+
+    console.log(tabla);
+
+return tabla;
+
+
+
+};
+
+
 
 module.exports = listaErrores;

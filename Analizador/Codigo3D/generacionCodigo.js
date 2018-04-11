@@ -105,6 +105,9 @@ generacionCodigo.prototype.generar3D= function(){
    // console.log("--------------------------------------------------------------------");
 //	console.log(this.c3d.codigo3D);
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
+	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
+	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
+
 	return this.tablaSimbolos.obtenerHTMLTabla();
 
 };
@@ -319,16 +322,13 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									// Verificar si posee parametros
 									 
 
-									if(parametrosInstancia!=0){
+									if(parametrosInstancia==0){
 										this.c3d.addCodigo("// No posee parametros ");
 
 									}else{
-										this.c3d.addCodigo("// posee parametros ");
-										
-
+										this.c3d.addCodigo("// posee parametros ");										
 									}
 
-                                   
 									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
 									var l16 = "call, , , "+firmMetodo;
 									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
@@ -338,14 +338,11 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									this.c3d.addCodigo(l17);
 									this.c3d.addCodigo("");
 								}
-								
-
-
-
 
 							}else{
 								// se realizara una instancia de una vairable local
 								console.log("INSATANCIA DE VAIRABLEA LOCAL");
+
 
 
 
@@ -357,7 +354,7 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 					}else{
 
 						console.log("La variable  "+ nombreVar+", es de tipo "+tipoVar+", imposible de instanciar con tipo "+ nombreClaseInstanciar);
-						errores.insertarError("Semantico", "La variable  "+ nombreVar+", es de tipo "+tipoVar+", imposible de instanciar con tipo "+ nombreClaseInstanciar);
+						errores.insertarError("Semantico", "La variable  "+ nombreVar+", es de tipo "+tipoVar+", imposible de instanciar con tipo "+ nombreClaseInstanciar+", o El constructor no coincide con los parametros ");
 
 					}
 	
