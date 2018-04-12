@@ -167,9 +167,9 @@ begin, , , persona_PRINCIPAL
 <=, t66, t64, stack // insertando apuntador del heap al stack del obeto p1
 
 // No posee parametros 
-+, p, 1, p // simulando cambio de ambito
++, p, 3, p // simulando cambio de ambito
 call, , , persona_vacio_persona
--, p, 1, p // regresando al ambito acutal
+-, p, 3, p // regresando al ambito acutal
 
 
 end, , persona_PRINCIPAL

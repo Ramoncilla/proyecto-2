@@ -32,6 +32,7 @@ var posArreglo = require("../Arbol/Expresion/PosArreglo");
 var ReservarMemoria = require("../Arbol/Expresion/ReservarMemoria");
 var unario = require("../Arbol/Expresion/Unario");
 var valorPuntero = require("../Arbol/Expresion/ValorPuntero");
+var Identificador = require("../Arbol/Expresion/t_id");
 
 /*
 
@@ -82,8 +83,9 @@ function sentenciaNombre(){
 
 sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
-   
-
+    if(sent instanceof cadena){
+        return "cadena";
+    } 
 
     if(sent instanceof obtenerDireccion){
         return "obtenerDireccion";
@@ -109,16 +111,11 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "valorPuntero";
     }
 
-    if(sent instanceof Instancia){
-        return "instancia";
-    }
-
+   
     if(sent instanceof llamada){
         return "llamada";
     }
-    if(sent instanceof Logica){
-        return "logica";
-    }
+    
 
     if(sent instanceof Negativo){
         return "negativo";
@@ -155,6 +152,16 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 
+
+
+    if(sent instanceof Identificador){
+        return "identificador";
+    }
+
+    if(sent instanceof Logica){
+        return "logica";
+    }
+
     if(sent instanceof entero){
         return "ENTERO";
     }
@@ -172,12 +179,6 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "caracter";
     } 
 
-
-    if(sent instanceof cadena){
-        return "cadena";
-    } 
-
-
     if(sent instanceof aritmerica){
         return "aritmetica";
     } 
@@ -191,7 +192,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 };
-
+ 
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){

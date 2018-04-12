@@ -55,6 +55,8 @@ clase persona {
 
     principal(){
         persona p1;
+        entero pedrito = edad +7;
+        entero alina = pedrito *2;
         
         p1 = nuevo persona();
  

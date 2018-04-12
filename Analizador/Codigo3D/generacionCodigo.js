@@ -544,9 +544,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 /* ================================================ Resolver Expresiones ===================================================== */
 
-generacionCodigo.prototype.resolverInstancia = function(){
-
-};
 
 
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
@@ -892,11 +889,79 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 			}
 
+			break;
+		}//fin de operaciones logica
 
+		case "IDENTIFICADOR":{
+			var nombreId = nodo.nombreId;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombreId, ambitos);
+			if(esAtributo!=null){
+				if(esAtributo){
+					//accesar a un atributo
+					var pos = this.tablaSimbolos.obtenerPosAtributo(nombreId,ambitos);
+					var tipoV = this.tablaSimbolos.obtenerTipo(nombreId,ambitos);
+					if(pos!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var l1 = "+, p, 0, "+temp1+" // pos this ";
+						var temp2 = this.c3d.getTemporal();
+						var l2 = "=>, "+temp1+", "+temp2+", stack // obtenido apuntador al heap ";
+						var temp3 = this.c3d.getTemporal();
+						var l3 = "=>, "+temp2+", "+temp3+", heap // apuntador ";
+						var temp4 = this.c3d.getTemporal(); 
+						var l4 = "+, "+temp3+", "+pos+", "+temp4+" // pos de "+ nombreId;
+						var temp5 = this.c3d.getTemporal();
+						var l5 = "=>, "+temp4+", "+temp5+", heap // obtengo el valor que se encuentre en el heap ";
+						this.c3d.addCodigo("// ------------ Resolviendo un ID (atributo) -----------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l4);
+						this.c3d.addCodigo(l5);
+						var retExpresion = new EleRetorno();
+						retExpresion.setValores(tipoV,temp5);
+						return retExpresion;
+					}else{
+						errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}					
+				}else{
+					//accesar a  una vairable local
+					var pos = this.tablaSimbolos.obtenerPosLocal(nombreId,ambitos);
+					var tipoV = this.tablaSimbolos.obtenerTipo(nombreId,ambitos);
+					if(pos!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var l1 = "+, p, "+pos+", "+temp1+" // pos de "+nombreId;
+						var temp2 = this.c3d.getTemporal();
+						var l2 = "=>, "+temp1+", "+temp2+", stack // valor de lo que trae en el stack "+ nombreId;
+						this.c3d.addCodigo("// -------------- Resolviendo para un ID (var local) ------------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						var retExpresion = new EleRetorno();
+						retExpresion.setValores(tipoV,temp2);
+						return retExpresion;
+
+					}else{
+						errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+
+					}
+
+				}
+
+			}else{
+				errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
+				var ret = new EleRetorno();
+				ret.setValoresNulos();
+				return ret;
+			}
 
 
 			break;
-		}//fin de operaciones logica
+		}
 
 
     
