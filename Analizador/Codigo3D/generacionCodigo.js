@@ -9,6 +9,8 @@ var tabla_Simbolos= require("../Codigo3D/TablaSimbolos");
 var listaErrores = require("../Errores/listaErrores");
 var Ambito = require("../Codigo3D/Ambito");
 var EleRetorno = require("./retorno");
+var Instancia = require("../Arbol/Expresion/Instancia");
+var AsignacionE = require("../Arbol/Sentencias/Asignacion");
 
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
@@ -88,6 +90,51 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
 			this.c3d.addCodigo("");
+			//hacemos la diferencia entre constructores y funciones normales 
+			if(funTemporal.esConstructor){
+				//buscamos los atributos que poseen asignacion
+				var atributosAsignar = this.tablaSimbolos.obteberAtributosClase(nombreClase);
+				if(atributosAsignar!=0){
+					// el arreglo trae mas de algun atributo para asignar
+					var atriTemporal;
+					for(var h =0; h< atributosAsignar.length; h++){
+						atriTemporal = atributosAsignar[h];
+						if(atriTemporal.expresionAtributo instanceof Instancia){
+							var asInstancia = new AsignacionE();
+							asInstancia.setValores(atriTemporal.nombreCorto,"=",atriTemporal.expresionAtributo,2);
+							this.escribir3D(asInstancia,ambitos,nombreClase,funTemporal.obtenerFirma());
+							//|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
+						}else{
+							var temp1 = this.c3d.getTemporal();
+							var l1 = "+, p, 0, "+temp1+" //Pos del this del objeto "+ nombreClase;
+							var temp2 = this.c3d.getTemporal();
+							var l2 = "=>, "+temp1+", "+temp2+", stack // obteniendo el apuntador  del heap ";
+							var temp3 = this.c3d.getTemporal();
+							var l3 = "=>, "+temp2+", "+temp3+", heap // recupenrado del heap el apuntdor al heap de donde inicia el objeto";
+							var temp4 = this.c3d.getTemporal();
+							var l4 = "+, "+temp3+", "+atriTemporal.apuntador+", "+temp4+" // obteniendo la posicion real del atributo "+ atriTemporal.nombreCorto;
+							var retExpresion = this.resolverExpresion(atriTemporal.expresionAtributo,ambitos,nombreClase, funTemporal.obtenerFirma());
+							if(retExpresion instanceof EleRetorno){
+								if(retExpresion.tipo.toUpperCase() != "NULO"){
+									var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap //guardando en el heap el valor del atributo";
+									this.c3d.addCodigo("// Asignando atributo "+ atriTemporal.nombreCorto);
+									this.c3d.addCodigo(l1);
+									this.c3d.addCodigo(l2);
+									this.c3d.addCodigo(l3);
+									this.c3d.addCodigo(l4);
+									this.c3d.addCodigo(l5);
+								}
+							}else{
+								errores.insertarError("Semantico", "Hubo un error al resolver para "+ atriTemporal.nombreCorto);
+							}
+
+						}
+					}
+
+				}
+
+
+			}
 			for(var k =0; k<funTemporal.sentencias.length; k++){
 				sentTemporal = funTemporal.sentencias[k];
 				this.escribir3D(sentTemporal,ambitos,nombreClase,funTemporal.obtenerFirma());
@@ -102,9 +149,6 @@ generacionCodigo.prototype.generar3D= function(){
 		ambitos.ambitos.shift();
 	}
 
-	
-   // console.log("--------------------------------------------------------------------");
-//	console.log(this.c3d.codigo3D);
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
 	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
 	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
@@ -204,25 +248,19 @@ generacionCodigo.prototype.obtenerClasePadre = function(nombre){
 };
 
 
-/* --------------------------- Generacion de codigo */
- 
+/* --------------------------- Generacion de codigo -------------------------- */
+
+generacionCodigo.prototype.asignarAtributos = function (nodo, ambito, clase, metodo){
+
+};
 
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
-	
-	 var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
-	 
-	 
-
+	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);	 
 	switch(nombreSentecia.toUpperCase()){
 
 		case "ASIGNACION":{
 
-			/*var a = this.resolverExpresion (expresionAsig, ambitos, clase, metodo);
-			console.log("Resultado   ");
-			console.dir(a);
-			console.log(this.c3d.getCodigo3D());
-			var expresionAsig = nodo.getValor();*/
 			var tipoAsignacion = nodo.getTipo();
 			switch (tipoAsignacion){
 

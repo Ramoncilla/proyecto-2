@@ -39,9 +39,9 @@ publico carro(){
 
 clase persona {
 
-    entero edad;
+    entero edad = 25*2;
     entero dpi;
-    carro c;
+    carro c = nuevo carro();
 
     persona(entero edad, entero dpi)
     {

@@ -12,6 +12,20 @@ TablaSimbolos.prototype.insertarSimbolosClase = function(simbolos) {
 
 
 
+TablaSimbolos.prototype.obteberAtributosClase = function(nombreClase){
+  var simbTemporal;
+  var ret = [];
+  for(var i = 0; i<this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.expresionAtributo!=null && 
+       simbTemporal.rol.toUpperCase() == "ATRIBUTO" && 
+       simbTemporal.ambito.toUpperCase() == nombreClase.toUpperCase() ){
+        ret.push(simbTemporal);
+    }
+  }
+
+  return ret;
+};
 
 
 TablaSimbolos.prototype.obtenerTipo= function (nombre, ambitos){
