@@ -33,7 +33,7 @@ listaErrores.prototype.obtenerErroresHTML = function(){
     }
     tabla +="</table>";
 
-    console.log(tabla);
+
 
 return tabla;
 

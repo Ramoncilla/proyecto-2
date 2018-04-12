@@ -126,6 +126,20 @@ end, , carro_vacio_carro
 
 begin, , , persona_PRINCIPAL
 
++, p, 0, t49 // pos de p1
+<=, t49, h, stack //guardando referencia del heap para el objeto p1
++, h, 1, t50 // guardo la posicion donde inicia el objeto 
+<=, h, t50, heap // guardando donde es que inicia el objeto dentro del heap
++, h, 1, h // sumando al heap la posicion que usamos extra para el doble apuntador 
++, t53, 0, t54 //pos del this de p1
+
+<=, t54, t52, stack // insertando apuntador del heap al stack del obeto p1
+
+// No posee parametros 
++, p, 1, p // simulando cambio de ambito
+call, , , persona_vacio_persona
+-, p, 1, p // regresando al ambito acutal
+
 
 end, , persona_PRINCIPAL
 

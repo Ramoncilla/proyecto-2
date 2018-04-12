@@ -108,7 +108,6 @@ generacionCodigo.prototype.generar3D= function(){
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
 	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
 	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
-
 	return this.tablaSimbolos.obtenerHTMLTabla();
 
 };
@@ -237,23 +236,12 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 				case 2:{
 					//|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
-					//INSTANCIA: nuevo id PARAMETROS_LLAMADA {$$= $3;};
-					/*LISTA_EXPRESIONES: EXPRESION { var arreglo = []; var g= arreglo.push($1); console.log("size "+ g); $$= arreglo;}
-	|LISTA_EXPRESIONES coma EXPRESION{var arreglo = $1; var g= arreglo.push($3); console.log("size "+ g);; $$= arreglo;};
-}
-
-
-PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
-	|abrePar LISTA_EXPRESIONES cierraPar{$$=$2; console.log($2);};
-}
- */
 					var nombreVar = nodo.getElemento();
 					var tipoVar = this.tablaSimbolos.obtenerTipo(nombreVar,ambitos); 
 					var nodoInstancia = nodo.getValor();
 					var nombreClaseInstanciar = nodoInstancia.getTipo();
 					var parametrosInstancia = nodoInstancia.getParametros();
 					var noParametros =0;
-					console.dir(parametrosInstancia);
 					if(parametrosInstancia==0){
 						noParametros=0;
 					}else{
@@ -266,7 +254,6 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 					console.log("CLASE "+ nombreClaseInstanciar + "  No Parametros  "+ noParametros +"  Nombre Clase a  Instancia  "+ nombreClaseInstanciar);
 					console.log("Nombre del metodo "+ firmMetodo);
 					if(tipoVar.toUpperCase() == nombreClaseInstanciar.toUpperCase() && firmMetodo!=""){
-						//console.log("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 						var sizeClase = this.tablaSimbolos.SizeClase(nombreClaseInstanciar);
 						var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
 						
@@ -304,6 +291,7 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									var l13 = "+, "+temp9+", 0, "+temp10 +" // pos del this para la nueva instancia de "+ nombreVar;
 									var l14 = "<=, "+temp10+", "+temp8+", stack //guaradndo el puntero del this en el stack ";
 									
+									this.c3d.addCodigo("// ----------- Instancia a un atributo --------------");
 									this.c3d.addCodigo(l1);
 									this.c3d.addCodigo(l2);
 									this.c3d.addCodigo(l3);
@@ -357,16 +345,87 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									this.c3d.addCodigo(l16);
 									this.c3d.addCodigo(l17);
 									this.c3d.addCodigo("");
+								}else{
+									errores.insertarError("Semantico","La variable "+ nombreVar+", no existe");
+
 								}
 
 							}else{
 								// se realizara una instancia de una vairable local
 								console.log("INSATANCIA DE VAIRABLEA LOCAL");
 
+                                var posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVar,ambitos);
+								if(posVariable!= -1){
+									var temp1= this.c3d.getTemporal();
+									var l1 = "+, p, "+ posVariable+", "+ temp1+" // pos de "+ nombreVar;
+									var l2 = "<=, "+temp1+", h, stack //guardando referencia del heap para el objeto "+ nombreVar;
+									var temp2 = this.c3d.getTemporal();
+									var l3 = "+, h, 1, "+temp2+" // guardo la posicion donde inicia el objeto ";
+									var l4 = "<=, h, "+temp2+", heap // guardando donde es que inicia el objeto dentro del heap";
+									var l5 = "+, h, 1, h // sumando al heap la posicion que usamos extra para el doble apuntador ";
+									var l6 = "+, h, "+sizeClase+", h // reservando espacio para el objeto "+ nombreVar;
+									var l7 = "//Ingresando referencia al this del objeto "+ nombreVar;
+									var temp3 =this.c3d.getTemporal();
+									var l8 = "+, p, "+posVariable+", "+temp3+" // pos de "+nombreVar;
+									var temp4 = this.c3d.getTemporal();
+									var l9 = "=>, "+temp3+", "+temp4+", stack // obteniendo apuntador de "+ nombreVar;
+									var temp5 = this.c3d.getTemporal();
+									var l10 = "+, p, "+ sizeFuncActual+", "+ temp5+" // simulando cambio de ambito";
+									var temp6 = this.c3d.getTemporal();
+									var l6 = "+, "+temp5+", 0, "+temp6+" //pos del this de "+nombreVar;
+									var l7 = "<=, "+temp6+", "+temp4+", stack // insertando apuntador del heap al stack del obeto "+ nombreVar;
+
+									this.c3d.addCodigo("// ----------- Instancia a una variable local --------------");
+									this.c3d.addCodigo(l1);
+									this.c3d.addCodigo(l2);
+									this.c3d.addCodigo(l3);
+									this.c3d.addCodigo(l4);
+									this.c3d.addCodigo(l5);
+									this.c3d.addCodigo(l6);
+									this.c3d.addCodigo("");
+									this.c3d.addCodigo(l7);
+									this.c3d.addCodigo("");
 
 
+									if(noParametros!= 0){
+										this.c3d.addCodigo("// Asignando parametros  ");
+										var expresionTemporal;
+										var cont=1;
+										for(var j =0; j< parametrosInstancia.length; j++){
+											expresionTemporal = parametrosInstancia[j];
+											var temp1_1 = this.c3d.getTemporal();
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+" // size de funcion actual";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+" //pos del parametro "+ cont;
+											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
+											var l3_1="";
+											if(retExpresion.tipo.toUpperCase() != "NULO"){
+												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack // asignado al stack el parametro";
+												this.c3d.addCodigo(l1_1);
+												this.c3d.addCodigo(l2_1);
+												this.c3d.addCodigo(l3_1);
+											} 
+										}
 
-							}
+									}else{
+										this.c3d.addCodigo("// No posee parametros ");
+									}
+
+									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
+									var l16 = "call, , , "+firmMetodo;
+									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
+									
+
+									this.c3d.addCodigo(l15);
+									this.c3d.addCodigo(l16);
+									this.c3d.addCodigo(l17);
+									this.c3d.addCodigo("");
+								
+								}else{
+									errores.insertarError("Semantico","La variable "+ nombreVar+", no existe");
+								}
+								
+							}//fin else de que la instancia es local
 
 						}else{
 							errores.insertarError("Semantico", "No existe "+nombreVar);
