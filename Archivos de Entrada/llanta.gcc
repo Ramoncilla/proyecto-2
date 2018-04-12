@@ -1,4 +1,21 @@
-
+<table border =1>
+<tr>
+<th> Tipo de Error </th>
+<th> Descripcion </th>
+<th> Columna </th>
+<th> Fila </th>
+</tr>
+<tr>NaNSemantico</td>
+<td> La variable  lla1, es de tipo llanta, imposible de instanciar con tipo llanta </td>
+<td> 0</td>
+<td> 0</td>
+</tr>
+<tr>NaNSemantico</td>
+<td> La variable  lla2, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td>
+<td> 0</td>
+</tr>
+<tr>
+NaNSemantico</td><td> La variable  lla3, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td><td> 0</td></tr><tr>NaNSemantico</td><td> La variable  lla4, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td><td> 0</td></tr><tr>NaNSemantico</td><td>
 
 
 

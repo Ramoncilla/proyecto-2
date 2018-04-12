@@ -61,7 +61,7 @@ generacionCodigo.prototype.generar3D= function(){
     nombreClase = claseTemporal.nombre;
 		//1. Traducimos el principal si es que posee
 		if(claseTemporal.principal_met!=null){
-			nombreFuncion = "PRINCIPAL";
+			nombreFuncion = nombreClase+"_PRINCIPAL";
 			var nombreAmb= nombreClase+"_PRINCIPAL";
 			ambitos.addAmbito(nombreAmb);
 			this.c3d.addCodigo("");
@@ -70,7 +70,7 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
 				sentTemporal = claseTemporal.principal_met.sentencias[j];
-				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreFuncion);
+				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreAmb);
 			}
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("end, , "+nombreAmb);
@@ -83,13 +83,14 @@ generacionCodigo.prototype.generar3D= function(){
 		for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
 			funTemporal = claseTemporal.funciones.funciones[j];
 			ambitos.addAmbito(funTemporal.obtenerFirma());
+			nombreFuncion = funTemporal.obtenerFirma();
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
 			this.c3d.addCodigo("");
 			for(var k =0; k<funTemporal.sentencias.length; k++){
 				sentTemporal = funTemporal.sentencias[k];
-				this.escribir3D(sentTemporal,ambitos,nombreClase,nombreFuncion);
+				this.escribir3D(sentTemporal,ambitos,nombreClase,funTemporal.obtenerFirma());
 			}
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("end, , "+funTemporal.obtenerFirma());
@@ -260,13 +261,15 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 					}
 
 					var firmMetodo = this.tablaSimbolos.obtenerFirmaMetodo(nombreClaseInstanciar,noParametros,nombreClaseInstanciar);
+					var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
+
 					console.log("CLASE "+ nombreClaseInstanciar + "  No Parametros  "+ noParametros +"  Nombre Clase a  Instancia  "+ nombreClaseInstanciar);
 					console.log("Nombre del metodo "+ firmMetodo);
-
 					if(tipoVar.toUpperCase() == nombreClaseInstanciar.toUpperCase() && firmMetodo!=""){
 						//console.log("ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 						var sizeClase = this.tablaSimbolos.SizeClase(nombreClaseInstanciar);
 						var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
+						
 						if(esAtributo!=null){
 							if(esAtributo){
 								// se realizara una instancia de un atributo
@@ -293,7 +296,7 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									var l10 = "=>, "+temp6+", "+temp7+", heap //posicion real donde incia el objeto "+nombreVar;
 									var temp8 = this.c3d.getTemporal();
 									var l11= "+, "+temp7+", "+posVar+", "+ temp8+" // pos real donde incial el objeto "+ nombreVar;
-									var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
+									
 									var temp9 = this.c3d.getTemporal();
 
 									var l12 = "+, p, "+temp8+", "+temp9+" // tamanho de la funcion actual "+ metodo;
@@ -320,18 +323,35 @@ PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 									this.c3d.addCodigo("");
 
 									// Verificar si posee parametros
-									 
 
-									if(parametrosInstancia==0){
-										this.c3d.addCodigo("// No posee parametros ");
+									if(noParametros!= 0){
+										this.c3d.addCodigo("// Asignando parametros  ");
+										var expresionTemporal;
+										var cont=1;
+										for(var j =0; j< parametrosInstancia.length; j++){
+											expresionTemporal = parametrosInstancia[j];
+											var temp1_1 = this.c3d.getTemporal();
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+" // size de funcion actual";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+" //pos del parametro "+ cont;
+											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
+											var l3_1="";
+											if(retExpresion.tipo.toUpperCase() != "NULO"){
+												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack // asignado al stack el parametro";
+												this.c3d.addCodigo(l1_1);
+												this.c3d.addCodigo(l2_1);
+												this.c3d.addCodigo(l3_1);
+											} 
+										}
 
 									}else{
-										this.c3d.addCodigo("// posee parametros ");										
+										this.c3d.addCodigo("// No posee parametros ");
 									}
-
+									
 									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
 									var l16 = "call, , , "+firmMetodo;
 									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
+									
 
 									this.c3d.addCodigo(l15);
 									this.c3d.addCodigo(l16);

@@ -4,7 +4,7 @@ entero valor1;
 entero valor2;
 
 
-publico llanta( ){
+publico llanta(entero val){
     valor1= val1;
     valor2= val1*10;
 }

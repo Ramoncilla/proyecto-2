@@ -155,6 +155,7 @@ TablaSimbolos.prototype.obtenerFirmaMetodo = function(nombreClase, noParametros,
 TablaSimbolos.prototype.sizeFuncion = function(nombreClase, firmaMetodo){
 
   var item;
+  console.log("ESTOY BUSANDO    "+ nombreClase+ firmaMetodo);
   for(var i =0; i<this.listaSimbolos.length; i++){
     item = this.listaSimbolos[i];
     if(item.ambito.toUpperCase() == nombreClase.toUpperCase() &&

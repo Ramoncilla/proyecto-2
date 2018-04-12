@@ -1,9 +1,9 @@
 
 
-begin, , , llanta_vacio_llanta
+begin, , , llanta_vacio_llanta_entero
 
 
-end, , llanta_vacio_llanta
+end, , llanta_vacio_llanta_entero
 
 
 
@@ -17,6 +17,106 @@ end, , llanta_vacio_getValor1
 
 
 begin, , , carro_vacio_carro
+
++, p, 0, t1// pos this de lla1
+=>, t1, t2, stack //apuntador del heap de lla1
+=>, t2, t3, heap //posicion real del heap donde inicia lla1
++, t3, 0, t4 //pos real del atributo lla1
+<=, t4, h, heap //guardando la pos real donde inicia el objeto lla1
++, h, 2, h // reservando el espacio de memoria para el nuevo objeto lla1
+
+// Guardando la referencia al this del objeto para la llamada al constructor lla1
++, p, 0, t5
+=>, t5, t6, stack //apuntador al heap de lla1
+=>, t6, t7, heap //posicion real donde incia el objeto lla1
++, t7, 0, t8 // pos real donde incial el objeto lla1
+
++, p, t8, t9 // tamanho de la funcion actual carro_vacio_carro
++, t9, 0, t10 // pos del this para la nueva instancia de lla1
+<=, t10, t8, stack //guaradndo el puntero del this en el stack 
+
+// Asignando parametros  
++, p, 2, t11 // size de funcion actual
++, t11, 1, t12 //pos del parametro 1
+<=, 
++, p, 2, p // simulando cambio de ambito
+call, , , llanta_vacio_llanta_entero
+-, p, 2, p // regresando al ambito acutal
+
++, p, 0, t13// pos this de lla2
+=>, t13, t14, stack //apuntador del heap de lla2
+=>, t14, t15, heap //posicion real del heap donde inicia lla2
++, t15, 1, t16 //pos real del atributo lla2
+<=, t16, h, heap //guardando la pos real donde inicia el objeto lla2
++, h, 2, h // reservando el espacio de memoria para el nuevo objeto lla2
+
+// Guardando la referencia al this del objeto para la llamada al constructor lla2
++, p, 0, t17
+=>, t17, t18, stack //apuntador al heap de lla2
+=>, t18, t19, heap //posicion real donde incia el objeto lla2
++, t19, 1, t20 // pos real donde incial el objeto lla2
+
++, p, t20, t21 // tamanho de la funcion actual carro_vacio_carro
++, t21, 0, t22 // pos del this para la nueva instancia de lla2
+<=, t22, t20, stack //guaradndo el puntero del this en el stack 
+
+// Asignando parametros  
++, p, 2, t23 // size de funcion actual
++, t23, 1, t24 //pos del parametro 1
+<=, 
++, p, 2, p // simulando cambio de ambito
+call, , , llanta_vacio_llanta_entero
+-, p, 2, p // regresando al ambito acutal
+
++, p, 0, t25// pos this de lla3
+=>, t25, t26, stack //apuntador del heap de lla3
+=>, t26, t27, heap //posicion real del heap donde inicia lla3
++, t27, 2, t28 //pos real del atributo lla3
+<=, t28, h, heap //guardando la pos real donde inicia el objeto lla3
++, h, 2, h // reservando el espacio de memoria para el nuevo objeto lla3
+
+// Guardando la referencia al this del objeto para la llamada al constructor lla3
++, p, 0, t29
+=>, t29, t30, stack //apuntador al heap de lla3
+=>, t30, t31, heap //posicion real donde incia el objeto lla3
++, t31, 2, t32 // pos real donde incial el objeto lla3
+
++, p, t32, t33 // tamanho de la funcion actual carro_vacio_carro
++, t33, 0, t34 // pos del this para la nueva instancia de lla3
+<=, t34, t32, stack //guaradndo el puntero del this en el stack 
+
+// Asignando parametros  
++, p, 2, t35 // size de funcion actual
++, t35, 1, t36 //pos del parametro 1
+<=, 
++, p, 2, p // simulando cambio de ambito
+call, , , llanta_vacio_llanta_entero
+-, p, 2, p // regresando al ambito acutal
+
++, p, 0, t37// pos this de lla4
+=>, t37, t38, stack //apuntador del heap de lla4
+=>, t38, t39, heap //posicion real del heap donde inicia lla4
++, t39, 3, t40 //pos real del atributo lla4
+<=, t40, h, heap //guardando la pos real donde inicia el objeto lla4
++, h, 2, h // reservando el espacio de memoria para el nuevo objeto lla4
+
+// Guardando la referencia al this del objeto para la llamada al constructor lla4
++, p, 0, t41
+=>, t41, t42, stack //apuntador al heap de lla4
+=>, t42, t43, heap //posicion real donde incia el objeto lla4
++, t43, 3, t44 // pos real donde incial el objeto lla4
+
++, p, t44, t45 // tamanho de la funcion actual carro_vacio_carro
++, t45, 0, t46 // pos del this para la nueva instancia de lla4
+<=, t46, t44, stack //guaradndo el puntero del this en el stack 
+
+// Asignando parametros  
++, p, 2, t47 // size de funcion actual
++, t47, 1, t48 //pos del parametro 1
+<=, 
++, p, 2, p // simulando cambio de ambito
+call, , , llanta_vacio_llanta_entero
+-, p, 2, p // regresando al ambito acutal
 
 
 end, , carro_vacio_carro
