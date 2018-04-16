@@ -5,8 +5,8 @@ entero valor2;
 
 
 publico llanta(entero val){
-    valor1= val1;
-    valor2= val1*10;
+    valor1= val;
+    valor2= val*10;
 }
 
 publico vacio getValor1(){
@@ -50,13 +50,18 @@ clase persona {
     }
 
     persona(){
+        imprimir(edad);
         
     }
 
     principal(){
         persona p1;
-        entero pedrito = edad +7;
-        entero alina = pedrito *2;
+        entero pedrito;
+        pedrito = 10 +7;
+        entero alina;
+         alina = 2 *2-pedrito;
+        imprimir(pedrito);
+        imprimir(alina);
         
         p1 = nuevo persona();
  

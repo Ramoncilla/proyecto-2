@@ -11,6 +11,11 @@ var Ambito = require("../Codigo3D/Ambito");
 var EleRetorno = require("./retorno");
 var Instancia = require("../Arbol/Expresion/Instancia");
 var AsignacionE = require("../Arbol/Sentencias/Asignacion");
+var interprete = require("../Interprete/interprete");
+var analizInterprete = require("../Interprete/AnalizadorInterprete");
+
+
+
 
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
@@ -106,22 +111,22 @@ generacionCodigo.prototype.generar3D= function(){
 							//|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
 						}else{
 							var temp1 = this.c3d.getTemporal();
-							var l1 = "+, p, 0, "+temp1+" //Pos del this del objeto "+ nombreClase;
+							var l1 = "+, p, 0, "+temp1+"; //Pos del this del objeto "+ nombreClase;
 							var temp2 = this.c3d.getTemporal();
-							var l2 = "=>, "+temp1+", "+temp2+", stack // obteniendo el apuntador  del heap ";
+							var l2 = "=>, "+temp1+", "+temp2+", stack; // obteniendo el apuntador  del heap ";
 							var temp3 = this.c3d.getTemporal();
-							var l3 = "=>, "+temp2+", "+temp3+", heap // recupenrado del heap el apuntdor al heap de donde inicia el objeto";
+							var l3 = "=>, "+temp2+", "+temp3+", heap;// recupenrado del heap el apuntdor al heap de donde inicia el objeto";
 							var temp4 = this.c3d.getTemporal();
-							var l4 = "+, "+temp3+", "+atriTemporal.apuntador+", "+temp4+" // obteniendo la posicion real del atributo "+ atriTemporal.nombreCorto;
+							var l4 = "+, "+temp3+", "+atriTemporal.apuntador+", "+temp4+"; // obteniendo la posicion real del atributo "+ atriTemporal.nombreCorto;
+							this.c3d.addCodigo("// Asignando atributo "+ atriTemporal.nombreCorto);
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo(l3);
+							this.c3d.addCodigo(l4);
 							var retExpresion = this.resolverExpresion(atriTemporal.expresionAtributo,ambitos,nombreClase, funTemporal.obtenerFirma());
 							if(retExpresion instanceof EleRetorno){
 								if(retExpresion.tipo.toUpperCase() != "NULO"){
-									var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap //guardando en el heap el valor del atributo";
-									this.c3d.addCodigo("// Asignando atributo "+ atriTemporal.nombreCorto);
-									this.c3d.addCodigo(l1);
-									this.c3d.addCodigo(l2);
-									this.c3d.addCodigo(l3);
-									this.c3d.addCodigo(l4);
+									var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap; //guardando en el heap el valor del atributo";
 									this.c3d.addCodigo(l5);
 								}
 							}else{
@@ -152,6 +157,13 @@ generacionCodigo.prototype.generar3D= function(){
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
 	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
 	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
+	var a = new analizInterprete();
+	a.Ejecutar3D(this.c3d.codigo3D,"persona_PRINCIPAL");
+	console.log("Impresion");
+	console.log(a.cadenaImpresion);
+	
+
+    //interprete.parse(this.c3d.codigo3D);
 	return this.tablaSimbolos.obtenerHTMLTabla();
 
 };
@@ -250,9 +262,7 @@ generacionCodigo.prototype.obtenerClasePadre = function(nombre){
 
 /* --------------------------- Generacion de codigo -------------------------- */
 
-generacionCodigo.prototype.asignarAtributos = function (nodo, ambito, clase, metodo){
 
-};
 
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
@@ -267,8 +277,85 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 				case 1:{
 					//id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
 
+					var nombreVar = nodo.getElemento();
+					var tipoVar= this.tablaSimbolos.obtenerTipo(nombreVar, ambitos);
+					var expresionVar = nodo.getValor();
+					var simboloIgual = nodo.getSimbolo();
+
+					var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
+
+					if(esAtributo!= null){
+						if(esAtributo){
+							// es un atributo
+							var posVar = this.tablaSimbolos.obtenerPosAtributo(nombreVar, ambitos);
+							if(posVar!= -1){
+								var temp1 = this.c3d.getTemporal();
+								var l1 = "+, p, 0, "+temp1+"; //pos this ";
+								var temp2 = this.c3d.getTemporal();
+								var l2 = "=>, "+temp1+", "+temp2+", stack; // apuntador al heap";
+								var temp3 = this.c3d.getTemporal();
+								var l3 = "=>, "+temp2+", "+temp3+", heap; // apuntador donde inicia el objeto";
+								var temp4 = this.c3d.getTemporal();
+								var l4 = "+, "+temp3+", "+posVar+", "+temp4+"; // pos real  de "+nombreVar;
+								this.c3d.addCodigo("// Asignando atributo "+ nombreVar);
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+								if(retExpresion instanceof EleRetorno){
+									if(retExpresion.tipo.toUpperCase() != "NULO"){
+										var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap; //guardando en el heap el valor del atributo";
+										this.c3d.addCodigo(l5);
+									}
 
 
+								}else{
+									errores.insertarError("Semantico", "Hubo un error al realizar la operacion");
+								}
+
+							}else{
+								errores.insertarError("Semantico", "La variable "+nombreVar+", no existe");
+							}
+
+						}else{
+							// es una vairable local
+							var pos = this.tablaSimbolos.obtenerPosLocal(nombreVar,ambitos);
+							var tipoV = this.tablaSimbolos.obtenerTipo(nombreVar,ambitos);
+							if(pos!=-1){
+								var temp1 = this.c3d.getTemporal();
+								var l1 = "+, p, "+pos+", "+temp1+"; // pos de "+nombreVar;
+								var temp2 = this.c3d.getTemporal();
+								this.c3d.addCodigo("// -------------- Resolviendo para un ID (var local) Asignacion ------------");
+								this.c3d.addCodigo(l1);
+								var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase, metodo);
+								if(retExpresion instanceof EleRetorno){
+									if(retExpresion.tipo.toUpperCase() != "NULO"){
+										var l2 = "<=, "+temp1+", "+ retExpresion.valor+", stack; // asignando a "+ nombreVar;
+										this.c3d.addCodigo(l2);
+									}else{
+										errores.insertarError("Semantico", "Hubo un error al reslver para "+ nombreVar);
+									}
+
+
+								}else{
+									errores.insertarError("Semantico", "Ocurrio un error al resolver para "+ nombreVar);
+								}
+
+							}else{
+								errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
+								var ret = new EleRetorno();
+								ret.setValoresNulos();
+								return ret;
+
+							}
+
+
+						}
+
+					}else{
+						errores.insertarError("Semantico", "No existe la vairable "+ nombreVar);
+					}
 					break;
 				}
 
@@ -302,32 +389,32 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 								var posVar = this.tablaSimbolos.obtenerPosAtributo(nombreVar,ambitos);
 								if(posVar!= -1){
 									var temp = this.c3d.getTemporal();
-									var l1 = "+, p, 0, "+temp+"// pos this de "+nombreVar;
+									var l1 = "+, p, 0, "+temp+";// pos this de "+nombreVar;
 									var temp2 = this.c3d.getTemporal();
-									var l2= "=>, "+temp+", "+temp2+", stack //apuntador del heap de "+ nombreVar;
+									var l2= "=>, "+temp+", "+temp2+", stack; //apuntador del heap de "+ nombreVar;
 									var temp3 = this.c3d.getTemporal();
-									var l3 = "=>, "+temp2+", "+temp3+", heap //posicion real del heap donde inicia "+nombreVar;
+									var l3 = "=>, "+temp2+", "+temp3+", heap; //posicion real del heap donde inicia "+nombreVar;
 									var temp4= this.c3d.getTemporal();
-									var l4 ="+, "+temp3+", "+posVar+", "+temp4+" //pos real del atributo "+nombreVar;
-									var l5 ="<=, "+temp4+", h, heap //guardando la pos real donde inicia el objeto "+nombreVar;
-									var l6 ="+, h, "+sizeClase+", h // reservando el espacio de memoria para el nuevo objeto "+ nombreVar;
+									var l4 ="+, "+temp3+", "+posVar+", "+temp4+"; //pos real del atributo "+nombreVar;
+									var l5 ="<=, "+temp4+", h, heap; //guardando la pos real donde inicia el objeto "+nombreVar;
+									var l6 ="+, h, "+sizeClase+", h; // reservando el espacio de memoria para el nuevo objeto "+ nombreVar;
 
 									var l7="// Guardando la referencia al this del objeto para la llamada al constructor "+nombreVar;
 									var temp5 = this.c3d.getTemporal();
-									var l8 = "+, p, 0, "+ temp5;
+									var l8 = "+, p, 0, "+ temp5+";";
 									var temp6 = this.c3d.getTemporal();
-									var l9 = "=>, "+temp5+", "+ temp6+", stack //apuntador al heap de "+ nombreVar;
+									var l9 = "=>, "+temp5+", "+ temp6+", stack; //apuntador al heap de "+ nombreVar;
 									var temp7 = this.c3d.getTemporal();
-									var l10 = "=>, "+temp6+", "+temp7+", heap //posicion real donde incia el objeto "+nombreVar;
+									var l10 = "=>, "+temp6+", "+temp7+", heap; //posicion real donde incia el objeto "+nombreVar;
 									var temp8 = this.c3d.getTemporal();
-									var l11= "+, "+temp7+", "+posVar+", "+ temp8+" // pos real donde incial el objeto "+ nombreVar;
+									var l11= "+, "+temp7+", "+posVar+", "+ temp8+"; // pos real donde incial el objeto "+ nombreVar;
 									
 									var temp9 = this.c3d.getTemporal();
 
-									var l12 = "+, p, "+temp8+", "+temp9+" // tamanho de la funcion actual "+ metodo;
+									var l12 = "+, p, "+temp8+", "+temp9+"; // tamanho de la funcion actual "+ metodo;
 									var temp10 = this.c3d.getTemporal();
-									var l13 = "+, "+temp9+", 0, "+temp10 +" // pos del this para la nueva instancia de "+ nombreVar;
-									var l14 = "<=, "+temp10+", "+temp8+", stack //guaradndo el puntero del this en el stack ";
+									var l13 = "+, "+temp9+", 0, "+temp10 +"; // pos del this para la nueva instancia de "+ nombreVar;
+									var l14 = "<=, "+temp10+", "+temp8+", stack; //guaradndo el puntero del this en el stack ";
 									
 									this.c3d.addCodigo("// ----------- Instancia a un atributo --------------");
 									this.c3d.addCodigo(l1);
@@ -357,15 +444,15 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										for(var j =0; j< parametrosInstancia.length; j++){
 											expresionTemporal = parametrosInstancia[j];
 											var temp1_1 = this.c3d.getTemporal();
-											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+" // size de funcion actual";
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
-											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+" //pos del parametro "+ cont;
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
 											var l3_1="";
 											if(retExpresion.tipo.toUpperCase() != "NULO"){
-												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack // asignado al stack el parametro";
-												this.c3d.addCodigo(l1_1);
-												this.c3d.addCodigo(l2_1);
+												l3_1= "<=, "+temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
 												this.c3d.addCodigo(l3_1);
 											} 
 										}
@@ -374,9 +461,9 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										this.c3d.addCodigo("// No posee parametros ");
 									}
 									
-									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
-									var l16 = "call, , , "+firmMetodo;
-									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
+									var l15= "+, p, "+sizeFuncActual+", p; // simulando cambio de ambito";
+									var l16 = "call, , , "+firmMetodo+";";
+									var l17 = "-, p, "+sizeFuncActual+", p; // regresando al ambito acutal";
 									
 
 									this.c3d.addCodigo(l15);
@@ -395,23 +482,23 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
                                 var posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVar,ambitos);
 								if(posVariable!= -1){
 									var temp1= this.c3d.getTemporal();
-									var l1 = "+, p, "+ posVariable+", "+ temp1+" // pos de "+ nombreVar;
-									var l2 = "<=, "+temp1+", h, stack //guardando referencia del heap para el objeto "+ nombreVar;
+									var l1 = "+, p, "+ posVariable+", "+ temp1+"; // pos de "+ nombreVar;
+									var l2 = "<=, "+temp1+", h, stack; //guardando referencia del heap para el objeto "+ nombreVar;
 									var temp2 = this.c3d.getTemporal();
-									var l3 = "+, h, 1, "+temp2+" // guardo la posicion donde inicia el objeto ";
-									var l4 = "<=, h, "+temp2+", heap // guardando donde es que inicia el objeto dentro del heap";
-									var l5 = "+, h, 1, h // sumando al heap la posicion que usamos extra para el doble apuntador ";
-									var l6 = "+, h, "+sizeClase+", h // reservando espacio para el objeto "+ nombreVar;
+									var l3 = "+, h, 1, "+temp2+"; // guardo la posicion donde inicia el objeto ";
+									var l4 = "<=, h, "+temp2+", heap; // guardando donde es que inicia el objeto dentro del heap";
+									var l5 = "+, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador ";
+									var l6 = "+, h, "+sizeClase+", h; // reservando espacio para el objeto "+ nombreVar;
 									var l7 = "//Ingresando referencia al this del objeto "+ nombreVar;
 									var temp3 =this.c3d.getTemporal();
-									var l8 = "+, p, "+posVariable+", "+temp3+" // pos de "+nombreVar;
+									var l8 = "+, p, "+posVariable+", "+temp3+"; // pos de "+nombreVar;
 									var temp4 = this.c3d.getTemporal();
-									var l9 = "=>, "+temp3+", "+temp4+", stack // obteniendo apuntador de "+ nombreVar;
+									var l9 = "=>, "+temp3+", "+temp4+", stack; // obteniendo apuntador de "+ nombreVar;
 									var temp5 = this.c3d.getTemporal();
-									var l10 = "+, p, "+ sizeFuncActual+", "+ temp5+" // simulando cambio de ambito";
+									var l10 = "+, p, "+ sizeFuncActual+", "+ temp5+"; // simulando cambio de ambito";
 									var temp6 = this.c3d.getTemporal();
-									var l6 = "+, "+temp5+", 0, "+temp6+" //pos del this de "+nombreVar;
-									var l7 = "<=, "+temp6+", "+temp4+", stack // insertando apuntador del heap al stack del obeto "+ nombreVar;
+									var l11 = "+, "+temp5+", 0, "+temp6+"; //pos del this de "+nombreVar;
+									var l12 = "<=, "+temp6+", "+temp4+", stack; // insertando apuntador del heap al stack del obeto "+ nombreVar;
 
 									this.c3d.addCodigo("// ----------- Instancia a una variable local --------------");
 									this.c3d.addCodigo(l1);
@@ -420,10 +507,13 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									this.c3d.addCodigo(l4);
 									this.c3d.addCodigo(l5);
 									this.c3d.addCodigo(l6);
-									this.c3d.addCodigo("");
 									this.c3d.addCodigo(l7);
-									this.c3d.addCodigo("");
-
+									this.c3d.addCodigo(l8);
+									this.c3d.addCodigo(l9);
+									this.c3d.addCodigo(l10);
+									this.c3d.addCodigo(l11);
+									this.c3d.addCodigo(l12);
+								
 
 									if(noParametros!= 0){
 										this.c3d.addCodigo("// Asignando parametros  ");
@@ -432,15 +522,16 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										for(var j =0; j< parametrosInstancia.length; j++){
 											expresionTemporal = parametrosInstancia[j];
 											var temp1_1 = this.c3d.getTemporal();
-											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+" // size de funcion actual";
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
-											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+" //pos del parametro "+ cont;
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
 											var l3_1="";
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
 											if(retExpresion.tipo.toUpperCase() != "NULO"){
-												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack // asignado al stack el parametro";
-												this.c3d.addCodigo(l1_1);
-												this.c3d.addCodigo(l2_1);
+												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
+												
 												this.c3d.addCodigo(l3_1);
 											} 
 										}
@@ -449,9 +540,9 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										this.c3d.addCodigo("// No posee parametros ");
 									}
 
-									var l15= "+, p, "+sizeFuncActual+", p // simulando cambio de ambito";
-									var l16 = "call, , , "+firmMetodo;
-									var l17 = "-, p, "+sizeFuncActual+", p // regresando al ambito acutal";
+									var l15= "+, p, "+sizeFuncActual+", p; // simulando cambio de ambito";
+									var l16 = "call, , , "+firmMetodo+";";
+									var l17 = "-, p, "+sizeFuncActual+", p; // regresando al ambito acutal";
 									
 
 									this.c3d.addCodigo(l15);
@@ -526,11 +617,40 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 			}
 
-
-			
-
 			break;
 		}//fin asignacion
+
+
+		case "IMPRIMIR":{
+			console.log("voy a imprimirrrrrrrrrrrrrrrrrr");
+			console.dir(nodo);
+
+			var resultado = this.resolverExpresion(nodo.expresionImprimir,ambitos,clase, metodo);
+			if(resultado instanceof EleRetorno){
+				if(resultado.tipo.toUpperCase() != "NULO"){
+					if(resultado.tipo.toUpperCase() == "ENTERO" || resultado.tipo.toUpperCase() == "BOOLEANO"){
+						var l1 = "print(\"%d\", "+ resultado.valor +");";
+						this.c3d.addCodigo(l1);
+					}else if(resultado.tipo.toUpperCase() == "DECIMAL"){
+						var l1 = "print(\"%f\", "+ resultado.valor +");";
+						this.c3d.addCodigo(l1);
+
+					}else if(resultado.tipo.toUpperCase() == "CARACTER"){
+						var l1 = "print(\"%c\", "+ resultado.valor +");";
+						this.c3d.addCodigo(l1);
+
+					}
+				}
+
+			}else{
+				errores.insertarError("Ha ocurrido un error al resolver para imprimir");
+			}
+
+
+
+
+			break;
+		}
 
 	}//fin switch sentencia
 };
@@ -662,7 +782,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "je, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "je, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -687,7 +807,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jne, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "jne, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -713,7 +833,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jg, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "jg, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -739,7 +859,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jge, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "jge, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -766,7 +886,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jl, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "jl, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -792,7 +912,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
 							var etiqV= this.c3d.getEtiqueta();
 							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jle, "+val1.valor+", "+ val2.valor+", "+etiqV+ "\njmp, , , "+etiqF;
+							var cod = "jle, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
 							var res = new nodoCondicion(cod);
 							res.addFalsa(etiqF);
 							res.addVerdadera(etiqV);
@@ -902,15 +1022,15 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 					var tipoV = this.tablaSimbolos.obtenerTipo(nombreId,ambitos);
 					if(pos!=-1){
 						var temp1 = this.c3d.getTemporal();
-						var l1 = "+, p, 0, "+temp1+" // pos this ";
+						var l1 = "+, p, 0, "+temp1+"; // pos this ";
 						var temp2 = this.c3d.getTemporal();
-						var l2 = "=>, "+temp1+", "+temp2+", stack // obtenido apuntador al heap ";
+						var l2 = "=>, "+temp1+", "+temp2+", stack; // obtenido apuntador al heap ";
 						var temp3 = this.c3d.getTemporal();
-						var l3 = "=>, "+temp2+", "+temp3+", heap // apuntador ";
+						var l3 = "=>, "+temp2+", "+temp3+", heap; // apuntador ";
 						var temp4 = this.c3d.getTemporal(); 
-						var l4 = "+, "+temp3+", "+pos+", "+temp4+" // pos de "+ nombreId;
+						var l4 = "+, "+temp3+", "+pos+", "+temp4+"; // pos de "+ nombreId;
 						var temp5 = this.c3d.getTemporal();
-						var l5 = "=>, "+temp4+", "+temp5+", heap // obtengo el valor que se encuentre en el heap ";
+						var l5 = "=>, "+temp4+", "+temp5+", heap; // obtengo el valor que se encuentre en el heap ";
 						this.c3d.addCodigo("// ------------ Resolviendo un ID (atributo) -----------");
 						this.c3d.addCodigo(l1);
 						this.c3d.addCodigo(l2);
@@ -932,9 +1052,9 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 					var tipoV = this.tablaSimbolos.obtenerTipo(nombreId,ambitos);
 					if(pos!=-1){
 						var temp1 = this.c3d.getTemporal();
-						var l1 = "+, p, "+pos+", "+temp1+" // pos de "+nombreId;
+						var l1 = "+, p, "+pos+", "+temp1+"; // pos de "+nombreId;
 						var temp2 = this.c3d.getTemporal();
-						var l2 = "=>, "+temp1+", "+temp2+", stack // valor de lo que trae en el stack "+ nombreId;
+						var l2 = "=>, "+temp1+", "+temp2+", stack; // valor de lo que trae en el stack "+ nombreId;
 						this.c3d.addCodigo("// -------------- Resolviendo para un ID (var local) ------------");
 						this.c3d.addCodigo(l1);
 						this.c3d.addCodigo(l2);
@@ -981,7 +1101,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			if(this.esInt(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -989,7 +1109,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -998,7 +1118,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1007,7 +1127,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esChar(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1016,7 +1136,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esBool(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1025,7 +1145,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1034,7 +1154,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1043,7 +1163,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 //enteros
 			else if(this.esInt(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1052,7 +1172,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esChar(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1061,7 +1181,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esBool(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1070,7 +1190,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1078,7 +1198,7 @@ generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 			}
 			else if(this.esInt(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "^, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1113,7 +1233,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			if(this.esInt(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1121,7 +1241,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1130,7 +1250,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1139,7 +1259,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esChar(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1148,7 +1268,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esBool(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1157,7 +1277,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1166,7 +1286,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esDecimal(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1175,7 +1295,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1184,7 +1304,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esChar(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1193,7 +1313,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esBool(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1202,7 +1322,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1210,7 +1330,7 @@ generacionCodigo.prototype.validarDivisionOperacion = function(val1, val2){
 			}
 			else if(this.esInt(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "/, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1244,7 +1364,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 
 			if(this.esInt(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1252,7 +1372,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1260,7 +1380,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1268,7 +1388,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esChar(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1276,7 +1396,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esBool(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1284,7 +1404,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1292,7 +1412,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1302,7 +1422,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1311,7 +1431,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 
 			else if(this.esChar(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1320,7 +1440,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 
 			else if(this.esBool(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1329,7 +1449,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1337,7 +1457,7 @@ generacionCodigo.prototype.validarMultiplicacionOperacion= function(val1, val2){
 			}
 			else if(this.esInt(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "*, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1370,7 +1490,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 
 			if(this.esInt(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1378,7 +1498,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1386,7 +1506,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1394,7 +1514,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esChar(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1402,7 +1522,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esBool(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1410,7 +1530,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1418,7 +1538,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esDecimal(val1.tipo) && this.esDecimal(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorDecimal(temp);
@@ -1428,7 +1548,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esChar(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1436,7 +1556,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esChar(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1444,7 +1564,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esBool(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1452,7 +1572,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 			}
 			else if(this.esInt(val1.tipo) && this.esBool(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1461,7 +1581,7 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 
 			else if(this.esInt(val1.tipo) && this.esInt(val2.tipo)){
 				var temp = this.c3d.getTemporal();
-				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp;
+				var cod = "-, "+val1.valor+", "+val2.valor+", "+temp+";";
 				this.c3d.addCodigo(cod);
 				ret = new EleRetorno();
 				ret.setValorEntero(temp);
@@ -1495,7 +1615,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				
 				if(this.esInt(val1.tipo) && this.esDecimal(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1503,7 +1623,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				} 
 				else if(this.esDecimal(val1.tipo) && this.esInt(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1511,7 +1631,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				}
 				else if(this.esDecimal(val1.tipo) && this.esChar(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1519,7 +1639,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				}
 				else if(this.esChar(val1.tipo) && this.esDecimal(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1527,7 +1647,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				}
 				else if(this.esBool(val1.tipo) && this.esDecimal(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1535,7 +1655,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				}
 				else if(this.esDecimal(val1.tipo) && this.esBool(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1543,7 +1663,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 				}
 				else if(this.esDecimal(val1.tipo) && this.esDecimal(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorDecimal(temp); 
@@ -1554,7 +1674,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esInt(val1.tipo) && this.esChar(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1563,7 +1683,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esChar(val1.tipo) && this.esInt(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1572,7 +1692,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esBool(val1.tipo) && this.esInt(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1581,7 +1701,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esInt(val1.tipo) && this.esBool(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1590,7 +1710,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esInt(val1.tipo) && this.esInt(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1599,7 +1719,7 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 				else if(this.esBool(val1.tipo) && this.esBool(val2.tipo)){
 					var temp = this.c3d.getTemporal();
-					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp;
+					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
 					this.c3d.addCodigo(cod);
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
@@ -1646,12 +1766,6 @@ generacionCodigo.prototype.esChar = function(val){
 	return (val.toUpperCase() == "CARACTER");
 };
 
-
-
-generacionCodigo.prototype.validarTipo = function(nodo, ambito, clase, metodo){
-	 
-
-};
 
 
 

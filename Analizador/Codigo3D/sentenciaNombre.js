@@ -34,49 +34,57 @@ var unario = require("../Arbol/Expresion/Unario");
 var valorPuntero = require("../Arbol/Expresion/ValorPuntero");
 var Identificador = require("../Arbol/Expresion/t_id");
 
-/*
-
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
-var  = require("../Arbol/Sentencias");
 
 
-/*
-SENTENCIA: DECLARACION{$$=$1;}
-|CONCATENAR{$$=$1;}
-|IMPRIMIR{$$=$1;}
-|ROMPER{$$=$1;}
-|RETORNO{$$=$1;}
-|CONTINUAR{$$=$1;}
-|ESTRUCTURA{$$=$1;}
-|DECLA_LISTA{$$=$1;}
-|DECLA_PILA{$$=$1;}
-|DECLA_COLA{$$=$1;}
-|SI{$$=$1;}
-|SWITCH{$$=$1;}
-|REPETIR_MIENTRAS{$$=$1;}
-|HACER_MIENTRAS{$$=$1;}
-|CICLO_X{$$=$1;}
-|REPETIR{$$=$1;}
-|REPETIR_CONTANDO{$$=$1;}
-|ENCICLAR{$$=$1;}
-|CONTADOR{$$=$1;}
-|LEER_TECLADO{$$=$1;}
-|ACCESO puntoComa{$$=$1;}
-|ASIGNACION puntoComa{$$=$1;}
-|DESTRUIR_PUNTERO puntoComa{$$=$1;}
-|DECLA_PUNTERO puntoComa{$$=$1;};
+var expresion3D = require("../Interprete/ArbolInterprete/Aritmetica");
+var get_asig_ed_3d = require("../Interprete/ArbolInterprete/Get_Asig_ED");
+var asig_3d = require("../Interprete/ArbolInterprete/Asig");
+var llamada_3d = require("../Interprete/ArbolInterprete/Llamada");
+var imprimir_3d = require("../Interprete/ArbolInterprete/Imprimir");
+var relacional_3d = require("../Interprete/ArbolInterprete/Relacional");
+var etiqueta_3d = require("../Interprete/ArbolInterprete/Etiqueta");
+var salto_3d = require("../Interprete/ArbolInterprete/Salto");
 
-*/
 function sentenciaNombre(){
 
 }
 
+sentenciaNombre.prototype.obtenerNombre3D= function(sent){
 
+    if(sent instanceof expresion3D){
+        return "aritmetica";
+    }
+
+    if(sent instanceof get_asig_ed_3d){
+        return "get_asig_ed_3d";
+    }
+
+    if(sent instanceof asig_3d){
+        return "asig_3d";
+    }
+
+    if(sent instanceof llamada_3d){
+        return "llamada";
+    }
+
+    if(sent instanceof imprimir_3d){
+        return "imprimir";
+    }
+
+    if(sent instanceof relacional_3d){
+        return "relacional";
+    }
+
+    if(sent instanceof etiqueta_3d){
+        return "etiqueta";
+    }
+
+    if(sent instanceof salto_3d){
+        return "salto";
+    }
+
+    return "";
+};
 
 
 
@@ -201,6 +209,10 @@ sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
 
  if(sent instanceof Asignacion){
      return "asignacion";
+ }
+
+ if (sent instanceof Imprimir){
+     return "imprimir";
  }
 
 /*

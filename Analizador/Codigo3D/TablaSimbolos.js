@@ -111,14 +111,27 @@ TablaSimbolos.prototype.esAtributo = function(nombre, ambitos){
       simbTemporal = this.listaSimbolos[j];
       if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
          simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
-           if(simbTemporal.rol.toUpperCase()=="ATRIBUTO")
-              return true;
-            else
+           if(simbTemporal.rol.toUpperCase()!="ATRIBUTO")
               return false;
          }
     }
 
   }
+
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()=="ATRIBUTO")
+              return true;
+         }
+    }
+
+  }
+
+
 
   return null;
 

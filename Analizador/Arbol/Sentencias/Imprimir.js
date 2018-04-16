@@ -1,5 +1,5 @@
 function Imprimir(){
-	this.expresion = null;
+	this.expresionImprimir = null;
 }
 
 
