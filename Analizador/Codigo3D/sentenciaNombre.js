@@ -6,12 +6,16 @@ var caracter = require("../Arbol/Expresion/Caracter");
 var cadena = require("../Arbol/Expresion/Cadena");
 var aritmerica = require("../Arbol/Expresion/Aritmetica");
 var Relacional = require("../Arbol/Expresion/Relacional");
+
+
+var declaArreglo = require("../Arbol/Sentencias/DeclaArreglo");
 var Concatenar = require("../Arbol/Sentencias/Concatenar");
 var Imprimir = require("../Arbol/Sentencias/Imprimir");
 var  Romper= require("../Arbol/Sentencias/Romper");
 var  Retorno = require("../Arbol/Sentencias/Retorno");
 var  Continuar = require("../Arbol/Sentencias/Continuar");
 var Asignacion = require("../Arbol/Sentencias/Asignacion");
+var asignaDecla = require("../Arbol/Sentencias/AsignaDecla");
 
 
 
@@ -103,10 +107,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "obtenerTamanio";
     }
 
-    if(sent instanceof posArreglo){
-        return "posArreglo";
-    }
-
+   
     if(sent instanceof ReservarMemoria){
         return "reservarMemoria";
     }
@@ -159,6 +160,11 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
 
+
+
+    if(sent instanceof posArreglo){
+        return "pos_Arreglo";
+    }
 
 
 
@@ -214,6 +220,17 @@ sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
  if (sent instanceof Imprimir){
      return "imprimir";
  }
+
+
+ if(sent instanceof declaArreglo){
+     return "decla_Arreglo";
+ }
+
+
+ if(sent instanceof asignaDecla){
+     return "asigna_Decla";
+ }
+
 
 /*
 SENTENCIA: DECLARACION{$$=$1;}

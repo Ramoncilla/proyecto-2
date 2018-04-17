@@ -174,6 +174,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var noDim = dimensionesArreglo.length;
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, this.nombre, "ATRIBUTO", apuntador, 1, noDim, dimensionesArreglo);
+                        
                         var asignacion = declaracionAtributo.getAsigna();
                         
                         var expresion = asignacion.getValor();

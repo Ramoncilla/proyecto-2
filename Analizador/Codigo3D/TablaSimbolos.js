@@ -139,6 +139,107 @@ TablaSimbolos.prototype.esAtributo = function(nombre, ambitos){
 };
 
 
+
+TablaSimbolos.prototype.obtenerSimbolo = function(nombre, ambitos, tipoAtr){
+  var ambitoTemporal;
+  var simbTemporal;
+  
+  
+ if(!tipoAtr){
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()!="ATRIBUTO")
+              return simbTemporal;
+         }
+    }
+
+  }
+
+ }else{
+
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()=="ATRIBUTO")
+              return simbTemporal;
+         }
+    }
+
+  }
+
+ }
+
+
+  return null;
+
+
+};
+
+TablaSimbolos.prototype.setArregloNs = function(nombre, ambitos, tipoAtr, arr){
+  var ambitoTemporal;
+  var simbTemporal;
+  
+  console.log("oooooooooooooooo");
+  console.dir(arr);
+ if(!tipoAtr){
+ console.log("es local");
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()!="ATRIBUTO"){
+            if(simbTemporal.tipoSimbolo.toUpperCase() == "ARREGLO"){
+             console.log("lo hare");
+              this.listaSimbolos[j].setArregloNs(arr);
+            }
+
+           }
+              
+         }
+    }
+
+  }
+
+ }else{
+   
+  console.log("es atributo");
+  for(var i = 0; i<ambitos.ambitos.length; i++){
+    ambitoTemporal = ambitos.ambitos[i];
+    for(var j =0; j< this.listaSimbolos.length; j++){
+      simbTemporal = this.listaSimbolos[j];
+      if(simbTemporal.ambito.toUpperCase() == ambitoTemporal.toUpperCase() &&
+         simbTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
+           if(simbTemporal.rol.toUpperCase()=="ATRIBUTO")
+              {
+                if(simbTemporal.tipoSimbolo.toUpperCase() == "ARREGLO"){
+                  this.listaSimbolos[j].setArregloNs(arr);
+                }
+                
+              }
+         }
+    }
+
+  }
+
+ }
+
+
+ 
+
+
+};
+
+
+
 TablaSimbolos.prototype.SizeClase = function(nombre) {
   var simbTemporal;
   for(var i = 0; i<this.listaSimbolos.length; i++){

@@ -5,7 +5,7 @@ function PosArreglo(){
 	this.posicionesArreglo =[];
 }
 
-
+ 
 
 
 

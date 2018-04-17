@@ -15,6 +15,7 @@ function Simbolo(){
     this.expresionAtributo=null;//pubico entero a =5;	
     this.noDimensiones=0;
     this.pasoReferencia ="NO_TIENE";
+    this.arregloNs = [];
 }
  
 Simbolo.prototype.setPasoReferencia= function(val){
@@ -66,6 +67,10 @@ Simbolo.prototype.getAmbito= function(){
      this.dimensiones = listaDim;
 
  };
+
+ Simbolo.prototype.setArregloNs = function (arr){
+     this.arregloNs= arr;
+ }; 
 
 
 Simbolo.prototype.setValoresLista = function(nombreC, tipoSimb, tipoElemento, ambito, rol, apu, size ) {

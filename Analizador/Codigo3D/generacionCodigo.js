@@ -262,12 +262,222 @@ generacionCodigo.prototype.obtenerClasePadre = function(nombre){
 
 /* --------------------------- Generacion de codigo -------------------------- */
 
+generacionCodigo.prototype.calculoArregloNs = function(posiciones, ambitos, clase, metodo){
+	var posTemporal;
+	var retornoTamanio =[];
+	var elemento;
+	for(var i =0; i<posiciones.length; i++){
+		posTemporal= posiciones[i];
+		elemento = this.resolverExpresion(posTemporal,ambitos,clase,metodo);
+		if(elemento instanceof EleRetorno){
+			if(elemento.tipo.toUpperCase() == "ENTERO"){
+				retornoTamanio.push(elemento.valor);
+			}else{
+				errores.insertarError("Semantico", "Tipo no valido para el tamanio de un arreglo, "+ elemento.tipo);
+			}
 
+		}else{
+			errores.insertarError("SEmantico", "Hubo un error al reconcer el tamanio del arreglo");
+		}
+
+	}
+
+	return retornoTamanio;
+
+};
 
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);	 
 	switch(nombreSentecia.toUpperCase()){
+
+
+		case "ASIGNA_DECLA":{
+			console.dir(nodo);
+			break;
+		}
+
+		case "DECLA_ARREGLO":{
+			console.dir(nodo);
+			var tipoArreglo = nodo.tipoArreglo;
+			var nombreArreglo = nodo.nombreArreglo;
+			var dimensionesArreglo = nodo.dimensionesArreglo;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo,ambitos);
+			
+			if(esAtributo!= null){
+				var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
+				if(simb!=null){
+					console.dir(simb);
+					if(simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+						if(esAtributo){
+							//arreglo atributo
+							var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
+							
+							if(posArreglo != -1){
+								var temp1 = this.c3d.getTemporal();
+								var l1 = "=, P, 0, "+temp1+"; //pos this del arreglo";
+								var temp2 = this.c3d.getTemporal();
+								var l2 = "=>, "+temp1+", "+temp2+", stack; //obteniendo apuntador de arreglo en eel heap";
+								var temp3 = this.c3d.getTemporal();
+								var l3 = "=>, "+temp2+", "+temp3+", heap;//apuntando donde en verdad inicia el arreglo";
+								var temp4 = this.c3d.getTemporal();
+								var l4 = "+, "+temp3+", "+posArreglo+", "+ temp4+"; //pos del heap que guarda apuntador del heap para el arreglo "+ nombreArreglo;
+								var l5 = "<=, "+temp4+", H, heap; //escribiendo apunt del heap donde inicia el arreglo ";
+								var l6 = "// REsolvemos tamanio del arreglo";
+								this.c3d.addCodigo("// ----------------------- Creando arreglo atributo "+ nombreArreglo);
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								this.c3d.addCodigo(l6);
+								var tamanios = this.calculoArregloNs(dimensionesArreglo,ambitos,clase,metodo);
+								//calculando el valor linezliado del arreglo
+								if(tamanios.length == dimensionesArreglo.length){
+									this.tablaSimbolos.setArregloNs(nombreArreglo,ambitos,esAtributo,tamanios);
+									var nTemporal;
+									var tempRes="";
+									for(var k =0; k<tamanios.length; k++ ){
+										nTemporal = tamanios[k];
+										if(k == 0){
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 1, "+temp1_1+"; //calculando el n real";
+											tempRes = this.c3d.getTemporal();
+											var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);	
+										}else{
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 1, "+temp1_1+"; //calculando el n real";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "*, "+tempRes+", "+nTemporal+", "+temp2_1+";// multiplicando por n"+k;
+											var temp3_1= this.c3d.getTemporal();
+											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
+											this.c3d.addCodigo(l3_1);
+											tempRes = this.c3d.getTemporal();
+											var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+											this.c3d.addCodigo(l4_1);
+										}
+
+									}
+
+									if(tempRes != ""){
+										var l1_2= "<=, H, "+tempRes+", heap; // insertando el tamanio del arreglo linealizado "+ nombreArreglo;
+										var l2_2= "+, H, 1, H;";
+										var temp1_2 = this.c3d.getTemporal();
+										var l3_2= "+, "+tempRes+", 1, "+temp1_2+"; // anhadiendo una posicion mas";
+										var l4_2 ="+, h, "+temp1_2+", h; // reservnado el espacio del arreglo "+nombreArreglo;
+										this.c3d.addCodigo(l1_2);
+										this.c3d.addCodigo(l2_2);
+										this.c3d.addCodigo(l3_2);
+										this.c3d.addCodigo(l4_2);
+									}
+
+
+								}
+								
+							}else{
+								errorres.insertarError("Semantico", "No existe el arreglo "+ nombreArreglo+" pos -1");
+							}
+							
+
+						}else{
+							//arreglo local
+							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
+							if(posArreglo!= -1){
+								var temp1 = this.c3d.getTemporal();
+								var l1= "+, P, "+posArreglo+", "+temp1+"; //pos de arreglo "+nombreArreglo;
+								var l2= "<=, "+temp1+", H, stack; // ingrensando al stack apunt del heap para "+nombreArreglo;
+								var temp2 = this.c3d.getTemporal();
+								var l3 = "+, H, 1, "+temp2+";";
+								var l4 = "<=, H, "+temp2+", heap; //insetnado donde inicia el arreglo "+nombreArreglo;
+								var l5 = "+, H, 1, H;";
+								var l6 = "// calculando el tamanho del arreglo";
+								this.c3d.addCodigo("// ------------------------ Creando arreglo local "+ nombreArreglo);
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								this.c3d.addCodigo(l6);
+
+								var tamanios = this.calculoArregloNs(dimensionesArreglo,ambitos,clase,metodo);
+								console.log("****************************************************");
+								console.dir(tamanios);
+								//calculando el valor linezliado del arreglo
+								if(tamanios.length == dimensionesArreglo.length){
+									this.tablaSimbolos.setArregloNs(nombreArreglo,ambitos,esAtributo,tamanios);
+									
+									var nTemporal;
+									var tempRes="";
+									for(var k =0; k<tamanios.length; k++ ){
+										nTemporal = tamanios[k];
+										if(k == 0){
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 1, "+temp1_1+"; //calculando el n real";
+											tempRes = this.c3d.getTemporal();
+											var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);	
+										}else{
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 1, "+temp1_1+"; //calculando el n real";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "*, "+tempRes+", "+nTemporal+", "+temp2_1+";// multiplicando por n"+k;
+											var temp3_1= this.c3d.getTemporal();
+											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
+											this.c3d.addCodigo(l3_1);
+											tempRes = this.c3d.getTemporal();
+											var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+											this.c3d.addCodigo(l4_1);
+										}
+									}
+
+									if(tempRes != ""){
+
+										var l1_2= "<=, H, "+tempRes+", heap; // insertando el tamanio del arreglo linealizado "+ nombreArreglo;
+										var l2_2= "+, H, 1, H;";
+										var temp1_2 = this.c3d.getTemporal();
+										//var l3_2= "+, "+tempRes+", 1, "+temp1_2+"; // anhadiendo una posicion mas";
+										var l4_2 ="+, h, "+tempRes+", h; // reservnado el espacio del arreglo "+nombreArreglo;
+										this.c3d.addCodigo(l1_2);
+										this.c3d.addCodigo(l2_2);
+										//this.c3d.addCodigo(l3_2);
+										this.c3d.addCodigo(l4_2);
+										simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
+										console.dir(simb);
+
+
+									}
+
+
+								}
+
+							}else{
+								errores.insertarError("Semantico", "No existe el arrglo local "+ nombreArreglo+", pos "+posArreglo);
+							}	
+						}
+
+					} else{
+						errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+
+					}
+
+				}else{
+					errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+				}
+
+
+			}else{
+				errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+			}
+
+			break;
+		}
 
 		case "ASIGNACION":{
 
@@ -376,8 +586,8 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 					var firmMetodo = this.tablaSimbolos.obtenerFirmaMetodo(nombreClaseInstanciar,noParametros,nombreClaseInstanciar);
 					var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
 
-					console.log("CLASE "+ nombreClaseInstanciar + "  No Parametros  "+ noParametros +"  Nombre Clase a  Instancia  "+ nombreClaseInstanciar);
-					console.log("Nombre del metodo "+ firmMetodo);
+					//console.log("CLASE "+ nombreClaseInstanciar + "  No Parametros  "+ noParametros +"  Nombre Clase a  Instancia  "+ nombreClaseInstanciar);
+					//console.log("Nombre del metodo "+ firmMetodo);
 					if(tipoVar.toUpperCase() == nombreClaseInstanciar.toUpperCase() && firmMetodo!=""){
 						var sizeClase = this.tablaSimbolos.SizeClase(nombreClaseInstanciar);
 						var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
@@ -658,8 +868,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 
-/*============================================= Validacion de Tipos ============================================ */
-
 
 
 /* ================================================ Resolver Expresiones ===================================================== */
@@ -669,7 +877,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
 
 	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
-	console.log("Expresion "+ nombreSentecia);
+	//console.log("Expresion "+ nombreSentecia);
 	
 	switch(nombreSentecia){
 		case "ENTERO":{
@@ -1081,7 +1289,62 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 
 			break;
+		}//fin identificador
+
+		case "POS_ARREGLO":{
+
+			var nombreArreglo = nodo.nombreArreglo;
+			var posicionesArreglo = nodo.posicionesArreglo;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
+			if(esAtributo!= null){
+				var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
+				if(simb!=null){
+					if(simb.tipoSimb.toUpperCase() == "ARREGLO"){
+						if(esAtributo){
+							//arreglo atributo
+							var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
+							var temp1 = this.c3d.getTemporal();
+							var l1 = "=, P, 0, "+temp1+"; //pos this del arreglo";
+							var temp2 = this.c3d.getTemporal();
+							var l2 = "=>, "+temp1+", "+temp2+", stack; //obteniendo apuntador de arreglo en eel heap";
+							var temp3 = this.c3d.getTemporal();
+							var l3 = "=>, "+temp2+", "+temp3+", heap;//apuntando donde en verdad inicia el arreglo";
+
+							var posTemporal;
+							for(var i = 0; i< posicionesArreglo.length; i++){
+								posTemporal = posicionesArreglo[i];
+
+							}
+
+
+						}else{
+							//arreglo local
+							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
+							
+						}
+
+					} else{
+						errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+
+					}
+
+				}else{
+					errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+				}
+
+
+			}else{
+				errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+			}
+
+
+
+
+			break;
 		}
+
+
+
 
 
     

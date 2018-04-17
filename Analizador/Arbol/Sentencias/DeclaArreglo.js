@@ -3,7 +3,7 @@ function DeclaArreglo(){
 	this.nombreArreglo = "";
 	this.dimensionesArreglo = null;
 
-}
+} 
 
 
 

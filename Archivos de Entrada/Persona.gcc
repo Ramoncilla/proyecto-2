@@ -51,21 +51,24 @@ clase persona {
 
     persona(){
         imprimir(edad);
+
+         persona p1;
+        entero pedrito;
+        pedrito = 2;
+        entero alina;
+        alina = 2 *2-pedrito;
+        imprimir(pedrito);
+        imprimir(alina);
+         p1 = nuevo persona();
+ 
+        c= nuevo persona();
+
+        caracter nombre[20]= "alina Urbina";
         
     }
 
-    principal(){
-        persona p1;
-        entero pedrito;
-        pedrito = 10 +7;
-        entero alina;
-         alina = 2 *2-pedrito;
-        imprimir(pedrito);
-        imprimir(alina);
-        
-        p1 = nuevo persona();
- 
-        c= nuevo persona();
+    principal(){ 
+        caracter apellido[2*5+1][3*3][2*1];
     }
 
 }
