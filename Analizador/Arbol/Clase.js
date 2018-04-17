@@ -152,11 +152,12 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         var nuevoSimbolo = new Simbolo();
                         nuevoSimbolo.setValoresVariable(nombreC, tipoSimb, tipoElemento, this.nombre, "ATRIBUTO", apuntador, 1);
                         var asignacion = declaracionAtributo.getAsigna();
-                        console.dir(declaracionAtributo);
-                        console.dir(asignacion);
+                        //console.dir(declaracionAtributo);
+                        //console.dir(asignacion);
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
-                        nuevoSimbolo.setExpresionAtributo(expresion);
+                       // nuevoSimbolo.setExpresionAtributo(expresion);
+                       nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                         listaRetorno.push(nuevoSimbolo);
                         apuntador++;
 
@@ -179,7 +180,8 @@ Clase.prototype.generarSimbolosAtributos = function() {
                         
                         var expresion = asignacion.getValor();
                         nuevoSimbolo.setVisibilidad(visibilidadAtributo);
-                        nuevoSimbolo.setExpresionAtributo(expresion);
+                       // nuevoSimbolo.setExpresionAtributo(expresion);
+                       nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                         listaRetorno.push(nuevoSimbolo);
                         apuntador++;
 

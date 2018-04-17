@@ -104,7 +104,8 @@ generacionCodigo.prototype.generar3D= function(){
 					var atriTemporal;
 					for(var h =0; h< atributosAsignar.length; h++){
 						atriTemporal = atributosAsignar[h];
-						if(atriTemporal.expresionAtributo instanceof Instancia){
+						this.escribir3D(atriTemporal.expresionAtributo, ambitos,nombreClase,funTemporal.obtenerFirma());
+						/*if(atriTemporal.expresionAtributo instanceof Instancia){
 							var asInstancia = new AsignacionE();
 							asInstancia.setValores(atriTemporal.nombreCorto,"=",atriTemporal.expresionAtributo,2);
 							this.escribir3D(asInstancia,ambitos,nombreClase,funTemporal.obtenerFirma());
@@ -133,7 +134,7 @@ generacionCodigo.prototype.generar3D= function(){
 								errores.insertarError("Semantico", "Hubo un error al resolver para "+ atriTemporal.nombreCorto);
 							}
 
-						}
+						}*/
 					}
 
 				}
@@ -293,12 +294,15 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 		case "ASIGNA_DECLA":{
-			console.dir(nodo);
+			console.log("----------------- Entre a un asigna Decla  ---------------------------");
+			var decla = nodo.declaracionE;
+			this.escribir3D(decla, ambitos, clase,metodo);
+			var asigna = nodo.asignacionE;
+			this.escribir3D(asigna, ambitos,clase,metodo);
 			break;
 		}
 
 		case "DECLA_ARREGLO":{
-			console.dir(nodo);
 			var tipoArreglo = nodo.tipoArreglo;
 			var nombreArreglo = nodo.nombreArreglo;
 			var dimensionesArreglo = nodo.dimensionesArreglo;
