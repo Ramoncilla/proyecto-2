@@ -188,80 +188,91 @@ end, , carro_vacio_carro
 
 begin, , , persona_PRINCIPAL
 
-// ------------------------ Creando arreglo local apellido
-+, P, 0, t83; //pos de arreglo apellido
-<=, t83, H, stack; // ingrensando al stack apunt del heap para apellido
-+, H, 1, t84;
-<=, H, t84, heap; //insetnado donde inicia el arreglo apellido
-+, H, 1, H;
-// calculando el tamanho del arreglo
-*, 2, 5, t85;
-+, t85, 1, t86;
-*, 3, 3, t87;
-*, 2, 1, t88;
--, t86, 1, t89; //calculando el n real
--, t89, 0, t90; //iReal columna 0
--, t87, 1, t91; //calculando el n real
-*, t90, t87, t92;// multiplicando por n1
-+, t92, t91, t93;
--, t93, 0, t94; //i real de columna 1
--, t88, 1, t95; //calculando el n real
-*, t94, t88, t96;// multiplicando por n2
-+, t96, t95, t97;
--, t97, 0, t98; //i real de columna 2
-<=, H, t98, heap; // insertando el tamanio del arreglo linealizado apellido
-+, H, 1, H;
-+, h, t98, h; // reservnado el espacio del arreglo apellido
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t100; // pos de pedrito
-<=, t100, 2, stack; // asignando a pedrito
++, p, 1, t83; // pos de pedrito
+<=, t83, 2, stack; // asignando a pedrito
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 3, t102; // pos de alina
-*, 2, 2, t104;
++, p, 2, t84; // pos de alina
+*, 2, 2, t85;
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t105; // pos de pedrito
-=>, t105, t106, stack; // valor de lo que trae en el stack pedrito
--, t104, t106, t107;
-+, t107, 26, t108;
-<=, t102, t108, stack; // asignando a alina
++, p, 1, t86; // pos de pedrito
+=>, t86, t87, stack; // valor de lo que trae en el stack pedrito
+-, t85, t87, t88;
++, t88, 26, t89;
+<=, t84, t89, stack; // asignando a alina
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t109; // pos de pedrito
-=>, t109, t110, stack; // valor de lo que trae en el stack pedrito
-print("%d", t110);
++, p, 1, t90; // pos de pedrito
+=>, t90, t91, stack; // valor de lo que trae en el stack pedrito
+print("%d", t91);
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 3, t111; // pos de alina
-=>, t111, t112, stack; // valor de lo que trae en el stack alina
-print("%d", t112);
++, p, 2, t92; // pos de alina
+=>, t92, t93, stack; // valor de lo que trae en el stack alina
+print("%d", t93);
 // ----------- Instancia a una variable local --------------
-+, p, 1, t113; // pos de p1
-<=, t113, h, stack; //guardando referencia del heap para el objeto p1
-+, h, 1, t114; // guardo la posicion donde inicia el objeto 
-<=, h, t114, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 0, t94; // pos de p1
+<=, t94, h, stack; //guardando referencia del heap para el objeto p1
++, h, 1, t95; // guardo la posicion donde inicia el objeto 
+<=, h, t95, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 3, h; // reservando espacio para el objeto p1
 //Ingresando referencia al this del objeto p1
-+, p, 1, t115; // pos de p1
-=>, t115, t116, stack; // obteniendo apuntador de p1
-+, p, 5, t117; // simulando cambio de ambito
-+, t117, 0, t118; //pos del this de p1
-<=, t118, t116, stack; // insertando apuntador del heap al stack del obeto p1
++, p, 0, t96; // pos de p1
+=>, t96, t97, stack; // obteniendo apuntador de p1
++, p, 4, t98; // simulando cambio de ambito
++, t98, 0, t99; //pos del this de p1
+<=, t99, t97, stack; // insertando apuntador del heap al stack del obeto p1
 // No posee parametros 
-+, p, 5, p; // simulando cambio de ambito
++, p, 4, p; // simulando cambio de ambito
 call, , , persona_vacio_persona;
--, p, 5, p; // regresando al ambito acutal
+-, p, 4, p; // regresando al ambito acutal
 
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t100; // pos de pedrito
+=>, t100, t101, stack; //obtenidoe el valor de pedrito
++, t101, 19, t102;
+<=, t100, t102, stack; // asignando a pedrito
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t103; // pos de pedrito
+=>, t103, t104, stack; // valor de lo que trae en el stack pedrito
+print("%d", t104);
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t105; // pos de pedrito
+=>, t105, t106, stack; //obtenidoe el valor de pedrito
+-, t106, 10.2, t107;
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t108; // pos de pedrito
+=>, t108, t109, stack; // valor de lo que trae en el stack pedrito
+print("%d", t109);
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t110; // pos de pedrito
+=>, t110, t111, stack; //obtenidoe el valor de pedrito
+-, t111, 5, t112;
+<=, t110, t112, stack; // asignando a pedrito
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t113; // pos de pedrito
+=>, t113, t114, stack; // valor de lo que trae en el stack pedrito
+print("%d", t114);
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t115; // pos de pedrito
+=>, t115, t116, stack; //obtenidoe el valor de pedrito
+*, t116, 2, t117;
+<=, t115, t117, stack; // asignando a pedrito
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t118; // pos de pedrito
+=>, t118, t119, stack; // valor de lo que trae en el stack pedrito
+print("%d", t119);
 // ------------------------ Creando arreglo local nombre
-+, P, 4, t119; //pos de arreglo nombre
-<=, t119, H, stack; // ingrensando al stack apunt del heap para nombre
-+, H, 1, t120;
-<=, H, t120, heap; //insetnado donde inicia el arreglo nombre
++, P, 3, t120; //pos de arreglo nombre
+<=, t120, H, stack; // ingrensando al stack apunt del heap para nombre
++, H, 1, t121;
+<=, H, t121, heap; //insetnado donde inicia el arreglo nombre
 +, H, 1, H;
 // calculando el tamanho del arreglo
--, 20, 1, t121; //calculando el n real
--, t121, 0, t122; //iReal columna 0
-<=, H, t122, heap; // insertando el tamanio del arreglo linealizado nombre
+-, 20, 1, t122; //calculando el n real
+-, t122, 0, t123; //iReal columna 0
+<=, H, t123, heap; // insertando el tamanio del arreglo linealizado nombre
 +, H, 1, H;
-+, h, t122, h; // reservnado el espacio del arreglo nombre
++, h, t123, h; // reservnado el espacio del arreglo nombre
 
 end, , persona_PRINCIPAL
 
@@ -271,9 +282,9 @@ end, , persona_PRINCIPAL
 begin, , , persona_vacio_persona_entero_entero
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t124; // pos de edad
++, p, 1, t125; // pos de edad
 *, 25, 2, t126;
-<=, t124, t126, stack; // asignando a edad
+<=, t125, t126, stack; // asignando a edad
 // ----------- Instancia a un atributo --------------
 +, p, 0, t127;// pos this de c
 =>, t127, t128, stack; //apuntador del heap de c
@@ -342,6 +353,21 @@ call, , , carro_vacio_carro;
 +, t154, 0, t155; // pos de edad
 =>, t155, t156, heap; // obtengo el valor que se encuentre en el heap 
 print("%d", t156);
+// Asignando atributo edad
++, p, 0, t157; //pos this 
+=>, t157, t158, stack; // apuntador al heap
+=>, t158, t159, heap; // apuntador donde inicia el objeto
++, t159, 0, t160; // pos real  de edad
+=>, t160, t161, heap; //obtenidoe el valor de edad
++, t161, 8, t162;
+<=, t160, t162, heap; //guardando en el heap el valor del atributo edad
+// ------------ Resolviendo un ID (atributo) -----------
++, p, 0, t163; // pos this 
+=>, t163, t164, stack; // obtenido apuntador al heap 
+=>, t164, t165, heap; // apuntador 
++, t165, 0, t166; // pos de edad
+=>, t166, t167, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t167);
 
 end, , persona_vacio_persona
 

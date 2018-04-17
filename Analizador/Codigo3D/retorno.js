@@ -4,6 +4,10 @@ function retorno(){
 }
 
 
+retorno.prototype.setValorVacio = function(){
+    this.tipo= "NULO2";
+    this.tipo = 36;
+};
 
 retorno.prototype.setValorEntero = function(valor){
     this.tipo = "ENTERO";

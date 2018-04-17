@@ -20,8 +20,10 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 
 
 %%
-\s+                   /* skip whitespace */
-[//].* 				  /* skip whitespace */
+\s+                                   /* IGNORE */
+"//".*                                /* IGNORE */
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
+
 [0-9]+("."[0-9]+)\b   return 'decimal'
 [0-9]+  return 'entero'
 
@@ -114,7 +116,7 @@ TIPO_ED: stack{$$=0;}
 OPE_ARITMETICO: suma {$$="+";}   
     |menos{$$="-";}   
     |por{$$="*";}   
-    |div{$$="/";}   
+    |div{$$="/"; console.log("POPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO88888899911111111111111111");}   
     |pot{$$="^";};
 
 OPE_RELACIONAL: je{$$="==";}   

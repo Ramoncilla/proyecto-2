@@ -134,9 +134,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "notLogica";
     }
 
-    if(sent instanceof nulo){
-        return "nulo";
-    }
+    
 
     if(sent instanceof convertirEntero){
         return "convertirEntero";
@@ -167,6 +165,12 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
 
+
+
+
+    if(sent instanceof nulo){
+        return "nulo2";
+    }
 
     if(sent instanceof Identificador){
         return "identificador";

@@ -460,16 +460,16 @@ case 106:
 this.$="=";
 break;
 case 107:
-this.$="=+";
+this.$="+=";
 break;
 case 108:
-this.$="=-";
+this.$="-=";
 break;
 case 109:
-this.$="=*";
+this.$="*=";
 break;
 case 110:
-this.$="=/";
+this.$="/=";
 break;
 case 111: case 112:
 this.$= $$[$0];
@@ -771,7 +771,7 @@ case 184:
 var bol= new Booleano(); bol.setValorBooleano($$[$0]); this.$=bol;
 break;
 case 185:
- this.$=$$[$0-2];
+ this.$=$$[$0-1];
 break;
 case 186:
 var n = new Cadena(); n.setCadena($$[$0]); this.$=n;
@@ -1526,165 +1526,165 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 148
+case 0:/* IGNORE */
 break;
-case 1:/* skip whitespace */
+case 1:/* IGNORE */
 break;
-case 2:/* skip whitespace */
+case 2:/* IGNORE */
 break;
-case 3:/ *skip whitespace */
+case 3:return 87
 break;
-case 4:return 183
+case 4:return 148
 break;
-case 5:return 184
+case 5:return 183
 break;
-case 6:return 185
+case 6:return 184
 break;
-case 7:return 186
+case 7:return 185
 break;
-case 8:return 187
+case 8:return 186
 break;
-case 9:return 189
+case 9:return 187
 break;
-case 10:return 175
+case 10:return 189
 break;
-case 11:return 100
+case 11:return 175
 break;
-case 12:return 101
+case 12:return 100
 break;
-case 13:return 102
+case 13:return 101
 break;
-case 14:return 103
+case 14:return 102
 break;
-case 15:return 104
+case 15:return 103
 break;
-case 16:return 105
+case 16:return 104
 break;
-case 17:return 106
+case 17:return 105
 break;
-case 18:return 107
+case 18:return 106
 break;
-case 19:return 108
+case 19:return 107
 break;
-case 20:return 109
+case 20:return 108
 break;
-case 21:return 110
+case 21:return 109
 break;
-case 22:return 111
+case 22:return 110
 break;
-case 23:return 112
+case 23:return 111
 break;
-case 24:return 99
+case 24:return 112
 break;
-case 25:return 94
+case 25:return 99
 break;
-case 26:return 97
+case 26:return 94
 break;
-case 27:return 89
+case 27:return 97
 break;
-case 28:return 91
+case 28:return 89
 break;
-case 29:return 92
+case 29:return 91
 break;
-case 30:return 69
+case 30:return 92
 break;
-case 31:return 72
+case 31:return 69
 break;
-case 32:return 73
+case 32:return 72
 break;
-case 33:return 167
+case 33:return 73
 break;
-case 34:return 173
+case 34:return 167
 break;
-case 35:return 174
+case 35:return 173
 break;
-case 36:return 171
+case 36:return 174
 break;
-case 37:return 172
+case 37:return 171
 break;
-case 38:return 9
+case 38:return 172
 break;
-case 39:return 37
+case 39:return 9
 break;
-case 40:return 38
+case 40:return 37
 break;
-case 41:return 115
+case 41:return 38
 break;
-case 42:return 48
+case 42:return 115
 break;
-case 43:return 182
+case 43:return 48
 break;
-case 44:return 180
+case 44:return 182
 break;
-case 45:return 116
+case 45:return 180
 break;
-case 46:return 117
+case 46:return 116
 break;
-case 47:return 118
+case 47:return 117
 break;
-case 48:return 43
+case 48:return 118
 break;
-case 49:return 71
+case 49:return 43
 break;
-case 50:return 27
+case 50:return 71
 break;
-case 51:return 28
+case 51:return 27
 break;
-case 52:return 29
+case 52:return 28
 break;
-case 53:return 119
+case 53:return 29
 break;
-case 54:return 157
+case 54:return 119
 break;
 case 55:return 157
 break;
-case 56:'nulo'
+case 56:return 157
 break;
-case 57:return 137
+case 57:'nulo'
 break;
-case 58:return 138
+case 58:return 137
 break;
-case 59:return 139
+case 59:return 138
 break;
-case 60:return 140
+case 60:return 139
 break;
-case 61:return 142
+case 61:return 140
 break;
-case 62:return 141
+case 62:return 142
 break;
-case 63:return 17
+case 63:return 141
 break;
-case 64:return 14
+case 64:return 17
 break;
-case 65:return 79
+case 65:return 14
 break;
-case 66:return 46
+case 66:return 79
 break;
-case 67:return 42
+case 67:return 46
 break;
-case 68:return 156
+case 68:return 42
 break;
-case 69:return 156 
+case 69:return 156
 break;
-case 70:return 120
+case 70:return 156 
 break;
-case 71:return 80
+case 71:return 120
 break;
-case 72:return 122
+case 72:return 80
 break;
-case 73:return 123
+case 73:return 122
 break;
-case 74:return 125
+case 74:return 123
 break;
-case 75:return 124
+case 75:return 125
 break;
-case 76:return 84
+case 76:return 124
 break;
-case 77:return 85
+case 77:return 84
 break;
-case 78:return 86
+case 78:return 85
 break;
-case 79:return 87
+case 79:return 86
 break;
 case 80:return 70
 break;
@@ -1740,7 +1740,7 @@ case 105:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\/)/i,/^(?:\s+)/i,/^(?:[\/\/].*)/i,/^(?:\/\*.\*\/)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:\/=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[\/][*][^*]*[*]+([^\/*][^*]*[*]+)*[\/])/i,/^(?:\/=)/i,/^(?:\/)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105],"inclusive":true}}
 });
 return lexer;

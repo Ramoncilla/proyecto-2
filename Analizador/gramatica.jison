@@ -89,10 +89,12 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 
 
 %%
+\s+                                   /* IGNORE */
+"//".*                                /* IGNORE */
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
+"/="				return 'divIgual'
 "/"                   return 'division'
-\s+                   /* skip whitespace */
-[//].* 				  /* skip whitespace */
-"/*"."*/" 			 / *skip whitespace */
+
 "crearPuntero" return 'crearPuntero'
 "obtenerDireccion" return 'obtenerDireccion'
 "reservarMemoria" return 'reservarMemoria'
@@ -148,7 +150,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "Nada" return 'nulo'
 "{'\0'}" return 'nulo'
 "{\"\0\"}"return 'nulo'
-
+ 
 "<"                   return 'menor'
 ">"                   return 'mayor'
 "<="                   return 'menorIgual'
@@ -175,7 +177,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "+="                return 'masIgual'
 "-="				return 'menosIgual'
 "*="				return 'porIgual'
-"/="				return 'divIgual'
+
 "=" 				return 'igual'
 
 "++"	return 'masMas'
@@ -673,10 +675,10 @@ INSTANCIA: nuevo id PARAMETROS_LLAMADA
 	};
 
 SIMB_IGUAL: igual{$$="=";}
-	|masIgual {$$="=+";}
-	|menosIgual {$$="=-";}
-	|porIgual{$$="=*";}
-	|divIgual{$$="=/";};
+	|masIgual {$$="+=";}
+	|menosIgual {$$="-=";}
+	|porIgual{$$="*=";}
+	|divIgual{$$="/=";};
 
 /*--------------------- Estrucuras de Control -------------------------*/
 
@@ -954,7 +956,7 @@ VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|decimal{var num = new Decimal(); num.setNumero($1); $$=num;}
 	|caracter{var car= new Caracter(); car.setValorCaracter($1); $$=car;}
 	|booleano{var bol= new Booleano(); bol.setValorBooleano($1); $$=bol;}
-	|abrePar EXPRESION cierraPar{ $$=$1;}
+	|abrePar EXPRESION cierraPar{ $$=$2;}
 	|cadena {var n = new Cadena(); n.setCadena($1); $$=n;}
 	|nulo {var n = new Nulo(); n.setNulo(); $$=n;}
 	|CONVERTIR_CADENA{$$=S1;}

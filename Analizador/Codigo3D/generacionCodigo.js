@@ -158,11 +158,13 @@ generacionCodigo.prototype.generar3D= function(){
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
 	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
 	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
+
 	var a = new analizInterprete();
 	a.Ejecutar3D(this.c3d.codigo3D,"persona_PRINCIPAL");
 	console.log("Impresion");
 	console.log(a.cadenaImpresion);
-	
+	fs.writeFileSync('./Heap.html', a.imprimirHeap());
+	fs.writeFileSync('./Stack.html', a.imprimirStack());
 
     //interprete.parse(this.c3d.codigo3D);
 	return this.tablaSimbolos.obtenerHTMLTabla();
@@ -490,7 +492,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 				case 1:{
 					//id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
-
 					var nombreVar = nodo.getElemento();
 					var tipoVar= this.tablaSimbolos.obtenerTipo(nombreVar, ambitos);
 					var expresionVar = nodo.getValor();
@@ -516,17 +517,85 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 								this.c3d.addCodigo(l2);
 								this.c3d.addCodigo(l3);
 								this.c3d.addCodigo(l4);
-								var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
-								if(retExpresion instanceof EleRetorno){
-									if(retExpresion.tipo.toUpperCase() != "NULO"){
-										var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap; //guardando en el heap el valor del atributo";
-										this.c3d.addCodigo(l5);
+
+								if(simboloIgual == "="){
+									var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+									if(retExpresion instanceof EleRetorno){
+										if(retExpresion.tipo.toUpperCase() != "NULO"){
+											if(retExpresion.tipo.toUpperCase() == "NULO2" || retExpresion.tipo.toUpperCase() == tipoVar.toUpperCase()){
+												var l5 = "<=, "+temp4+", "+retExpresion.valor+", heap; //guardando en el heap el valor del atributo";
+												this.c3d.addCodigo(l5);
+											}
+										}else{
+											errores.insertarError("Semantico", "Hubo un error al realizar la operacion para "+ nombreVar);
+										}
+									}else{
+										errores.insertarError("Semantico", "Hubo un error al realizar la operacion");
 									}
 
+								}else{ // es *=, +=, -=,/=
+									
+									var temp1_3 = this.c3d.getTemporal();
+									var l1_3= "=>, "+temp4+", "+temp1_3+", heap; //obtenidoe el valor de "+nombreVar;
+									this.c3d.addCodigo(l1_3);
+									var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+									if(retExpresion instanceof EleRetorno){
+										if(retExpresion.tipo.toUpperCase()!="NULO"){
+											var val1_1 = new EleRetorno();
+											val1_1.valor = temp1_3;
+											val1_1.tipo = tipoVar.toUpperCase();
+											var ret;
+											if(simboloIgual=="+="){
+												ret = this.validarSumaOperacion(val1_1, retExpresion);
 
-								}else{
-									errores.insertarError("Semantico", "Hubo un error al realizar la operacion");
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l5 = "<=, "+temp4+", "+ret.valor+", heap; //guardando en el heap el valor del atributo "+nombreVar;
+													this.c3d.addCodigo(l5);
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ ret.tipo+", no valido para asignar a "+ nombreVar);
+												}
+
+											}
+											
+											if(simboloIgual=="-="){
+												ret = this.validarRestaOperacion(val1_1, retExpresion);
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l5 = "<=, "+temp4+", "+ret.valor+", heap; //guardando en el heap el valor del atributo "+nombreVar;
+													this.c3d.addCodigo(l5);
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ ret.tipo+", no valido para asignar a "+ nombreVar);
+												}
+											}
+
+											if(simboloIgual=="*="){
+												ret = this.validarMultiplicacionOperacion(val1_1, retExpresion);
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l5 = "<=, "+temp4+", "+ret.valor+", heap; //guardando en el heap el valor del atributo "+nombreVar;
+													this.c3d.addCodigo(l5);
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ ret.tipo+", no valido para asignar a "+ nombreVar);
+												}
+											}
+
+											if(simboloIgual=="/="){
+												ret = this.validarDivisionOperacion(val1_1, retExpresion);
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l5 = "<=, "+temp4+", "+ret.valor+", heap; //guardando en el heap el valor del atributo "+nombreVar;
+													this.c3d.addCodigo(l5);
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ ret.tipo+", no valido para asignar a "+ nombreVar);
+												}
+											}
+
+											
+										}
+
+									}else{
+										errores.insertarError("Semantico", "Hubo un error al realizar la operacion para "+ nombreVar);
+									}
+
 								}
+								
 
 							}else{
 								errores.insertarError("Semantico", "La variable "+nombreVar+", no existe");
@@ -539,14 +608,22 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 							if(pos!=-1){
 								var temp1 = this.c3d.getTemporal();
 								var l1 = "+, p, "+pos+", "+temp1+"; // pos de "+nombreVar;
-								var temp2 = this.c3d.getTemporal();
+								//var temp2 = this.c3d.getTemporal();
 								this.c3d.addCodigo("// -------------- Resolviendo para un ID (var local) Asignacion ------------");
 								this.c3d.addCodigo(l1);
-								var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase, metodo);
+
+								if(simboloIgual == "="){
+									var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase, metodo);
 								if(retExpresion instanceof EleRetorno){
 									if(retExpresion.tipo.toUpperCase() != "NULO"){
-										var l2 = "<=, "+temp1+", "+ retExpresion.valor+", stack; // asignando a "+ nombreVar;
-										this.c3d.addCodigo(l2);
+										if(retExpresion.tipo.toUpperCase() == tipoVar.toUpperCase() || retExpresion.tipo.toUpperCase()== "NULO2"){
+											var l2 = "<=, "+temp1+", "+ retExpresion.valor+", stack; // asignando a "+ nombreVar;
+											this.c3d.addCodigo(l2);
+										
+										}else{
+											errores.insertarError("Semantico", "Tipo "+ retExpresion.tipo+", no valido para asignar a "+ nombreVar);
+										}
+										
 									}else{
 										errores.insertarError("Semantico", "Hubo un error al reslver para "+ nombreVar);
 									}
@@ -556,6 +633,102 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									errores.insertarError("Semantico", "Ocurrio un error al resolver para "+ nombreVar);
 								}
 
+
+								}else{
+									//+=,*=,/=,-=
+									var temp1_3 = this.c3d.getTemporal();
+									var l1_3= "=>, "+temp1+", "+temp1_3+", stack; //obtenidoe el valor de "+nombreVar;
+									this.c3d.addCodigo(l1_3);
+									console.log("99999999999999999999999999999999999999999999999999999999999999999999999");
+									console.dir(expresionVar);
+									var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+									if(retExpresion instanceof EleRetorno){
+
+										//
+
+										if(retExpresion.tipo.toUpperCase()!="NULO"){
+											var val1_1 = new EleRetorno();
+											val1_1.valor = temp1_3;
+											val1_1.tipo = tipoVar.toUpperCase();
+											var ret;
+											if(simboloIgual=="+="){
+												ret = this.validarSumaOperacion(val1_1, retExpresion);
+
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l2 = "<=, "+temp1+", "+ ret.valor+", stack; // asignando a "+ nombreVar;
+													this.c3d.addCodigo(l2);
+												
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ retExpresion.tipo+", no valido para asignar a "+ nombreVar);
+												}
+
+											}
+											
+											if(simboloIgual=="-="){
+												ret = this.validarRestaOperacion(val1_1, retExpresion);
+
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l2 = "<=, "+temp1+", "+ ret.valor+", stack; // asignando a "+ nombreVar;
+													this.c3d.addCodigo(l2);
+												
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ retExpresion.tipo+", no valido para asignar a "+ nombreVar);
+												}
+
+											}
+											
+
+											if(simboloIgual=="*="){
+												ret = this.validarMultiplicacionOperacion(val1_1, retExpresion);
+
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l2 = "<=, "+temp1+", "+ ret.valor+", stack; // asignando a "+ nombreVar;
+													this.c3d.addCodigo(l2);
+												
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ retExpresion.tipo+", no valido para asignar a "+ nombreVar);
+												}
+
+											}
+											
+
+											if(simboloIgual=="/="){
+												ret = this.validarDivisionOperacion(val1_1, retExpresion);
+												console.dir(ret);
+												console.log("hhhhhhhhhhhhhhhhhhhhhhh");
+
+												if(ret.tipo.toUpperCase() == tipoVar.toUpperCase() || ret.tipo.toUpperCase()== "NULO2"){
+													var l2 = "<=, "+temp1+", "+ ret.valor+", stack; // asignando a "+ nombreVar;
+													this.c3d.addCodigo(l2);
+												
+												}else{
+													errores.insertarError("Semantico", "Tipo "+ retExpresion.tipo+", no valido para asignar a "+ nombreVar);
+												}
+
+											}
+											
+
+											
+										}
+
+
+
+
+										//
+									
+									}else{
+										errores.insertarError("Semantico", "Hubo un error al realizar la operacion para "+ nombreVar);
+									}
+
+									
+
+
+								}
+
+
+
+
+								
 							}else{
 								errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
 								var ret = new EleRetorno();
@@ -836,8 +1009,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 		case "IMPRIMIR":{
-			console.log("voy a imprimirrrrrrrrrrrrrrrrrr");
-			console.dir(nodo);
 
 			var resultado = this.resolverExpresion(nodo.expresionImprimir,ambitos,clase, metodo);
 			if(resultado instanceof EleRetorno){
@@ -879,6 +1050,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
+	console.dir(nodo);
 
 	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
 	//console.log("Expresion "+ nombreSentecia);
@@ -1342,8 +1514,13 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			}
 
 
+			break;
+		}
 
-
+		case "NULO2":{
+			var ret = new EleRetorno();
+			ret.setValorVacio();
+			return ret;
 			break;
 		}
 

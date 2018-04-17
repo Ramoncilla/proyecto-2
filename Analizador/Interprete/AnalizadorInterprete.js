@@ -19,6 +19,26 @@ function AnalizadorInterprete(){
 }
 
 
+AnalizadorInterprete.prototype.imprimirStack= function(){
+
+    var cad = "<table border= 1><tr><td> Valor<td/></tr>";
+    for(var i =0; i< this.stack.length; i++){
+        cad+="<tr><td>"+ this.stack[i]+"</td></tr>";
+    }
+    cad+="</table>";
+    return cad;
+};
+
+AnalizadorInterprete.prototype.imprimirHeap= function(){
+
+    var cad = "<table border= 1><tr><td> Valor<td/></tr>";
+    for(var i =0; i< this.heap.length; i++){
+        cad+="<tr><td>"+ this.heap[i]+"</td></tr>";
+    }
+    cad+="</table>";
+    return cad;
+};
+
 AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
     if(codigo3D!= ""){
         this.inicializarEstructuras();
@@ -189,13 +209,13 @@ AnalizadorInterprete.prototype.resolverEDD= function(sent){
             if(vVal!="nulo"){
                 if(ed == 0){
                     //stack
-                    console.log("Voy a insertar en stack pos "+vPos+", el valor "+ vVal);
+                    //console.log("Voy a insertar en stack pos "+vPos+", el valor "+ vVal);
                     this.stack[parseInt(vPos)]=parseFloat(vVal);
                 }
                 if(ed == 1){
                     //heap
                     this.heap[parseInt(vPos)]=parseFloat(vVal);
-                    console.log("Voy a insertar en heap pos "+vPos+", el valor "+ vVal);
+                   // console.log("Voy a insertar en heap pos "+vPos+", el valor "+ vVal);
                 } 
             }else{
                 errores.insertarError("Semantico", "Ha ocurrido un erro al determinar el valor 3D");
@@ -211,14 +231,14 @@ AnalizadorInterprete.prototype.resolverEDD= function(sent){
                     var a = this.stack[parseInt(vPos)];
                     var tmp = new temporal(val.valor,a);
                     this.temporales.insertarTemporal(tmp);
-                    console.log("Voy a obtener  en stack pos "+vPos+", el valor "+ val.valor);
+                   // console.log("Voy a obtener  en stack pos "+vPos+", el valor "+ val.valor);
 
                 }
                 if(ed ==1){
                     var a = this.heap[parseInt(vPos)];
                     var tmp = new temporal(val.valor,a);
                     this.temporales.insertarTemporal(tmp);
-                    console.log("Voy a obtener  en heap pos "+vPos+", el valor "+ val.valor);
+                    //console.log("Voy a obtener  en heap pos "+vPos+", el valor "+ val.valor);
 
 
                 }
@@ -327,6 +347,11 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
             var v2 = this.resolverValor(val2);
             var varAsig = valCont.valor;
 
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+            console.dir(v1);
+            console.dir(v2);
+
             if(v1 != "nulo" && v2 != "nulo"){
                 if(v1=="vacio"){
                     v1=0;
@@ -335,6 +360,8 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                     v2=0;
                 }
                 var res = parseFloat(v1) /parseFloat(v2);
+                
+                console.dir(res);
                 var temp = new temporal(varAsig,res);
                 this.temporales.insertarTemporal(temp);
             }else{
