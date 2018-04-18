@@ -21,9 +21,9 @@ function AnalizadorInterprete(){
 
 AnalizadorInterprete.prototype.imprimirStack= function(){
 
-    var cad = "<table border= 1><tr><td> Valor<td/></tr>";
+    var cad = "<table border= 1><tr><td>Posicion</td> <td>Valor</td></tr>";
     for(var i =0; i< this.stack.length; i++){
-        cad+="<tr><td>"+ this.stack[i]+"</td></tr>";
+        cad+="<tr><td>"+i+"</td><td>"+ this.stack[i]+"</td></tr>";
     }
     cad+="</table>";
     return cad;
@@ -31,9 +31,9 @@ AnalizadorInterprete.prototype.imprimirStack= function(){
 
 AnalizadorInterprete.prototype.imprimirHeap= function(){
 
-    var cad = "<table border= 1><tr><td> Valor<td/></tr>";
+    var cad = "<table border= 1><tr><td>Posicion</td> <td>Valor</td></tr>";
     for(var i =0; i< this.heap.length; i++){
-        cad+="<tr><td>"+ this.heap[i]+"</td></tr>";
+        cad+="<tr><td>"+i+"</td><td>"+ this.heap[i]+"</td></tr>";
     }
     cad+="</table>";
     return cad;
@@ -87,9 +87,6 @@ AnalizadorInterprete.prototype.inicializarEstructuras = function(){
 AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
     var nombreInstruccion = nombres.obtenerNombre3D(instruccion).toUpperCase();
-   // console.log("-----------------QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ----------------");
-    //console.log(nombreInstruccion);
-    //console.dir(instruccion);
 
     switch(nombreInstruccion){
 

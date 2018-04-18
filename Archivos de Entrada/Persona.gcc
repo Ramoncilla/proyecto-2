@@ -92,8 +92,8 @@ clase persona {
        nombre[0]= 'A';
        nombre[1]= 'L';
        nombre[2]= 'I';
-       nombre[3]='N';
-       nombre[4]='A';
+       nombre[3]= 'N';
+       nombre[4]= 'A';
         
     }
 
