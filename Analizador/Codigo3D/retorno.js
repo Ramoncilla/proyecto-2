@@ -3,6 +3,11 @@ function retorno(){
     this.valor;
 }
 
+retorno.prototype.setValorCadena = function(valor){
+    this.tipo= "CADENA";
+    this.valor = valor;
+
+};
 
 retorno.prototype.setValorVacio = function(){
     this.tipo= "NULO2";

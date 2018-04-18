@@ -7,11 +7,13 @@ var obtenerNombres = require("../Codigo3D/sentenciaNombre");
 
 var errores = new listaErrores();
 var nombres = new obtenerNombres();
-
+var funActual;
 function AnalizadorInterprete(){
     this.funciones =[];
     this.temporales = new listaTemporales();
     this.bandera =0;
+    this.ir_a="";
+    this.etiqueta ="";
     this.heap = [];
     this.stack =[];
     this.cadenaImpresion ="";
@@ -51,10 +53,10 @@ AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
         var funTemporal, sentTemporal;
         //buscamos la funcion princiapl la cual vamos a iniciar a ejecutar
         for(var i = 0; i< this.funciones.length; i++){
-            funTemporal = this.funciones[i];
-            if(funTemporal.nombre.toUpperCase() == principal.toUpperCase()){
-                for(var j = 0; j <funTemporal.instrucciones.length; j++){
-                    sentTemporal = funTemporal.instrucciones[j];
+            funActual = this.funciones[i];
+            if(funActual.nombre.toUpperCase() == principal.toUpperCase()){
+                for(var j = 0; j <funActual.instrucciones.length; j++){
+                    sentTemporal = funActual.instrucciones[j];
                     if(this.bandera==1){
                         break;
                     }
@@ -64,6 +66,10 @@ AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
             }
 
         }
+
+        this.ir_a="";
+        this.etiqueta="";
+        this.bandera=0;
     
     }else{
         errores.insertarError("Semantico", "En ejecucion 3D, no se puede ejecutar una cadena vacia");
@@ -131,11 +137,6 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
             var tipo = instruccion.tipoImpresion;
             var exp = instruccion.expresion;
             var vVal = this.resolverValor(exp);
-           // console.log("-----------------QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ----------------");
-           // console.dir(instruccion);
-           // console.dir(vVal);
-           // console.dir(exp);
-            
 
             if(vVal!="nulo"){
                 if(tipo == "\"%c\""){
@@ -163,23 +164,49 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
         case "RELACIONAL":{
 
+            
+
             break;
         }
 
         case "ETIQUETA":{
-
+            var nombreEtiqueta = instruccion.etiqueta;
+            if(this.ir_a==""){
+                this.etiqueta = nombreEtiqueta;
+                this.ir_a= this.etiqueta;
+            }else{
+                this.etiqueta = nombreEtiqueta;
+            }
             break;
         }
 
         case "SALTO":{
-
+            var nombreSalto = instruccion.etiqueta;
+            if(nombreSalto.toUpperCase() == this.etiqueta.toUpperCase()){
+                this.ir_a= nombreSalto;
+                this.evaluar();
+                this.bandera=1;
+            }
             break;
         }
+
+
 
     }
 
 
 
+};
+
+AnalizadorInterprete.prototype.evaluar = function(){
+    var sentTemporal;
+    for(var j = 0; j <funActual.instrucciones.length; j++){
+        sentTemporal = funActual.instrucciones[j];
+        if(this.bandera==1){
+            break;
+        }
+        this.ejecutarInstruccion(sentTemporal);
+    }
 };
 
 AnalizadorInterprete.prototype.agregarImpresion = function(cad){
@@ -444,6 +471,11 @@ AnalizadorInterprete.prototype.resolverValor = function(val){
     return "nulo";
 };
 
+
+
+AnalizadorInterprete.prototype.evaluarCondicion= function(){
+
+};
 
 
 

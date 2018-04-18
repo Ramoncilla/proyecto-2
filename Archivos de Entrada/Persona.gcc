@@ -1,4 +1,4 @@
-clase llanta {
+/*clase llanta {
 
 entero valor1;
 entero valor2;
@@ -36,10 +36,10 @@ publico carro(){
 }
 
 
-}
+}*/
 
 clase persona {
-
+/*
     entero edad = 25*2;
     entero dpi;
     carro c = nuevo carro();
@@ -57,7 +57,7 @@ clase persona {
 
          
     }
-
+*/
     principal(){ 
         /* caracter apellido[2*5+1][3*3][2*1];
         decimal hola;
@@ -88,12 +88,15 @@ clase persona {
        // caracter nombre[20]= "alina Urbina";*/
 
 
-       caracter nombre[20];
+      /* caracter nombre[20];
        nombre[0]= 'A';
        nombre[1]= 'L';
        nombre[2]= 'I';
        nombre[3]= 'N';
-       nombre[4]= 'A';
+       nombre[4]= 'A';*/
+
+       caracter a;// = 'B';
+       a = "alina";
         
     }
 

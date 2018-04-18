@@ -5,7 +5,8 @@ function Cadena(){
 
 
 Cadena.prototype.setCadena = function(valor) {
-	this.valorCadena= valor;
+	this.valorCadena= valor.replace("\"", "");
+	this.valorCadena = this.valorCadena.replace("\"", "");
 
 };
 

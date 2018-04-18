@@ -628,6 +628,8 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 				case 1:{
 					//id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
+					console.log("aqui llegue -----> ");
+					console.dir(nodo);
 					var nombreVar = nodo.getElemento();
 					var tipoVar= this.tablaSimbolos.obtenerTipo(nombreVar, ambitos);
 					var expresionVar = nodo.getValor();
@@ -772,6 +774,8 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 								}else{
 									//+=,*=,/=,-=
+									console.log("es una variable local");
+									console.dir(expresionVar);
 									var temp1_3 = this.c3d.getTemporal();
 									var l1_3= "=>, "+temp1+", "+temp1_3+", stack; //obtenidoe el valor de "+nombreVar;
 									this.c3d.addCodigo(l1_3);
@@ -1189,6 +1193,14 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	//console.log("Expresion "+ nombreSentecia);
 	
 	switch(nombreSentecia){
+
+		case "NULO2":{
+			var ret = new EleRetorno();
+			ret.setValorVacio();
+			return ret;
+			break;
+		}
+		
 		case "ENTERO":{
 				var ret = new EleRetorno();
 				var valEntero = parseInt(nodo.getNumero());
@@ -1218,8 +1230,36 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 		}
 
 		case "CADENA":{
-
-			break;
+			
+			var l0= "// Resolviendo una cadena ";
+			var cadena = nodo.valorCadena;
+			var c;
+			var temp1 = this.c3d.getTemporal();
+			var l1 = "+, H, 1, "+temp1+"; //apu donde inicia la cadena";
+			var l2 = "<=, "+temp1+", H, heap; //guaradnod donde inicia la cadena ";
+			var l3 = "+, H, 1, H;";
+			var l4 = "<=, H, "+cadena.length+", heap; //guardando el tamanio de la cadena";
+			var l5 = "+, H, 1, H;";
+			this.c3d.addCodigo(l0);
+			this.c3d.addCodigo(l1);
+			this.c3d.addCodigo(l2);
+			this.c3d.addCodigo(l3);
+			this.c3d.addCodigo(l4);
+			this.c3d.addCodigo(l5);
+			var l6="";
+			for(var i = 0; i< cadena.length; i++){
+				c= cadena.charCodeAt(i);
+				l6="<=, H, "+c+", heap; //guardadndo "+cadena.charAt(i);
+				this.c3d.addCodigo(l6);
+				this.c3d.addCodigo(l3);
+			}
+			var l7 = "<=, H, 34, heap; // ingresando caracter de escape de la cadena";
+			this.c3d.addCodigo(l7);
+			this.c3d.addCodigo(l3);
+			var ret = new EleRetorno();
+			ret.setValorCadena(temp1);
+			//console.dir(ret);
+			return ret;
 
 		}
 
@@ -1292,163 +1332,43 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			var val1 = this.resolverExpresion(nodo.getExpresion1(),ambitos,clase,metodo);
 			var val2 = this.resolverExpresion(nodo.getExpresion2(),ambitos,clase,metodo);
 			var operando = nodo.getOperador();
+			var signo = "";
 			switch(operando){
 
 				case "==":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "je, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '==' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '==' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "je";
 					break;
 				}
-
 				case "!=":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jne, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '!=' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '!=' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "jne";
 					break;
 				}
-
-
 				case ">":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jg, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '>' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '>' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "jg";
 					break;
 				}
-
-
 				case ">=":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jge, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '>=' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '>=' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "jge";
 					break;
 
 				}
-
-
 				case "<":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jl, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '<' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '<' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "jl";
 					break;
 				}
-
-
 				case "<=":{
-					if(val1 instanceof EleRetorno && val2 instanceof EleRetorno){
-						if(!(this.esNulo(val1.tipo)) && !(this.esNulo(val2.tipo))){
-							var etiqV= this.c3d.getEtiqueta();
-							var etiqF = this.c3d.getEtiqueta();
-							var cod = "jle, "+val1.valor+", "+ val2.valor+", "+etiqV+ ";\njmp, , , "+etiqF+";";
-							var res = new nodoCondicion(cod);
-							res.addFalsa(etiqF);
-							res.addVerdadera(etiqV);
-							return res;
-						}else{
-							errores.insertarError("Semantico","Tipos no validos para una relacional '<=' ");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
-					}else{
-						errores.insertarError("Semantico","Tipos no validos para una relacional '<=' ");
-						var ret = new EleRetorno();
-						ret.setValoresNulos();
-						return ret;
-					}
+					signo = "jle";
 					break;
-				}				
-				break;
+				}
+			}
+			var retExp = this.validarRelacional(val1,val2,signo);
+			if(retExp instanceof nodoCondicion){
+				return retExp;
+			}else{
+				errores.insertarError("Semantico", "Hubo un error al resolver la operacion relacional "+ signo);
+				var r = new EleRetorno();
+				r.setValoresNulos();
+				return r;
 			}
 			break;
 		}//fin relacional
@@ -1625,7 +1545,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 							}
 
-
 						}else{
 							//arreglo local
 							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
@@ -1650,25 +1569,112 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			break;
 		}
 
-		case "NULO2":{
-			var ret = new EleRetorno();
-			ret.setValorVacio();
-			return ret;
-			break;
-		}
-
-
-
-
-
-    
-
 
 	}//fin switch
 	 
 	
 };
 
+
+
+generacionCodigo.prototype.sumarAsciiCadena = function(pos){
+
+	var etiqCiclo = this.c3d.getEtiqueta();
+	var temp1 = this.c3d.getTemporal();
+	var l1 = "=>, "+pos+", "+temp1+", heap; // apunt al heap donde inicia la cadena";
+	var temp2 = this.c3d.getTemporal();
+	var l2 = "+, "+temp1+", 1, "+temp2+"; // pos donde incia la cadena";
+	var temp3 = this.c3d.getTemporal();
+	var l3 = "=>, "+ temp2+", "+temp3+", heap; // valor caracter  de la cadena";
+	var temp4 = this.c3d.getTemporal();
+	var l4 = "+, 0, 0, "+temp4+"; //acumulador de la cadena";
+	var etiqV = this.c3d.getEtiqueta();
+	var etiqF = this.c3d.getEtiqueta();
+	this.c3d.addCodigo("// ------------ Obtenieido suma de caracteres de una cadena --------");
+	this.c3d.addCodigo(l1);
+	this.c3d.addCodigo(l2);
+	this.c3d.addCodigo(l3);
+	this.c3d.addCodigo(l4);
+	this.c3d.addCodigo(etiqCiclo+":");
+	var l5 =  "jne, "+temp3+", 34, "+etiqV+ ";\njmp, , , "+etiqF+";";
+	this.c3d.addCodigo(l5);
+	this.c3d.addCodigo(etiqV+":");
+	var l6 = "+, "+temp4+", "+temp3+", "+temp4+"; // sumando los caracteres ";
+	var l7 = "+, "+temp2+", 1, "+temp2+"; // sumando una posicion";
+	var l8 = "=>, "+temp2+", "+temp3+", heap; // obteniendo el valor del caracter ";
+	var l9 = "jmp, , , "+etiqV+";"
+	var l10= etiqF+":";
+	this.c3d.addCodigo(l6);
+	this.c3d.addCodigo(l7);
+	this.c3d.addCodigo(l8);
+	this.c3d.addCodigo(l9);
+	this.c3d.addCodigo(l10);
+
+	return temp4;
+
+};
+
+generacionCodigo.prototype.validarRelacional = function(val1, val2, signo){
+	var retNulo = new EleRetorno();
+	retNulo.setValoresNulos();
+
+	if(!(this.esNulo(val1.tipo) || this.esNulo(val2.tipo))){
+		if(!(this.esVacio(val1.tipo) || this.esVacio(val2.tipo))){
+			if(!(this.esBool(val1.tipo) || this.esBool(val2.tipo))){
+				var etiqV = this.c3d.getEtiqueta();
+				var etiqF = this.c3d.getEtiqueta();
+				var cod="";
+				var res;
+				if((this.esInt(val1.tipo) || this.esDecimal(val1.tipo) || this.esChar(val1.tipo))||
+					this.esInt(val2.tipo) || this.esDecimal(val2.tipo) || this.esChar(val2.tipo)){
+						cod=signo+", "+val1.valor+", "+val2.valor+", "+etiqV+";\njmp, , , "+etiqF+";";
+						res = new nodoCondicion(cod);
+						res.addFalsa(etiqF);
+						res.addVerdadera(etiqV);
+						return res;
+					}else if(this.esChar(val1.tipo) && this.esCadena(val2.tipo)){
+						var sumaCadena = this.sumarAsciiCadena(val2.valor);
+						cod=signo+", "+val1.valor+", "+sumaCadena+", "+etiqV+";\njmp, , , "+etiqF+";";
+						res = new nodoCondicion(cod);
+						res.addFalsa(etiqF);
+						res.addVerdadera(etiqV);
+						return res;
+					}else if(this.esCadena(val1.tipo) && this.esChar(val2.tipo)){
+						var sumaCadena = this.sumarAsciiCadena(val1.valor);
+						cod=signo+", "+sumaCadena+", "+val2.valor+", "+etiqV+";\njmp, , , "+etiqF+";";
+						res = new nodoCondicion(cod);
+						res.addFalsa(etiqF);
+						res.addVerdadera(etiqV);
+						return res;
+					}else if(this.esCadena(val1.tipo) && this.esCadena(val2.tipo)){
+						var sumaCadena = this.sumarAsciiCadena(val2.valor);
+						var suma2 = this.sumarAsciiCadena(val1.valor);
+						cod=signo+", "+suma2+", "+sumaCadena+", "+etiqV+";\njmp, , , "+etiqF+";";
+						res = new nodoCondicion(cod);
+						res.addFalsa(etiqF);
+						res.addVerdadera(etiqV);
+						return res;
+					}else{
+						errores.insertarError("Semantico", "No es valido realizar una operacion relacional "+ val1.tipo +", con "+val2.tipo);
+						return retNulo;
+					}
+
+			}else{
+				errores.insertarError("Semantico", "No es valido realizar una operacion relacional con booleanos "+ signo);
+				return retNulo;
+			}
+
+		}else{
+			errores.insertarError("Semantico","No es valido realizar una operacion relacional con nulos, "+ signo);
+			return retNulo;
+		}
+
+	}else{
+		errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para relacional "+signo);
+		return retNulo;
+
+	}
+};
 
 generacionCodigo.prototype.validarPotenciaOperacion = function(val1, val2){
 
@@ -2325,6 +2331,14 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 generacionCodigo.prototype.esNulo= function(val){
 	 return (val.toUpperCase() == "NULO");
+};
+
+generacionCodigo.prototype.esVacio= function(val){
+	return (val.toUpperCase() == "NULO2");
+};
+
+generacionCodigo.prototype.esCadena = function(val){
+	return (val.toUpperCase() == "CADENA");
 };
 
 generacionCodigo.prototype.esInt = function(val){
