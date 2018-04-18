@@ -64,7 +64,7 @@ clase persona {
         hola = 5/2;
         imprimir(hola);
         hola/=(2*1);
-        imprimir(hola); */
+        imprimir(hola); 
 
         persona p1;
         entero pedrito;
@@ -73,7 +73,7 @@ clase persona {
         alina = 2 *2-pedrito+26;
         imprimir(pedrito);
         imprimir(alina);
-         p1 = nuevo persona();
+         //p1 = nuevo persona();
         pedrito+=19;
         imprimir(pedrito);
         pedrito-=10.2;
@@ -83,9 +83,17 @@ clase persona {
         pedrito*=2;
         imprimir(pedrito);
        
-        c= nuevo persona();
+        //c= nuevo persona();
 
-        caracter nombre[20]= "alina Urbina";
+       // caracter nombre[20]= "alina Urbina";*/
+
+
+       caracter nombre[20];
+       nombre[0]= 'A';
+       nombre[1]= 'L';
+       nombre[2]= 'I';
+       nombre[3]='N';
+       nombre[4]='A';
         
     }
 

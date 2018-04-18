@@ -188,91 +188,73 @@ end, , carro_vacio_carro
 
 begin, , , persona_PRINCIPAL
 
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t83; // pos de pedrito
-<=, t83, 2, stack; // asignando a pedrito
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t84; // pos de alina
-*, 2, 2, t85;
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t86; // pos de pedrito
-=>, t86, t87, stack; // valor de lo que trae en el stack pedrito
--, t85, t87, t88;
-+, t88, 26, t89;
-<=, t84, t89, stack; // asignando a alina
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t90; // pos de pedrito
-=>, t90, t91, stack; // valor de lo que trae en el stack pedrito
-print("%d", t91);
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t92; // pos de alina
-=>, t92, t93, stack; // valor de lo que trae en el stack alina
-print("%d", t93);
-// ----------- Instancia a una variable local --------------
-+, p, 0, t94; // pos de p1
-<=, t94, h, stack; //guardando referencia del heap para el objeto p1
-+, h, 1, t95; // guardo la posicion donde inicia el objeto 
-<=, h, t95, heap; // guardando donde es que inicia el objeto dentro del heap
-+, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 3, h; // reservando espacio para el objeto p1
-//Ingresando referencia al this del objeto p1
-+, p, 0, t96; // pos de p1
-=>, t96, t97, stack; // obteniendo apuntador de p1
-+, p, 4, t98; // simulando cambio de ambito
-+, t98, 0, t99; //pos del this de p1
-<=, t99, t97, stack; // insertando apuntador del heap al stack del obeto p1
-// No posee parametros 
-+, p, 4, p; // simulando cambio de ambito
-call, , , persona_vacio_persona;
--, p, 4, p; // regresando al ambito acutal
-
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t100; // pos de pedrito
-=>, t100, t101, stack; //obtenidoe el valor de pedrito
-+, t101, 19, t102;
-<=, t100, t102, stack; // asignando a pedrito
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t103; // pos de pedrito
-=>, t103, t104, stack; // valor de lo que trae en el stack pedrito
-print("%d", t104);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t105; // pos de pedrito
-=>, t105, t106, stack; //obtenidoe el valor de pedrito
--, t106, 10.2, t107;
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t108; // pos de pedrito
-=>, t108, t109, stack; // valor de lo que trae en el stack pedrito
-print("%d", t109);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t110; // pos de pedrito
-=>, t110, t111, stack; //obtenidoe el valor de pedrito
--, t111, 5, t112;
-<=, t110, t112, stack; // asignando a pedrito
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t113; // pos de pedrito
-=>, t113, t114, stack; // valor de lo que trae en el stack pedrito
-print("%d", t114);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t115; // pos de pedrito
-=>, t115, t116, stack; //obtenidoe el valor de pedrito
-*, t116, 2, t117;
-<=, t115, t117, stack; // asignando a pedrito
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t118; // pos de pedrito
-=>, t118, t119, stack; // valor de lo que trae en el stack pedrito
-print("%d", t119);
 // ------------------------ Creando arreglo local nombre
-+, P, 3, t120; //pos de arreglo nombre
-<=, t120, H, stack; // ingrensando al stack apunt del heap para nombre
-+, H, 1, t121;
-<=, H, t121, heap; //insetnado donde inicia el arreglo nombre
++, P, 0, t83; //pos de arreglo nombre
+<=, t83, H, stack; // ingrensando al stack apunt del heap para nombre
++, H, 1, t84;
+<=, H, t84, heap; //insetnado donde inicia el arreglo nombre
 +, H, 1, H;
 // calculando el tamanho del arreglo
--, 20, 1, t122; //calculando el n real
--, t122, 0, t123; //iReal columna 0
-<=, H, t123, heap; // insertando el tamanio del arreglo linealizado nombre
+-, 20, 1, t85; //calculando el n real
+-, t85, 0, t86; //iReal columna 0
+<=, H, t86, heap; // insertando el tamanio del arreglo linealizado nombre
 +, H, 1, H;
-+, h, t123, h; // reservnado el espacio del arreglo nombre
++, h, t86, h; // reservnado el espacio del arreglo nombre
++, P, 0, t87; // pos de arreglo nombre
+=>, t87, t88, stack; // apunt al heap de arreglo nombre
+=>, t88, t89, heap; //apunt al heap donde inicia el arreglo nombre
+=>, t89, t90, heap; //obteniendo el tamanio del arreglo nombre
++, t89, 1, t91; // pos 0 del arreglo nombre
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombre
+-, 0, 0, t92; //calculando el n real ()
+-, t92, 0, t93; //iReal columna 0
++, t91, t93, t94; // pos donde se va inicar a escribir el arreglo nombre
+<=, t94, 65, heap; // asignando al heap en la nueva posicion de arreglo nombre
++, P, 0, t95; // pos de arreglo nombre
+=>, t95, t96, stack; // apunt al heap de arreglo nombre
+=>, t96, t97, heap; //apunt al heap donde inicia el arreglo nombre
+=>, t97, t98, heap; //obteniendo el tamanio del arreglo nombre
++, t97, 1, t99; // pos 0 del arreglo nombre
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombre
+-, 1, 0, t100; //calculando el n real ()
+-, t100, 0, t101; //iReal columna 0
++, t99, t101, t102; // pos donde se va inicar a escribir el arreglo nombre
+<=, t102, 76, heap; // asignando al heap en la nueva posicion de arreglo nombre
++, P, 0, t103; // pos de arreglo nombre
+=>, t103, t104, stack; // apunt al heap de arreglo nombre
+=>, t104, t105, heap; //apunt al heap donde inicia el arreglo nombre
+=>, t105, t106, heap; //obteniendo el tamanio del arreglo nombre
++, t105, 1, t107; // pos 0 del arreglo nombre
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombre
+-, 2, 0, t108; //calculando el n real ()
+-, t108, 0, t109; //iReal columna 0
++, t107, t109, t110; // pos donde se va inicar a escribir el arreglo nombre
+<=, t110, 73, heap; // asignando al heap en la nueva posicion de arreglo nombre
++, P, 0, t111; // pos de arreglo nombre
+=>, t111, t112, stack; // apunt al heap de arreglo nombre
+=>, t112, t113, heap; //apunt al heap donde inicia el arreglo nombre
+=>, t113, t114, heap; //obteniendo el tamanio del arreglo nombre
++, t113, 1, t115; // pos 0 del arreglo nombre
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombre
+-, 3, 0, t116; //calculando el n real ()
+-, t116, 0, t117; //iReal columna 0
++, t115, t117, t118; // pos donde se va inicar a escribir el arreglo nombre
+<=, t118, 78, heap; // asignando al heap en la nueva posicion de arreglo nombre
++, P, 0, t119; // pos de arreglo nombre
+=>, t119, t120, stack; // apunt al heap de arreglo nombre
+=>, t120, t121, heap; //apunt al heap donde inicia el arreglo nombre
+=>, t121, t122, heap; //obteniendo el tamanio del arreglo nombre
++, t121, 1, t123; // pos 0 del arreglo nombre
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombre
+-, 4, 0, t124; //calculando el n real ()
+-, t124, 0, t125; //iReal columna 0
++, t123, t125, t126; // pos donde se va inicar a escribir el arreglo nombre
+<=, t126, 65, heap; // asignando al heap en la nueva posicion de arreglo nombre
 
 end, , persona_PRINCIPAL
 
@@ -282,26 +264,26 @@ end, , persona_PRINCIPAL
 begin, , , persona_vacio_persona_entero_entero
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t125; // pos de edad
-*, 25, 2, t126;
-<=, t125, t126, stack; // asignando a edad
++, p, 1, t127; // pos de edad
+*, 25, 2, t128;
+<=, t127, t128, stack; // asignando a edad
 // ----------- Instancia a un atributo --------------
-+, p, 0, t127;// pos this de c
-=>, t127, t128, stack; //apuntador del heap de c
-=>, t128, t129, heap; //posicion real del heap donde inicia c
-+, t129, 2, t130; //pos real del atributo c
-<=, t130, h, heap; //guardando la pos real donde inicia el objeto c
++, p, 0, t129;// pos this de c
+=>, t129, t130, stack; //apuntador del heap de c
+=>, t130, t131, heap; //posicion real del heap donde inicia c
++, t131, 2, t132; //pos real del atributo c
+<=, t132, h, heap; //guardando la pos real donde inicia el objeto c
 +, h, 6, h; // reservando el espacio de memoria para el nuevo objeto c
 
 // Guardando la referencia al this del objeto para la llamada al constructor c
-+, p, 0, t131;
-=>, t131, t132, stack; //apuntador al heap de c
-=>, t132, t133, heap; //posicion real donde incia el objeto c
-+, t133, 2, t134; // pos real donde incial el objeto c
++, p, 0, t133;
+=>, t133, t134, stack; //apuntador al heap de c
+=>, t134, t135, heap; //posicion real donde incia el objeto c
++, t135, 2, t136; // pos real donde incial el objeto c
 
-+, p, t134, t135; // tamanho de la funcion actual persona_vacio_persona_entero_entero
-+, t135, 0, t136; // pos del this para la nueva instancia de c
-<=, t136, t134, stack; //guaradndo el puntero del this en el stack 
++, p, t136, t137; // tamanho de la funcion actual persona_vacio_persona_entero_entero
++, t137, 0, t138; // pos del this para la nueva instancia de c
+<=, t138, t136, stack; //guaradndo el puntero del this en el stack 
 
 // No posee parametros 
 +, p, 4, p; // simulando cambio de ambito
@@ -317,29 +299,29 @@ end, , persona_vacio_persona_entero_entero
 begin, , , persona_vacio_persona
 
 // Asignando atributo edad
-+, p, 0, t137; //pos this 
-=>, t137, t138, stack; // apuntador al heap
-=>, t138, t139, heap; // apuntador donde inicia el objeto
-+, t139, 0, t140; // pos real  de edad
-*, 25, 2, t141;
-<=, t140, t141, heap; //guardando en el heap el valor del atributo
++, p, 0, t139; //pos this 
+=>, t139, t140, stack; // apuntador al heap
+=>, t140, t141, heap; // apuntador donde inicia el objeto
++, t141, 0, t142; // pos real  de edad
+*, 25, 2, t143;
+<=, t142, t143, heap; //guardando en el heap el valor del atributo
 // ----------- Instancia a un atributo --------------
-+, p, 0, t142;// pos this de c
-=>, t142, t143, stack; //apuntador del heap de c
-=>, t143, t144, heap; //posicion real del heap donde inicia c
-+, t144, 2, t145; //pos real del atributo c
-<=, t145, h, heap; //guardando la pos real donde inicia el objeto c
++, p, 0, t144;// pos this de c
+=>, t144, t145, stack; //apuntador del heap de c
+=>, t145, t146, heap; //posicion real del heap donde inicia c
++, t146, 2, t147; //pos real del atributo c
+<=, t147, h, heap; //guardando la pos real donde inicia el objeto c
 +, h, 6, h; // reservando el espacio de memoria para el nuevo objeto c
 
 // Guardando la referencia al this del objeto para la llamada al constructor c
-+, p, 0, t146;
-=>, t146, t147, stack; //apuntador al heap de c
-=>, t147, t148, heap; //posicion real donde incia el objeto c
-+, t148, 2, t149; // pos real donde incial el objeto c
++, p, 0, t148;
+=>, t148, t149, stack; //apuntador al heap de c
+=>, t149, t150, heap; //posicion real donde incia el objeto c
++, t150, 2, t151; // pos real donde incial el objeto c
 
-+, p, t149, t150; // tamanho de la funcion actual persona_vacio_persona
-+, t150, 0, t151; // pos del this para la nueva instancia de c
-<=, t151, t149, stack; //guaradndo el puntero del this en el stack 
++, p, t151, t152; // tamanho de la funcion actual persona_vacio_persona
++, t152, 0, t153; // pos del this para la nueva instancia de c
+<=, t153, t151, stack; //guaradndo el puntero del this en el stack 
 
 // No posee parametros 
 +, p, 2, p; // simulando cambio de ambito
@@ -347,27 +329,27 @@ call, , , carro_vacio_carro;
 -, p, 2, p; // regresando al ambito acutal
 
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t152; // pos this 
-=>, t152, t153, stack; // obtenido apuntador al heap 
-=>, t153, t154, heap; // apuntador 
-+, t154, 0, t155; // pos de edad
-=>, t155, t156, heap; // obtengo el valor que se encuentre en el heap 
-print("%d", t156);
++, p, 0, t154; // pos this 
+=>, t154, t155, stack; // obtenido apuntador al heap 
+=>, t155, t156, heap; // apuntador 
++, t156, 0, t157; // pos de edad
+=>, t157, t158, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t158);
 // Asignando atributo edad
-+, p, 0, t157; //pos this 
-=>, t157, t158, stack; // apuntador al heap
-=>, t158, t159, heap; // apuntador donde inicia el objeto
-+, t159, 0, t160; // pos real  de edad
-=>, t160, t161, heap; //obtenidoe el valor de edad
-+, t161, 8, t162;
-<=, t160, t162, heap; //guardando en el heap el valor del atributo edad
++, p, 0, t159; //pos this 
+=>, t159, t160, stack; // apuntador al heap
+=>, t160, t161, heap; // apuntador donde inicia el objeto
++, t161, 0, t162; // pos real  de edad
+=>, t162, t163, heap; //obtenidoe el valor de edad
++, t163, 8, t164;
+<=, t162, t164, heap; //guardando en el heap el valor del atributo edad
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t163; // pos this 
-=>, t163, t164, stack; // obtenido apuntador al heap 
-=>, t164, t165, heap; // apuntador 
-+, t165, 0, t166; // pos de edad
-=>, t166, t167, heap; // obtengo el valor que se encuentre en el heap 
-print("%d", t167);
++, p, 0, t165; // pos this 
+=>, t165, t166, stack; // obtenido apuntador al heap 
+=>, t166, t167, heap; // apuntador 
++, t167, 0, t168; // pos de edad
+=>, t168, t169, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t169);
 
 end, , persona_vacio_persona
 

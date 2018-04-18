@@ -135,7 +135,7 @@ case 28:
 this.$="*";
 break;
 case 29:
-this.$="/"; console.log("POPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO88888899911111111111111111");
+this.$="/";
 break;
 case 30:
 this.$="^";

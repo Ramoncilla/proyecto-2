@@ -116,7 +116,7 @@ TIPO_ED: stack{$$=0;}
 OPE_ARITMETICO: suma {$$="+";}   
     |menos{$$="-";}   
     |por{$$="*";}   
-    |div{$$="/"; console.log("POPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO88888899911111111111111111");}   
+    |div{$$="/";}   
     |pot{$$="^";};
 
 OPE_RELACIONAL: je{$$="==";}   

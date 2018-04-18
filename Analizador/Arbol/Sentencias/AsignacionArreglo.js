@@ -6,7 +6,7 @@ function AsignacionArreglo(){
 	this.valorAsignacionArreglo=null;
 	this.tipoAsignacionArreglo =0;
 }
-
+ 
 
 
 AsignacionArreglo.prototype.setValores = function(elemento,dimensiones,igual,valor,tipo) {

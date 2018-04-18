@@ -16,6 +16,7 @@ var  Retorno = require("../Arbol/Sentencias/Retorno");
 var  Continuar = require("../Arbol/Sentencias/Continuar");
 var Asignacion = require("../Arbol/Sentencias/Asignacion");
 var asignaDecla = require("../Arbol/Sentencias/AsignaDecla");
+var asignaArreglo = require("../Arbol/Sentencias/AsignacionArreglo");
 
 
 
@@ -235,6 +236,10 @@ sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
      return "asigna_Decla";
  }
 
+
+ if(sent instanceof asignaArreglo){
+     return "ASIGNACION_ARREGLO";
+ }
 
 /*
 SENTENCIA: DECLARACION{$$=$1;}
