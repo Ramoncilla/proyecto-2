@@ -6,7 +6,11 @@ clase persona {
     persona()
     {
         valor[0][0]='O'; 
-        valor[3][1]='p';        
+        valor[3][1]='p';  
+        imprimir(valor[0][0]);
+        imprimir(valor[1][1]);
+        imprimir(valor[3][1]);
+        imprimir('z');      
     }
 
     principal(){ 

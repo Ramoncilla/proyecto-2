@@ -97,9 +97,7 @@ sentenciaNombre.prototype.obtenerNombre3D= function(sent){
 
 sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
-    if(sent instanceof cadena){
-        return "cadena";
-    } 
+     
 
     if(sent instanceof obtenerDireccion){
         return "obtenerDireccion";
@@ -162,13 +160,14 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 
-    if(sent instanceof posArreglo){
-        return "pos_Arreglo";
+    if(sent instanceof cadena){
+        return "cadena";
     }
 
 
-
-
+    if(sent instanceof posArreglo){
+        return "pos_Arreglo";
+    }
 
     if(sent instanceof nulo){
         return "nulo2";

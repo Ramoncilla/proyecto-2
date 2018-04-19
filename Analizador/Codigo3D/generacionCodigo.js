@@ -309,6 +309,31 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 		case "ASIGNACION_ARREGLO":{
 			console.log("------------------ Entre a una asignacion Arreglo  --------------------");
+
+
+			var nombreArreglo = nodo.elementoAsignacionArreglo;
+			var posicionesArreglo = nodo.dimensiones;
+			var simboloIgual = nodo.simboloIgual;
+			var expresionArreglo = nodo.valorAsignacionArreglo;
+			var tipoArreglo = this.tablaSimbolos.obtenerTipo(nombreArreglo, ambitos);
+			var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+			if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
+				var ret = this.resolverExpresion(expresionArreglo,ambitos,clase,metodo);
+			    if(ret.tipo.toUpperCase()== tipoArreglo.toUpperCase() || ret.tipo.toUpperCase() == "NULO2"){
+					var l1_1= "<=, "+apuntadorArreglo.valor+", "+ ret.valor+", heap; // asignando al heap en la nueva posicion de arreglo "+nombreArreglo;
+					this.c3d.addCodigo(l1_1);	
+				}else{ 
+					errores.insertarError("Semantico", "Imposible asignar posicion de "+ nombreArreglo+" de tipo "+ tipoArreglo+", con "+ ret.tipo);
+				}
+			}else{
+				errores.insertarError("Semantico","No se ha podido insertar al arreglo "+nombreArreglo);
+
+			}
+			break;
+
+
+
+/*
 			var nombreArreglo = nodo.elementoAsignacionArreglo;
 			var simboloIgual = nodo.simboloIgual;
 			var posicionAsignar = nodo.dimensiones;
@@ -514,7 +539,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 				errores.insertarError("Semantico", "El arreglo de nombre "+ nombreArreglo+", no existe");
 			}
 
-			break;
+			break;*/
 		}
 
 		case "DECLA_ARREGLO":{
@@ -526,7 +551,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			if(esAtributo!= null){
 				var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
 				if(simb!=null){
-//console.dir(simb);
 					if(simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
 						if(esAtributo){
 							//arreglo atributo
@@ -1628,139 +1652,221 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 		}//fin identificador
 
 		case "POS_ARREGLO":{
-
-			var ret2 = new EleRetorno();
-				ret2.setValoresNulos();
-				
 			var nombreArreglo = nodo.nombreArreglo;
 			var posicionesArreglo = nodo.posicionesArreglo;
-			var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
 			var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
-			if(esAtributo!= null){
-				var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
-				if(simb!=null){
-					if(simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
-						if(esAtributo){
-							//arreglo atributo
-							var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
-							if(posArreglo!=-1){
-
-							}else{
-								errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe");
-								return ret2;
-							}
-							
-						}else{
-							//arreglo local
-							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
-							if(posArreglo!=-1){
-								var temp1 = this.c3d.getTemporal();
-								var l1 = "+, P, "+posArreglo+", "+temp1+"; // pos de arreglo "+nombreArreglo;
-								var temp2 = this.c3d.getTemporal();
-								var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt al heap de arreglo "+ nombreArreglo;
-								var temp3 = this.c3d.getTemporal();
-								var l3 = "=>, "+temp2+", "+temp3+", heap; //apunt al heap donde inicia el arreglo "+ nombreArreglo;
-								var temp4 = this.c3d.getTemporal();
-								var l4 = "=>, "+temp3+", "+temp4+", heap; //obteniendo el tamanio del arreglo "+ nombreArreglo;
-								var temp5 = this.c3d.getTemporal();
-								var l5 = "+, "+temp3+", 1, "+temp5+"; // pos 0 del arreglo "+ nombreArreglo;
-								var l6 = "// ---- Calculo de valor de las posiciones  ";
-
-								this.c3d.addCodigo(l1);
-								this.c3d.addCodigo(l2);
-								this.c3d.addCodigo(l3);
-								this.c3d.addCodigo(l4);
-								this.c3d.addCodigo(l5);
-								this.c3d.addCodigo(l6);
-								var tamanios = this.calculoArregloNs(posicionesArreglo,ambitos,clase,metodo);
-								var tamanios2 = simb.arregloNs;
-								this.c3d.addCodigo("// -----------(Obteniendo valor) Calculo de iReal para el arreglo "+ nombreArreglo);
-								if(tamanios.length == posicionesArreglo.length && (tamanios2.length == tamanios.length)){
-									var nTemporal;
-									var tempRes="";
-									var nSize;
-									for(var k =0; k<tamanios.length; k++ ){
-										nTemporal = tamanios[k];
-										nSize = tamanios2[k];
-										if(k == 0){
-											var temp1_1= this.c3d.getTemporal();
-											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
-											tempRes = this.c3d.getTemporal();
-											var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
-											this.c3d.addCodigo(l1_1);
-											this.c3d.addCodigo(l2_1);	
-										}else{
-											var temp1_1= this.c3d.getTemporal();
-											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
-											var temp2_1= this.c3d.getTemporal();
-											var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
-											var temp3_1= this.c3d.getTemporal();
-											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
-											this.c3d.addCodigo(l1_1);
-											this.c3d.addCodigo(l2_1);
-											this.c3d.addCodigo(l3_1);
-											tempRes = this.c3d.getTemporal(); 
-											var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
-											this.c3d.addCodigo(l4_1);
-										}
-
-									}
-
-									if(tempRes!=""){
-										var temp1_5 = this.c3d.getTemporal();
-										var l1_5= "+, "+temp5+", "+tempRes+", "+temp1_5+"; // pos donde se va inicar a escribir el arreglo "+ nombreArreglo;
-										var temp2_5 = this.c3d.getTemporal();
-										var l2_5= "=>, "+temp1_5+", "+temp2_5+", heap; //valor que trae el objeto";
-										this.c3d.addCodigo(l1_5);
-										this.c3d.addCodigo(l2_5);
-										var ret = new EleRetorno();
-										ret.tipo = tipoArreglo;
-										ret.valor = temp2_5;
-										return ret;
-									  }else{
-										  errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para la posicoina a asignar");
-										  return ret2;
-									  }
-								}else{
-									errores.insertarError("Semantico", "No coincide el numero de valores para resolver arreglo");
-									return ret2;
-								}
-
-
-
-
-							}else{
-								errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe");
-								return ret2;
-							}
-							
-						}
-
-					} else{
-						errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
-						return ret2;
-
-					}
-
-				}else{
-					errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
-				}
-
-
-			}else{
-				errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
-				return ret2;
+			var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+			if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
+				var temp2_5 = this.c3d.getTemporal();
+				var l2_5= "=>, "+apuntadorArreglo.valor+", "+temp2_5+", heap; //valor que trae el objeto";
+				this.c3d.addCodigo(l2_5);
+				var retornVal = new EleRetorno();
+				retornVal.tipo = tipoArreglo;
+				retornVal.valor = temp2_5;
+				return retornVal;
 			}
-
-			return ret2;
-			break;
-		}
+				var ret2 = new EleRetorno();
+				ret2.setValoresNulos();
+				return ret2;
+				break;
+			
+		}//fin pos_arreglo
 
 
 	}//fin switch
 	 
 	
 };
+
+
+
+generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, posicionesArreglo, ambitos, clase, metodo){
+		var ret2 = new EleRetorno();
+		ret2.setValoresNulos();
+		var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
+		var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
+		if(esAtributo!= null){
+			var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
+			if(simb!=null){
+				if(simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+					if(esAtributo){
+						//arreglo atributo
+						var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
+						if(posArreglo!=-1){
+							var temp1 = this.c3d.getTemporal();
+							var temp2 = this.c3d.getTemporal();
+							var temp3 = this.c3d.getTemporal();
+							var temp4 = this.c3d.getTemporal();
+							var temp5 = this.c3d.getTemporal();
+							var temp6 = this.c3d.getTemporal();
+							var temp7 = this.c3d.getTemporal();
+							var l1 = "+, P, 0, "+temp1+"; // pos this del objeto ";
+							var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt del heap para le objeto";
+							var l3 = "=>, "+temp2+", "+temp3+", heap; // apunt donde inicia el objeto";
+							var l4 = "+, "+temp3+", "+posArreglo+", "+temp4+"; // pos del arreglo dentro del heap ";
+							var l5 = "=>, "+temp4+", "+temp5+", heap; // apuntador donde inicia el arreglo";
+							var l6 = "=>, "+temp5+", "+temp6+", heap; // size del arreglo "+ nombreArreglo;
+							var l7 = "+, "+temp5+", 1, "+temp7+"; //pos 0 del arreglo "+ nombreArreglo;
+							this.c3d.addCodigo("//------------- Asignancio posicion de un arreglo Atributo  "+nombreArreglo);
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo(l3);
+							this.c3d.addCodigo(l4);
+							this.c3d.addCodigo(l5);
+							this.c3d.addCodigo(l6);
+							this.c3d.addCodigo(l7);
+							var tamanios = this.calculoArregloNs(posicionesArreglo,ambitos,clase,metodo);
+							var tamanios2 = simb.arregloNs;
+							this.c3d.addCodigo("// ----------- Calculo de iReal para el arreglo "+ nombreArreglo);
+
+							if(tamanios.length == posicionesArreglo.length && (tamanios2.length == tamanios.length)){
+								var nTemporal;
+								var tempRes="";
+								var nSize;
+								for(var k =0; k<tamanios.length; k++ ){
+									nTemporal = tamanios[k];
+									nSize = tamanios2[k];
+
+									if(k == 0){
+										var temp1_1= this.c3d.getTemporal();
+										var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+										tempRes = this.c3d.getTemporal();
+										var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+										this.c3d.addCodigo(l1_1);
+										this.c3d.addCodigo(l2_1);	
+									}else{
+										var temp1_1= this.c3d.getTemporal();
+										var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+										var temp2_1= this.c3d.getTemporal();
+										var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
+										var temp3_1= this.c3d.getTemporal();
+										var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+										this.c3d.addCodigo(l1_1);
+										this.c3d.addCodigo(l2_1);
+										this.c3d.addCodigo(l3_1);
+										tempRes = this.c3d.getTemporal(); 
+										var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+										this.c3d.addCodigo(l4_1);
+									}
+								}// fin ciclo for donde se calcula la posicion
+
+								if(tempRes!=""){
+									var temp1_8 = this.c3d.getTemporal();
+									var l1_8= "+, "+temp7+", "+tempRes+", "+temp1_8+"; // pos buscade del arreglo atributo "+ nombreArreglo;
+									this.c3d.addCodigo(l1_8);
+									var eler = new EleRetorno();
+									eler.tipo = tipoArreglo;
+									eler.valor = temp1_8;
+									return eler;
+								  }else{
+									  errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para la posicoina a asignar");
+									  return ret2;
+								  }
+
+							}//fin de la verificacion ue sena el mismo numero de columnas
+							else{
+								errores.insertarError("Semantico", "No coiciden el numero de columnas ocn las que se definio "+nombreArreglo);
+								return ret2;
+							}
+						}else{
+							errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe Atributo");
+							return ret2;
+						}
+						
+					}else{
+						//arreglo local
+						var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
+						if(posArreglo!=-1){
+							var temp1 = this.c3d.getTemporal();
+							var l1 = "+, P, "+posArreglo+", "+temp1+"; // pos de arreglo "+nombreArreglo;
+							var temp2 = this.c3d.getTemporal();
+							var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt al heap de arreglo "+ nombreArreglo;
+							var temp3 = this.c3d.getTemporal();
+							var l3 = "=>, "+temp2+", "+temp3+", heap; //apunt al heap donde inicia el arreglo "+ nombreArreglo;
+							var temp4 = this.c3d.getTemporal();
+							var l4 = "=>, "+temp3+", "+temp4+", heap; //obteniendo el tamanio del arreglo "+ nombreArreglo;
+							var temp5 = this.c3d.getTemporal();
+							var l5 = "+, "+temp3+", 1, "+temp5+"; // pos 0 del arreglo "+ nombreArreglo;
+							var l6 = "// ---- Calculo de valor de las posiciones  ";
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo(l3);
+							this.c3d.addCodigo(l4);
+							this.c3d.addCodigo(l5);
+							this.c3d.addCodigo(l6);
+							var tamanios = this.calculoArregloNs(posicionesArreglo,ambitos,clase,metodo);
+							var tamanios2 = simb.arregloNs;
+							this.c3d.addCodigo("// -----------(Obteniendo valor) Calculo de iReal para el arreglo "+ nombreArreglo);
+							if(tamanios.length == posicionesArreglo.length && (tamanios2.length == tamanios.length)){
+								var nTemporal;
+								var tempRes="";
+								var nSize;
+								for(var k =0; k<tamanios.length; k++ ){
+									nTemporal = tamanios[k];
+									nSize = tamanios2[k];
+									if(k == 0){
+										var temp1_1= this.c3d.getTemporal();
+										var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+										tempRes = this.c3d.getTemporal();
+										var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+										this.c3d.addCodigo(l1_1);
+										this.c3d.addCodigo(l2_1);	
+									}else{
+										var temp1_1= this.c3d.getTemporal();
+										var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+										var temp2_1= this.c3d.getTemporal();
+										var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
+										var temp3_1= this.c3d.getTemporal();
+										var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+										this.c3d.addCodigo(l1_1);
+										this.c3d.addCodigo(l2_1);
+										this.c3d.addCodigo(l3_1);
+										tempRes = this.c3d.getTemporal(); 
+										var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+										this.c3d.addCodigo(l4_1);
+									}
+
+								}
+
+								if(tempRes!=""){
+									var temp1_5 = this.c3d.getTemporal();
+									var l1_5= "+, "+temp5+", "+tempRes+", "+temp1_5+"; // pos buscada del arreglo  "+ nombreArreglo;
+									this.c3d.addCodigo(l1_5);
+									var ret = new EleRetorno();
+									ret.tipo = tipoArreglo;
+									ret.valor = temp1_5;
+									return ret;
+								  }else{
+									  errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para la posicoina a asignar");
+									  return ret2;
+								  }
+							}else{
+								errores.insertarError("Semantico", "No coincide el numero de valores para resolver arreglo");
+								return ret2;
+							}
+						}else{
+							errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe");
+							return ret2;
+						}	
+					}
+
+				} else{
+					errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+					return ret2;
+
+				}
+			}else{
+				errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+			}
+
+		}else{
+			errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+			return ret2;
+		}
+
+		return ret2;
+};
+
 
 
 
