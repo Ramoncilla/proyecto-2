@@ -5,13 +5,14 @@ begin, , , persona_PRINCIPAL
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
 +, p, 0, t1; // pos de i
 <=, t1, 0, stack; // asignando a i
+// Resolviendo un repetur mientras
+L1:
 // -------------- Resolviendo para un ID (var local) ------------
 +, p, 0, t2; // pos de i
 =>, t2, t3, stack; // valor de lo que trae en el stack i
-L3:
-jl, t3, 10, L1;
-jmp, , , L2;
-L1:
+jl, t3, 10, L2;
+jmp, , , L3;
+L2:
 
 // -------------- Resolviendo para un ID (var local) ------------
 +, p, 0, t4; // pos de i
@@ -22,8 +23,8 @@ print("%d", t5);
 =>, t6, t7, stack; //obtenidoe el valor de i
 +, t7, 1, t8;
 <=, t6, t8, stack; // asignando a i
-jmp, , ,L3; //regresando a la etiqueral del ciclo
-L2:
+jmp, , ,L1; //regresando a la etiqueral del ciclo
+L3:
 
 
 end, , persona_PRINCIPAL

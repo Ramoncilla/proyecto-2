@@ -10,6 +10,8 @@
     var llamada = require("./ArbolInterprete/Llamada");
     var imprimir = require("./ArbolInterprete/Imprimir");
     var funcion = require("./ArbolInterprete/Funcion");
+    var inicioFuncion = require("./ArbolInterprete/InicioFuncion");
+    var finFuncion = require("./ArbolInterprete/FinalFuncion");
    
 %}
 %lex
@@ -78,7 +80,10 @@ FUNCIONES: FUNCION{$$ = []; $$.push($1);}
 
 FUNCION: begin coma coma coma id INSTRUCCIONES end coma coma id{$$ = new funcion($5,$6);}
     |begin coma coma coma id end coma coma id{$$ = new funcion($5,[]);};
+/*
+INICIO_FUNCION: begin coma coma coma id {$$ = new inicioFuncion($5);};
 
+FINAL_FUNCION: end coma coma id{$$ = new finFuncion($4);};*/
 
 INSTRUCCIONES: INSTRUCCION {$$=[]; $$.push($1);}
     |INSTRUCCIONES INSTRUCCION{$$ = $1; $$.push($2);};
@@ -92,6 +97,8 @@ INSTRUCCION: EXP {$$=$1;}
     |RELACIONAL{$$=$1;}
     |ETIQUETA{$$=$1;}
     |SALTO{$$=$1;};
+    //|INICIO_FUNCION{$$=$1;}
+    //|FINAL_FUNCION{$$=$1;};
 
 TIPO: impre_char{$$=$1;}
     |impre_decimal{$$=$1;}

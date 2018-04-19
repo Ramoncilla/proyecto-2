@@ -1176,10 +1176,13 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 console.log("entre aun repetir mientras");
 			var expresionCiclo = nodo.expresion;
 			var cuerpoCiclo = nodo.cuerpo;
+			this.c3d.addCodigo("// Resolviendo un repetur mientras");
+			var etiqCiclo = this.c3d.getEtiqueta();
+			this.c3d.addCodigo(etiqCiclo+":");
 			var retExpresion = this.resolverExpresion(expresionCiclo,ambitos,clase, metodo);
 			if(retExpresion instanceof nodoCondicion){
-				var etiqCiclo = this.c3d.getEtiqueta();
-				this.c3d.addCodigo(etiqCiclo+":");
+				
+				
 				this.c3d.addCodigo(retExpresion.codigo);
 				this.c3d.addCodigo(retExpresion.getEtiqueteasVerdaderas());
 				ambitos.addRepetirMientras();
