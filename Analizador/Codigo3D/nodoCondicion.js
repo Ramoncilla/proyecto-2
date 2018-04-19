@@ -34,7 +34,7 @@ nodoCondicion.prototype.getCodigo = function(){
     return this.codigo;
 };
 
-nodoCondicion.prototype.getEtiqueteasVerdaderas = function(){
+nodoCondicion.prototype.getEtiquetasVerdaderas = function(){
     var cadena ="";
     for(var i =0; i<this.verdaderas.length; i++){
         cadena +=this.verdaderas[i]+":\n";
@@ -44,7 +44,7 @@ nodoCondicion.prototype.getEtiqueteasVerdaderas = function(){
 };
 
 
-nodoCondicion.prototype.getEtiqueteasFalsas= function(){
+nodoCondicion.prototype.getEtiquetasFalsas= function(){
     var cadena ="";
     for(var i =0; i<this.falsas.length; i++){
         cadena +=this.falsas[i]+":\n";

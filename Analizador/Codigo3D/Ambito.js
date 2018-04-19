@@ -52,8 +52,8 @@ Ambito.prototype.addDefecto = function() {
 
   
 Ambito.prototype.addRepetirMientras = function() {
-	Ambito.prototype.valMientras++;
-	this.ambitos.unshift("REPETIR_MIENTRAS"+Ambito.prototype.valMientras);
+	this.valRepetirMientras++;
+	this.ambitos.unshift("REPETIR_MIENTRAS"+this.valRepetirMientras);
 };
 
 

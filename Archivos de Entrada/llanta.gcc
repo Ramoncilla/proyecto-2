@@ -1,81 +1,148 @@
-<table border =1>
-<tr>
-<th> Tipo de Error </th>
-<th> Descripcion </th>
-<th> Columna </th>
-<th> Fila </th>
-</tr>
-<tr>NaNSemantico</td>
-<td> La variable  lla1, es de tipo llanta, imposible de instanciar con tipo llanta </td>
-<td> 0</td>
-<td> 0</td>
-</tr>
-<tr>NaNSemantico</td>
-<td> La variable  lla2, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td>
-<td> 0</td>
-</tr>
-<tr>
-NaNSemantico</td><td> La variable  lla3, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td><td> 0</td></tr><tr>NaNSemantico</td><td> La variable  lla4, es de tipo llanta, imposible de instanciar con tipo llanta </td><td> 0</td><td> 0</td></tr><tr>NaNSemantico</td><td>
+/*clase llanta {
+
+entero valor1;
+entero valor2;
 
 
+publico llanta(entero val){
+    valor1= val;
+    valor2= val*10;
+    imprimir(valor2);
+}
+
+publico vacio getValor1(){
+     retorno valor1;
+}
 
 
+}
 
 
+clase carro{
+
+publico llanta lla1;
+publico llanta lla2;
+publico llanta lla3;
+publico llanta lla4;
+publico llanta repuesto= nuevo llanta(15);
+publico entero color;
+
+publico carro(){
+    lla1= nuevo llanta(1);
+    lla2 = nuevo llanta(2);
+    lla3 = nuevo llanta(3);
+    lla4 = nuevo llanta(4);
+    color =11;
+}
 
 
-
-
-
-
-
+}*/
 
 clase persona {
+caracter valor[6][2];
 
-  publico caracter estado;
-  publico popo nuevoPpop ;
-  publico booleano dpi;
+/*
+    entero edad = 25*2;
+    entero dpi;
+    carro c = nuevo carro();
 
- 
+    persona(entero edad, entero dpi)
+    {
+        este.edad = edad;
+        este.dpi= dpi;
+    }
 
-
-principal(){
-  entero estado;
-  
-  a= 10/11.2;
-  a= 12.5/5;
-  a= 15.6/'a';
-  a= 'a'/8.3;
-  a= true/15.2;
-  a= 10.2/true;
-  a= 11.1/8.2;
-  a= 5/'z';
-  a= 'l'/2;
-  a= true/5;
-  a= 2/false;
-  a= 10/2;
+   
+*/
 
 
+ persona(){
+         valor[0][0]='O';
 
+        /*
+        imprimir(edad);
+        edad+=8;
+        imprimir(edad);*/
 
-
-
-
-
-
-  
-
-  
+         
+    }
+publico vacio hola(entero h){
+    caracter g;
 }
+    principal(){ 
+
+        /* caracter apellido[2*5+1][3*3][2*1];
+        decimal hola;
+        hola = 5/2;
+        imprimir(hola);
+        hola/=(2*1);
+        imprimir(hola); 
+
+        persona p1;
+        entero pedrito;
+        pedrito = 2;
+        entero alina;
+        alina = 2 *2-pedrito+26;
+        imprimir(pedrito);
+        imprimir(alina);
+         //p1 = nuevo persona();
+        pedrito+=19;
+        imprimir(pedrito);
+        pedrito-=10.2;
+        imprimir(pedrito);
+        pedrito-=5;
+        imprimir(pedrito);
+        pedrito*=2;
+        imprimir(pedrito);
+       
+        //c= nuevo persona();
+
+       // caracter nombre[20]= "alina Urbina";*/
+ persona p = nuevo persona();
+
+       caracter nombre[20];
+       nombre[0]= 'A';
+       nombre[1]= 'L';
+       nombre[2]= 'I';
+       nombre[3]= 'N';
+       nombre[4]= 'A';
+
+       caracter sex[3];
+       sex[0]='A';
+
+       //caracter a;// = 'B';
+       //a = "alina";
+       entero i = 0;
+       entero b=0;
+
+       repetir_mientras('a'<"alina" && i<10){
+           imprimir('Z');
+           i+=1;
+       }
+i=0;
+       repetir_mientras(i<10){
+           repetir_mientras(b<5){
+               entero c;
+               c = i+b;
+               imprimir(c);
+               imprimir('X');
+               imprimir(g);
+               imprimir('X');
+               imprimir('A');
+               b+=1;
+               entero d =0;
+               repetir_mientras (d<5){
+                   entero g=c*b;
+                   imprimir(g);
+                   imprimir('B');
+                   d+=1;
+
+               }
+           }
+           imprimir(i);
+           i+=1;
+       }
+        
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-

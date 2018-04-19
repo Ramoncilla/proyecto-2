@@ -236,9 +236,11 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
             var nombreEtiqueta = instruccion.etiqueta;
             if(this.ir_a==""){
                 this.etiqueta = nombreEtiqueta;
-                this.ir_a= this.etiqueta;
+                this.ir_a= nombreEtiqueta;
             }else{
                 this.etiqueta = nombreEtiqueta;
+                //
+                //this.ir_a= nombreEtiqueta;
             }
             break;
         }
@@ -247,6 +249,8 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
             var nombreSalto = instruccion.etiqueta;
             if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
                 this.ir_a= nombreSalto;
+                //
+                //this.etiqueta= nombreSalto;
                 this.evaluar();
                 this.bandera=1;
             }

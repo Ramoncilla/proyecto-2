@@ -2,31 +2,142 @@
 
 begin, , , persona_PRINCIPAL
 
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t1; // pos de i
-<=, t1, 0, stack; // asignando a i
-// Resolviendo un repetur mientras
-L1:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t2; // pos de i
-=>, t2, t3, stack; // valor de lo que trae en el stack i
-jl, t3, 10, L2;
-jmp, , , L3;
-L2:
+// ----------- Instancia a una variable local --------------
++, p, 0, t1; // pos de p
+<=, t1, h, stack; //guardando referencia del heap para el objeto p
++, h, 1, t2; // guardo la posicion donde inicia el objeto 
+<=, h, t2, heap; // guardando donde es que inicia el objeto dentro del heap
++, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
++, h, 1, h; // reservando espacio para el objeto p
+//Ingresando referencia al this del objeto p
++, p, 0, t3; // pos de p
+=>, t3, t4, stack; // obteniendo apuntador de p
++, p, 3, t5; // simulando cambio de ambito
++, t5, 0, t6; //pos del this de p
+<=, t6, t4, stack; // insertando apuntador del heap al stack del obeto p
+// No posee parametros 
++, p, 3, p; // simulando cambio de ambito
+call, , , persona_vacio_persona;
+-, p, 3, p; // regresando al ambito acutal
 
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t4; // pos de i
-=>, t4, t5, stack; // valor de lo que trae en el stack i
-print("%d", t5);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t6; // pos de i
-=>, t6, t7, stack; //obtenidoe el valor de i
-+, t7, 1, t8;
-<=, t6, t8, stack; // asignando a i
-jmp, , ,L1; //regresando a la etiqueral del ciclo
-L3:
-
+// ------------------------ Creando arreglo local nombreP
++, P, 1, t7; //pos de arreglo nombreP
+<=, t7, H, stack; // ingrensando al stack apunt del heap para nombreP
++, H, 1, t8;
+<=, H, t8, heap; //insetnado donde inicia el arreglo nombreP
++, H, 1, H;
+// calculando el tamanho del arreglo
+-, 6, 1, t9; //calculando el n real
+-, t9, 0, t10; //iReal columna 0
+-, 2, 1, t11; //calculando el n real
+*, t10, 2, t12;// multiplicando por n1
++, t12, t11, t13;
+-, t13, 0, t14; //i real de columna 1
++, t14, 1, t14; //size del arreglo nombreP
+<=, H, t14, heap; // insertando el tamanio del arreglo linealizado nombreP
++, H, 1, H;
++, h, t14, h; // reservnado el espacio del arreglo nombreP
++, P, 1, t15; // pos de arreglo nombrep
+=>, t15, t16, stack; // apunt al heap de arreglo nombrep
+=>, t16, t17, heap; //apunt al heap donde inicia el arreglo nombrep
+=>, t17, t18, heap; //obteniendo el tamanio del arreglo nombrep
++, t17, 1, t19; // pos 0 del arreglo nombrep
+// ---- Calculo de valor de las posiciones  
+// ----------- Calculo de iReal para el arreglo nombrep
+-, 4, 0, t20; //calculando el n real ()
+-, t20, 0, t21; //iReal columna 0
+-, 1, 0, t22; //calculando el n real ()
+*, t21, 2, t23;// multiplicando por n1
++, t23, t22, t24;
+-, t24, 0, t25; //i real de columna 1
++, t19, t25, t26; // pos donde se va inicar a escribir el arreglo nombrep
+<=, t26, 65, heap; // asignando al heap en la nueva posicion de arreglo nombrep
+// ------------------------ Creando arreglo local n
++, P, 2, t27; //pos de arreglo n
+<=, t27, H, stack; // ingrensando al stack apunt del heap para n
++, H, 1, t28;
+<=, H, t28, heap; //insetnado donde inicia el arreglo n
++, H, 1, H;
+// calculando el tamanho del arreglo
+-, 10, 1, t29; //calculando el n real
+-, t29, 0, t30; //iReal columna 0
++, t30, 1, t30; //size del arreglo n
+<=, H, t30, heap; // insertando el tamanio del arreglo linealizado n
++, H, 1, H;
++, h, t30, h; // reservnado el espacio del arreglo n
++, P, 2, t31; // pos de arreglo n
+=>, t31, t32, stack; // apunt al heap de arreglo n
+=>, t32, t33, heap; //apunt al heap donde inicia el arreglo n
+=>, t33, t34, heap; //obteniendo el tamanio del arreglo n
++, t33, 1, t35; // pos 0 del arreglo n
+// ---- Calculo de valor de las posiciones  
+*, 2, 2, t36;
+// ----------- Calculo de iReal para el arreglo n
+-, t36, 0, t37; //calculando el n real ()
+-, t37, 0, t38; //iReal columna 0
++, t35, t38, t39; // pos donde se va inicar a escribir el arreglo n
+<=, t39, 67, heap; // asignando al heap en la nueva posicion de arreglo n
 
 end, , persona_PRINCIPAL
+
+
+
+
+begin, , , persona_vacio_persona
+
+// ----------------------- Creando arreglo atributo valor
++, P, 0, t40; //pos this del arreglo
+=>, t40, t41, stack; //obteniendo apuntador de arreglo en eel heap
+=>, t41, t42, heap;//apuntando donde en verdad inicia el arreglo
++, t42, 0, t43; //pos del heap que guarda apuntador del heap para el arreglo valor
+<=, t43, H, heap; //escribiendo apunt del heap donde inicia el arreglo 
+// REsolvemos tamanio del arreglo
+-, 6, 1, t44; //calculando el n real
+-, t44, 0, t45; //iReal columna 0
+-, 2, 1, t46; //calculando el n real
+*, t45, 2, t47;// multiplicando por n1
++, t47, t46, t48;
+-, t48, 0, t49; //i real de columna 1
++, t49, 1, t49; //size del arreglo valor
+<=, H, t49, heap; // insertando el tamanio del arreglo linealizado valor
++, H, 1, H;
++, t49, 0, t50; // anhadiendo una posicion mas
++, h, t50, h; // reservnado el espacio del arreglo valor
+//------------- Asignancio posicion de un arreglo Atributo  valor
++, P, 0, t51; // pos this del objeto 
+=>, t51, t52, stack; // apunt del heap para le objeto
+=>, t52, t53, heap; // apunt donde inicia el objeto
++, t53, 0, t54; // pos del arreglo dentro del heap 
+=>, t54, t55, heap; // apuntador donde inicia el arreglo
+=>, t55, t56, heap; // size del arreglo valor
++, t55, 1, t57; //pos 0 del arreglo valor
+// ----------- Calculo de iReal para el arreglo valor
+-, 0, 0, t58; //calculando el n real ()
+-, t58, 0, t59; //iReal columna 0
+-, 0, 0, t60; //calculando el n real ()
+*, t59, 2, t61;// multiplicando por n1
++, t61, t60, t62;
+-, t62, 0, t63; //i real de columna 1
++, t57, t63, t64; // pos donde se va inicar a escribir el arreglo valor
+<=, t64, 79, heap; // asignando al heap en la nueva posicion de arreglo valor
+//------------- Asignancio posicion de un arreglo Atributo  valor
++, P, 0, t65; // pos this del objeto 
+=>, t65, t66, stack; // apunt del heap para le objeto
+=>, t66, t67, heap; // apunt donde inicia el objeto
++, t67, 0, t68; // pos del arreglo dentro del heap 
+=>, t68, t69, heap; // apuntador donde inicia el arreglo
+=>, t69, t70, heap; // size del arreglo valor
++, t69, 1, t71; //pos 0 del arreglo valor
+// ----------- Calculo de iReal para el arreglo valor
+-, 3, 0, t72; //calculando el n real ()
+-, t72, 0, t73; //iReal columna 0
+-, 1, 0, t74; //calculando el n real ()
+*, t73, 2, t75;// multiplicando por n1
++, t75, t74, t76;
+-, t76, 0, t77; //i real de columna 1
++, t71, t77, t78; // pos donde se va inicar a escribir el arreglo valor
+<=, t78, 112, heap; // asignando al heap en la nueva posicion de arreglo valor
+
+end, , persona_vacio_persona
 
 

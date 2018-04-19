@@ -5,22 +5,31 @@ function listaTemporales(){
 }
 
 
+listaTemporales.prototype.imprimirHTML = function(){
+    var tabla = "<table border =1><tr><td>Nombre</td><td>Valor</td></tr>";
+    for(var i = 0; i<this.listado.length; i++){
+        tabla+="<tr><td>"+this.listado[i].nombre+"</td><td>"+this.listado[i].valor+"</td></tr>";
+    }
+    return tabla+"</table>";
+
+};
+
 listaTemporales.prototype.insertarTemporal  = function(temp){
    
    if(this.listado!=0){
         if(this.existeTemporal(temp)){
             //se debe de modificar
             this.modificarTemporal(temp);
-           // console.log("Se ha modificado "+ temp.nombre+", valor  "+temp.valor);
+            console.log("Se ha modificado "+ temp.nombre+", valor  "+temp.valor);
         }else{
             //se debe de agregar a la lista
             this.listado.push(temp);
-            //console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
+            console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
 
         }
    }else{
        this.listado.push(temp);
-       //console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
+       console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
    } 
 
 };

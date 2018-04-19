@@ -206,6 +206,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresArreglo(nombreArreglo, "ARREGLO", tipoArreglo, this.nombre, "ATRIBUTO", apuntador, 1, noDim, dimensionesArreglo);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -229,6 +230,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresCola(nombreCola, "COLA", tipoCola, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                   // nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -248,6 +250,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresLista(nombreLista, "LISTA", tipoLista, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                   // nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -363,7 +366,8 @@ Clase.prototype.generarSimbolosClase = function() {
 		var noPametros =0;
         var banderaConstructor=funTemporal.esConstructor;
 		ambitos = new Ambito();
-		console.log(funTemporal.obtenerFirma());
+        console.log(funTemporal.obtenerFirma());
+        ambitos.addAmbito(this.nombre);
 		ambitos.addAmbito(funTemporal.obtenerFirma());
 		apuntador=0;
 
@@ -446,6 +450,7 @@ Clase.prototype.generarSimbolosClase = function() {
 
     if(this.principal_met!=null){
         ambitos= new Ambito();
+        ambitos.addAmbito(this.nombre);
         ambitos.addAmbito(this.nombre+"_PRINCIPAL");
         apuntador=0;
         lista2=[];
@@ -463,6 +468,7 @@ Clase.prototype.generarSimbolosClase = function() {
                 retornoSimbolos.push(lista2[j]);
             }
         }
+    ambitos.ambitos.shift();
     ambitos.ambitos.shift();
 
     }

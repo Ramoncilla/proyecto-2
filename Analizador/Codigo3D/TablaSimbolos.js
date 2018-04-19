@@ -27,7 +27,7 @@ TablaSimbolos.prototype.obteberAtributosClase = function(nombreClase){
   return ret;
 };
 
-
+/*
 TablaSimbolos.prototype.obtenerTipo= function (nombre, ambitos){
    
   var ambitoTemporal;
@@ -99,9 +99,223 @@ TablaSimbolos.prototype.obtenerPosAtributo= function (nombre, ambitos){
 
   return -1;
 
+};*/
+
+
+/* --------------------------------- Obtener Tipo --------------------------------------- */
+
+
+TablaSimbolos.prototype.obtenerTipo= function (nombre, ambitos){
+   
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  for(var i =0; i<ambitos.ambitos.length; i++){
+    cadenaAmbito = ambitoTemporal.getAmbitos();
+    var cont= this.getTipo(cadenaAmbito,nombre);
+    if(cont!=""){
+      return cont;
+    }
+    ambitoTemporal.ambitos.shift();
+}
+return "";
+
 };
 
 
+TablaSimbolos.prototype.getTipo = function(cadenaAmbito, nombre ){
+  var simTemporal;
+
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+              return simTemporal.tipoElemento;
+            
+              
+          }
+      }
+  }
+return "";
+};
+
+
+
+/*  --------------------------------- Obtener Posicion Local ------------------------------ */
+
+TablaSimbolos.prototype.obtenerPosLocal= function(nombre, ambitos){
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  for(var i =0; i<ambitos.ambitos.length; i++){
+    cadenaAmbito = ambitoTemporal.getAmbitos();
+    var cont= this.posLocal(cadenaAmbito,nombre);
+    if(cont>=0){
+      return cont;
+    }
+    ambitoTemporal.ambitos.shift();
+}
+return -1;
+  
+};
+
+
+TablaSimbolos.prototype.posLocal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
+              return simTemporal.apuntador;
+            }
+              
+          }
+      }
+  }
+return -1;
+};
+
+
+
+
+
+/*  --------------------------------- Obtener Posicion Global ------------------------------ */
+
+TablaSimbolos.prototype.obtenerPosAtributo= function(nombre, ambitos){
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  for(var i =0; i<ambitos.ambitos.length; i++){
+    cadenaAmbito = ambitoTemporal.getAmbitos();
+    var cont= this.posGlobal(cadenaAmbito,nombre);
+    if(cont>=0){
+      return cont;
+    }
+    ambitoTemporal.ambitos.shift();
+}
+return -1;
+  
+};
+
+
+TablaSimbolos.prototype.posGlobal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()=="ATRIBUTO"){
+              return simTemporal.apuntador;
+            }
+              
+          }
+      }
+  }
+return -1;
+};
+
+
+TablaSimbolos.prototype.esAtributo= function(nombre, ambitos){
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cont =0;
+  var temporal;
+  var cadenaAmbito="";
+   
+  if(this.listaSimbolos == 0){
+      cont+=0;
+  }
+  else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        cont=cont + this.existeListaLocal(cadenaAmbito,nombre);
+        if(cont>0){
+          return false;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+}
+
+
+  ambitoTemporal = new Ambito();
+  arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+   cont =0;
+   temporal;
+   cadenaAmbito="";
+   
+  if(this.listaSimbolos == 0){
+      cont+=0;
+  }
+  else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        cont=cont + this.existeListaGlobal(cadenaAmbito,nombre);
+        if(cont>0){
+          return true;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+}
+
+
+return null;
+
+};
+
+
+TablaSimbolos.prototype.existeListaGlobal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()=="ATRIBUTO"){
+             //return false;
+              console.log("existe el simbolo "+nombre);
+              cont++;
+            }
+              
+          }
+      }
+  }
+return cont;
+};
+
+
+TablaSimbolos.prototype.existeListaLocal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
+             //return false;
+              console.log("existe el simbolo "+nombre);
+              cont++;
+            }
+              
+          }
+      }
+  }
+return cont;
+};
+
+
+
+
+/*
 TablaSimbolos.prototype.esAtributo = function(nombre, ambitos){
   var ambitoTemporal;
   var simbTemporal;  
@@ -137,9 +351,106 @@ TablaSimbolos.prototype.esAtributo = function(nombre, ambitos){
 
 
 };
+*/
+
+//
+
+TablaSimbolos.prototype.obtenerSimbolo = function(nombre, ambitos, tipoAtr){
+  var ambitoTemporal;
+  var simbTemporal;
+  
+ if(!tipoAtr){// es local
+
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cadenaAmbito="";
+   
+  if(this.listaSimbolos == 0){
+      return null;
+  }
+  else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        var cont= this.buscarLocal(cadenaAmbito,nombre);
+        if(cont!=null){
+          return cont;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+}
+
+ }else{ // es atributo
+
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cadenaAmbito="";
+   
+  if(this.listaSimbolos == 0){
+      return null;
+  }
+  else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        var cont=this.buscarGlobal(cadenaAmbito,nombre);
+        if(cont!=null){
+          return cont;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+}
+
+ }
 
 
+  return null;
 
+
+};
+
+
+TablaSimbolos.prototype.buscarGlobal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()=="ATRIBUTO"){
+             //return false;
+              return this.listaSimbolos[i];
+            }
+              
+          }
+      }
+  }
+return null;
+};
+
+
+TablaSimbolos.prototype.buscarLocal = function(cadenaAmbito, nombre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
+             //return false;
+              return this.listaSimbolos[i];
+            }
+              
+          }
+      }
+  }
+return null;
+};
+
+
+/*
 TablaSimbolos.prototype.obtenerSimbolo = function(nombre, ambitos, tipoAtr){
   var ambitoTemporal;
   var simbTemporal;
@@ -180,8 +491,13 @@ TablaSimbolos.prototype.obtenerSimbolo = function(nombre, ambitos, tipoAtr){
   return null;
 
 
-};
+};*/
 
+
+
+
+/*
+//
 TablaSimbolos.prototype.setArregloNs = function(nombre, ambitos, tipoAtr, arr){
   var ambitoTemporal;
   var simbTemporal;
@@ -237,6 +553,100 @@ TablaSimbolos.prototype.setArregloNs = function(nombre, ambitos, tipoAtr, arr){
 
 
 };
+*/
+
+
+
+TablaSimbolos.prototype.setArregloNs = function(nombre, ambitos, tipoAtr,arr22){
+  var ambitoTemporal;
+  var simbTemporal;
+  
+ if(!tipoAtr){// es local
+
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cadenaAmbito="";
+   
+ 
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        var cont= this.arregloLocal(cadenaAmbito,nombre,arr22);
+        if(cont==true){
+          break;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+
+
+ }else{ // es atributo
+
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cadenaAmbito="";
+   
+ 
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        var cont=this.arregloGlobal(cadenaAmbito,nombre,arr22);
+        if(cont==true){
+          break;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+
+
+ }
+
+
+  
+
+
+};
+
+
+TablaSimbolos.prototype.arregloGlobal = function(cadenaAmbito, nombre, arre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()=="ATRIBUTO"){
+             //return false;
+             this.listaSimbolos[i].setArregloNs(arre);
+             return true;
+            }
+              
+          }
+      }
+  }
+  return false;
+};
+
+
+TablaSimbolos.prototype.arregloLocal = function(cadenaAmbito, nombre, arre ){
+  var simTemporal;
+  var cont =0;
+  for (var i =0; i<this.listaSimbolos.length; i++){
+      simTemporal  = this.listaSimbolos[i];
+      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+            if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
+             //return false;
+              this.listaSimbolos[i].setArregloNs(arre);
+              return true;
+            }
+              
+          }
+      }
+  }
+  return false;
+};
+
 
 
 

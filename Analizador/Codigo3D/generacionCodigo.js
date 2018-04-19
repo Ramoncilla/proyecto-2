@@ -64,8 +64,9 @@ generacionCodigo.prototype.generar3D= function(){
   var funTemporal;
 	for(var i=0; i<this.listaClase.length; i++){
 		claseTemporal = this.listaClase[i];
-		ambitos.addAmbito(claseTemporal.nombre);
-    nombreClase = claseTemporal.nombre;
+		nombreClase = claseTemporal.nombre;
+		ambitos.addAmbito(nombreClase);
+   
 		//1. Traducimos el principal si es que posee
 		if(claseTemporal.principal_met!=null){
 			nombreFuncion = nombreClase+"_PRINCIPAL";
@@ -165,6 +166,7 @@ generacionCodigo.prototype.generar3D= function(){
 	console.log(a.cadenaImpresion);
 	fs.writeFileSync('./Heap.html', a.imprimirHeap());
 	fs.writeFileSync('./Stack.html', a.imprimirStack());
+	fs.writeFileSync('./temporales.html',a.temporales.imprimirHTML());
 
     //interprete.parse(this.c3d.codigo3D);
 	return this.tablaSimbolos.obtenerHTMLTabla();
@@ -292,7 +294,6 @@ generacionCodigo.prototype.calculoArregloNs = function(posiciones, ambitos, clas
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
-	//console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 	console.dir(nodo);	 
 	switch(nombreSentecia.toUpperCase()){
 
@@ -323,12 +324,102 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 							//arreglo atributo
 							var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
 							if(posArreglo!= -1){
+								var temp1 = this.c3d.getTemporal();
+								var temp2 = this.c3d.getTemporal();
+								var temp3 = this.c3d.getTemporal();
+								var temp4 = this.c3d.getTemporal();
+								var temp5 = this.c3d.getTemporal();
+								var temp6 = this.c3d.getTemporal();
+								var temp7 = this.c3d.getTemporal();
+								
+								var l1 = "+, P, 0, "+temp1+"; // pos this del objeto ";
+								var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt del heap para le objeto";
+								var l3 = "=>, "+temp2+", "+temp3+", heap; // apunt donde inicia el objeto";
+								var l4 = "+, "+temp3+", "+posArreglo+", "+temp4+"; // pos del arreglo dentro del heap ";
+								var l5 = "=>, "+temp4+", "+temp5+", heap; // apuntador donde inicia el arreglo";
+								var l6 = "=>, "+temp5+", "+temp6+", heap; // size del arreglo "+ nombreArreglo;
+								var l7 = "+, "+temp5+", 1, "+temp7+"; //pos 0 del arreglo "+ nombreArreglo;
+
+								this.c3d.addCodigo("//------------- Asignancio posicion de un arreglo Atributo  "+nombreArreglo);
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								this.c3d.addCodigo(l6);
+								this.c3d.addCodigo(l7);
+								var tamanios = this.calculoArregloNs(posicionAsignar,ambitos,clase,metodo);
+								var tamanios2 = simb.arregloNs;
+								this.c3d.addCodigo("// ----------- Calculo de iReal para el arreglo "+ nombreArreglo);
+
+								if(tamanios.length == posicionAsignar.length && (tamanios2.length == tamanios.length)){
+									var nTemporal;
+									var tempRes="";
+									var nSize;
+									for(var k =0; k<tamanios.length; k++ ){
+										nTemporal = tamanios[k];
+										nSize = tamanios2[k];
+
+										if(k == 0){
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+											tempRes = this.c3d.getTemporal();
+											var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);	
+										}else{
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
+											var temp3_1= this.c3d.getTemporal();
+											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
+											this.c3d.addCodigo(l3_1);
+											tempRes = this.c3d.getTemporal(); 
+											var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+											this.c3d.addCodigo(l4_1);
+										}
+									}// fin ciclo for donde se calcula la posicion
+
+
+									// hasta aqui puedo retornar el objeto para un posicion
+
+									if(tempRes!=""){
+										var temp1_8 = this.c3d.getTemporal();
+										var l1_8= "+, "+temp7+", "+tempRes+", "+temp1_8+"; // pos donde se va inicar a escribir el arreglo "+ nombreArreglo;
+										this.c3d.addCodigo(l1_8);
+									   var ret = this.resolverExpresion(expresionArreglo,ambitos,clase,metodo);
+									   if(ret.tipo.toUpperCase()== tipoArreglo.toUpperCase() || ret.tipo.toUpperCase() == "NULO2"){
+										  var l1_1= "<=, "+temp1_8+", "+ ret.valor+", heap; // asignando al heap en la nueva posicion de arreglo "+nombreArreglo;
+										  this.c3d.addCodigo(l1_1);	
+	  
+									   }else{ 
+										  errores.insertarError("Semantico", "Imposible asignar posicion de "+ nombreArreglo+" de tipo "+ tipoArreglo+", con "+ ret.tipo);
+									   }
+									   
+									  }else{
+										  errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para la posicoina a asignar");
+									  }
+
+
+
+								}else{
+									errores.insertarError("Semantico", "No coinciden con el numero de columnas, hubo un error al obtener la posicion "+nombreArreglo);
+								}
+
+
+
+
+
+
+
+
 
 							}else{
 								errores.insertarError("Semantico", "El arreglo "+nombreArreglo+", no existe");
 							}
-
-
 						}else{
 							//es un arreglo local
 							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo, ambitos);
@@ -353,18 +444,21 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 								this.c3d.addCodigo(l5);
 								this.c3d.addCodigo(l6);
 								var tamanios = this.calculoArregloNs(posicionAsignar,ambitos,clase,metodo);
+								var tamanios2 = simb.arregloNs;
 								this.c3d.addCodigo("// ----------- Calculo de iReal para el arreglo "+ nombreArreglo);
 
-								if(tamanios.length == posicionAsignar.length){
+								if(tamanios.length == posicionAsignar.length && (tamanios2.length == tamanios.length)){
 									var nTemporal;
 									var tempRes="";
+									var nSize;
 									for(var k =0; k<tamanios.length; k++ ){
 										nTemporal = tamanios[k];
+										nSize = tamanios2[k];
 
-										console.log("HOLAAAAAAAAAAAAA");
-										console.dir(posicionAsignar);
-										console.dir(tamanios);
-										console.dir(nTemporal);
+										//console.log("HOLAAAAAAAAAAAAA");
+										//console.dir(posicionAsignar);
+										//console.dir(tamanios);
+										//console.dir(nTemporal);
 										if(k == 0){
 											var temp1_1= this.c3d.getTemporal();
 											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
@@ -376,7 +470,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											var temp1_1= this.c3d.getTemporal();
 											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
 											var temp2_1= this.c3d.getTemporal();
-											var l2_1= "*, "+tempRes+", "+nTemporal+", "+temp2_1+";// multiplicando por n"+k;
+											var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
 											var temp3_1= this.c3d.getTemporal();
 											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
 											this.c3d.addCodigo(l1_1);
@@ -457,7 +551,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 							
 							if(posArreglo != -1){
 								var temp1 = this.c3d.getTemporal();
-								var l1 = "=, P, 0, "+temp1+"; //pos this del arreglo";
+								var l1 = "+, P, 0, "+temp1+"; //pos this del arreglo";
 								var temp2 = this.c3d.getTemporal();
 								var l2 = "=>, "+temp1+", "+temp2+", stack; //obteniendo apuntador de arreglo en eel heap";
 								var temp3 = this.c3d.getTemporal();
@@ -506,11 +600,13 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									}
 
 									if(tempRes != ""){
+										var l1_0= "+, "+tempRes+", 1, "+tempRes+"; //size del arreglo "+nombreArreglo; // extraaaaaa
 										var l1_2= "<=, H, "+tempRes+", heap; // insertando el tamanio del arreglo linealizado "+ nombreArreglo;
 										var l2_2= "+, H, 1, H;";
 										var temp1_2 = this.c3d.getTemporal();
-										var l3_2= "+, "+tempRes+", 1, "+temp1_2+"; // anhadiendo una posicion mas";
+										var l3_2= "+, "+tempRes+", 0, "+temp1_2+"; // anhadiendo una posicion mas"; ///aquiii par pos exra 1 o 0
 										var l4_2 ="+, h, "+temp1_2+", h; // reservnado el espacio del arreglo "+nombreArreglo;
+										this.c3d.addCodigo(l1_0); //extra
 										this.c3d.addCodigo(l1_2);
 										this.c3d.addCodigo(l2_2);
 										this.c3d.addCodigo(l3_2);
@@ -580,12 +676,13 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									}
 
 									if(tempRes != ""){
-
+										var l1_0= "+, "+tempRes+", 1, "+tempRes+"; //size del arreglo "+nombreArreglo; // extraaaaaa
 										var l1_2= "<=, H, "+tempRes+", heap; // insertando el tamanio del arreglo linealizado "+ nombreArreglo;
 										var l2_2= "+, H, 1, H;";
 										//var temp1_2 = this.c3d.getTemporal();
 										//var l3_2= "+, "+tempRes+", 1, "+temp1_2+"; // anhadiendo una posicion mas";
 										var l4_2 ="+, h, "+tempRes+", h; // reservnado el espacio del arreglo "+nombreArreglo;
+										this.c3d.addCodigo(l1_0); //extra
 										this.c3d.addCodigo(l1_2);
 										this.c3d.addCodigo(l2_2);
 										//this.c3d.addCodigo(l3_2);
@@ -1178,13 +1275,14 @@ console.log("entre aun repetir mientras");
 			var cuerpoCiclo = nodo.cuerpo;
 			this.c3d.addCodigo("// Resolviendo un repetur mientras");
 			var etiqCiclo = this.c3d.getEtiqueta();
+			this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo");//
 			this.c3d.addCodigo(etiqCiclo+":");
 			var retExpresion = this.resolverExpresion(expresionCiclo,ambitos,clase, metodo);
 			if(retExpresion instanceof nodoCondicion){
 				
 				
 				this.c3d.addCodigo(retExpresion.codigo);
-				this.c3d.addCodigo(retExpresion.getEtiqueteasVerdaderas());
+				this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
 				ambitos.addRepetirMientras();
 				if(cuerpoCiclo!=0){
 					var sentTemp;
@@ -1193,7 +1291,7 @@ console.log("entre aun repetir mientras");
 						this.escribir3D(sentTemp,ambitos,clase,metodo);
 					}
 					this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo");
-					this.c3d.addCodigo(retExpresion.getEtiqueteasFalsas());
+					this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
 				}
 				ambitos.ambitos.shift();
 			}else{
@@ -1382,6 +1480,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 				}
 				case "<":{
+					console.log("una menor");
 					signo = "jl";
 					break;
 				}
@@ -1392,6 +1491,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			}
 			var retExp = this.validarRelacional(val1,val2,signo);
 			if(retExp instanceof nodoCondicion){
+				console.dir(retExp);
 				return retExp;
 			}else{
 				errores.insertarError("Semantico", "Hubo un error al resolver la operacion relacional "+ signo);
@@ -1624,14 +1724,16 @@ generacionCodigo.prototype.sumarAsciiCadena = function(pos){
 	this.c3d.addCodigo(l2);
 	this.c3d.addCodigo(l3);
 	this.c3d.addCodigo(l4);
-	this.c3d.addCodigo(etiqCiclo+":");
+	var l9 = "jmp, , , "+etiqCiclo+";"
+	this.c3d.addCodigo(l9); //
+	this.c3d.addCodigo(etiqCiclo+": //etiquera ciclo suma cadena");
 	var l5 =  "jne, "+temp3+", 34, "+etiqV+ ";\njmp, , , "+etiqF+";";
 	this.c3d.addCodigo(l5);
 	this.c3d.addCodigo(etiqV+":");
 	var l6 = "+, "+temp4+", "+temp3+", "+temp4+"; // sumando los caracteres ";
 	var l7 = "+, "+temp2+", 1, "+temp2+"; // sumando una posicion";
 	var l8 = "=>, "+temp2+", "+temp3+", heap; // obteniendo el valor del caracter ";
-	var l9 = "jmp, , , "+etiqV+";"
+	//var l9 = "jmp, , , "+etiqCiclo+";"
 	var l10= etiqF+":";
 	this.c3d.addCodigo(l6);
 	this.c3d.addCodigo(l7);
@@ -1654,7 +1756,7 @@ generacionCodigo.prototype.validarRelacional = function(val1, val2, signo){
 				var etiqF = this.c3d.getEtiqueta();
 				var cod="";
 				var res;
-				if((this.esInt(val1.tipo) || this.esDecimal(val1.tipo) || this.esChar(val1.tipo))||
+				if((this.esInt(val1.tipo) || this.esDecimal(val1.tipo) || this.esChar(val1.tipo))&&
 					this.esInt(val2.tipo) || this.esDecimal(val2.tipo) || this.esChar(val2.tipo)){
 						cod=signo+", "+val1.valor+", "+val2.valor+", "+etiqV+";\njmp, , , "+etiqF+";";
 						res = new nodoCondicion(cod);
