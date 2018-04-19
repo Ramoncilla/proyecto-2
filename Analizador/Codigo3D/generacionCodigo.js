@@ -409,14 +409,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									errores.insertarError("Semantico", "No coinciden con el numero de columnas, hubo un error al obtener la posicion "+nombreArreglo);
 								}
 
-
-
-
-
-
-
-
-
 							}else{
 								errores.insertarError("Semantico", "El arreglo "+nombreArreglo+", no existe");
 							}
@@ -454,11 +446,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									for(var k =0; k<tamanios.length; k++ ){
 										nTemporal = tamanios[k];
 										nSize = tamanios2[k];
-
-										//console.log("HOLAAAAAAAAAAAAA");
-										//console.dir(posicionAsignar);
-										//console.dir(tamanios);
-										//console.dir(nTemporal);
 										if(k == 0){
 											var temp1_1= this.c3d.getTemporal();
 											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
@@ -512,10 +499,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 								errores.insertarError("Semantico", "El arreglo "+nombreArreglo+", no existe");
 							}
 							
-
-
-
-
 						}
 					}else{
 						errores.insertarError("Semantico", "El simbolo "+nombreArreglo+", no es de tipo ARREGLO");
@@ -1270,17 +1253,15 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 		case "REPETIR_MIENTRAS":{
-console.log("entre aun repetir mientras");
+            console.log("entre aun repetir mientras");
 			var expresionCiclo = nodo.expresion;
 			var cuerpoCiclo = nodo.cuerpo;
 			this.c3d.addCodigo("// Resolviendo un repetur mientras");
 			var etiqCiclo = this.c3d.getEtiqueta();
-			this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo");//
+			this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo repetir- mientras");//
 			this.c3d.addCodigo(etiqCiclo+":");
 			var retExpresion = this.resolverExpresion(expresionCiclo,ambitos,clase, metodo);
 			if(retExpresion instanceof nodoCondicion){
-				
-				
 				this.c3d.addCodigo(retExpresion.codigo);
 				this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
 				ambitos.addRepetirMientras();
@@ -1290,14 +1271,13 @@ console.log("entre aun repetir mientras");
 						sentTemp= cuerpoCiclo[i];
 						this.escribir3D(sentTemp,ambitos,clase,metodo);
 					}
-					this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo");
+					this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo repetir mientras");
 					this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
 				}
 				ambitos.ambitos.shift();
 			}else{
 				errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion para repetir mientras");
 			}
-
 			break;
 		}//fin repetir mientras
 
@@ -1480,7 +1460,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 				}
 				case "<":{
-					console.log("una menor");
 					signo = "jl";
 					break;
 				}
@@ -1574,7 +1553,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 				}
 
 			}
-
 			break;
 		}//fin de operaciones logica
 
@@ -1651,37 +1629,116 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 		case "POS_ARREGLO":{
 
+			var ret2 = new EleRetorno();
+				ret2.setValoresNulos();
+				
 			var nombreArreglo = nodo.nombreArreglo;
 			var posicionesArreglo = nodo.posicionesArreglo;
 			var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
+			var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
 			if(esAtributo!= null){
 				var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
 				if(simb!=null){
-					if(simb.tipoSimb.toUpperCase() == "ARREGLO"){
+					if(simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
 						if(esAtributo){
 							//arreglo atributo
 							var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
-							var temp1 = this.c3d.getTemporal();
-							var l1 = "=, P, 0, "+temp1+"; //pos this del arreglo";
-							var temp2 = this.c3d.getTemporal();
-							var l2 = "=>, "+temp1+", "+temp2+", stack; //obteniendo apuntador de arreglo en eel heap";
-							var temp3 = this.c3d.getTemporal();
-							var l3 = "=>, "+temp2+", "+temp3+", heap;//apuntando donde en verdad inicia el arreglo";
+							if(posArreglo!=-1){
 
-							var posTemporal;
-							for(var i = 0; i< posicionesArreglo.length; i++){
-								posTemporal = posicionesArreglo[i];
-
+							}else{
+								errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe");
+								return ret2;
 							}
-
+							
 						}else{
 							//arreglo local
 							var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
+							if(posArreglo!=-1){
+								var temp1 = this.c3d.getTemporal();
+								var l1 = "+, P, "+posArreglo+", "+temp1+"; // pos de arreglo "+nombreArreglo;
+								var temp2 = this.c3d.getTemporal();
+								var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt al heap de arreglo "+ nombreArreglo;
+								var temp3 = this.c3d.getTemporal();
+								var l3 = "=>, "+temp2+", "+temp3+", heap; //apunt al heap donde inicia el arreglo "+ nombreArreglo;
+								var temp4 = this.c3d.getTemporal();
+								var l4 = "=>, "+temp3+", "+temp4+", heap; //obteniendo el tamanio del arreglo "+ nombreArreglo;
+								var temp5 = this.c3d.getTemporal();
+								var l5 = "+, "+temp3+", 1, "+temp5+"; // pos 0 del arreglo "+ nombreArreglo;
+								var l6 = "// ---- Calculo de valor de las posiciones  ";
+
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								this.c3d.addCodigo(l6);
+								var tamanios = this.calculoArregloNs(posicionesArreglo,ambitos,clase,metodo);
+								var tamanios2 = simb.arregloNs;
+								this.c3d.addCodigo("// -----------(Obteniendo valor) Calculo de iReal para el arreglo "+ nombreArreglo);
+								if(tamanios.length == posicionesArreglo.length && (tamanios2.length == tamanios.length)){
+									var nTemporal;
+									var tempRes="";
+									var nSize;
+									for(var k =0; k<tamanios.length; k++ ){
+										nTemporal = tamanios[k];
+										nSize = tamanios2[k];
+										if(k == 0){
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+											tempRes = this.c3d.getTemporal();
+											var l2_1= "-, "+temp1_1+", 0, "+tempRes+"; //iReal columna "+k;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);	
+										}else{
+											var temp1_1= this.c3d.getTemporal();
+											var l1_1= "-, "+nTemporal+", 0, "+temp1_1+"; //calculando el n real ()";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "*, "+tempRes+", "+nSize+", "+temp2_1+";// multiplicando por n"+k;
+											var temp3_1= this.c3d.getTemporal();
+											var l3_1="+, "+temp2_1+", "+temp1_1+", "+ temp3_1+";";
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);
+											this.c3d.addCodigo(l3_1);
+											tempRes = this.c3d.getTemporal(); 
+											var l4_1 = "-, "+temp3_1+", 0, "+tempRes+"; //i real de columna "+k;
+											this.c3d.addCodigo(l4_1);
+										}
+
+									}
+
+									if(tempRes!=""){
+										var temp1_5 = this.c3d.getTemporal();
+										var l1_5= "+, "+temp5+", "+tempRes+", "+temp1_5+"; // pos donde se va inicar a escribir el arreglo "+ nombreArreglo;
+										var temp2_5 = this.c3d.getTemporal();
+										var l2_5= "=>, "+temp1_5+", "+temp2_5+", heap; //valor que trae el objeto";
+										this.c3d.addCodigo(l1_5);
+										this.c3d.addCodigo(l2_5);
+										var ret = new EleRetorno();
+										ret.tipo = tipoArreglo;
+										ret.valor = temp2_5;
+										return ret;
+									  }else{
+										  errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para la posicoina a asignar");
+										  return ret2;
+									  }
+								}else{
+									errores.insertarError("Semantico", "No coincide el numero de valores para resolver arreglo");
+									return ret2;
+								}
+
+
+
+
+							}else{
+								errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no existe");
+								return ret2;
+							}
 							
 						}
 
 					} else{
 						errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+						return ret2;
 
 					}
 
@@ -1692,9 +1749,10 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 
 			}else{
 				errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
+				return ret2;
 			}
 
-
+			return ret2;
 			break;
 		}
 
