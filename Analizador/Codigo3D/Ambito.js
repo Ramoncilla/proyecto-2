@@ -50,7 +50,7 @@ Ambito.prototype.addDefecto = function() {
 };
 
 
- 
+  
 Ambito.prototype.addRepetirMientras = function() {
 	Ambito.prototype.valMientras++;
 	this.ambitos.unshift("REPETIR_MIENTRAS"+Ambito.prototype.valMientras);

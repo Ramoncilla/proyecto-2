@@ -163,9 +163,21 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
         }
 
         case "RELACIONAL":{
-
-            
-
+            var simbolo = instruccion.signo;
+            var operando1 = instruccion.operando1;
+            var operando2 = instruccion.operando2;
+            var etiqV= instruccion.etiquetaV;
+            var etiqF = instruccion.etiquetaF;
+            var res = this.evaluarCondicion(simbolo, operando1, operando2);
+            if(res == true){
+                this.ir_a= etiqV;
+                this.evaluar();
+                bandera =1;
+            }else{
+                this.ir_a= etiqF;
+                this.evaluar();
+                bandera =1;
+            }
             break;
         }
 
@@ -198,6 +210,79 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
 };
 
+
+
+AnalizadorInterprete.prototype.evaluarCondicion = function(simbolo, operando1, operando2){
+     var val1 = this.resolverValor(operando1);
+     var val2 = this.resolverValor(operando2);
+     if(val1 != "nulo" && val1!= "vacio"){
+         if(val2!= "nulo" && val2 != "vacio"){
+            switch(simbolo){
+                case "==":{
+                    if(val1 == val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+                }
+                case "!=":{
+                    if(val1 != val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+                }
+                case ">":{
+                    if(val1 > val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+                }
+                case ">=":{
+                    if(val1 >= val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+        
+                }
+                case "<":{
+                    if(val1 < val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+                }
+                case "<=":{
+                    if(val1 <= val2){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    break;
+                }
+            }
+         }else{
+             //error en val2
+             errores.insertarError("Semantica", "Hubo un error en la operacion relacional operando 2 "+simbolo);
+             return false;
+         }
+     }else{
+        errores.insertarError("Semantica", "Hubo un error en la operacion relacional operando 1 "+simbolo);
+        return false;
+     }
+
+return false;
+
+};
+
+
 AnalizadorInterprete.prototype.evaluar = function(){
     var sentTemporal;
     for(var j = 0; j <funActual.instrucciones.length; j++){
@@ -210,7 +295,7 @@ AnalizadorInterprete.prototype.evaluar = function(){
 };
 
 AnalizadorInterprete.prototype.agregarImpresion = function(cad){
-    this.cadenaImpresion+=cad+"\n";
+    this.cadenaImpresion+=cad;
 };
 
 
@@ -370,12 +455,6 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
             var v1 = this.resolverValor(val1);
             var v2 = this.resolverValor(val2);
             var varAsig = valCont.valor;
-
-            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-            console.dir(v1);
-            console.dir(v2);
-
             if(v1 != "nulo" && v2 != "nulo"){
                 if(v1=="vacio"){
                     v1=0;
@@ -428,11 +507,11 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
 AnalizadorInterprete.prototype.resolverValor = function(val){
 
     if(val.tipo.toUpperCase() == "ENTERO"){
-        return val.valor;
+        return parseInt(val.valor);
     }
 
     if(val.tipo.toUpperCase() == "DECIMAL"){
-        return val.valor;
+        return parseFloat(val.valor);
     }
     
     if(val.tipo.toUpperCase()== "NEGATIVO"){
@@ -464,7 +543,7 @@ AnalizadorInterprete.prototype.resolverValor = function(val){
 
     if(val.tipo.toUpperCase() == "ID"){
         var v = this.temporales.obtenerValorTemporal(val.valor);
-        return v;
+        return parseFloat(v);
     }
 
 
@@ -472,10 +551,6 @@ AnalizadorInterprete.prototype.resolverValor = function(val){
 };
 
 
-
-AnalizadorInterprete.prototype.evaluarCondicion= function(){
-
-};
 
 
 

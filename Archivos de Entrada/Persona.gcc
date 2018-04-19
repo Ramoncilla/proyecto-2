@@ -95,8 +95,14 @@ clase persona {
        nombre[3]= 'N';
        nombre[4]= 'A';*/
 
-       caracter a;// = 'B';
-       a = "alina";
+       //caracter a;// = 'B';
+       //a = "alina";
+       entero i = 0;
+
+       repetir_mientras(i<10){
+           imprimir(i);
+           i+=1;
+       }
         
     }
 

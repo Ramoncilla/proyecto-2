@@ -293,7 +293,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
 	//console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-	//console.dir(nodo);	 
+	console.dir(nodo);	 
 	switch(nombreSentecia.toUpperCase()){
 
 
@@ -1167,12 +1167,38 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			}else{
 				errores.insertarError("Ha ocurrido un error al resolver para imprimir");
 			}
+			break;
+		}// fin de imprimir
 
 
 
+		case "REPETIR_MIENTRAS":{
+console.log("entre aun repetir mientras");
+			var expresionCiclo = nodo.expresion;
+			var cuerpoCiclo = nodo.cuerpo;
+			var retExpresion = this.resolverExpresion(expresionCiclo,ambitos,clase, metodo);
+			if(retExpresion instanceof nodoCondicion){
+				var etiqCiclo = this.c3d.getEtiqueta();
+				this.c3d.addCodigo(etiqCiclo+":");
+				this.c3d.addCodigo(retExpresion.codigo);
+				this.c3d.addCodigo(retExpresion.getEtiqueteasVerdaderas());
+				ambitos.addRepetirMientras();
+				if(cuerpoCiclo!=0){
+					var sentTemp;
+					for(var i = 0; i<cuerpoCiclo.length; i++){
+						sentTemp= cuerpoCiclo[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					this.c3d.addCodigo("jmp, , ,"+etiqCiclo+"; //regresando a la etiqueral del ciclo");
+					this.c3d.addCodigo(retExpresion.getEtiqueteasFalsas());
+				}
+				ambitos.ambitos.shift();
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion para repetir mientras");
+			}
 
 			break;
-		}
+		}//fin repetir mientras
 
 	}//fin switch sentencia
 };

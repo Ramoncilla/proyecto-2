@@ -44,7 +44,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "jne"       return 'jne'
 "jg"        return 'jg'
 "jge"       return 'jge'
-"jl"        return 'ji'
+"jl"        return 'jl'
 "jle"       return 'jle'
 "jmp"       return 'jmp'
 "*"                   return 'por'
@@ -54,6 +54,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "^"                   return 'pot'
 ","                    return 'coma'
 ";"                 return 'puntoComa'
+":"                 return 'dosPuntos'
 "call"              return 'call'
 {id}        return 'id'
 
@@ -79,8 +80,8 @@ FUNCION: begin coma coma coma id INSTRUCCIONES end coma coma id{$$ = new funcion
     |begin coma coma coma id end coma coma id{$$ = new funcion($5,[]);};
 
 
-INSTRUCCIONES: INSTRUCCION puntoComa{$$=[]; $$.push($1);}
-    |INSTRUCCIONES INSTRUCCION puntoComa{$$ = $1; $$.push($2);};
+INSTRUCCIONES: INSTRUCCION {$$=[]; $$.push($1);}
+    |INSTRUCCIONES INSTRUCCION{$$ = $1; $$.push($2);};
 
 INSTRUCCION: EXP {$$=$1;}  
     |ASIG_ED{$$=$1;}
@@ -97,16 +98,16 @@ TIPO: impre_char{$$=$1;}
     |impre_entero{$$=$1;};
 
 
-IMPRIMIR: print abrePar TIPO coma VAL cierrPar{$$= new imprimir($3,$5);};
+IMPRIMIR: print abrePar TIPO coma VAL cierrPar puntoComa {$$= new imprimir($3,$5);};
 
-LLAMADA: call coma coma coma id{$$ = new llamada($5);};
+LLAMADA: call coma coma coma id puntoComa{$$ = new llamada($5);};
 
 /* ---------------- Asignaciones y obtener del Heap y Stack -------------*/
 
 
-ASIG_ED: sale coma VAL coma VAL coma TIPO_ED{$$= new edd(2,$3,$5,$7);};
+ASIG_ED: sale coma VAL coma VAL coma TIPO_ED puntoComa{$$= new edd(2,$3,$5,$7);};
 
-GET_ED: entra coma VAL coma VAL coma TIPO_ED{$$= new edd(1,$3,$5,$7);};
+GET_ED: entra coma VAL coma VAL coma TIPO_ED puntoComa{$$= new edd(1,$3,$5,$7);};
 
 
 TIPO_ED: stack{$$=0;}
@@ -130,13 +131,13 @@ RELACIONAL : OPE_RELACIONAL coma VAL coma VAL coma id puntoComa jmp coma coma co
 
 SALTO: jmp coma coma coma id puntoComa{$$ = new Salto($5);};
 
-ETIQUETA: id dosPuntos{$$= new etiqueta($);};
+ETIQUETA: id dosPuntos{$$= new etiqueta($1);};
 
 
-ASIG : igual coma VAL coma VAL coma VAL{$$ = new Asig($3,$5,$7);};
+ASIG : igual coma VAL coma VAL coma VAL puntoComa{$$ = new Asig($3,$5,$7);};
 
 
-EXP: OPE_ARITMETICO coma VAL coma VAL coma VAL{$$= new Aritmetica($1,$3,$5,$7);};
+EXP: OPE_ARITMETICO coma VAL coma VAL coma VAL puntoComa{$$= new Aritmetica($1,$3,$5,$7);};
 
 
 VAL: NEGATIVO{$$ = new valor("negativo",$1);}

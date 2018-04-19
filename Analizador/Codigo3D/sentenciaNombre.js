@@ -17,6 +17,7 @@ var  Continuar = require("../Arbol/Sentencias/Continuar");
 var Asignacion = require("../Arbol/Sentencias/Asignacion");
 var asignaDecla = require("../Arbol/Sentencias/AsignaDecla");
 var asignaArreglo = require("../Arbol/Sentencias/AsignacionArreglo");
+var repetir_mientras = require("../Arbol/Sentencias/Repetir_Mientras");
 
 
 
@@ -216,6 +217,9 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
   
+    if(sent instanceof repetir_mientras){
+        return "REPETIR_MIENTRAS";
+    }
    
 
  if(sent instanceof Asignacion){

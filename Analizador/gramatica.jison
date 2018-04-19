@@ -783,6 +783,7 @@ REPETIR_MIENTRAS: Repetir_Mientras abrePar EXPRESION cierraPar CUERPO_FUNCION
 	{
 		var a = new Repetir_Mientras();
 		a.setValores($3,$5);
+		$$=a;
 	};
 
 HACER_MIENTRAS: hacer CUERPO_FUNCION mientras abrePar EXPRESION cierraPar puntoComa

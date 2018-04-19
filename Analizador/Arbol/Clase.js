@@ -579,7 +579,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
 
     if(sent instanceof Repetir_Mientras){
         var cuerpo = sent.getCuerpo();
-        ambitos.ambitos.addRepetirMientras();
+        ambitos.addRepetirMientras();
         for(var i =0; i< cuerpo.length; i++){
             this.simbMet(cuerpo[i],ambitos,parametros);
         }

@@ -3,25 +3,28 @@
 begin, , , persona_PRINCIPAL
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t1; // pos de a
-// Resolviendo una cadena 
-+, H, 1, t2; //apu donde inicia la cadena
-<=, t2, H, heap; //guaradnod donde inicia la cadena 
-+, H, 1, H;
-<=, H, 5, heap; //guardando el tamanio de la cadena
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 108, heap; //guardadndo l
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 110, heap; //guardadndo n
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 34, heap; // ingresando caracter de escape de la cadena
-+, H, 1, H;
++, p, 0, t1; // pos de i
+<=, t1, 0, stack; // asignando a i
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 0, t2; // pos de i
+=>, t2, t3, stack; // valor de lo que trae en el stack i
+L3:
+jl, t3, 10, L1;
+jmp, , , L2;
+L1:
+
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 0, t4; // pos de i
+=>, t4, t5, stack; // valor de lo que trae en el stack i
+print("%d", t5);
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 0, t6; // pos de i
+=>, t6, t7, stack; //obtenidoe el valor de i
++, t7, 1, t8;
+<=, t6, t8, stack; // asignando a i
+jmp, , ,L3; //regresando a la etiqueral del ciclo
+L2:
+
 
 end, , persona_PRINCIPAL
 

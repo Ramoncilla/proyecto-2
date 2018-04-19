@@ -576,6 +576,7 @@ case 126:
 
 		var a = new Repetir_Mientras();
 		a.setValores($$[$0-2],$$[$0]);
+		this.$=a;
 	
 break;
 case 127:
