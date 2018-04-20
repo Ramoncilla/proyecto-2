@@ -26,7 +26,7 @@ clase persona {
         n[2+1]='N';
         n[2*2]='A';*/
 
-        caracter pedris[20] ="Alina "+"Urbina";
+        caracter pedris[20] ='a'+'l'+'i';
 
 
         entero i=0;
