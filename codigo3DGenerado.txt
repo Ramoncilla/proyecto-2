@@ -25,134 +25,143 @@ begin, , , persona_PRINCIPAL
 +, H, 1, t11; //apu donde inicia la cadena
 <=, t10, t11, heap; //guaradnod donde inicia la cadena 
 +, H, 1, H;
-<=, H, 34, heap; //guardando el tamanio de la cadena
+<=, H, 6, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
-<=, H, 104, heap; //guardadndo h
-+, H, 1, H;
-<=, H, 111, heap; //guardadndo o
+<=, H, 65, heap; //guardadndo A
 +, H, 1, H;
 <=, H, 108, heap; //guardadndo l
 +, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 100, heap; //guardadndo d
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 100, heap; //guardadndo d
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 100, heap; //guardadndo d
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 100, heap; //guardadndo d
-+, H, 1, H;
-<=, H, 103, heap; //guardadndo g
-+, H, 1, H;
-<=, H, 102, heap; //guardadndo f
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 109, heap; //guardadndo m
-+, H, 1, H;
 <=, H, 105, heap; //guardadndo i
 +, H, 1, H;
-<=, H, 32, heap; //guardadndo  
+<=, H, 110, heap; //guardadndo n
 +, H, 1, H;
 <=, H, 97, heap; //guardadndo a
 +, H, 1, H;
-<=, H, 109, heap; //guardadndo m
-+, H, 1, H;
-<=, H, 111, heap; //guardadndo o
-+, H, 1, H;
-<=, H, 114, heap; //guardadndo r
+<=, H, 32, heap; //guardadndo  
 +, H, 1, H;
 <=, H, 34, heap; // ingresando caracter de escape de la cadena
 +, H, 1, H;
-=>, t10, t12, heap; // pos que apunta al size de la cadena
-=>, t12, t13, heap; // size de la cadena
-+, t12, 1, t14; // Pos 0 de la cadena
-=>, t14, t15, heap; // sacandor el caracter del heap cadena
-jle, t13, t5, L1;
-jmp, , , L2;
+// Resolviendo una cadena 
++, H, 0, t12; //apuntaodr a cadena 
++, H, 1, t13; //apu donde inicia la cadena
+<=, t12, t13, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 6, heap; //guardando el tamanio de la cadena
++, H, 1, H;
+<=, H, 85, heap; //guardadndo U
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 98, heap; //guardadndo b
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+//Iniciando a concatnar cadenas 
+=>, t10, t14, heap;
+=>, t14, t15, heap; // size cadena1
++, t14, 1, t16; // pos 0 de la cadena 1
+=>, t12, t17, heap;
+=>, t17, t18, heap; // size cadena2
++, t17, 1, t19; // pos 0 de la cadena 2
++, t15, t18, t20; // size de la nueva cadena
+=>, t16, t21, heap; // primer caracter de la cadena 1
+=>, t19, t22, heap; // primer caracter de la cadena 2
++, H, 0, t23; // posicion de retorno de la cadena
++, H, 1, t24;
+<=, t23, t24, heap;
++, H, 1, H;
+<=, H, t20, heap; //guardo el size de la nueva cadena
++, H, 1, H;
 jmp, , , L1;
 L1:
-jne, t15, 34, L3;
-jmp, , , L4;
+jne, t21, 34, L2;
 jmp, , , L3;
-L3:
-<=, t6, t15, heap; // guardando el caracter 
-+, t6, 1, t6; // incremnetnado la pos del arreglo
-+, t14, 1, t14; // incrementando la pos de la cadena
-=>, t14, t15, heap; // sacandor el caracter del heap cadena
-jmp, , , L1;
-jmp, , , L4;
-L4:
 jmp, , , L2;
 L2:
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t16; // pos de i
-<=, t16, 0, stack; // asignando a i
-// Resolviendo un repetur mientras
-jmp, , ,L5; //regresando a la etiqueral del ciclo repetir- mientras
+<=, H, t21, heap; //asignando caracter a la nueva cadena de la cadena 1
++, H, 1, H;
++, t16, 1, t16;
+=>, t16, t21, heap;
+jmp, , , L1;
+jmp, , , L3;
+L3:
+jmp, , , L4;
+L4:
+jne, t22, 34, L5;
+jmp, , , L6;
+jmp, , , L5;
 L5:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t17; // pos de i
-=>, t17, t18, stack; // valor de lo que trae en el stack i
-jl, t18, 20, L6;
-jmp, , , L7;
+<=, H, t22, heap; // ingresando caracter de la cadena 2
++, H, 1, H;
++, t19, 1, t19;
+=>, t19, t22, heap;
+jmp, , , L4;
+jmp, , , L6;
 L6:
+<=, H, 34, heap; // apuntador final de la cadena
++, h, 1, h;
+=>, t23, t25, heap; // pos que apunta al size de la cadena
+=>, t25, t26, heap; // size de la cadena
++, t25, 1, t27; // Pos 0 de la cadena
+=>, t27, t28, heap; // sacandor el caracter del heap cadena
+jle, t26, t5, L7;
+jmp, , , L8;
+jmp, , , L7;
+L7:
+jne, t28, 34, L9;
+jmp, , , L10;
+jmp, , , L9;
+L9:
+<=, t6, t28, heap; // guardando el caracter 
++, t6, 1, t6; // incremnetnado la pos del arreglo
++, t27, 1, t27; // incrementando la pos de la cadena
+=>, t27, t28, heap; // sacandor el caracter del heap cadena
+jmp, , , L7;
+jmp, , , L10;
+L10:
+jmp, , , L8;
+L8:
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t29; // pos de i
+<=, t29, 0, stack; // asignando a i
+// Resolviendo un repetur mientras
+jmp, , ,L11; //regresando a la etiqueral del ciclo repetir- mientras
+L11:
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t30; // pos de i
+=>, t30, t31, stack; // valor de lo que trae en el stack i
+jl, t31, 20, L12;
+jmp, , , L13;
+L12:
 
-+, P, 0, t19; // pos de arreglo pedris
-=>, t19, t20, stack; // apunt al heap de arreglo pedris
-=>, t20, t21, heap; //apunt al heap donde inicia el arreglo pedris
-=>, t21, t22, heap; //obteniendo el tamanio del arreglo pedris
-+, t21, 1, t23; // pos 0 del arreglo pedris
++, P, 0, t32; // pos de arreglo pedris
+=>, t32, t33, stack; // apunt al heap de arreglo pedris
+=>, t33, t34, heap; //apunt al heap donde inicia el arreglo pedris
+=>, t34, t35, heap; //obteniendo el tamanio del arreglo pedris
++, t34, 1, t36; // pos 0 del arreglo pedris
 // ---- Calculo de valor de las posiciones  
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t24; // pos de i
-=>, t24, t25, stack; // valor de lo que trae en el stack i
++, p, 1, t37; // pos de i
+=>, t37, t38, stack; // valor de lo que trae en el stack i
 // -----------(Obteniendo valor) Calculo de iReal para el arreglo pedris
--, t25, 0, t26; //calculando el n real ()
--, t26, 0, t27; //iReal columna 0
-+, t23, t27, t28; // pos buscada del arreglo  pedris
-=>, t28, t29, heap; //valor que trae el objeto
-print("%c", t29);
+-, t38, 0, t39; //calculando el n real ()
+-, t39, 0, t40; //iReal columna 0
++, t36, t40, t41; // pos buscada del arreglo  pedris
+=>, t41, t42, heap; //valor que trae el objeto
+print("%c", t42);
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t30; // pos de i
-=>, t30, t31, stack; //obtenidoe el valor de i
-+, t31, 1, t32;
-<=, t30, t32, stack; // asignando a i
-jmp, , ,L5; //regresando a la etiqueral del ciclo repetir mientras
-L7:
++, p, 1, t43; // pos de i
+=>, t43, t44, stack; //obtenidoe el valor de i
++, t44, 1, t45;
+<=, t43, t45, stack; // asignando a i
+jmp, , ,L11; //regresando a la etiqueral del ciclo repetir mientras
+L13:
 
 
 end, , persona_PRINCIPAL
@@ -163,113 +172,113 @@ end, , persona_PRINCIPAL
 begin, , , persona_vacio_persona
 
 // ----------------------- Creando arreglo atributo valor
-+, P, 0, t33; //pos this del arreglo
-=>, t33, t34, stack; //obteniendo apuntador de arreglo en eel heap
-=>, t34, t35, heap;//apuntando donde en verdad inicia el arreglo
-+, t35, 0, t36; //pos del heap que guarda apuntador del heap para el arreglo valor
-<=, t36, H, heap; //escribiendo apunt del heap donde inicia el arreglo 
++, P, 0, t46; //pos this del arreglo
+=>, t46, t47, stack; //obteniendo apuntador de arreglo en eel heap
+=>, t47, t48, heap;//apuntando donde en verdad inicia el arreglo
++, t48, 0, t49; //pos del heap que guarda apuntador del heap para el arreglo valor
+<=, t49, H, heap; //escribiendo apunt del heap donde inicia el arreglo 
 // REsolvemos tamanio del arreglo
--, 6, 1, t37; //calculando el n real
--, t37, 0, t38; //iReal columna 0
--, 2, 1, t39; //calculando el n real
-*, t38, 2, t40;// multiplicando por n1
-+, t40, t39, t41;
--, t41, 0, t42; //i real de columna 1
-+, t42, 1, t42; //size del arreglo valor
-<=, H, t42, heap; // insertando el tamanio del arreglo linealizado valor
+-, 6, 1, t50; //calculando el n real
+-, t50, 0, t51; //iReal columna 0
+-, 2, 1, t52; //calculando el n real
+*, t51, 2, t53;// multiplicando por n1
++, t53, t52, t54;
+-, t54, 0, t55; //i real de columna 1
++, t55, 1, t55; //size del arreglo valor
+<=, H, t55, heap; // insertando el tamanio del arreglo linealizado valor
 +, H, 1, H;
-+, t42, 0, t43; // anhadiendo una posicion mas
-+, h, t43, h; // reservnado el espacio del arreglo valor
++, t55, 0, t56; // anhadiendo una posicion mas
++, h, t56, h; // reservnado el espacio del arreglo valor
 // Asignar un posicion del arreglo 
 //------------- Asignancio posicion de un arreglo Atributo  valor
-+, P, 0, t44; // pos this del objeto 
-=>, t44, t45, stack; // apunt del heap para le objeto
-=>, t45, t46, heap; // apunt donde inicia el objeto
-+, t46, 0, t47; // pos del arreglo dentro del heap 
-=>, t47, t48, heap; // apuntador donde inicia el arreglo
-=>, t48, t49, heap; // size del arreglo valor
-+, t48, 1, t50; //pos 0 del arreglo valor
++, P, 0, t57; // pos this del objeto 
+=>, t57, t58, stack; // apunt del heap para le objeto
+=>, t58, t59, heap; // apunt donde inicia el objeto
++, t59, 0, t60; // pos del arreglo dentro del heap 
+=>, t60, t61, heap; // apuntador donde inicia el arreglo
+=>, t61, t62, heap; // size del arreglo valor
++, t61, 1, t63; //pos 0 del arreglo valor
 // ----------- Calculo de iReal para el arreglo valor
--, 0, 0, t51; //calculando el n real ()
--, t51, 0, t52; //iReal columna 0
--, 0, 0, t53; //calculando el n real ()
-*, t52, 2, t54;// multiplicando por n1
-+, t54, t53, t55;
--, t55, 0, t56; //i real de columna 1
-+, t50, t56, t57; // pos buscade del arreglo atributo valor
-<=, t57, 79, heap; // asignando al heap en la nueva posicion de arreglo valor
+-, 0, 0, t64; //calculando el n real ()
+-, t64, 0, t65; //iReal columna 0
+-, 0, 0, t66; //calculando el n real ()
+*, t65, 2, t67;// multiplicando por n1
++, t67, t66, t68;
+-, t68, 0, t69; //i real de columna 1
++, t63, t69, t70; // pos buscade del arreglo atributo valor
+<=, t70, 79, heap; // asignando al heap en la nueva posicion de arreglo valor
 // Asignar un posicion del arreglo 
 //------------- Asignancio posicion de un arreglo Atributo  valor
-+, P, 0, t58; // pos this del objeto 
-=>, t58, t59, stack; // apunt del heap para le objeto
-=>, t59, t60, heap; // apunt donde inicia el objeto
-+, t60, 0, t61; // pos del arreglo dentro del heap 
-=>, t61, t62, heap; // apuntador donde inicia el arreglo
-=>, t62, t63, heap; // size del arreglo valor
-+, t62, 1, t64; //pos 0 del arreglo valor
++, P, 0, t71; // pos this del objeto 
+=>, t71, t72, stack; // apunt del heap para le objeto
+=>, t72, t73, heap; // apunt donde inicia el objeto
++, t73, 0, t74; // pos del arreglo dentro del heap 
+=>, t74, t75, heap; // apuntador donde inicia el arreglo
+=>, t75, t76, heap; // size del arreglo valor
++, t75, 1, t77; //pos 0 del arreglo valor
 // ----------- Calculo de iReal para el arreglo valor
--, 3, 0, t65; //calculando el n real ()
--, t65, 0, t66; //iReal columna 0
--, 1, 0, t67; //calculando el n real ()
-*, t66, 2, t68;// multiplicando por n1
-+, t68, t67, t69;
--, t69, 0, t70; //i real de columna 1
-+, t64, t70, t71; // pos buscade del arreglo atributo valor
-<=, t71, 112, heap; // asignando al heap en la nueva posicion de arreglo valor
+-, 3, 0, t78; //calculando el n real ()
+-, t78, 0, t79; //iReal columna 0
+-, 1, 0, t80; //calculando el n real ()
+*, t79, 2, t81;// multiplicando por n1
++, t81, t80, t82;
+-, t82, 0, t83; //i real de columna 1
++, t77, t83, t84; // pos buscade del arreglo atributo valor
+<=, t84, 112, heap; // asignando al heap en la nueva posicion de arreglo valor
 //------------- Asignancio posicion de un arreglo Atributo  valor
-+, P, 0, t72; // pos this del objeto 
-=>, t72, t73, stack; // apunt del heap para le objeto
-=>, t73, t74, heap; // apunt donde inicia el objeto
-+, t74, 0, t75; // pos del arreglo dentro del heap 
-=>, t75, t76, heap; // apuntador donde inicia el arreglo
-=>, t76, t77, heap; // size del arreglo valor
-+, t76, 1, t78; //pos 0 del arreglo valor
++, P, 0, t85; // pos this del objeto 
+=>, t85, t86, stack; // apunt del heap para le objeto
+=>, t86, t87, heap; // apunt donde inicia el objeto
++, t87, 0, t88; // pos del arreglo dentro del heap 
+=>, t88, t89, heap; // apuntador donde inicia el arreglo
+=>, t89, t90, heap; // size del arreglo valor
++, t89, 1, t91; //pos 0 del arreglo valor
 // ----------- Calculo de iReal para el arreglo valor
--, 0, 0, t79; //calculando el n real ()
--, t79, 0, t80; //iReal columna 0
--, 0, 0, t81; //calculando el n real ()
-*, t80, 2, t82;// multiplicando por n1
-+, t82, t81, t83;
--, t83, 0, t84; //i real de columna 1
-+, t78, t84, t85; // pos buscade del arreglo atributo valor
-=>, t85, t86, heap; //valor que trae el objeto
-print("%c", t86);
+-, 0, 0, t92; //calculando el n real ()
+-, t92, 0, t93; //iReal columna 0
+-, 0, 0, t94; //calculando el n real ()
+*, t93, 2, t95;// multiplicando por n1
++, t95, t94, t96;
+-, t96, 0, t97; //i real de columna 1
++, t91, t97, t98; // pos buscade del arreglo atributo valor
+=>, t98, t99, heap; //valor que trae el objeto
+print("%c", t99);
 //------------- Asignancio posicion de un arreglo Atributo  valor
-+, P, 0, t87; // pos this del objeto 
-=>, t87, t88, stack; // apunt del heap para le objeto
-=>, t88, t89, heap; // apunt donde inicia el objeto
-+, t89, 0, t90; // pos del arreglo dentro del heap 
-=>, t90, t91, heap; // apuntador donde inicia el arreglo
-=>, t91, t92, heap; // size del arreglo valor
-+, t91, 1, t93; //pos 0 del arreglo valor
++, P, 0, t100; // pos this del objeto 
+=>, t100, t101, stack; // apunt del heap para le objeto
+=>, t101, t102, heap; // apunt donde inicia el objeto
++, t102, 0, t103; // pos del arreglo dentro del heap 
+=>, t103, t104, heap; // apuntador donde inicia el arreglo
+=>, t104, t105, heap; // size del arreglo valor
++, t104, 1, t106; //pos 0 del arreglo valor
 // ----------- Calculo de iReal para el arreglo valor
--, 1, 0, t94; //calculando el n real ()
--, t94, 0, t95; //iReal columna 0
--, 1, 0, t96; //calculando el n real ()
-*, t95, 2, t97;// multiplicando por n1
-+, t97, t96, t98;
--, t98, 0, t99; //i real de columna 1
-+, t93, t99, t100; // pos buscade del arreglo atributo valor
-=>, t100, t101, heap; //valor que trae el objeto
-print("%c", t101);
+-, 1, 0, t107; //calculando el n real ()
+-, t107, 0, t108; //iReal columna 0
+-, 1, 0, t109; //calculando el n real ()
+*, t108, 2, t110;// multiplicando por n1
++, t110, t109, t111;
+-, t111, 0, t112; //i real de columna 1
++, t106, t112, t113; // pos buscade del arreglo atributo valor
+=>, t113, t114, heap; //valor que trae el objeto
+print("%c", t114);
 //------------- Asignancio posicion de un arreglo Atributo  valor
-+, P, 0, t102; // pos this del objeto 
-=>, t102, t103, stack; // apunt del heap para le objeto
-=>, t103, t104, heap; // apunt donde inicia el objeto
-+, t104, 0, t105; // pos del arreglo dentro del heap 
-=>, t105, t106, heap; // apuntador donde inicia el arreglo
-=>, t106, t107, heap; // size del arreglo valor
-+, t106, 1, t108; //pos 0 del arreglo valor
++, P, 0, t115; // pos this del objeto 
+=>, t115, t116, stack; // apunt del heap para le objeto
+=>, t116, t117, heap; // apunt donde inicia el objeto
++, t117, 0, t118; // pos del arreglo dentro del heap 
+=>, t118, t119, heap; // apuntador donde inicia el arreglo
+=>, t119, t120, heap; // size del arreglo valor
++, t119, 1, t121; //pos 0 del arreglo valor
 // ----------- Calculo de iReal para el arreglo valor
--, 3, 0, t109; //calculando el n real ()
--, t109, 0, t110; //iReal columna 0
--, 1, 0, t111; //calculando el n real ()
-*, t110, 2, t112;// multiplicando por n1
-+, t112, t111, t113;
--, t113, 0, t114; //i real de columna 1
-+, t108, t114, t115; // pos buscade del arreglo atributo valor
-=>, t115, t116, heap; //valor que trae el objeto
-print("%c", t116);
+-, 3, 0, t122; //calculando el n real ()
+-, t122, 0, t123; //iReal columna 0
+-, 1, 0, t124; //calculando el n real ()
+*, t123, 2, t125;// multiplicando por n1
++, t125, t124, t126;
+-, t126, 0, t127; //i real de columna 1
++, t121, t127, t128; // pos buscade del arreglo atributo valor
+=>, t128, t129, heap; //valor que trae el objeto
+print("%c", t129);
 print("%c", 122);
 
 end, , persona_vacio_persona

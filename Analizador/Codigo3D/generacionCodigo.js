@@ -433,6 +433,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 						this.c3d.addCodigo(l1_16);
 						this.c3d.addCodigo(l1_21);
 						this.c3d.addCodigo(l1_17);
+						
 					
 					}
 
@@ -2355,6 +2356,160 @@ generacionCodigo.prototype.validarRestaOperacion = function(val1, val2){
 	 }
 };
 
+generacionCodigo.prototype.convertirCadena = function(val1){
+		if(val1.tipo.toUpperCase()== "CARACTER"){
+			var temp1= this.c3d.getTemporal();
+			var temp2= this.c3d.getTemporal();
+			var l1= "+, H, 0, "+temp1+"; //apuntador de cadena";
+			var l2= "+, H, 1, "+temp2+"; // posicion donde iniciara la cadena";
+			var l3 ="<=, "+temp1+", "+temp2+", heap; //insertando apuntador del heap donde incia la cadena";
+			var l4 ="+, H, 1, H; // incrementando h";
+			var l5 = "<=, H, 1, heap; //ingrensado el tamanho de la cadena nueva ";
+			var l6 = "<=, H, "+val1.valor+", heap; // ingresnado caracter al heap";
+			var l7 = "<=, H, 34, heap; //caracter de escape de la nueva cadena";
+			this.c3d.addCodigo(l1);
+			this.c3d.addCodigo(l2);
+			this.c3d.addCodigo(l3);
+			this.c3d.addCodigo(l4);
+			this.c3d.addCodigo(l5);
+			this.c3d.addCodigo(l4);
+			this.c3d.addCodigo(l6);
+			this.c3d.addCodigo(l4);
+			this.c3d.addCodigo(l7);
+			this.c3d.addCodigo(l4);
+			var ret = new EleRetorno();
+			ret.setValorCadena(temp1);
+			return ret;
+		}
+
+	
+
+};
+
+
+generacionCodigo.prototype.concatenarCadenas = function(cad1, cad2){
+	if(cad1.tipo.toUpperCase() =="CADENA" && cad2.tipo.toUpperCase() == "CADENA"){
+		var temp1= this.c3d.getTemporal();
+		var temp2= this.c3d.getTemporal();
+		var temp3= this.c3d.getTemporal();
+		var temp4= this.c3d.getTemporal();
+		var temp5= this.c3d.getTemporal();
+		var temp6= this.c3d.getTemporal();
+		var temp7= this.c3d.getTemporal();
+		var temp8= this.c3d.getTemporal();
+		var temp9= this.c3d.getTemporal();
+		var temp10= this.c3d.getTemporal();
+		var temp11= this.c3d.getTemporal();
+		var l1 = "=>, "+cad1.valor+", "+temp1+", heap;";
+		var l2 = "=>, "+temp1+", "+temp2+", heap; // size cadena1";
+		var l3 = "+, "+temp1+", 1, "+temp3+"; // pos 0 de la cadena 1";
+
+		var l4 = "=>, "+cad2.valor+", "+temp4+", heap;";
+		var l5 = "=>, "+temp4+", "+temp5+", heap; // size cadena2";
+		var l6 = "+, "+ temp4+", 1, "+temp6+"; // pos 0 de la cadena 2";
+		
+		var l7 = "+, "+temp2+", "+temp5+", "+temp7+"; // size de la nueva cadena";
+
+		var l8 = "=>, "+temp3+", "+temp8+", heap; // primer caracter de la cadena 1";
+		var l9 = "=>, "+temp6+", "+temp9+", heap; // primer caracter de la cadena 2";
+
+		var l10 = "+, H, 0, "+temp10+"; // posicion de retorno de la cadena";
+		var l11 = "+, H, 1, "+temp11+";";
+		var l12 = "<=, "+temp10+", "+temp11+", heap;";
+		var l13 = "+, H, 1, H;";
+		var l14 = "<=, H, "+temp7+", heap; //guardo el size de la nueva cadena";
+		var l15 = "+, H, 1, H;";
+		var etiq1= this.c3d.getEtiqueta();
+		var etiq2= this.c3d.getEtiqueta();
+		var etiq3= this.c3d.getEtiqueta();
+		var etiq4= this.c3d.getEtiqueta();
+		var etiq5= this.c3d.getEtiqueta();
+		var etiq6= this.c3d.getEtiqueta();
+
+		var l16 = "jmp, , , "+etiq1+";";
+		var l17 = etiq1+":";
+		var l18 = "jne, "+temp8+", 34, "+etiq2+";";
+		var l19 = "jmp, , , "+etiq3+";";
+		var l20 = "jmp, , , "+etiq2+";";
+		var l21 = etiq2+":";
+		var l22 = "<=, H, "+temp8+", heap; //asignando caracter a la nueva cadena de la cadena 1";
+		var l23 = "+, H, 1, H;";
+		var l24 = "+, "+temp3+", 1, "+temp3+";";
+		var l25 = "=>, "+temp3+", "+temp8+", heap;";
+		var l26 = "jmp, , , "+etiq1+";";
+		var l27 = "jmp, , , "+etiq3+";";
+		var l28 = etiq3+":";
+		var l29 = "jmp, , , "+etiq4+";";
+		var l30 = etiq4+":";
+		var l31 = "jne, "+temp9+", 34, "+etiq5+";";
+		var l32 = "jmp, , , "+etiq6+";";
+		var l33 = "jmp, , , "+etiq5+";";
+		var l34 = etiq5+":";
+		var l35 = "<=, H, "+temp9+", heap; // ingresando caracter de la cadena 2";
+		var l36 = "+, H, 1, H;";
+		var l37 = "+, "+temp6+", 1, "+temp6+";";
+		var l38 = "=>, "+temp6+", "+temp9+", heap;";
+		var l39 = "jmp, , , "+ etiq4+";";
+		var l40 = "jmp, , , "+etiq6+";";
+		var l41 = etiq6+":";
+
+		this.c3d.addCodigo("//Iniciando a concatnar cadenas ");
+		this.c3d.addCodigo(l1);
+		this.c3d.addCodigo(l2);
+		this.c3d.addCodigo(l3);
+		this.c3d.addCodigo(l4);
+		this.c3d.addCodigo(l5);
+		this.c3d.addCodigo(l6);
+		this.c3d.addCodigo(l7);
+		this.c3d.addCodigo(l8);
+		this.c3d.addCodigo(l9);
+		this.c3d.addCodigo(l10);
+		this.c3d.addCodigo(l11);
+		this.c3d.addCodigo(l12);
+		this.c3d.addCodigo(l13);
+		this.c3d.addCodigo(l14);
+		this.c3d.addCodigo(l15);
+		this.c3d.addCodigo(l16);
+		this.c3d.addCodigo(l17);
+		this.c3d.addCodigo(l18);
+		this.c3d.addCodigo(l19);
+		this.c3d.addCodigo(l20);
+		this.c3d.addCodigo(l21);
+		this.c3d.addCodigo(l22);
+		this.c3d.addCodigo(l23);
+		this.c3d.addCodigo(l24);
+		this.c3d.addCodigo(l25);
+		this.c3d.addCodigo(l26);
+		this.c3d.addCodigo(l27);
+		this.c3d.addCodigo(l28);
+		this.c3d.addCodigo(l29);
+		this.c3d.addCodigo(l30);
+		this.c3d.addCodigo(l31);
+		this.c3d.addCodigo(l32);
+		this.c3d.addCodigo(l33);
+		this.c3d.addCodigo(l34);
+		this.c3d.addCodigo(l35);
+		this.c3d.addCodigo(l36);
+		this.c3d.addCodigo(l37);
+		this.c3d.addCodigo(l38);
+		this.c3d.addCodigo(l39);
+		this.c3d.addCodigo(l40);
+		this.c3d.addCodigo(l41);
+		this.c3d.addCodigo("<=, H, 34, heap; // apuntador final de la cadena");
+		this.c3d.addCodigo("+, h, 1, h;");
+		var retn = new EleRetorno();
+		retn.setValorCadena(temp10);
+		return retn;
+	}else{
+		errores.insertarError("Semantico", "Para concatenar deben ser dos cadenas");
+		var ret = new EleRetorno();
+					ret.setValoresNulos();
+					return ret;
+	}
+
+
+};
+
 generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 		var ret; 
@@ -2466,7 +2621,6 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 					ret.setValorEntero(temp);
 					return ret;
 				}
-
 				else if(this.esBool(val1.tipo) && this.esBool(val2.tipo)){
 					var temp = this.c3d.getTemporal();
 					var cod = "+, "+val1.valor+", "+ val2.valor+", "+temp+";";
@@ -2474,7 +2628,52 @@ generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 					ret = new EleRetorno();
 					ret.setValorEntero(temp);
 					return ret;
-				}else{
+				}else if(this.esChar(val1.tipo) && this.esChar(val2.tipo)){
+					var cad1 = this.convertirCadena(val1);
+					var cad2 = this.convertirCadena(val2);
+					var r = this.concatenarCadenas(cad1, cad2);
+					if(r.tipo.toUpperCase() == "CADENA"){
+						return r;
+					}else{
+						ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+				}else if(this.esChar(val1.tipo) && this.esCadena(val2.tipo)){
+					var cad1 = this.convertirCadena(val1);
+					var r = this.concatenarCadenas(cad1, val2);
+					if(r.tipo.toUpperCase() == "CADENA"){
+						return r;
+					}else{
+						ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+
+
+				}else if(this.esCadena(val1.tipo) && this.esChar(val2.tipo)){
+					var cad2 = this.convertirCadena(val2);
+					var r = this.concatenarCadenas(val1, cad2);
+					if(r.tipo.toUpperCase() == "CADENA"){
+						return r;
+					}else{
+						ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+
+				}else if(this.esCadena(val1.tipo) && this.esCadena(val2.tipo)){
+					var r = this.concatenarCadenas(val1, val2);
+					if(r.tipo.toUpperCase() == "CADENA"){
+						return r;
+					}else{
+						ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+
+				}
+				else{
                     errores.insertarError("Semantico","Tipos no validos para una suma "+ val1.tipo+", con "+ val2.tipo);
 					ret = new EleRetorno();
 					ret.setValoresNulos();
