@@ -101,7 +101,7 @@ TablaSimbolos.prototype.obtenerPosAtributo= function (nombre, ambitos){
 
 };*/
 
-
+ 
 /* --------------------------------- Obtener Tipo --------------------------------------- */
 
 

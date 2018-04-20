@@ -615,8 +615,8 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 		var decla = new  DeclaArreglo(); decla.setValores($1,$2, $3);
 		var idA= new t_id();
 		idA.setValorId($2);
-		var asigna = new AsignacionArreglo(); asigna.setValores(idA,$3,$4,$5,7);	 //setValores = function(elemento,dimensiones,igual,valor,tipo)
-		console.dir(asigna);
+		var asigna = new AsignacionArreglo(); asigna.setValores($2,$3,$4,$5,17);	 //setValores = function(elemento,dimensiones,igual,valor,tipo)
+		//console.dir(asigna);
 		var asigDec= new AsignaDecla(); asigDec.setValores(decla,asigna,2);
 		$$= asigDec;
 	}
@@ -972,8 +972,6 @@ VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|RESERVAR_MEMORIA{$$=$1;}
 	|OBTENER_TAMANIO{$$=$1;}
 	|VALOR_PUNTERO{$$=$1;};
-
-
 
 
 
