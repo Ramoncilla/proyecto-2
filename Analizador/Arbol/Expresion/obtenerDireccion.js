@@ -2,8 +2,6 @@ function obtenerDireccion(){
 	this.expresion = "";
 }
 
-
-
 obtenerDireccion.prototype.setValores = function(exp) {
 	// body...
 

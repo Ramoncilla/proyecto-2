@@ -3,7 +3,7 @@ function DeclaAsignaPuntero(){
 	this.expresion = null;
 }
  
-
+ 
 DeclaAsignaPuntero.prototype.setValores = function(p, exp) {
 
 	this.puntero= p;

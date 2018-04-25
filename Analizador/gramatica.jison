@@ -328,7 +328,7 @@ SENTENCIA_CLASE: ATRIBUTO{$$=$1;}
 	|FUNCION_SOBRE{$$=$1;}
 	|PRINCIPAL{$$=$1;};
 	//|CONSTRUCTOR{$$=$1;};
-
+ 
 
 VISIBILIDAD: publico {$$="publico";}
 	|protegido{$$="protegido";}
@@ -394,13 +394,13 @@ ATRIBUTO: VISIBILIDAD DECLARACION
 			a.setValores($1,$2);
 			$$=a;
 		}
-	|VISIBILIDAD DECLA_PUNTERO
+	|VISIBILIDAD DECLA_PUNTERO puntoComa
 		{
 			var a = new Atributo();
 			a.setValores($1,$2);
 			$$=a;
 		}
-	|DECLA_PUNTERO
+	|DECLA_PUNTERO puntoComa
 		{
 			var a = new Atributo();
 			a.setValores("publico",$1);
@@ -651,7 +651,7 @@ ASIGNACION: id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,
 	|VALOR_PUNTERO igual EXPRESION //15
 	{ var a = new Asignacion(); a.setValores($1,$2,$3,15); $$=a;} ;
 
-
+ 
 DECLA_PUNTERO: CREAR_PUNTERO igual EXPRESION
 		{
 			var a = new DeclaAsignaPuntero();
@@ -1147,7 +1147,7 @@ CONVERTIR_A_ENTERO: convertirAEntero abrePar EXPRESION cierraPar puntoComa{var a
 /*--------------------- Punteros ------------------------*/
 
 
-
+ 
 CREAR_PUNTERO: crearPuntero abrePar TIPO_DECLARACION coma id cierraPar //apunta nulo
 	{
 		var a = new Puntero();

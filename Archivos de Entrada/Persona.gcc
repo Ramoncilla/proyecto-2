@@ -1,7 +1,7 @@
 
 clase persona {
 
-    caracter valor[6][2];
+    crearpuntero(entero , dir);
 
     persona()
     {
@@ -14,6 +14,9 @@ clase persona {
     }
 
     principal(){ 
+        persona p = nuevo persona();
+
+
 /*
         //persona p = nuevo persona();
         caracter nombreP [6][2];
@@ -25,16 +28,22 @@ clase persona {
         n[2*1]= 'I';
         n[2+1]='N';
         n[2*2]='A';*/
-
+/*
         caracter pedris[20] ='a'+'l'+'i';
-
+        caracter alina[20];
+        alina=pedris;
+        pedris[4]='0';
+        alina[10]='U';
+        entero a=10;
+        imprimir(a);
 
         entero i=0;
         repetir_mientras(i<20){
+            imprimir(alina[i]);
             imprimir(pedris[i]);
             i+=1;
             
-        }
+        }*/
         
 
   

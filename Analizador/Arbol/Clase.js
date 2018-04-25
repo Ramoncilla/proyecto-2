@@ -219,8 +219,26 @@ Clase.prototype.generarSimbolosAtributos = function() {
                 break;
 
             case 3:
+            var puntero = declaracionAtributo.getPuntero();
+            var nombrePuntero = puntero.getNombrePuntero();
+            if (!(this.existeAtributo(listaRetorno, nombrePuntero))) {
+                var tipoPuntero = puntero.getTipoPuntero();
+                var nuevoSimbolo = new Simbolo();
+                nuevoSimbolo.setValoresPuntero(nombrePuntero, "PUNTERO", tipoPuntero, this.nombre, "ATRIBUTO", apuntador, 1);
+                nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
+                listaRetorno.push(nuevoSimbolo);
+                apuntador++;
 
-                break;
+            } else {
+                lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePuntero);
+                console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
+
+            }
+
+            break;
+
+
 
             case 4: //cola
                 var nombreCola = declaracionAtributo.getNombre();
@@ -230,7 +248,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresCola(nombreCola, "COLA", tipoCola, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
-                   // nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -250,7 +268,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresLista(nombreLista, "LISTA", tipoLista, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
-                   // nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -269,6 +287,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresPila(nombrePila, "PILA", tipoPila, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -277,7 +296,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePila);
                 }
 
-
+ 
 
                 break;
 
@@ -289,6 +308,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresPuntero(nombrePuntero, "PUNTERO", tipoPuntero, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 
@@ -308,6 +328,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     var nuevoSimbolo = new Simbolo();
                     nuevoSimbolo.setValoresVariable(nombreC, tipoSimb, tipoVar, this.nombre, "ATRIBUTO", apuntador, 1);
                     nuevoSimbolo.setVisibilidad(visibilidadAtributo);
+                    nuevoSimbolo.setExpresionAtributo(declaracionAtributo);
                     listaRetorno.push(nuevoSimbolo);
                     apuntador++;
 

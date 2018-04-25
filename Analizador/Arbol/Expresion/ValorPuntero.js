@@ -3,7 +3,7 @@ function ValorPuntero(){
 	this.valoresEstructura=[];
 }
 
-
+ 
 
 
 ValorPuntero.prototype.setValores = function(id, arrValores) {

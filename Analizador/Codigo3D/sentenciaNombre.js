@@ -18,6 +18,9 @@ var Asignacion = require("../Arbol/Sentencias/Asignacion");
 var asignaDecla = require("../Arbol/Sentencias/AsignaDecla");
 var asignaArreglo = require("../Arbol/Sentencias/AsignacionArreglo");
 var repetir_mientras = require("../Arbol/Sentencias/Repetir_Mientras");
+var decla_puntero = require("../Arbol/Sentencias/DeclaPuntero");
+var decla_asigna_puntero = require("../Arbol/Sentencias/DeclaAsignaPuntero");
+
 
 
 
@@ -215,8 +218,16 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
-  
-    if(sent instanceof repetir_mientras){
+
+    if(sent instanceof decla_puntero){
+        return "DECLA_PUNTERO";
+    }
+
+   if(sent instanceof decla_asigna_puntero){
+       return "DECLA_ASIGNA_PUNTERO";
+   }  
+
+  if(sent instanceof repetir_mientras){
         return "REPETIR_MIENTRAS";
     }
    

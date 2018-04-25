@@ -6,7 +6,7 @@ function Puntero(){
 }
 
 
-
+ 
 
 Puntero.prototype.setValores = function(tipo, id) {
 	// body...

@@ -1,6 +1,7 @@
 function retorno(){
     this.tipo;
     this.valor;
+    this. tipoElemento;
 }
 
 retorno.prototype.setValorCadena = function(valor){
@@ -44,6 +45,9 @@ retorno.prototype.setValoresNulos= function(){
     this.valor ="nulo";
 }
 
+retorno.prototype.setTipoElemento= function (tipo){
+    this.tipoElemento= tipo;
+}
 module.exports = retorno;
 
 
