@@ -15,6 +15,10 @@ var interprete = require("../Interprete/interprete");
 var analizInterprete = require("../Interprete/AnalizadorInterprete");
 var retornoDireccion = require("../Arbol/retornoDireccion");
 
+var t_id = require("../Arbol/Expresion/t_id");
+var posicion_arreglo = require("../Arbol/Expresion/PosArreglo");
+var llamada_funcion = require("../Arbol/Expresion/Llamada");
+
 
 
 
@@ -718,7 +722,8 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 									
 									var temp9 = this.c3d.getTemporal();
 
-									var l12 = "+, p, "+temp8+", "+temp9+"; // tamanho de la funcion actual "+ metodo;
+									//var l12 = "+, p, "+temp8+", "+temp9+"; // tamanho de la funcion actual "+ metodo; ///aaaaaaaaaaaaa
+									var l12 = "+, p, "+sizeFuncActual+", "+temp9+"; // tamanho de la funcion actual "+ metodo; ///aaaaaaaaaaaaa
 									var temp10 = this.c3d.getTemporal();
 									var l13 = "+, "+temp9+", 0, "+temp10 +"; // pos del this para la nueva instancia de "+ nombreVar;
 									var l14 = "<=, "+temp10+", "+temp8+", stack; //guaradndo el puntero del this en el stack ";
@@ -1800,40 +1805,8 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 		}
 
 		case "ACCESO":{
-
-
-
-
-/*
-
-
-
-			ACCESO: id punto ATRI
-		{
-			var b = new t_id();
-			b.setValorId($1);	
-			var a = new Acceso();
-			a.setValores(b,$3);
-			$$=a;
-		}
-	|id COL_ARREGLO punto ATRI
-		{
-			var a = new PosArreglo();
-			a.setValores($1,$2);
-			var b = new Acceso();
-			b.setValores(a,$4);
-			$$=b;
-		}
-	|id PARAMETROS_LLAMADA punto  ATRI
-		{
-			var a = new Llamada();
-			a.setValoresLlamada($1,$2);
-			var b = new Acceso();
-			b.setValores(a,$4);
-			$$=b;
-		};
-
-*/
+			var v = this.resolverAcceso(nodo,ambitos,clase,metodo);
+			return v;
 
 			break;
 		}
@@ -1842,6 +1815,158 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	}//fin switch
 	 
 	
+};
+
+generacionCodigo.prototype.esObjeto = function(tipo){
+
+	if(tipo.toUpperCase() == "ENTERO" ||
+	tipo.toUpperCase() == "DECIMAL" ||
+	tipo.toUpperCase() == "BOOLEANO" ||
+	tipo.toUpperCase() == "CARACTER"){
+		return false;
+	}
+
+return true;
+};
+
+generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metodo){
+	var nombreVar = nodo.objeto; //nodo id
+	var nombreVariable= nombreVar.nombreId;
+	var elementosAcceso = nodo.elementosAcceso;
+	var esAtributo = this.tablaSimbolos.esAtributo(nombreVariable, ambitos);
+			if(esAtributo!=null){
+				if(esAtributo){
+					//es un atributo
+					var posVariable = this.tablaSimbolos.obtenerPosAtributo(nombreVariable,ambitos);
+					if(posVariable!= -1){
+
+
+					}else{
+						errores.insertarError("Semantico", "No existe la variable para el acceso atributo "+ nombreVariable);
+					}
+
+				}else{
+					//es una variable local
+					var posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVariable,ambitos);
+					var tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable,ambitos);
+					if(posVariable!= -1){
+						var posFinal;
+						var temp1= this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						posFinal = this.c3d.getTemporal();
+						var l1 = "+, P, "+posVariable+", "+temp1+"; // pos del objeto";
+						var l2 = "=>, "+temp1+", "+temp2+", stack; //apuntador al heap del obejto";
+						var l3 = "=>, "+temp2+", "+posFinal+", heap; // pos donde inicial el objeto "+ nombreVariable;
+						this.c3d.addCodigo("// ----------------- Resolviendo acceso local ");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						var elementoTemporal; 
+						var esObj= this.esObjeto(tipoElemento);
+						var nombreElemento;
+						for(var i =0; i<elementosAcceso.length; i++){
+							elementoTemporal = elementosAcceso[i];
+							if(esObj){
+								if(elementoTemporal instanceof t_id){
+									nombreElemento = elementoTemporal.nombreId;
+									var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
+									var temp4 = this.c3d.getTemporal();
+									var l4 = "+, "+posFinal +", "+posVar+", "+temp4+";";
+									var l5 = "=>, "+temp4+", "+posFinal+", heap; // pos inicial de otro objeto o valor de una vairble comun ";
+									this.c3d.addCodigo(l4);
+									this.c3d.addCodigo(l5);
+									tipoElemento = this.tablaSimbolos.obtenerTipoAtributoAcceso(tipoElemento, nombreElemento);
+									esObj= this.esObjeto(tipoElemento);
+
+									//busco que el tipo de este objeto sea un ambito y que tenga una vairable con este nombre y que sea atibuto 
+
+								}
+								if(elementoTemporal instanceof posicion_arreglo){
+									nombreElemento = elementoTemporal.nombreArreglo;
+									var posiciones = elementoTemporal.posicionesArreglo;
+
+
+								}
+
+								if(elementoTemporal instanceof llamada_funcion){
+									nombreElemento = elementoTemporal.nombreFuncion;
+									var parametros = elementoTemporal.parametros;
+
+								}
+
+								
+
+								
+
+							}
+							
+							
+
+
+
+
+						}
+
+						var ret = new EleRetorno();
+						ret.valor= posFinal;
+						ret.tipo= tipoElemento;
+						return ret;
+
+
+
+
+					}else{
+						errores.insertarError("Semantico", "No existe la variable para el acceso local "+ nombreVariable);
+					}
+
+
+				}
+			}
+
+
+	var r = new EleRetorno();
+	e.setValoresNulos();
+	return r;		
+
+
+
+
+
+
+
+
+/*
+
+
+
+	ACCESO: id punto ATRI
+{
+	var b = new t_id();
+	b.setValorId($1);	
+	var a = new Acceso();
+	a.setValores(b,$3);
+	$$=a;
+}
+|id COL_ARREGLO punto ATRI
+{
+	var a = new PosArreglo();
+	a.setValores($1,$2);
+	var b = new Acceso();
+	b.setValores(a,$4);
+	$$=b;
+}
+|id PARAMETROS_LLAMADA punto  ATRI
+{
+	var a = new Llamada();
+	a.setValoresLlamada($1,$2);
+	var b = new Acceso();
+	b.setValores(a,$4);
+	$$=b;
+};
+
+*/
+
+
 };
 
 

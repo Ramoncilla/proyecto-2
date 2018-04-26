@@ -16,3 +16,4 @@ DeclaPuntero.prototype.getPuntero= function(){
 
 
 module.exports=DeclaPuntero;
+ 

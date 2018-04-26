@@ -4,7 +4,7 @@ function t_id(){
 }
 
 
- 
+  
 
 t_id.prototype.setValorId = function(valor) {
 	// body...

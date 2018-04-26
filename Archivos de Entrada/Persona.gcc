@@ -1,52 +1,65 @@
+clase llanta {
+
+entero valor1;
+entero valor2;
+
+
+publico llanta(entero val){
+    valor1= val;
+    valor2= val*10;
+    //imprimir(valor2);
+}
+
+publico vacio getValor1(){
+     retorno valor1;
+}
+
+
+}
+
+
+clase carro{
+
+publico llanta lla1;
+publico llanta lla2;
+publico llanta lla3;
+publico llanta lla4;
+publico llanta repuesto= nuevo llanta(15);
+publico entero color;
+
+publico carro(){
+    lla1= nuevo llanta(19800);
+    lla2 = nuevo llanta(19801);
+    lla3 = nuevo llanta(19802);
+    lla4 = nuevo llanta(19803);
+    color =11500;
+}
+
+
+}
+
+
+
 
 clase persona {
 
-    crearpuntero(entero , dir);
+
+   entero edad=88;
+   caracter a = 'a';
+   carro car;
 
     persona()
     {
-        valor[0][0]='O'; 
-        valor[3][1]='p';  
-        imprimir(valor[0][0]);
-        imprimir(valor[1][1]);
-        imprimir(valor[3][1]);
-        imprimir('z');      
+        car = nuevo carro();
+         
     }
 
     principal(){ 
         persona p = nuevo persona();
-
-
-/*
-        //persona p = nuevo persona();
-        caracter nombreP [6][2];
-        nombrep[4][1]='A';
-
-        caracter n[10];
-        n[0]='A';
-        n[1]='L';
-        n[2*1]= 'I';
-        n[2+1]='N';
-        n[2*2]='A';*/
-/*
-        caracter pedris[20] ='a'+'l'+'i';
-        caracter alina[20];
-        alina=pedris;
-        pedris[4]='0';
-        alina[10]='U';
-        entero a=10;
-        imprimir(a);
-
-        entero i=0;
-        repetir_mientras(i<20){
-            imprimir(alina[i]);
-            imprimir(pedris[i]);
-            i+=1;
-            
-        }*/
-        
-
-  
+        imprimir(p.car.lla1.valor1);
+        imprimir(p.car.lla4.valor2);
+        imprimir(p.a);
+        imprimir(p.car.color);
     }
 
 }

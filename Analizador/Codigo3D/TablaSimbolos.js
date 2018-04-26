@@ -104,6 +104,37 @@ TablaSimbolos.prototype.obtenerPosAtributo= function (nombre, ambitos){
  
 /* --------------------------------- Obtener Tipo --------------------------------------- */
 
+TablaSimbolos.prototype.obtenerPosAtributoAcceso = function(nombreClase, nombreAtributo){
+  
+  var simbTemporal;
+  for(var i = 0; i<this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.ambito.toUpperCase() == nombreClase.toUpperCase() &&
+       simbTemporal.rol.toUpperCase() == "ATRIBUTO" && 
+       simbTemporal.nombreCorto.toUpperCase() == nombreAtributo.toUpperCase()){
+         return simbTemporal.apuntador;
+       }
+  }
+  return -1;
+
+};
+
+
+TablaSimbolos.prototype.obtenerTipoAtributoAcceso = function(nombreClase, nombreAtributo){
+  
+  var simbTemporal;
+  for(var i = 0; i<this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.ambito.toUpperCase() == nombreClase.toUpperCase() &&
+       simbTemporal.rol.toUpperCase() == "ATRIBUTO" && 
+       simbTemporal.nombreCorto.toUpperCase() == nombreAtributo.toUpperCase()){
+         return simbTemporal.tipoElemento;
+       }
+  }
+  return "nulo";
+
+};
+
 
 TablaSimbolos.prototype.obtenerTipo= function (nombre, ambitos){
    
@@ -276,6 +307,7 @@ return null;
 TablaSimbolos.prototype.existeListaGlobal = function(cadenaAmbito, nombre ){
   var simTemporal;
   var cont =0;
+  nombre= nombre+"";
   for (var i =0; i<this.listaSimbolos.length; i++){
       simTemporal  = this.listaSimbolos[i];
       if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
@@ -298,8 +330,8 @@ TablaSimbolos.prototype.existeListaLocal = function(cadenaAmbito, nombre ){
   var cont =0;
   for (var i =0; i<this.listaSimbolos.length; i++){
       simTemporal  = this.listaSimbolos[i];
-      if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
-          if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
+      if(simTemporal.ambito.toUpperCase() == cadenaAmbito.toUpperCase()){
+          if(simTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
             if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
              //return false;
               console.log("existe el simbolo "+nombre);

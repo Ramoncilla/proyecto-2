@@ -7,9 +7,6 @@ function Llamada(){
 
 
 
-
-
-
 Llamada.prototype.setValoresLlamada= function(nombre, parametros) {
 	// body...
 	this.nombreFuncion = nombre;
@@ -29,3 +26,4 @@ Llamada.prototype.getParametros = function() {
 };
 
 module.exports=Llamada;
+ 
