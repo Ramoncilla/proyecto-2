@@ -18,6 +18,7 @@ var retornoDireccion = require("../Arbol/retornoDireccion");
 var t_id = require("../Arbol/Expresion/t_id");
 var posicion_arreglo = require("../Arbol/Expresion/PosArreglo");
 var llamada_funcion = require("../Arbol/Expresion/Llamada");
+var funNativa = require("../Arbol/Expresion/FuncionNativa");
 
 
 
@@ -949,7 +950,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 				}
 
 			}else{
-				errores.insertarError("Ha ocurrido un error al resolver para imprimir");
+				errores.insertarError("Semantico","Ha ocurrido un error al resolver para imprimir");
 			}
 			break;
 		}// fin de imprimir
@@ -1833,24 +1834,49 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 	var nombreVar = nodo.objeto; //nodo id
 	var nombreVariable= nombreVar.nombreId;
 	var elementosAcceso = nodo.elementosAcceso;
+	var r = new EleRetorno();
+	r.setValoresNulos();
 	var esAtributo = this.tablaSimbolos.esAtributo(nombreVariable, ambitos);
 			if(esAtributo!=null){
+				var posVariable;
+				var tipoElemento;
+				var posFinal;
+				var esObj;
+				var nombreElemento;
 				if(esAtributo){
 					//es un atributo
 					var posVariable = this.tablaSimbolos.obtenerPosAtributo(nombreVariable,ambitos);
+					tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable, ambitos);
 					if(posVariable!= -1){
-
+						var temp1 = this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						var temp3 = this.c3d.getTemporal();
+						var temp4= this.c3d.getTemporal();
+						posFinal= this.c3d.getTemporal();
+						var l1 = "+, P, 0, "+temp1+"; ";
+						var l2 = "=>, "+temp1+", "+ temp2+", stack; // apuntador al heap";
+						var l3 = "=>, "+temp2+", "+temp3+", heap;";
+						var l4 ="+, "+temp3+", "+posVariable+", "+temp4+"; ";
+						var l5= "=>, "+temp4+", "+posFinal+", heap; // recuperando pos incial del objeto";
+						this.c3d.addCodigo("// Resolviendo un acceso para un atrinuto");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l4);		
+						this.c3d.addCodigo(l5);
+						
+						esObj= this.esObjeto(tipoElemento);
 
 					}else{
 						errores.insertarError("Semantico", "No existe la variable para el acceso atributo "+ nombreVariable);
+						return r;
 					}
 
 				}else{
 					//es una variable local
-					var posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVariable,ambitos);
-					var tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable,ambitos);
+					 posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVariable,ambitos);
+				     tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable,ambitos);
 					if(posVariable!= -1){
-						var posFinal;
 						var temp1= this.c3d.getTemporal();
 						var temp2 = this.c3d.getTemporal();
 						posFinal = this.c3d.getTemporal();
@@ -1861,72 +1887,77 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						this.c3d.addCodigo(l1);
 						this.c3d.addCodigo(l2);
 						this.c3d.addCodigo(l3);
-						var elementoTemporal; 
-						var esObj= this.esObjeto(tipoElemento);
-						var nombreElemento;
-						for(var i =0; i<elementosAcceso.length; i++){
-							elementoTemporal = elementosAcceso[i];
-							if(esObj){
-								if(elementoTemporal instanceof t_id){
-									nombreElemento = elementoTemporal.nombreId;
-									var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
-									var temp4 = this.c3d.getTemporal();
-									var l4 = "+, "+posFinal +", "+posVar+", "+temp4+";";
-									var l5 = "=>, "+temp4+", "+posFinal+", heap; // pos inicial de otro objeto o valor de una vairble comun ";
-									this.c3d.addCodigo(l4);
-									this.c3d.addCodigo(l5);
-									tipoElemento = this.tablaSimbolos.obtenerTipoAtributoAcceso(tipoElemento, nombreElemento);
-									esObj= this.esObjeto(tipoElemento);
+						esObj= this.esObjeto(tipoElemento);
+					}else{
+						errores.insertarError("Semantico", "No existe la variable para el acceso local "+ nombreVariable);
+						return r;
+					}
+				}// final del else una vairbale local  y del atributo
 
-									//busco que el tipo de este objeto sea un ambito y que tenga una vairable con este nombre y que sea atibuto 
+				var elementoTemporal; 
+				for(var i =0; i<elementosAcceso.length; i++){
+					elementoTemporal = elementosAcceso[i];
+					//if(esObj){
+						if(elementoTemporal instanceof t_id){
+							nombreElemento = elementoTemporal.nombreId;
+							var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
+							if(posVar!=-1){
+								var temp4 = this.c3d.getTemporal();
+								var l4 = "+, "+posFinal +", "+posVar+", "+temp4+";";
+								var l5 = "=>, "+temp4+", "+posFinal+", heap; // pos inicial de otro objeto o valor de una vairble comun ";
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								tipoElemento = this.tablaSimbolos.obtenerTipoAtributoAcceso(tipoElemento, nombreElemento);
+								esObj= this.esObjeto(tipoElemento);	
+							}else{
+								errores.insertarError("Semantico", "No existe el elemento "+nombreElemento);
+								return r;
+							}	
+						}
 
-								}
-								if(elementoTemporal instanceof posicion_arreglo){
-									nombreElemento = elementoTemporal.nombreArreglo;
-									var posiciones = elementoTemporal.posicionesArreglo;
-
-
-								}
-
-								if(elementoTemporal instanceof llamada_funcion){
-									nombreElemento = elementoTemporal.nombreFuncion;
-									var parametros = elementoTemporal.parametros;
-
-								}
-
-								
-
-								
-
-							}
-							
-							
-
-
+						if(elementoTemporal instanceof posicion_arreglo){
+							nombreElemento = elementoTemporal.nombreArreglo;
+							var posiciones = elementoTemporal.posicionesArreglo;
 
 
 						}
 
-						var ret = new EleRetorno();
+						if(elementoTemporal instanceof llamada_funcion){
+							nombreElemento = elementoTemporal.nombreFuncion;
+							var parametros = elementoTemporal.parametros;
+
+						}
+
+						if(elementoTemporal instanceof funNativa){
+
+							var nombreF = elementoTemporal.nombreFuncion;
+							var expresionF = elementoTemporal.expresion;
+
+							if(nombreF.toUpperCase() == "TAMANIO"){
+
+							}
+
+
+
+							
+
+							
+							
+
+						}	
+					//}
+				}//fin ciclo de valores acceso
+
+				var ret = new EleRetorno();
 						ret.valor= posFinal;
 						ret.tipo= tipoElemento;
 						return ret;
 
 
-
-
-					}else{
-						errores.insertarError("Semantico", "No existe la variable para el acceso local "+ nombreVariable);
-					}
-
-
-				}
 			}
 
 
-	var r = new EleRetorno();
-	e.setValoresNulos();
-	return r;		
+			
 
 
 

@@ -33,6 +33,10 @@ publico carro(){
     lla3 = nuevo llanta(19802);
     lla4 = nuevo llanta(19803);
     color =11500;
+     imprimir('b');
+    
+     imprimir(lla2.valor2);
+     imprimir('c');
 }
 
 
@@ -51,15 +55,19 @@ clase persona {
     persona()
     {
         car = nuevo carro();
+        imprimir('Z');
+        imprimir(car.lla4.valor2);
          
     }
 
     principal(){ 
         persona p = nuevo persona();
+    
         imprimir(p.car.lla1.valor1);
         imprimir(p.car.lla4.valor2);
         imprimir(p.a);
         imprimir(p.car.color);
+        imprimir(p.a);
     }
 
 }

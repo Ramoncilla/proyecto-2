@@ -7,18 +7,15 @@ function FuncionNativa(){
 
 
 
-
-
-
 FuncionNativa.prototype.setValores= function(nombre, exp) {
 	// body...
-	FuncionNativa.prototype.nombreFuncion = nombre;
+	this.nombreFuncion = nombre;
 	this.expresion=exp;
 };
 
 
 FuncionNativa.prototype.getNombreFuncion = function() {
-	return FuncionNativa.prototype.nombreFuncion;
+	return this.nombreFuncion;
 	// body...
 };
 
