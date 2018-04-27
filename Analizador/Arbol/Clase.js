@@ -276,8 +276,6 @@ Clase.prototype.generarSimbolosAtributos = function() {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreLista);
 					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreLista);
                 }
-
-
                 break;
 
             case 6: //pila

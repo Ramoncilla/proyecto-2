@@ -266,8 +266,15 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 	
 		case "DECLA_PUNTERO":{
 			var a = this.crearPunteroNulo(nodo, ambitos,clase, metodo);
-			if(a == false){
+			if(a.tipo.toUpperCase() == "NULO"){
 				errores.insertarError("SEmantico", "Ha ocurrido un error al crear el puntero");
+			}else{
+				var tipoPuntero = a.tipo;
+				var valorPuntero = a.valor;
+				var estructuraPuntero = a.estructura;
+				var referenciaPuntero = a.referencia;
+
+
 			}
 			break;
 		}// fin decla_puntero
@@ -278,6 +285,88 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 		}// fin decla asigna putnero
 	   
 
+		case "DECLA_PILA":{
+			break;
+		}
+
+		case "DECLA_COLA":{
+			break;
+		}
+
+		case "DECLA_LISTA":{
+			var tipo_lista = nodo.tipoLista;
+			var nombre_lista = nodo.nombreLista;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombre_lista, ambitos);
+			if(esAtributo!=null){
+				if(esAtributo){
+					var posLista = this.tablaSimbolos.obtenerPosAtributo(nombre_lista,ambitos);
+					if(posLista!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						var temp3 = this.c3d.getTemporal();
+						//var temp4 = this.c3d.getTemporal();
+						var temp5 = this.c3d.getTemporal();
+						var l1= "+, P, 0, "+temp1+"; //pos this";
+						var l2= "=>, "+temp1+", "+temp2+", stack; // obtenienido apuntador al heap para la lista";
+						var l3= "=>, "+temp2+", "+temp3+", heap; //apauntador al heap para el objeto";
+						//var l4= "=>, "+temp3+", "+temp4+", heap; // pos donde realmente inica el objeto";
+						var l5= "+, "+temp3+", "+posLista+", "+temp5+"; // pos donde inicia la lista";
+						var l6= "<=, "+temp5+", H, heap;";
+						var l7= "<=, H, -1, heap; // ingresando el size de la lista";
+						var l8= "+, H, 1, H;";
+						var l9= "<=, H, -1, heap; // ingresando el apuntador nulo a la lista";
+						var l10= "+, H, 3, H;";
+						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						//this.c3d.addCodigo(l4);
+						this.c3d.addCodigo(l5);
+						this.c3d.addCodigo(l6);
+						this.c3d.addCodigo(l7);
+						this.c3d.addCodigo(l8);
+						this.c3d.addCodigo(l9);
+						this.c3d.addCodigo(l10);
+					}else{
+						errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
+					}
+
+				}else{
+					//es una vairable local
+					var posLista = this.tablaSimbolos.obtenerPosLocal(nombre_lista,ambitos);
+					if(posLista!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						var l1= "+, P, "+posLista+", "+temp1+"; //pos de lista  "+nombre_lista;
+						var l2= "<=, "+temp1+", H, stack; //escribiendo apuntador al heap";
+						var l3= "+, H, 1, "+temp2+"; ";
+						var l4= "<=, H, "+temp2+", heap;";
+						var l5= "+, H, 1, H;";
+						var l6= "<=, H, -1, heap; //ingresando el size de la lista";
+						var l7= "+, H, 1, H;";
+						var l8= "<=, H, -1, heap; //ingresando el apuntador a nulo";
+						var l9= "+, H, 3, H;";
+						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l4);
+						this.c3d.addCodigo(l5);
+						this.c3d.addCodigo(l6);
+						this.c3d.addCodigo(l7);
+						this.c3d.addCodigo(l8);
+						this.c3d.addCodigo(l9);
+					}else{
+						errores.insertarError("Semantico", "La lista no existe "+nombre_lista);
+					}
+
+				}
+
+			}else{
+				errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
+			}
+			break;
+		}
 	   
 		case "ASIGNA_DECLA":{
 			console.log("----------------- Entre a un asigna Decla  ---------------------------");
@@ -418,14 +507,9 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 						this.c3d.addCodigo(l1_17);
 						
 					
-					}
-
-
-	
+					}	
 				}
-				
-
-				
+	
 			}
 			
 			break;
@@ -1368,7 +1452,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	console.dir(nodo);
 
 	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
-	//console.log("Expresion "+ nombreSentecia);
 	
 	switch(nombreSentecia){
 
@@ -1420,6 +1503,8 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			var l3 = "+, H, 1, H;";
 			var l4 = "<=, H, "+cadena.length+", heap; //guardando el tamanio de la cadena";
 			var l5 = "+, H, 1, H;";
+			var tempRef = this.c3d.getTemporal();
+			var lRef = "+, H, 0, "+tempRef+"; // referencia de donde iniciar el primer caracter de la cadena";
 			this.c3d.addCodigo(l0);
 			this.c3d.addCodigo(l00);
 			this.c3d.addCodigo(l1);
@@ -1427,6 +1512,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			this.c3d.addCodigo(l3);
 			this.c3d.addCodigo(l4);
 			this.c3d.addCodigo(l5);
+			this.c3d.addCodigo(lRef);
 			var l6="";
 			for(var i = 0; i< cadena.length; i++){
 				c= cadena.charCodeAt(i);
@@ -1439,6 +1525,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			this.c3d.addCodigo(l3);
 			var ret = new EleRetorno();
 			ret.setValorCadena(temp0);
+			ret.setReferencia("HEAP",tempRef);
 			//console.dir(ret);
 			return ret;
 
@@ -1711,6 +1798,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 				var retornVal = new EleRetorno();
 				retornVal.tipo = tipoArreglo;
 				retornVal.valor = temp2_5;
+				retornVal.setReferencia("HEAP",apuntadorArreglo.valor);
 				return retornVal;
 			}
 				var ret2 = new EleRetorno();
@@ -1781,22 +1869,15 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						}
 
 					}
-
-
-
 				}else{
 					posVar = this.tablaSimbolos.obtenerPosLocal(nombreVar,ambitos);
 				}
-
 				var temp1= this.c3d.getTemporal();
 				var l1= "+, P, 0, "+temp1+"; // pos this ";
 				var temp2 = this.c3d.getTemporal();
 				var l2= "=>, "+temp1+", "+temp2+", stack; // apuntador al heap de "+ nombreVar;
 				var temp3 = this.c3d.getTemporal();
 				var l3="=>, "+ temp2+", "+temp3+", heap; // ap donde inicia "+ nomrbreVar;
-
-			
-
 			}else{
 				errores.insertarError("Semantico", "No existe "+nombreVar)
 			}
@@ -1935,14 +2016,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 
 							if(nombreF.toUpperCase() == "TAMANIO"){
 
-							}
-
-
-
-							
-
-							
-							
+							}	
 
 						}	
 					//}
@@ -1954,48 +2028,12 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						return ret;
 
 
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error "+nombreVariable+", no existe");
+				return r;
 			}
 
 
-			
-
-
-
-
-
-
-
-
-/*
-
-
-
-	ACCESO: id punto ATRI
-{
-	var b = new t_id();
-	b.setValorId($1);	
-	var a = new Acceso();
-	a.setValores(b,$3);
-	$$=a;
-}
-|id COL_ARREGLO punto ATRI
-{
-	var a = new PosArreglo();
-	a.setValores($1,$2);
-	var b = new Acceso();
-	b.setValores(a,$4);
-	$$=b;
-}
-|id PARAMETROS_LLAMADA punto  ATRI
-{
-	var a = new Llamada();
-	a.setValoresLlamada($1,$2);
-	var b = new Acceso();
-	b.setValores(a,$4);
-	$$=b;
-};
-
-*/
 
 
 };
@@ -2007,6 +2045,9 @@ generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, met
 	var nombreP = punteroDecla.nombrePuntero;
 	var tipoP= punteroDecla.tipoPuntero;
 	var esAtributo = this.tablaSimbolos.esAtributo(nombreP,ambitos);
+	var retorn_nulo = new EleRetorno();	
+	retorn_nulo.setValoresNulos();
+	var ret_puntero;
 
 	if(esAtributo!=null){
 		var simb = this.tablaSimbolos.obtenerSimbolo(nombreP,ambitos,esAtributo);
@@ -2018,15 +2059,17 @@ generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, met
 				var temp1= this.c3d.getTemporal();
 				var temp2= this.c3d.getTemporal();
 				var temp3 = this.c3d.getTemporal();
-				var temp4= this.c3d.getTemporal();
+				var temp4= this.c3d.getTemporal(); //val
+				var tempRef= this.c3d.getTemporal();
 				var l1= "+, P, 0, "+temp1+";// pos del this";
 				var l2= "=>, "+temp1+", "+temp2+", stack; // apuntador al heap";
 				var l3 = "=>, "+temp2+", "+temp3+", heap; ";
 				var l4 = "+, "+temp3+", "+posPuntero+", "+temp4+"; // pos donde inicia el puntero";
 				var l5 = "<=, "+temp4+", H, heap; // guarandod pntero donde inicia el puntero ";
+				var l5_1= "+, H, 0, "+tempRef+"; // pos de REferencia";
 				var l6 = "<=, H, 110, heap; //guardano una n de null en el heap";
 				var l7 = "+, H, 1, H; // incrementando uno en h";
-				var l8 = "<=, H, 12500, heap; // guarando una posicion que no existe indica nulo";
+				var l8 = "<=, H, -1, heap; // guarando una posicion que no existe indica nulo";
 				var l9 = "+, H, 1, H; // incrementando uno en h";
 				this.c3d.addCodigo("// ---------------- Creando un puntero atributp nulo ---------");
 				this.c3d.addCodigo(l1);
@@ -2034,15 +2077,21 @@ generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, met
 				this.c3d.addCodigo(l3);
 				this.c3d.addCodigo(l4);
 				this.c3d.addCodigo(l5);
+				this.c3d.addCodigo(l5_1);
 				this.c3d.addCodigo(l6);
 				this.c3d.addCodigo(l7);
 				this.c3d.addCodigo(l8);
 				this.c3d.addCodigo(l9);
 				this.c3d.addCodigo("// ---------- Fin decla de puntero -------------");
-				return true;
+				ret_puntero = new EleRetorno();
+				ret_puntero.tipo=tipoP;
+				ret_puntero.valor= temp4;
+				ret_puntero.setReferencia("NULO2", tempRef);
+				return ret_puntero;
 
 			}else{
 				errores.insertarError("Semantico", "El puntro de nonbre "+ nombreP+", no existe");
+				return retorn_nulo;
 			}
 		}else{
 			posPuntero = this.tablaSimbolos.obtenerPosLocal(nombreP,ambitos);
@@ -2050,11 +2099,15 @@ generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, met
 			if(posPuntero!=-1){
 				var temp1 = this.c3d.getTemporal();
 				var temp2 = this.c3d.getTemporal();
+				var tempVal = this.c3d.getTemporal();
+				var tempRef = this.c3d.getTemporal();
 				var l1= "+, P, "+posPuntero+", "+temp1+"; // posicion de el puntero nombre "+nombreP;
 				var l2 = "<=, "+temp1+", H, stack; //guarando en el stack el apuntador al heap";
+				var l2_1= "+, H, 0, "+tempVal+"; // pos del heap donde inicia el puntero";
 				var l3 = "+, H, 1, "+temp2+"; // pos donde iniciara el puntero";
 				var l4 = "<=, H, "+temp2+", heap; // heap[h]= "+temp2;
 				var l5 = "+, H, 1, H; // incrementando h en uno";
+				var l5_1= "+, H, 0, "+tempRef+"; // pos del heap donde se guardar la esdtructara de la referencia ";
 				var l6 = "<=, H, 110, heap; // guarndo n de nulo en el puntero";
 				var l7 = "+, H, 1, H; // incrementando h en uno";
 				var l8 = "<=, H, 12500, heap; // posicion nula dentro del heap";
@@ -2062,26 +2115,33 @@ generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, met
 				this.c3d.addCodigo("// ---------------- Creando un puntero local nulo ---------");
 				this.c3d.addCodigo(l1);
 				this.c3d.addCodigo(l2);
+				this.c3d.addCodigo(l2_1);
 				this.c3d.addCodigo(l3);
 				this.c3d.addCodigo(l4);
 				this.c3d.addCodigo(l5);
+				this.c3d.addCodigo(l5_1);
 				this.c3d.addCodigo(l6);
 				this.c3d.addCodigo(l7);
 				this.c3d.addCodigo(l8);
 				this.c3d.addCodigo(l9);
 				this.c3d.addCodigo("// ---------- Fin decla de puntero -------------");
-				return true;
-
+				ret_puntero = new EleRetorno();
+				ret_puntero.tipo=tipoP;
+				ret_puntero.valor= tempVal;
+				ret_puntero.setReferencia("NULO2", tempRef);
+				return ret_puntero;
 			}else{
 				errores.insertarError("Semantico", "El puntero no existe "+ nombreP);
+				return retorn_nulo;
 			}
 		}
 
 	}else{
 		errores.insertarError("Semantico", "Elemento de nombre "+ nombreP+", no existe");
+		return retorn_nulo;
 	}
 
-    return false;
+    return retorn_nulo;
 };
 
 

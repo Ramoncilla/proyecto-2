@@ -1,7 +1,8 @@
 function retorno(){
     this.tipo;
     this.valor;
-    this. tipoElemento;
+    this.estructura = "nulo";
+    this.referencia = "nulo";
 }
 
 retorno.prototype.setValorCadena = function(valor){
@@ -45,9 +46,12 @@ retorno.prototype.setValoresNulos= function(){
     this.valor ="nulo";
 }
 
-retorno.prototype.setTipoElemento= function (tipo){
-    this.tipoElemento= tipo;
-}
+retorno.prototype.setReferencia = function(ed, ref){
+    this.estructura= ed;
+    this.referencia = ref;
+};
+
+
 module.exports = retorno;
 
 

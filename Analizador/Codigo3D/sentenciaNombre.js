@@ -21,6 +21,10 @@ var repetir_mientras = require("../Arbol/Sentencias/Repetir_Mientras");
 var decla_puntero = require("../Arbol/Sentencias/DeclaPuntero");
 var decla_asigna_puntero = require("../Arbol/Sentencias/DeclaAsignaPuntero");
 
+var decla_lista = require("../Arbol/Sentencias/DeclaLista");
+var decla_cola = require("../Arbol/Sentencias/DeclaCola");
+var decla_pila = require("../Arbol/Sentencias/DeclaPila");
+
 
 
 
@@ -226,6 +230,21 @@ sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
    if(sent instanceof decla_asigna_puntero){
        return "DECLA_ASIGNA_PUNTERO";
    }  
+
+
+
+if(sent instanceof decla_lista){
+    return "DECLA_LISTA";
+}
+
+if(sent instanceof decla_cola){
+    return "DECLA_COLA";
+}
+
+if(sent instanceof decla_pila){
+    return "DECLA_PILA";
+}
+
 
   if(sent instanceof repetir_mientras){
         return "REPETIR_MIENTRAS";

@@ -1,260 +1,25 @@
 
 
-begin, , , llanta_vacio_llanta_entero
-
-// Asignando atributo valor1
-+, p, 0, t1; //pos this 
-=>, t1, t2, stack; // apuntador al heap
-=>, t2, t3, heap; // apuntador donde inicia el objeto
-+, t3, 0, t4; // pos real  de valor1
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t5; // pos de val
-=>, t5, t6, stack; // valor de lo que trae en el stack val
-<=, t4, t6, heap; //guardando en el heap el valor del atributo
-// Asignando atributo valor2
-+, p, 0, t7; //pos this 
-=>, t7, t8, stack; // apuntador al heap
-=>, t8, t9, heap; // apuntador donde inicia el objeto
-+, t9, 1, t10; // pos real  de valor2
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t11; // pos de val
-=>, t11, t12, stack; // valor de lo que trae en el stack val
-*, t12, 10, t13;
-<=, t10, t13, heap; //guardando en el heap el valor del atributo
-
-end, , llanta_vacio_llanta_entero
-
-
-
-
-begin, , , llanta_vacio_getValor1
-
-
-end, , llanta_vacio_getValor1
-
-
-
-
-begin, , , carro_vacio_carro
-
-// ----------- Instancia a un atributo --------------
-+, p, 0, t14;// pos this de repuesto
-=>, t14, t15, stack; //apuntador del heap de repuesto
-=>, t15, t16, heap; //posicion real del heap donde inicia repuesto
-+, t16, 4, t17; //pos real del atributo repuesto
-<=, t17, h, heap; //guardando la pos real donde inicia el objeto repuesto
-+, h, 2, h; // reservando el espacio de memoria para el nuevo objeto repuesto
-
-// Guardando la referencia al this del objeto para la llamada al constructor repuesto
-+, p, 0, t18;
-=>, t18, t19, stack; //apuntador al heap de repuesto
-=>, t19, t20, heap; //posicion real donde incia el objeto repuesto
-+, t20, 4, t21; // pos real donde incial el objeto repuesto
-
-+, p, 2, t22; // tamanho de la funcion actual carro_vacio_carro
-+, t22, 0, t23; // pos del this para la nueva instancia de repuesto
-<=, t23, t21, stack; //guaradndo el puntero del this en el stack 
-
-// Asignando parametros  
-+, p, 2, t24; // size de funcion actual
-+, t24, 1, t25; //pos del parametro 1
-<=, t25, 15, stack; // asignado al stack el parametro
-+, p, 2, p; // simulando cambio de ambito
-call, , , llanta_vacio_llanta_entero;
--, p, 2, p; // regresando al ambito acutal
-
-// ----------- Instancia a un atributo --------------
-+, p, 0, t26;// pos this de lla1
-=>, t26, t27, stack; //apuntador del heap de lla1
-=>, t27, t28, heap; //posicion real del heap donde inicia lla1
-+, t28, 0, t29; //pos real del atributo lla1
-<=, t29, h, heap; //guardando la pos real donde inicia el objeto lla1
-+, h, 2, h; // reservando el espacio de memoria para el nuevo objeto lla1
-
-// Guardando la referencia al this del objeto para la llamada al constructor lla1
-+, p, 0, t30;
-=>, t30, t31, stack; //apuntador al heap de lla1
-=>, t31, t32, heap; //posicion real donde incia el objeto lla1
-+, t32, 0, t33; // pos real donde incial el objeto lla1
-
-+, p, 2, t34; // tamanho de la funcion actual carro_vacio_carro
-+, t34, 0, t35; // pos del this para la nueva instancia de lla1
-<=, t35, t33, stack; //guaradndo el puntero del this en el stack 
-
-// Asignando parametros  
-+, p, 2, t36; // size de funcion actual
-+, t36, 1, t37; //pos del parametro 1
-<=, t37, 19800, stack; // asignado al stack el parametro
-+, p, 2, p; // simulando cambio de ambito
-call, , , llanta_vacio_llanta_entero;
--, p, 2, p; // regresando al ambito acutal
-
-// ----------- Instancia a un atributo --------------
-+, p, 0, t38;// pos this de lla2
-=>, t38, t39, stack; //apuntador del heap de lla2
-=>, t39, t40, heap; //posicion real del heap donde inicia lla2
-+, t40, 1, t41; //pos real del atributo lla2
-<=, t41, h, heap; //guardando la pos real donde inicia el objeto lla2
-+, h, 2, h; // reservando el espacio de memoria para el nuevo objeto lla2
-
-// Guardando la referencia al this del objeto para la llamada al constructor lla2
-+, p, 0, t42;
-=>, t42, t43, stack; //apuntador al heap de lla2
-=>, t43, t44, heap; //posicion real donde incia el objeto lla2
-+, t44, 1, t45; // pos real donde incial el objeto lla2
-
-+, p, 2, t46; // tamanho de la funcion actual carro_vacio_carro
-+, t46, 0, t47; // pos del this para la nueva instancia de lla2
-<=, t47, t45, stack; //guaradndo el puntero del this en el stack 
-
-// Asignando parametros  
-+, p, 2, t48; // size de funcion actual
-+, t48, 1, t49; //pos del parametro 1
-<=, t49, 19801, stack; // asignado al stack el parametro
-+, p, 2, p; // simulando cambio de ambito
-call, , , llanta_vacio_llanta_entero;
--, p, 2, p; // regresando al ambito acutal
-
-// ----------- Instancia a un atributo --------------
-+, p, 0, t50;// pos this de lla3
-=>, t50, t51, stack; //apuntador del heap de lla3
-=>, t51, t52, heap; //posicion real del heap donde inicia lla3
-+, t52, 2, t53; //pos real del atributo lla3
-<=, t53, h, heap; //guardando la pos real donde inicia el objeto lla3
-+, h, 2, h; // reservando el espacio de memoria para el nuevo objeto lla3
-
-// Guardando la referencia al this del objeto para la llamada al constructor lla3
-+, p, 0, t54;
-=>, t54, t55, stack; //apuntador al heap de lla3
-=>, t55, t56, heap; //posicion real donde incia el objeto lla3
-+, t56, 2, t57; // pos real donde incial el objeto lla3
-
-+, p, 2, t58; // tamanho de la funcion actual carro_vacio_carro
-+, t58, 0, t59; // pos del this para la nueva instancia de lla3
-<=, t59, t57, stack; //guaradndo el puntero del this en el stack 
-
-// Asignando parametros  
-+, p, 2, t60; // size de funcion actual
-+, t60, 1, t61; //pos del parametro 1
-<=, t61, 19802, stack; // asignado al stack el parametro
-+, p, 2, p; // simulando cambio de ambito
-call, , , llanta_vacio_llanta_entero;
--, p, 2, p; // regresando al ambito acutal
-
-// ----------- Instancia a un atributo --------------
-+, p, 0, t62;// pos this de lla4
-=>, t62, t63, stack; //apuntador del heap de lla4
-=>, t63, t64, heap; //posicion real del heap donde inicia lla4
-+, t64, 3, t65; //pos real del atributo lla4
-<=, t65, h, heap; //guardando la pos real donde inicia el objeto lla4
-+, h, 2, h; // reservando el espacio de memoria para el nuevo objeto lla4
-
-// Guardando la referencia al this del objeto para la llamada al constructor lla4
-+, p, 0, t66;
-=>, t66, t67, stack; //apuntador al heap de lla4
-=>, t67, t68, heap; //posicion real donde incia el objeto lla4
-+, t68, 3, t69; // pos real donde incial el objeto lla4
-
-+, p, 2, t70; // tamanho de la funcion actual carro_vacio_carro
-+, t70, 0, t71; // pos del this para la nueva instancia de lla4
-<=, t71, t69, stack; //guaradndo el puntero del this en el stack 
-
-// Asignando parametros  
-+, p, 2, t72; // size de funcion actual
-+, t72, 1, t73; //pos del parametro 1
-<=, t73, 19803, stack; // asignado al stack el parametro
-+, p, 2, p; // simulando cambio de ambito
-call, , , llanta_vacio_llanta_entero;
--, p, 2, p; // regresando al ambito acutal
-
-// Asignando atributo color
-+, p, 0, t74; //pos this 
-=>, t74, t75, stack; // apuntador al heap
-=>, t75, t76, heap; // apuntador donde inicia el objeto
-+, t76, 5, t77; // pos real  de color
-<=, t77, 11500, heap; //guardando en el heap el valor del atributo
-print("%c", 98);
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t78; 
-=>, t78, t79, stack; // apuntador al heap
-=>, t79, t80, heap;
-+, t80, 1, t81; 
-=>, t81, t82, heap; // recuperando pos incial del objeto
-+, t82, 1, t83;
-=>, t83, t82, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%d", t82);
-print("%c", 99);
-
-end, , carro_vacio_carro
-
-
-
-
 begin, , , persona_PRINCIPAL
 
 // ----------- Instancia a una variable local --------------
-+, p, 0, t84; // pos de p
-<=, t84, h, stack; //guardando referencia del heap para el objeto p
-+, h, 1, t85; // guardo la posicion donde inicia el objeto 
-<=, h, t85, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 0, t1; // pos de p
+<=, t1, h, stack; //guardando referencia del heap para el objeto p
++, h, 1, t2; // guardo la posicion donde inicia el objeto 
+<=, h, t2, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 3, h; // reservando espacio para el objeto p
++, h, 1, h; // reservando espacio para el objeto p
 //Ingresando referencia al this del objeto p
-+, p, 0, t86; // pos de p
-=>, t86, t87, stack; // obteniendo apuntador de p
-+, p, 1, t88; // simulando cambio de ambito
-+, t88, 0, t89; //pos del this de p
-<=, t89, t87, stack; // insertando apuntador del heap al stack del obeto p
++, p, 0, t3; // pos de p
+=>, t3, t4, stack; // obteniendo apuntador de p
++, p, 1, t5; // simulando cambio de ambito
++, t5, 0, t6; //pos del this de p
+<=, t6, t4, stack; // insertando apuntador del heap al stack del obeto p
 // No posee parametros 
 +, p, 1, p; // simulando cambio de ambito
 call, , , persona_vacio_persona;
 -, p, 1, p; // regresando al ambito acutal
 
-// ----------------- Resolviendo acceso local 
-+, P, 0, t90; // pos del objeto
-=>, t90, t91, stack; //apuntador al heap del obejto
-=>, t91, t92, heap; // pos donde inicial el objeto p
-+, t92, 2, t93;
-=>, t93, t92, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t92, 0, t94;
-=>, t94, t92, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t92, 0, t95;
-=>, t95, t92, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%d", t92);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t96; // pos del objeto
-=>, t96, t97, stack; //apuntador al heap del obejto
-=>, t97, t98, heap; // pos donde inicial el objeto p
-+, t98, 2, t99;
-=>, t99, t98, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t98, 3, t100;
-=>, t100, t98, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t98, 1, t101;
-=>, t101, t98, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%d", t98);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t102; // pos del objeto
-=>, t102, t103, stack; //apuntador al heap del obejto
-=>, t103, t104, heap; // pos donde inicial el objeto p
-+, t104, 1, t105;
-=>, t105, t104, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%c", t104);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t106; // pos del objeto
-=>, t106, t107, stack; //apuntador al heap del obejto
-=>, t107, t108, heap; // pos donde inicial el objeto p
-+, t108, 2, t109;
-=>, t109, t108, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t108, 5, t110;
-=>, t110, t108, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%d", t108);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t111; // pos del objeto
-=>, t111, t112, stack; //apuntador al heap del obejto
-=>, t112, t113, heap; // pos donde inicial el objeto p
-+, t113, 1, t114;
-=>, t114, t113, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%c", t113);
 
 end, , persona_PRINCIPAL
 
@@ -263,53 +28,16 @@ end, , persona_PRINCIPAL
 
 begin, , , persona_vacio_persona
 
-// Asignando atributo edad
-+, p, 0, t115; //pos this 
-=>, t115, t116, stack; // apuntador al heap
-=>, t116, t117, heap; // apuntador donde inicia el objeto
-+, t117, 0, t118; // pos real  de edad
-<=, t118, 88, heap; //guardando en el heap el valor del atributo
-// Asignando atributo a
-+, p, 0, t119; //pos this 
-=>, t119, t120, stack; // apuntador al heap
-=>, t120, t121, heap; // apuntador donde inicia el objeto
-+, t121, 1, t122; // pos real  de a
-<=, t122, 97, heap; //guardando en el heap el valor del atributo
-// ----------- Instancia a un atributo --------------
-+, p, 0, t123;// pos this de car
-=>, t123, t124, stack; //apuntador del heap de car
-=>, t124, t125, heap; //posicion real del heap donde inicia car
-+, t125, 2, t126; //pos real del atributo car
-<=, t126, h, heap; //guardando la pos real donde inicia el objeto car
-+, h, 6, h; // reservando el espacio de memoria para el nuevo objeto car
-
-// Guardando la referencia al this del objeto para la llamada al constructor car
-+, p, 0, t127;
-=>, t127, t128, stack; //apuntador al heap de car
-=>, t128, t129, heap; //posicion real donde incia el objeto car
-+, t129, 2, t130; // pos real donde incial el objeto car
-
-+, p, 2, t131; // tamanho de la funcion actual persona_vacio_persona
-+, t131, 0, t132; // pos del this para la nueva instancia de car
-<=, t132, t130, stack; //guaradndo el puntero del this en el stack 
-
-// No posee parametros 
-+, p, 2, p; // simulando cambio de ambito
-call, , , carro_vacio_carro;
--, p, 2, p; // regresando al ambito acutal
-
-print("%c", 90);
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t133; 
-=>, t133, t134, stack; // apuntador al heap
-=>, t134, t135, heap;
-+, t135, 2, t136; 
-=>, t136, t137, heap; // recuperando pos incial del objeto
-+, t137, 3, t138;
-=>, t138, t137, heap; // pos inicial de otro objeto o valor de una vairble comun 
-+, t137, 1, t139;
-=>, t139, t137, heap; // pos inicial de otro objeto o valor de una vairble comun 
-print("%d", t137);
+// ------------------------ Instanciando una nueva lista atributo --------------------
++, P, 0, t7; //pos this
+=>, t7, t8, stack; // obtenienido apuntador al heap para la lista
+=>, t8, t9, heap; //apauntador al heap para el objeto
++, t9, 0, t10; // pos donde inicia la lista
+<=, t10, H, heap;
+<=, H, -1, heap; // ingresando el size de la lista
++, H, 1, H;
+<=, H, -1, heap; // ingresando el apuntador nulo a la lista
++, H, 3, H;
 
 end, , persona_vacio_persona
 

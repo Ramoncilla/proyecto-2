@@ -1,3 +1,4 @@
+/*
 clase llanta {
 
 entero valor1;
@@ -43,11 +44,20 @@ publico carro(){
 }
 
 
-
+*/
 
 clase persona {
+    lista l1 = nuevo lista(entero);
+
+ persona()
+    {
+        
+         
+    }
 
 
+
+/*
    entero edad=88;
    caracter a = 'a';
    carro car;
@@ -58,16 +68,18 @@ clase persona {
         imprimir('Z');
         imprimir(car.lla4.valor2);
          
-    }
+    }*/
 
     principal(){ 
         persona p = nuevo persona();
-    
+    /*
         imprimir(p.car.lla1.valor1);
         imprimir(p.car.lla4.valor2);
         imprimir(p.a);
         imprimir(p.car.color);
-        imprimir(p.a);
+        imprimir(p.a);*/
+       //lista l1 = nuevo lista(entero);
+        
     }
 
 }
