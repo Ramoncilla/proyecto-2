@@ -47,12 +47,26 @@ publico carro(){
 */
 
 clase persona {
-    lista l1 = nuevo lista(entero);
-
+   lista l1 = nuevo lista(entero);
+  
  persona()
     {
+       
+
         
          
+       l1.insertar(88*1);
+       l1.insertar(100-1);
+       l1.insertar(1020);
+       imprimir(l1.obtener(1));
+       imprimir(l1.obtener(0));
+       imprimir(l1.obtener(2));
+       imprimir(l1.obtener(3));
+
+       lista l2 = nuevo lista(caracter);
+        l2.insertar('p');
+        imprimir(l2.obtener(0));
+       
     }
 
 
@@ -79,7 +93,7 @@ clase persona {
         imprimir(p.car.color);
         imprimir(p.a);*/
        //lista l1 = nuevo lista(entero);
-        
+       
     }
 
 }

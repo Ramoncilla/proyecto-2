@@ -231,7 +231,9 @@ sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
        return "DECLA_ASIGNA_PUNTERO";
    }  
 
-
+   if(sent instanceof Acceso){
+       return "ACCESO";
+   }
 
 if(sent instanceof decla_lista){
     return "DECLA_LISTA";

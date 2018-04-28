@@ -120,6 +120,23 @@ TablaSimbolos.prototype.obtenerPosAtributoAcceso = function(nombreClase, nombreA
 };
 
 
+TablaSimbolos.prototype.obtenerPosTipoSimboloAcceso = function(nombreClase, nombreAtributo){
+  
+  var simbTemporal;
+  for(var i = 0; i<this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.ambito.toUpperCase() == nombreClase.toUpperCase() &&
+       simbTemporal.rol.toUpperCase() == "ATRIBUTO" && 
+       simbTemporal.nombreCorto.toUpperCase() == nombreAtributo.toUpperCase()){
+         return simbTemporal.tipoSimbolo;
+       }
+  }
+  return "";
+
+};
+
+
+
 TablaSimbolos.prototype.obtenerTipoAtributoAcceso = function(nombreClase, nombreAtributo){
   
   var simbTemporal;
