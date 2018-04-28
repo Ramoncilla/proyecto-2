@@ -2134,9 +2134,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 										this.c3d.addCodigo(l1_30_2);
 										this.c3d.addCodigo(l1_29);
 										this.c3d.addCodigo(l1_30);
-
-										
-
 									}else{
 										errores.insertarError("Semantico", "Tipo no valido para el indece de una lista "+ res.tipo);
 									}
@@ -2145,6 +2142,109 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							}// FIN del obtener
 
 							if(nombreF.toUpperCase() == "BUSCAR" && rolSimbolo.toUpperCase()== "LISTA"){
+								bandera = false;
+								var posSize = this.c3d.getTemporal();
+								var valSize = this.c3d.getTemporal();
+								var posPtr= this.c3d.getTemporal();
+								var valPtr = this.c3d.getTemporal();
+								var posIndice= this.c3d.getTemporal();
+								var posValor = this.c3d.getTemporal();
+								var valIndice= this.c3d.getTemporal(); //
+								var valValor = this.c3d.getTemporal();
+								if(esAtributo){
+									//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
+									var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+									this.c3d.addCodigo(l1_1);
+
+								}else{
+									//es una local
+									var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+									this.c3d.addCodigo(l1_1);
+									
+								}
+								    var l1_2= "=>, "+posSize+", "+valSize+", heap; // valor del size de una lista";
+									var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
+									var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
+									var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
+									var l1_5_1= "=>, "+posIndice+", "+valIndice+", heap; // valor del indice";
+									var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
+									var l1_87 = "=>, "+posValor+", "+valValor+", heap; // valor del primer valor de la lista";
+									this.c3d.addCodigo(l1_2);
+									this.c3d.addCodigo(l1_3);
+									this.c3d.addCodigo(l1_4);
+									this.c3d.addCodigo(l1_5);
+									this.c3d.addCodigo(l1_6);
+									this.c3d.addCodigo(l1_87);
+
+									var etiq1= this.c3d.getEtiqueta();
+									var etiq2= this.c3d.getEtiqueta();
+									var etiq3= this.c3d.getEtiqueta();
+									var etiq4= this.c3d.getEtiqueta();
+									var etiq5= this.c3d.getEtiqueta();
+									var etiq6= this.c3d.getEtiqueta();
+									
+									
+									var res= this.resolverExpresion(expresionF,ambitos,clase,metodo);
+									if(res.tipo.toUpperCase() != "NULO" && (res.tipo.toUpperCase() == tipoElemento.toUpperCase())){
+										var l1_7 = "jmp, , , "+etiq1+";";
+										var l1_8 = etiq1+":";
+										var l1_9 = "jne, "+valPtr+", -1, "+etiq2+";";
+										var l1_10 = "jmp, , , "+etiq3+";";
+										var l1_11 = "jmp, , , "+etiq2+";";
+										var l1_12 = etiq2+":";
+										var l1_13 = "je, "+valValor+", "+res.valor+", "+etiq4+";";
+										var l1_14 = "jmp, , , "+etiq5+";";
+										var l1_15 = "jmp, , , "+etiq4+";";
+										var l1_16 = etiq4+":";
+										var l1_17 = "=>, "+posIndice+", "+posFinal+", heap; // valor del indice ";
+										var l1_18 = "jmp, , , "+etiq6+";";
+										var l1_19 = "jmp, , , "+etiq5+";";
+										var l1_20 = etiq5+":";
+										var l1_21 = "+, "+valPtr+", 0, "+posPtr+";";
+										var l1_22 = "=>, "+posPtr+", "+valPtr+", heap;";
+										var l1_23 = "+, "+posPtr+", 1, "+posIndice+";";
+										var l1_24 = "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
+										var l1_25 = "=>, "+posValor+", "+valValor+", heap;// valor del valor "; 
+										var l1_26 = "jmp, , , "+etiq1+";";
+										var l1_27 = "jmp, , , "+etiq3+";";
+										var l1_28 = etiq3+":";
+										var l1_29 = "jmp, , , "+etiq6+";";
+										var l1_30 = etiq6+":";
+
+										this.c3d.addCodigo("// ------ funcion BUSCAR en una lista ---");
+										this.c3d.addCodigo(l1_7);
+										this.c3d.addCodigo(l1_8);
+										this.c3d.addCodigo(l1_9);
+										this.c3d.addCodigo(l1_10);
+										this.c3d.addCodigo(l1_11);
+										this.c3d.addCodigo(l1_12);
+										this.c3d.addCodigo(l1_13);
+										this.c3d.addCodigo(l1_14);
+										this.c3d.addCodigo(l1_15);
+										this.c3d.addCodigo(l1_16);
+										this.c3d.addCodigo(l1_17);
+										this.c3d.addCodigo(l1_18);
+										this.c3d.addCodigo(l1_19);
+										this.c3d.addCodigo(l1_20);
+										this.c3d.addCodigo(l1_21);
+										this.c3d.addCodigo(l1_22);
+										this.c3d.addCodigo(l1_23);
+										this.c3d.addCodigo(l1_24);
+										this.c3d.addCodigo(l1_25);
+										this.c3d.addCodigo(l1_26);
+										this.c3d.addCodigo(l1_27);
+										this.c3d.addCodigo(l1_28);
+										this.c3d.addCodigo(l1_29);
+										this.c3d.addCodigo(l1_30);
+										var ret = new EleRetorno();
+										ret.valor= posFinal;
+										ret.tipo= "ENTERO";
+										return ret;
+
+
+									}else{
+										errores.insertarError("Semantico", "Tipo no valido para el indece de una lista "+ res.tipo);
+									}
 
 							}
 

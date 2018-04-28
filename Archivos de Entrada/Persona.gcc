@@ -66,6 +66,9 @@ clase persona {
        lista l2 = nuevo lista(caracter);
         l2.insertar('p');
         imprimir(l2.obtener(0));
+        imprimir('Z');
+        imprimir(l1.buscar(99));
+        imprimir(l2.buscar('p'));
        
     }
 

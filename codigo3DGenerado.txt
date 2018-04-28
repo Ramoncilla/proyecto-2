@@ -401,6 +401,83 @@ L48:
 jmp, , , L51;
 L51:
 print("%c", t111);
+print("%c", 90);
+// Resolviendo un acceso para un atrinuto
++, P, 0, t120; 
+=>, t120, t121, stack; // apuntador al heap
+=>, t121, t122, heap;
++, t122, 0, t123; 
+=>, t123, t124, heap; // recuperando pos incial del objeto
++, t124, 0, t125; // posicion de; size de una lista
+=>, t125, t126, heap; // valor del size de una lista
++, t125, 1, t127; // pos de puntero
+=>, t127, t128, heap; //valor del puntero
++, t127, 1, t129; // pos del indice
++, t129, 1, t130; // pos del valor
+=>, t130, t132, heap; // valor del primer valor de la lista
+// ------ funcion BUSCAR en una lista ---
+jmp, , , L52;
+L52:
+jne, t128, -1, L53;
+jmp, , , L54;
+jmp, , , L53;
+L53:
+je, t132, 99, L55;
+jmp, , , L56;
+jmp, , , L55;
+L55:
+=>, t129, t124, heap; // valor del indice 
+jmp, , , L57;
+jmp, , , L56;
+L56:
++, t128, 0, t127;
+=>, t127, t128, heap;
++, t127, 1, t129;
++, t129, 1, t130; // pos del valor
+=>, t130, t132, heap;// valor del valor 
+jmp, , , L52;
+jmp, , , L54;
+L54:
+jmp, , , L57;
+L57:
+print("%d", t124);
+// ----------------- Resolviendo acceso local 
++, P, 1, t133; // pos del objeto
+=>, t133, t134, stack; //apuntador al heap del obejto
+=>, t134, t135, heap; // pos donde inicial el objeto l2
++, t135, 0, t136; // posicion de; size de una lista
+=>, t136, t137, heap; // valor del size de una lista
++, t136, 1, t138; // pos de puntero
+=>, t138, t139, heap; //valor del puntero
++, t138, 1, t140; // pos del indice
++, t140, 1, t141; // pos del valor
+=>, t141, t143, heap; // valor del primer valor de la lista
+// ------ funcion BUSCAR en una lista ---
+jmp, , , L58;
+L58:
+jne, t139, -1, L59;
+jmp, , , L60;
+jmp, , , L59;
+L59:
+je, t143, 112, L61;
+jmp, , , L62;
+jmp, , , L61;
+L61:
+=>, t140, t135, heap; // valor del indice 
+jmp, , , L63;
+jmp, , , L62;
+L62:
++, t139, 0, t138;
+=>, t138, t139, heap;
++, t138, 1, t140;
++, t140, 1, t141; // pos del valor
+=>, t141, t143, heap;// valor del valor 
+jmp, , , L58;
+jmp, , , L60;
+L60:
+jmp, , , L63;
+L63:
+print("%d", t135);
 
 end, , persona_vacio_persona
 
