@@ -1,0 +1,9 @@
+{%
+titulo { "gdfd"}
+descripcionE { "dgfd"}
+tipo { "a-coach"}
+ejemplo { "gfdg"}
+tarea { "dgfd"}
+resultado{ "dgfd"}
+%}
+

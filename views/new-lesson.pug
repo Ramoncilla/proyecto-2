@@ -1,0 +1,42 @@
+extends layout
+
+block content
+
+    <form id="post-lesson">
+        <input type="hidden" id="typeLesson" name="typeLesson" value="#{type}"/>
+        <input id="fileContent" type="hidden" value="">
+        <div class="form-group">
+            <label for="lessonTitle">Titulo</label>
+            <input type="text" class="form-control" id="lessonTitle"  placeholder="Ingrese Titulo leccion">
+        </div>
+        <div class="form-group">
+            <label for="lessonExplanation">Explicacion</label>
+            <textarea class = "form-control" id="lessonExplanation" name="lessonExplanation">
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="codeExample">Codigo de Ejemplo</label>
+            <textarea class = "form-control" id="codeExample" name="codeExample" rows="10">
+            </textarea>
+        </div>
+         <div class="form-group">
+            <label for="homeworkStatement">Enunciado de la tarea</label>
+            <textarea class = "form-control" id="homeworkStatement" name="homeworkStatement" rows="4">
+            </textarea>
+        </div>
+         <div class="form-group">
+            <label for="homeworkTest">Pruebas</label>
+            <textarea class = "form-control" id="homeworkTest" name="homeworkTest">
+            </textarea>
+        </div>
+        <input id="file-input" type="file" name="name" style="display: none;" />
+        <div class="row col-options">
+            <div class="col-md-12 ">
+                 <input class="btn btn-primary btn-create" value="Crear Leccion" type="submit"/>
+                 <input type="file" id="buttonLoad" />
+                 //-<input class="btn btn-primary btn-load" value="Carga Masiva" type="button" id="buttonLoad"/>
+                 <input class="btn btn-danger btn-cancel" value="Cancelar" type="button"/>
+            </div>
+
+        </div>    
+    </form>

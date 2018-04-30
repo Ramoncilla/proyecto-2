@@ -1,11 +1,68 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  
+  
   
   <input type="file" id="openFile" />
-   <input id="fileContent" type="hidden" value="">
-   <button id="btnAnalize" type="button" >Analizar Entrada</button>
-   <pre id="tablaSimbolos"></pre>
+  <input id="fileContent" type="hidden" value="">
+  <button id="btnAnalize" type="button" >Analizar Entrada</button>
+  
+
+  <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/new-Alesson">Crear Leccion A-Coach</a>
+        <a href="/new-Glesson">Crear Leccion G-Coach</a>
+        <a href="#">Editor de Texto</a>
+  </div>
+
+  <div id = "main" class="container">
+      //-h1= title
+      //- p Welcome to #{title}
+      <div class = "row main-menu">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; GccCompiler</span>
+      </div>
+      
+      <div class="list-search row">
+          <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-9">
+                  
+                      <label>Busqueda:</label>
+                   
+                       <input type="text" id="search-text" placeholder="Ingrese texto para buscar la leccion"/>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-primary"> Buscar</button>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-3">
+            <select id="choose-type" class="form-control">
+                    <option value="0">Seleccion tipo de leccion</option>
+                    <option value="1">A-Coach</option>
+                    <option value="2">G-Coach</option>
+            </select>
+          </div> 
+      </div>
+      <div class="list-container row">
+         
+      
+          <div class="col-md-12">
+          <div class="list-group list-container-lection">
+              <a href="#" class="list-group-item list-group-item-action active">
+                Cras justo odio
+              </a>
+              <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+              <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+              <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+              <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+          </div>
+          </div>
+      </div>
+  </div>
+  
+
+
+
 

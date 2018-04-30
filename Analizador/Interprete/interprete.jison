@@ -116,7 +116,7 @@ ASIG_ED: sale coma VAL coma VAL coma TIPO_ED puntoComa{$$= new edd(2,$3,$5,$7);}
 
 GET_ED: entra coma VAL coma VAL coma TIPO_ED puntoComa{$$= new edd(1,$3,$5,$7);};
 
-
+ 
 TIPO_ED: stack{$$=0;}
     |heap{$$=1;};
 

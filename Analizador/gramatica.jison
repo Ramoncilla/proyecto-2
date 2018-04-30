@@ -1075,7 +1075,7 @@ ATRI_:id
 			var a = new FuncionNativa();
 			a.setValores($1, $3);
 			$$=a;
-		}
+		} 
 	|Desencolar abrePar cierraPar
 		{
 			var a = new FuncionNativa();
