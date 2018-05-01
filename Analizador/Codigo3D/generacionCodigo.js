@@ -261,7 +261,7 @@ generacionCodigo.prototype.calculoArregloNs = function(posiciones, ambitos, clas
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
-	console.dir(nodo);	 
+	 
 	switch(nombreSentecia.toUpperCase()){
 
 	
@@ -1913,18 +1913,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	
 };
 
-generacionCodigo.prototype.esObjeto = function(tipo){
-
-	if(tipo.toUpperCase() == "ENTERO" ||
-	tipo.toUpperCase() == "DECIMAL" ||
-	tipo.toUpperCase() == "BOOLEANO" ||
-	tipo.toUpperCase() == "CARACTER"){
-		return false;
-	}
-
-return true;
-};
-
 
 
 generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metodo){
@@ -1946,7 +1934,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 					//es un atributo
 					var posVariable = this.tablaSimbolos.obtenerPosAtributo(nombreVariable,ambitos);
 					tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable, ambitos);
-					
 					if(posVariable!= -1){
 						var temp1 = this.c3d.getTemporal();
 						var temp2 = this.c3d.getTemporal();
@@ -1965,12 +1952,10 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						this.c3d.addCodigo(l4);		
 						this.c3d.addCodigo(l5);
 						esObj= this.esObjeto(tipoElemento);
-
 					}else{
 						errores.insertarError("Semantico", "No existe la variable para el acceso atributo "+ nombreVariable);
 						return r;
 					}
-
 				}else{
 					//es una variable local
 					 posVariable = this.tablaSimbolos.obtenerPosLocal(nombreVariable,ambitos);
@@ -2035,8 +2020,15 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							var nombreF = elementoTemporal.nombreFuncion;
 							var expresionF = elementoTemporal.expresion;
 
-							if(nombreF.toUpperCase() == "TAMANIO"){
-
+							if(nombreF.toUpperCase() == "TAMANIO" && rolSimbolo.toUpperCase()=="ARREGLO"){
+								bandera =false;
+								var temp1=this.c3d.getTemporal();
+								var l1= "=>, "+posFinal+", " +temp1+", heap; // obteneindio el size del arreglo "
+								this.c3d.addCodigo(l1);
+								var ret = new EleRetorno();
+								ret.valor= temp1;
+								ret.tipo= "ENTERO";
+								return ret;
 							} // fin del tamanio de una arreglo
 							
                             if(nombreF.toUpperCase() == "OBTENER" && rolSimbolo.toUpperCase()== "LISTA"){
@@ -2048,8 +2040,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							if(nombreF.toUpperCase() == "BUSCAR" && rolSimbolo.toUpperCase()== "LISTA"){
 								bandera = false;
 								return this.buscarEnLista(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
-								
-
 							}// fin del buscar de una lista
 
 							if(nombreF.toUpperCase()== "INSERTAR" && rolSimbolo.toUpperCase()== "LISTA"){
@@ -2082,7 +2072,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 					}
 				}//fin ciclo de valores acceso
 
-				var ret = new EleRetorno();
+				        var ret = new EleRetorno();
 						ret.valor= posFinal;
 						ret.tipo= tipoElemento;
 						return ret;
@@ -2094,8 +2084,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 			}
 
 return r;
-
-
 };
 
 generacionCodigo.prototype.insertarEstructura= function(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo){
@@ -2553,6 +2541,105 @@ generacionCodigo.prototype.desapilar = function(tipoElemento,esAtributo,posFinal
 };
 
 
+generacionCodigo.prototype.desencolar = function(tipoElemento,esAtributo,posFinal,ambitos,clase,metodo){
+	var posSize = this.c3d.getTemporal();
+	var valSize = this.c3d.getTemporal();
+	var posPtr= this.c3d.getTemporal();
+	var valPtr = this.c3d.getTemporal();
+	var posIndice= this.c3d.getTemporal();
+	var posValor = this.c3d.getTemporal();
+	var valIndice= this.c3d.getTemporal(); //
+	var valValor = this.c3d.getTemporal();
+	var temp = this.c3d.getTemporal();
+	if(esAtributo){
+		//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
+
+	}else{
+		//es una local
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
+		
+	}
+		var l1_2= "=>, "+posSize+", "+valSize+", heap; // valor del size de una lista";
+		var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
+		var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
+		var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
+		var l1_5_1= "=>, "+posIndice+", "+valIndice+", heap; // valor del indice";
+		var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
+		var l1_87 = "=>, "+posIndice+", "+valIndice+", heap; // valor del indice actual";
+		this.c3d.addCodigo(l1_2);
+		this.c3d.addCodigo(l1_3);
+		this.c3d.addCodigo(l1_4);
+		this.c3d.addCodigo(l1_5);
+		this.c3d.addCodigo(l1_6);
+		this.c3d.addCodigo(l1_87);
+		var penultimo = this.c3d.getTemporal();
+		var l1_88 = "-, "+valSize+", 1, "+penultimo+"; // siguiente poscions a la que apuntara la cabeza de la pila";
+		this.c3d.addCodigo(l1_88);
+
+		var etiq1= this.c3d.getEtiqueta();
+		var etiq2= this.c3d.getEtiqueta();
+		var etiq3= this.c3d.getEtiqueta();
+		var etiq4= this.c3d.getEtiqueta();
+		var etiq5= this.c3d.getEtiqueta();
+		var etiq6= this.c3d.getEtiqueta();
+		var etiq7= this.c3d.getEtiqueta();
+
+		
+		
+			
+
+			this.c3d.addCodigo("// ------ funcion descolar de una cola  ---");
+			this.c3d.addCodigo(l1_7);
+			this.c3d.addCodigo(l1_8);
+			this.c3d.addCodigo(l1_9);
+			this.c3d.addCodigo(l1_10);
+			this.c3d.addCodigo(l1_11);
+			this.c3d.addCodigo(l1_12);
+			this.c3d.addCodigo(l1_13);
+			this.c3d.addCodigo(l1_14);
+			this.c3d.addCodigo(l1_15);
+			this.c3d.addCodigo(l1_16);
+			this.c3d.addCodigo(l1_17);
+			this.c3d.addCodigo(l1_17_1);
+			this.c3d.addCodigo(l1_18);
+			this.c3d.addCodigo(l1_19);
+			this.c3d.addCodigo(l1_20);
+			this.c3d.addCodigo(l1_21);
+			this.c3d.addCodigo(l1_22);
+			this.c3d.addCodigo(l1_23);
+			
+			this.c3d.addCodigo(l1_25);
+			this.c3d.addCodigo(l1_26);
+			this.c3d.addCodigo(l1_27);
+			this.c3d.addCodigo(l1_28);
+			this.c3d.addCodigo(l1_29);
+			this.c3d.addCodigo(l1_30);
+			this.c3d.addCodigo(l1_31);
+			this.c3d.addCodigo(l1_32);
+			this.c3d.addCodigo(l1_33);
+			this.c3d.addCodigo(l1_34);
+			this.c3d.addCodigo(l1_35);
+			this.c3d.addCodigo(l1_36);
+			this.c3d.addCodigo(l1_37);
+			this.c3d.addCodigo(l1_38);
+			this.c3d.addCodigo(l1_39);
+			this.c3d.addCodigo(l1_40);
+			this.c3d.addCodigo(l1_41);
+			this.c3d.addCodigo(l1_42);
+			this.c3d.addCodigo(l1_43);
+			
+			
+			var ret = new EleRetorno();
+		    ret.valor= posFinal;
+		    ret.tipo= tipoElemento;
+			return ret;
+
+			
+			
+};
 
 generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, metodo){
 
@@ -3638,6 +3725,18 @@ generacionCodigo.prototype.esDecimal = function(val){
 
 generacionCodigo.prototype.esChar = function(val){
 	return (val.toUpperCase() == "CARACTER");
+};
+
+generacionCodigo.prototype.esObjeto = function(tipo){
+
+	if(tipo.toUpperCase() == "ENTERO" ||
+	tipo.toUpperCase() == "DECIMAL" ||
+	tipo.toUpperCase() == "BOOLEANO" ||
+	tipo.toUpperCase() == "CARACTER"){
+		return false;
+	}
+
+return true;
 };
 
 
