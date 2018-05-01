@@ -18,9 +18,16 @@ publico vacio getValor1(){
 
 }
 
-
+*/
 clase carro{
 
+pIla l1 = nuevo piLa(entero);
+
+publico carro(){
+
+}
+
+/*
 publico llanta lla1;
 publico llanta lla2;
 publico llanta lla3;
@@ -39,22 +46,28 @@ publico carro(){
      imprimir(lla2.valor2);
      imprimir('c');
 }
-
+*/
 
 }
 
 
-*/
+
 
 clase persona {
-   lista l1 = nuevo lista(entero);
-  
+   
+  carro c = nuevo carro();
  persona()
     {
-       
-
+       imprimir(C.l1.ApIlar(100));
+       imprimir(c.L1.apILAR(200));
+       imprimir(c.L1.aPILAr(300));
+       imprimir(c.l1.desaPIlAR());
+       imprimir(c.l1.Desapilar());
+      //imprimir(c.l1.desaPIlAR());
+       //c.l1.inSertar(88*2);
+       //imprimir(c.l1.obtener(0));
         
-         
+        /* 
        l1.insertar(88*1);
        l1.insertar(100-1);
        l1.insertar(1020);
@@ -69,7 +82,7 @@ clase persona {
         imprimir('Z');
         imprimir(l1.buscar(99));
         imprimir(l2.buscar('p'));
-       
+       */
     }
 
 

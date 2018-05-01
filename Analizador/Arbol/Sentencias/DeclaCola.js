@@ -1,22 +1,22 @@
 function DeclaCola(){
-	this.tipoCola ="";
-	this.nombreCola = "";
+	this.tipoLista ="";
+	this.nombreLista = "";
 }
-
-
+ 
+ 
 
 DeclaCola.prototype.setValores = function(nombre, tipo) {
-	this.tipoCola= tipo;
-	this.nombreCola= nombre;
+	this.tipoLista= tipo;
+	this.nombreLista= nombre;
 
 };
 
 DeclaCola.prototype.getTipo= function(){
-	return this.tipoCola;
+	return this.tipoLista;
 };
 
 
 DeclaCola.prototype.getNombre= function(){
-	return this.nombreCola;
+	return this.nombreLista;
 };
 module.exports=DeclaCola;

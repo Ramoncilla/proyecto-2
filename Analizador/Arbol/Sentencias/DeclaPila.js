@@ -1,22 +1,22 @@
 function DeclaPila(){
-	this.tipoPila ="";
-	this.nombrePila = "";
+	this.tipoLista ="";
+	this.nombreLista = "";
 }
 
-
+   
 
 DeclaPila.prototype.setValores = function(nombre, tipo) {
-	this.tipoPila= tipo;
-	this.nombrePila= nombre;
+	this.tipoLista= tipo;
+	this.nombreLista= nombre;
 
 };
 
 DeclaPila.prototype.getTipo= function(){
-	return this.tipoPila;
+	return this.tipoLista;
 };
 
 
 DeclaPila.prototype.getNombre= function(){
-	return this.nombrePila;
+	return this.nombreLista;
 };
 module.exports=DeclaPila;

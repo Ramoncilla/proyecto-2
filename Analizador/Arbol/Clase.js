@@ -765,6 +765,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         var nuevoSimbolo = new Simbolo();
         nuevoSimbolo.setValoresLista(nombreLista, "LISTA", tipoLista, ambitos.getAmbitos(), "LISTA_LOCAL", apuntador, 1);
         lista2.push(nuevoSimbolo);
+        
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreLista+", debido a que existe en el ambito actual");

@@ -131,6 +131,9 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "buscar" return 'buscar'
 "Encolar" return 'Encolar'
 "Desencolar" return 'Desencolar'
+"desapilar" return 'Desapilar'
+"apilar" return 'Apilar'
+
 "importar" 	return 'importar'
 "@" return 'arroba'
 "Sobreescribir" return 'sobreescribir'
@@ -1064,10 +1067,10 @@ ATRI_:id
 			a.setValores($1, $3);
 			$$=a;
 		}
-	|Desapilar abrePar cierrPar
+	|Desapilar abrePar cierraPar
 		{
 			var a = new FuncionNativa();
-			a.setValores($1, $3);
+			a.setValores($1, null);
 			$$=a;
 		}
 	|Encolar abrePar EXPRESION cierraPar
@@ -1079,7 +1082,7 @@ ATRI_:id
 	|Desencolar abrePar cierraPar
 		{
 			var a = new FuncionNativa();
-			a.setValores($1, $3);
+			a.setValores($1, null);
 			$$=a;
 		}
 	|obtener abrePar EXPRESION cierraPar

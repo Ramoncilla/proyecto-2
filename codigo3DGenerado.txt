@@ -1,20 +1,38 @@
 
 
+begin, , , carro_vacio_carro
+
+// ------------------------ Instanciando una nueva lista atributo --------------------
++, P, 0, t1; //pos this
+=>, t1, t2, stack; // obtenienido apuntador al heap para la lista
+=>, t2, t3, heap; //apauntador al heap para el objeto
++, t3, 0, t4; // pos donde inicia la lista
+<=, t4, H, heap;
+<=, H, -1, heap; // ingresando el size de la lista
++, H, 1, H;
+<=, H, -1, heap; // ingresando el apuntador nulo a la lista
++, H, 3, H;
+
+end, , carro_vacio_carro
+
+
+
+
 begin, , , persona_PRINCIPAL
 
 // ----------- Instancia a una variable local --------------
-+, p, 0, t1; // pos de p
-<=, t1, h, stack; //guardando referencia del heap para el objeto p
-+, h, 1, t2; // guardo la posicion donde inicia el objeto 
-<=, h, t2, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 0, t5; // pos de p
+<=, t5, h, stack; //guardando referencia del heap para el objeto p
++, h, 1, t6; // guardo la posicion donde inicia el objeto 
+<=, h, t6, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 1, h; // reservando espacio para el objeto p
 //Ingresando referencia al this del objeto p
-+, p, 0, t3; // pos de p
-=>, t3, t4, stack; // obteniendo apuntador de p
-+, p, 1, t5; // simulando cambio de ambito
-+, t5, 0, t6; //pos del this de p
-<=, t6, t4, stack; // insertando apuntador del heap al stack del obeto p
++, p, 0, t7; // pos de p
+=>, t7, t8, stack; // obteniendo apuntador de p
++, p, 1, t9; // simulando cambio de ambito
++, t9, 0, t10; //pos del this de p
+<=, t10, t8, stack; // insertando apuntador del heap al stack del obeto p
 // No posee parametros 
 +, p, 1, p; // simulando cambio de ambito
 call, , , persona_vacio_persona;
@@ -28,456 +46,256 @@ end, , persona_PRINCIPAL
 
 begin, , , persona_vacio_persona
 
-// ------------------------ Instanciando una nueva lista atributo --------------------
-+, P, 0, t7; //pos this
-=>, t7, t8, stack; // obtenienido apuntador al heap para la lista
-=>, t8, t9, heap; //apauntador al heap para el objeto
-+, t9, 0, t10; // pos donde inicia la lista
-<=, t10, H, heap;
-<=, H, -1, heap; // ingresando el size de la lista
-+, H, 1, H;
-<=, H, -1, heap; // ingresando el apuntador nulo a la lista
-+, H, 3, H;
+// ----------- Instancia a un atributo --------------
++, p, 0, t11;// pos this de c
+=>, t11, t12, stack; //apuntador del heap de c
+=>, t12, t13, heap; //posicion real del heap donde inicia c
++, t13, 0, t14; //pos real del atributo c
+<=, t14, h, heap; //guardando la pos real donde inicia el objeto c
++, h, 1, h; // reservando el espacio de memoria para el nuevo objeto c
+
+// Guardando la referencia al this del objeto para la llamada al constructor c
++, p, 0, t15;
+=>, t15, t16, stack; //apuntador al heap de c
+=>, t16, t17, heap; //posicion real donde incia el objeto c
++, t17, 0, t18; // pos real donde incial el objeto c
+
++, p, 2, t19; // tamanho de la funcion actual persona_vacio_persona
++, t19, 0, t20; // pos del this para la nueva instancia de c
+<=, t20, t18, stack; //guaradndo el puntero del this en el stack 
+
+// No posee parametros 
++, p, 2, p; // simulando cambio de ambito
+call, , , carro_vacio_carro;
+-, p, 2, p; // regresando al ambito acutal
+
 // Resolviendo un acceso para un atrinuto
-+, P, 0, t11; 
-=>, t11, t12, stack; // apuntador al heap
-=>, t12, t13, heap;
-+, t13, 0, t14; 
-=>, t14, t15, heap; // recuperando pos incial del objeto
-+, t15, 0, t16; // posicion de; size de una lista
-=>, t16, t17, heap; // valor del size de una lista
-+, t16, 1, t18; // pos de puntero
-=>, t18, t19, heap; //valor del puntero
-+, t18, 1, t20; // pos del indice
-+, t20, 1, t21; // pos del valor
++, P, 0, t21; 
+=>, t21, t22, stack; // apuntador al heap
+=>, t22, t23, heap;
++, t23, 0, t24; 
+=>, t24, t25, heap; // recuperando pos incial del objeto
++, t25, 0, t26;
+=>, t26, t25, heap; // pos inicial de otro objeto o valor de una vairble comun 
+//-------------- Apiladndo elemento 
++, t25, 0, t27; // posicion de; size de una lista
+=>, t27, t28, heap; // valor del size de una lista
++, t27, 1, t29; // pos de puntero
+=>, t29, t30, heap; //valor del puntero
++, t29, 1, t31; // pos del indice
++, t31, 1, t32; // pos del valor
 jmp, , , L1;
 L1:
-je, t19, -1, L2;
+je, t30, -1, L2;
 jmp, , , L3;
 jmp, , ,L2;
 L2:
-*, 88, 1, t22;
-+, t17, 1, t17; // incrementandor en uno el size de la lista
-<=, t16, t17, heap; // guarnado el size de la lista
-<=, t18, H, heap; // guardando el nuevo apuntador 
-<=, t20, t17, heap; // guarando el indice del nuevo elemento
-<=, t21, t22, heap; // guardando el valor del nuevo insert en la lista
++, t28, 1, t28; // incrementandor en uno el size de la lista
+<=, t27, t28, heap; // guarnado el size de la lista
+<=, t29, H, heap; // guardando el nuevo apuntador 
+<=, t31, t28, heap; // guarando el indice del nuevo elemento
+<=, t32, 100, heap; // guardando el valor del nuevo insert en la lista
 <=, H, -1, heap; // ingresando el nulo del atributo siguiente
 +, H, 3, H; // incrementado el h
 jmp, , , L4;
 jmp, , , L3;
 L3:
-+, t19, 0, t18; // pos del apuntador
-=>, t18, t19, heap; // valor del apuntador
-+, t18, 1, t20; // pos del indice
-+, t20, 1, t21; //pos valor 
++, t30, 0, t29; // pos del apuntador
+=>, t29, t30, heap; // valor del apuntador
++, t29, 1, t31; // pos del indice
++, t31, 1, t32; //pos valor 
 jmp, , , L1;
 jmp, , , L4;
 L4:
+print("%d", t28);
 // Resolviendo un acceso para un atrinuto
-+, P, 0, t23; 
-=>, t23, t24, stack; // apuntador al heap
-=>, t24, t25, heap;
-+, t25, 0, t26; 
-=>, t26, t27, heap; // recuperando pos incial del objeto
-+, t27, 0, t28; // posicion de; size de una lista
-=>, t28, t29, heap; // valor del size de una lista
-+, t28, 1, t30; // pos de puntero
-=>, t30, t31, heap; //valor del puntero
-+, t30, 1, t32; // pos del indice
-+, t32, 1, t33; // pos del valor
++, P, 0, t33; 
+=>, t33, t34, stack; // apuntador al heap
+=>, t34, t35, heap;
++, t35, 0, t36; 
+=>, t36, t37, heap; // recuperando pos incial del objeto
++, t37, 0, t38;
+=>, t38, t37, heap; // pos inicial de otro objeto o valor de una vairble comun 
+//-------------- Apiladndo elemento 
++, t37, 0, t39; // posicion de; size de una lista
+=>, t39, t40, heap; // valor del size de una lista
++, t39, 1, t41; // pos de puntero
+=>, t41, t42, heap; //valor del puntero
++, t41, 1, t43; // pos del indice
++, t43, 1, t44; // pos del valor
 jmp, , , L5;
 L5:
-je, t31, -1, L6;
+je, t42, -1, L6;
 jmp, , , L7;
 jmp, , ,L6;
 L6:
--, 100, 1, t34;
-+, t29, 1, t29; // incrementandor en uno el size de la lista
-<=, t28, t29, heap; // guarnado el size de la lista
-<=, t30, H, heap; // guardando el nuevo apuntador 
-<=, t32, t29, heap; // guarando el indice del nuevo elemento
-<=, t33, t34, heap; // guardando el valor del nuevo insert en la lista
++, t40, 1, t40; // incrementandor en uno el size de la lista
+<=, t39, t40, heap; // guarnado el size de la lista
+<=, t41, H, heap; // guardando el nuevo apuntador 
+<=, t43, t40, heap; // guarando el indice del nuevo elemento
+<=, t44, 200, heap; // guardando el valor del nuevo insert en la lista
 <=, H, -1, heap; // ingresando el nulo del atributo siguiente
 +, H, 3, H; // incrementado el h
 jmp, , , L8;
 jmp, , , L7;
 L7:
-+, t31, 0, t30; // pos del apuntador
-=>, t30, t31, heap; // valor del apuntador
-+, t30, 1, t32; // pos del indice
-+, t32, 1, t33; //pos valor 
++, t42, 0, t41; // pos del apuntador
+=>, t41, t42, heap; // valor del apuntador
++, t41, 1, t43; // pos del indice
++, t43, 1, t44; //pos valor 
 jmp, , , L5;
 jmp, , , L8;
 L8:
+print("%d", t40);
 // Resolviendo un acceso para un atrinuto
-+, P, 0, t35; 
-=>, t35, t36, stack; // apuntador al heap
-=>, t36, t37, heap;
-+, t37, 0, t38; 
-=>, t38, t39, heap; // recuperando pos incial del objeto
-+, t39, 0, t40; // posicion de; size de una lista
-=>, t40, t41, heap; // valor del size de una lista
-+, t40, 1, t42; // pos de puntero
-=>, t42, t43, heap; //valor del puntero
-+, t42, 1, t44; // pos del indice
-+, t44, 1, t45; // pos del valor
-jmp, , , L9;
-L9:
-je, t43, -1, L10;
-jmp, , , L11;
-jmp, , ,L10;
-L10:
-+, t41, 1, t41; // incrementandor en uno el size de la lista
-<=, t40, t41, heap; // guarnado el size de la lista
-<=, t42, H, heap; // guardando el nuevo apuntador 
-<=, t44, t41, heap; // guarando el indice del nuevo elemento
-<=, t45, 1020, heap; // guardando el valor del nuevo insert en la lista
-<=, H, -1, heap; // ingresando el nulo del atributo siguiente
-+, H, 3, H; // incrementado el h
-jmp, , , L12;
-jmp, , , L11;
-L11:
-+, t43, 0, t42; // pos del apuntador
-=>, t42, t43, heap; // valor del apuntador
-+, t42, 1, t44; // pos del indice
-+, t44, 1, t45; //pos valor 
-jmp, , , L9;
-jmp, , , L12;
-L12:
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t46; 
-=>, t46, t47, stack; // apuntador al heap
-=>, t47, t48, heap;
-+, t48, 0, t49; 
-=>, t49, t50, heap; // recuperando pos incial del objeto
-+, t50, 0, t51; // posicion de; size de una lista
++, P, 0, t45; 
+=>, t45, t46, stack; // apuntador al heap
+=>, t46, t47, heap;
++, t47, 0, t48; 
+=>, t48, t49, heap; // recuperando pos incial del objeto
++, t49, 0, t50;
+=>, t50, t49, heap; // pos inicial de otro objeto o valor de una vairble comun 
+//-------------- Apiladndo elemento 
++, t49, 0, t51; // posicion de; size de una lista
 =>, t51, t52, heap; // valor del size de una lista
 +, t51, 1, t53; // pos de puntero
 =>, t53, t54, heap; //valor del puntero
 +, t53, 1, t55; // pos del indice
 +, t55, 1, t56; // pos del valor
-=>, t55, t57, heap; // valor del indice actual
-// ------ funcion obtener en una lista ---
-jge, 1, 0, L13;
+jmp, , , L9;
+L9:
+je, t54, -1, L10;
+jmp, , , L11;
+jmp, , ,L10;
+L10:
++, t52, 1, t52; // incrementandor en uno el size de la lista
+<=, t51, t52, heap; // guarnado el size de la lista
+<=, t53, H, heap; // guardando el nuevo apuntador 
+<=, t55, t52, heap; // guarando el indice del nuevo elemento
+<=, t56, 300, heap; // guardando el valor del nuevo insert en la lista
+<=, H, -1, heap; // ingresando el nulo del atributo siguiente
++, H, 3, H; // incrementado el h
+jmp, , , L12;
+jmp, , , L11;
+L11:
++, t54, 0, t53; // pos del apuntador
+=>, t53, t54, heap; // valor del apuntador
++, t53, 1, t55; // pos del indice
++, t55, 1, t56; //pos valor 
+jmp, , , L9;
+jmp, , , L12;
+L12:
+print("%d", t52);
+// Resolviendo un acceso para un atrinuto
++, P, 0, t57; 
+=>, t57, t58, stack; // apuntador al heap
+=>, t58, t59, heap;
++, t59, 0, t60; 
+=>, t60, t61, heap; // recuperando pos incial del objeto
++, t61, 0, t62;
+=>, t62, t61, heap; // pos inicial de otro objeto o valor de una vairble comun 
++, t61, 0, t63; // posicion de; size de una lista
+=>, t63, t64, heap; // valor del size de una lista
++, t63, 1, t65; // pos de puntero
+=>, t65, t66, heap; //valor del puntero
++, t65, 1, t67; // pos del indice
++, t67, 1, t68; // pos del valor
+=>, t67, t69, heap; // valor del indice actual
+-, t64, 1, t72; // siguiente poscions a la que apuntara la cabeza de la pila
+// ------ funcion desapilar de una pila  ---
+jge, t72, 0, L13;
 jmp, , , L14;
 jmp, , , L13;
 L13:
-jle, 1, t52, L15;
+je, t72, t69, L15;
 jmp, , , L16;
 jmp, , , L15;
 L15:
-je, 1, t57, L17;
++, t65, 0, t71; // pos del puntero donde insertarmemos un nulo
++, t66, 0, t65;
+=>, t65, t66, heap; // val del punteor del siguiente elmento
++, t65, 1, t67;
++, t67, 1, t68;
+=>, t67, t69, heap; //valor del proximo indice
+<=, t71, -1, heap; // direccionando a nulo (nueva cabeza de al pila)
+jmp, , , L13;
+jmp, , , L16;
+L16:
+je, t64, t69, L17;
 jmp, , , L18;
 jmp, , , L17;
 L17:
-=>, t56, t50, heap; // valor de la poscion buscanda en la listsa 
+=>, t68, t61, heap; // valor de la posicion que saldra de la pila
+<=, t63, t72, heap; // cambiando el size de la pila
 jmp, , , L19;
 jmp, , , L18;
 L18:
-+, t54, 0, t53;
-=>, t53, t54, heap;
-+, t53, 1, t55; // pos indice
-+, t55, 1, t56; // pos valor
-=>, t55, t57, heap; //val del indice
-jmp, , , L15;
-jmp, , , L14;
-L14:
-jmp, , , L16;
-L16:
++, t66, 0, t65;
+=>, t65, t66, heap; // val del punteor del siguiente elmento
++, t65, 1, t67;
++, t67, 1, t68;
+=>, t67, t69, heap; //valor del proximo indice
+jmp, , , L13;
 jmp, , , L19;
 L19:
-print("%d", t50);
+jmp, , , L14;
+L14:
+print("%d", t61);
 // Resolviendo un acceso para un atrinuto
-+, P, 0, t59; 
-=>, t59, t60, stack; // apuntador al heap
-=>, t60, t61, heap;
-+, t61, 0, t62; 
-=>, t62, t63, heap; // recuperando pos incial del objeto
-+, t63, 0, t64; // posicion de; size de una lista
-=>, t64, t65, heap; // valor del size de una lista
-+, t64, 1, t66; // pos de puntero
-=>, t66, t67, heap; //valor del puntero
-+, t66, 1, t68; // pos del indice
-+, t68, 1, t69; // pos del valor
-=>, t68, t70, heap; // valor del indice actual
-// ------ funcion obtener en una lista ---
-jge, 0, 0, L20;
++, P, 0, t73; 
+=>, t73, t74, stack; // apuntador al heap
+=>, t74, t75, heap;
++, t75, 0, t76; 
+=>, t76, t77, heap; // recuperando pos incial del objeto
++, t77, 0, t78;
+=>, t78, t77, heap; // pos inicial de otro objeto o valor de una vairble comun 
++, t77, 0, t79; // posicion de; size de una lista
+=>, t79, t80, heap; // valor del size de una lista
++, t79, 1, t81; // pos de puntero
+=>, t81, t82, heap; //valor del puntero
++, t81, 1, t83; // pos del indice
++, t83, 1, t84; // pos del valor
+=>, t83, t85, heap; // valor del indice actual
+-, t80, 1, t88; // siguiente poscions a la que apuntara la cabeza de la pila
+// ------ funcion desapilar de una pila  ---
+jge, t88, 0, L20;
 jmp, , , L21;
 jmp, , , L20;
 L20:
-jle, 0, t65, L22;
+je, t88, t85, L22;
 jmp, , , L23;
 jmp, , , L22;
 L22:
-je, 0, t70, L24;
++, t81, 0, t87; // pos del puntero donde insertarmemos un nulo
++, t82, 0, t81;
+=>, t81, t82, heap; // val del punteor del siguiente elmento
++, t81, 1, t83;
++, t83, 1, t84;
+=>, t83, t85, heap; //valor del proximo indice
+<=, t87, -1, heap; // direccionando a nulo (nueva cabeza de al pila)
+jmp, , , L20;
+jmp, , , L23;
+L23:
+je, t80, t85, L24;
 jmp, , , L25;
 jmp, , , L24;
 L24:
-=>, t69, t63, heap; // valor de la poscion buscanda en la listsa 
+=>, t84, t77, heap; // valor de la posicion que saldra de la pila
+<=, t79, t88, heap; // cambiando el size de la pila
 jmp, , , L26;
 jmp, , , L25;
 L25:
-+, t67, 0, t66;
-=>, t66, t67, heap;
-+, t66, 1, t68; // pos indice
-+, t68, 1, t69; // pos valor
-=>, t68, t70, heap; //val del indice
-jmp, , , L22;
-jmp, , , L21;
-L21:
-jmp, , , L23;
-L23:
++, t82, 0, t81;
+=>, t81, t82, heap; // val del punteor del siguiente elmento
++, t81, 1, t83;
++, t83, 1, t84;
+=>, t83, t85, heap; //valor del proximo indice
+jmp, , , L20;
 jmp, , , L26;
 L26:
-print("%d", t63);
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t72; 
-=>, t72, t73, stack; // apuntador al heap
-=>, t73, t74, heap;
-+, t74, 0, t75; 
-=>, t75, t76, heap; // recuperando pos incial del objeto
-+, t76, 0, t77; // posicion de; size de una lista
-=>, t77, t78, heap; // valor del size de una lista
-+, t77, 1, t79; // pos de puntero
-=>, t79, t80, heap; //valor del puntero
-+, t79, 1, t81; // pos del indice
-+, t81, 1, t82; // pos del valor
-=>, t81, t83, heap; // valor del indice actual
-// ------ funcion obtener en una lista ---
-jge, 2, 0, L27;
-jmp, , , L28;
-jmp, , , L27;
-L27:
-jle, 2, t78, L29;
-jmp, , , L30;
-jmp, , , L29;
-L29:
-je, 2, t83, L31;
-jmp, , , L32;
-jmp, , , L31;
-L31:
-=>, t82, t76, heap; // valor de la poscion buscanda en la listsa 
-jmp, , , L33;
-jmp, , , L32;
-L32:
-+, t80, 0, t79;
-=>, t79, t80, heap;
-+, t79, 1, t81; // pos indice
-+, t81, 1, t82; // pos valor
-=>, t81, t83, heap; //val del indice
-jmp, , , L29;
-jmp, , , L28;
-L28:
-jmp, , , L30;
-L30:
-jmp, , , L33;
-L33:
-print("%d", t76);
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t85; 
-=>, t85, t86, stack; // apuntador al heap
-=>, t86, t87, heap;
-+, t87, 0, t88; 
-=>, t88, t89, heap; // recuperando pos incial del objeto
-+, t89, 0, t90; // posicion de; size de una lista
-=>, t90, t91, heap; // valor del size de una lista
-+, t90, 1, t92; // pos de puntero
-=>, t92, t93, heap; //valor del puntero
-+, t92, 1, t94; // pos del indice
-+, t94, 1, t95; // pos del valor
-=>, t94, t96, heap; // valor del indice actual
-// ------ funcion obtener en una lista ---
-jge, 3, 0, L34;
-jmp, , , L35;
-jmp, , , L34;
-L34:
-jle, 3, t91, L36;
-jmp, , , L37;
-jmp, , , L36;
-L36:
-je, 3, t96, L38;
-jmp, , , L39;
-jmp, , , L38;
-L38:
-=>, t95, t89, heap; // valor de la poscion buscanda en la listsa 
-jmp, , , L40;
-jmp, , , L39;
-L39:
-+, t93, 0, t92;
-=>, t92, t93, heap;
-+, t92, 1, t94; // pos indice
-+, t94, 1, t95; // pos valor
-=>, t94, t96, heap; //val del indice
-jmp, , , L36;
-jmp, , , L35;
-L35:
-jmp, , , L37;
-L37:
-jmp, , , L40;
-L40:
-print("%d", t89);
-// ------------------------ Instanciando una nueva lista atributo --------------------
-+, P, 1, t98; //pos de lista  l2
-<=, t98, H, stack; //escribiendo apuntador al heap
-+, H, 1, t99; 
-<=, H, t99, heap;
-+, H, 1, H;
-<=, H, -1, heap; //ingresando el size de la lista
-+, H, 1, H;
-<=, H, -1, heap; //ingresando el apuntador a nulo
-+, H, 3, H;
-// ----------------- Resolviendo acceso local 
-+, P, 1, t100; // pos del objeto
-=>, t100, t101, stack; //apuntador al heap del obejto
-=>, t101, t102, heap; // pos donde inicial el objeto l2
-+, t102, 0, t103; // posicion de; size de una lista
-=>, t103, t104, heap; // valor del size de una lista
-+, t103, 1, t105; // pos de puntero
-=>, t105, t106, heap; //valor del puntero
-+, t105, 1, t107; // pos del indice
-+, t107, 1, t108; // pos del valor
-jmp, , , L41;
-L41:
-je, t106, -1, L42;
-jmp, , , L43;
-jmp, , ,L42;
-L42:
-+, t104, 1, t104; // incrementandor en uno el size de la lista
-<=, t103, t104, heap; // guarnado el size de la lista
-<=, t105, H, heap; // guardando el nuevo apuntador 
-<=, t107, t104, heap; // guarando el indice del nuevo elemento
-<=, t108, 112, heap; // guardando el valor del nuevo insert en la lista
-<=, H, -1, heap; // ingresando el nulo del atributo siguiente
-+, H, 3, H; // incrementado el h
-jmp, , , L44;
-jmp, , , L43;
-L43:
-+, t106, 0, t105; // pos del apuntador
-=>, t105, t106, heap; // valor del apuntador
-+, t105, 1, t107; // pos del indice
-+, t107, 1, t108; //pos valor 
-jmp, , , L41;
-jmp, , , L44;
-L44:
-// ----------------- Resolviendo acceso local 
-+, P, 1, t109; // pos del objeto
-=>, t109, t110, stack; //apuntador al heap del obejto
-=>, t110, t111, heap; // pos donde inicial el objeto l2
-+, t111, 0, t112; // posicion de; size de una lista
-=>, t112, t113, heap; // valor del size de una lista
-+, t112, 1, t114; // pos de puntero
-=>, t114, t115, heap; //valor del puntero
-+, t114, 1, t116; // pos del indice
-+, t116, 1, t117; // pos del valor
-=>, t116, t118, heap; // valor del indice actual
-// ------ funcion obtener en una lista ---
-jge, 0, 0, L45;
-jmp, , , L46;
-jmp, , , L45;
-L45:
-jle, 0, t113, L47;
-jmp, , , L48;
-jmp, , , L47;
-L47:
-je, 0, t118, L49;
-jmp, , , L50;
-jmp, , , L49;
-L49:
-=>, t117, t111, heap; // valor de la poscion buscanda en la listsa 
-jmp, , , L51;
-jmp, , , L50;
-L50:
-+, t115, 0, t114;
-=>, t114, t115, heap;
-+, t114, 1, t116; // pos indice
-+, t116, 1, t117; // pos valor
-=>, t116, t118, heap; //val del indice
-jmp, , , L47;
-jmp, , , L46;
-L46:
-jmp, , , L48;
-L48:
-jmp, , , L51;
-L51:
-print("%c", t111);
-print("%c", 90);
-// Resolviendo un acceso para un atrinuto
-+, P, 0, t120; 
-=>, t120, t121, stack; // apuntador al heap
-=>, t121, t122, heap;
-+, t122, 0, t123; 
-=>, t123, t124, heap; // recuperando pos incial del objeto
-+, t124, 0, t125; // posicion de; size de una lista
-=>, t125, t126, heap; // valor del size de una lista
-+, t125, 1, t127; // pos de puntero
-=>, t127, t128, heap; //valor del puntero
-+, t127, 1, t129; // pos del indice
-+, t129, 1, t130; // pos del valor
-=>, t130, t132, heap; // valor del primer valor de la lista
-// ------ funcion BUSCAR en una lista ---
-jmp, , , L52;
-L52:
-jne, t128, -1, L53;
-jmp, , , L54;
-jmp, , , L53;
-L53:
-je, t132, 99, L55;
-jmp, , , L56;
-jmp, , , L55;
-L55:
-=>, t129, t124, heap; // valor del indice 
-jmp, , , L57;
-jmp, , , L56;
-L56:
-+, t128, 0, t127;
-=>, t127, t128, heap;
-+, t127, 1, t129;
-+, t129, 1, t130; // pos del valor
-=>, t130, t132, heap;// valor del valor 
-jmp, , , L52;
-jmp, , , L54;
-L54:
-jmp, , , L57;
-L57:
-print("%d", t124);
-// ----------------- Resolviendo acceso local 
-+, P, 1, t133; // pos del objeto
-=>, t133, t134, stack; //apuntador al heap del obejto
-=>, t134, t135, heap; // pos donde inicial el objeto l2
-+, t135, 0, t136; // posicion de; size de una lista
-=>, t136, t137, heap; // valor del size de una lista
-+, t136, 1, t138; // pos de puntero
-=>, t138, t139, heap; //valor del puntero
-+, t138, 1, t140; // pos del indice
-+, t140, 1, t141; // pos del valor
-=>, t141, t143, heap; // valor del primer valor de la lista
-// ------ funcion BUSCAR en una lista ---
-jmp, , , L58;
-L58:
-jne, t139, -1, L59;
-jmp, , , L60;
-jmp, , , L59;
-L59:
-je, t143, 112, L61;
-jmp, , , L62;
-jmp, , , L61;
-L61:
-=>, t140, t135, heap; // valor del indice 
-jmp, , , L63;
-jmp, , , L62;
-L62:
-+, t139, 0, t138;
-=>, t138, t139, heap;
-+, t138, 1, t140;
-+, t140, 1, t141; // pos del valor
-=>, t141, t143, heap;// valor del valor 
-jmp, , , L58;
-jmp, , , L60;
-L60:
-jmp, , , L63;
-L63:
-print("%d", t135);
+jmp, , , L21;
+L21:
+print("%d", t77);
 
 end, , persona_vacio_persona
 

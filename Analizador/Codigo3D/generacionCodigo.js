@@ -257,6 +257,7 @@ generacionCodigo.prototype.calculoArregloNs = function(posiciones, ambitos, clas
 
 };
 
+
 generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
@@ -283,95 +284,25 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 			break;
 		}// fin decla asigna putnero
-	   
+		
 
 		case "DECLA_PILA":{
+			this.instanciarEstructura(nodo,ambitos,clase, metodo);
 			break;
 		}
 
 		case "DECLA_COLA":{
+			this.instanciarEstructura(nodo,ambitos,clase, metodo);
 			break;
 		}
 
 		case "ACCESO":{
 			var t = this.resolverAcceso(nodo,ambitos,clase,metodo);
-			
-
 			break;
 		}
 
 		case "DECLA_LISTA":{
-			console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-			var tipo_lista = nodo.tipoLista;
-			var nombre_lista = nodo.nombreLista;
-			var esAtributo = this.tablaSimbolos.esAtributo(nombre_lista, ambitos);
-			if(esAtributo!=null){
-				if(esAtributo){
-					console.log("es atriuto "+ nombre_lista);
-					var posLista = this.tablaSimbolos.obtenerPosAtributo(nombre_lista,ambitos);
-					if(posLista!=-1){
-						var temp1 = this.c3d.getTemporal();
-						var temp2 = this.c3d.getTemporal();
-						var temp3 = this.c3d.getTemporal();
-						var temp5 = this.c3d.getTemporal();
-						var l1= "+, P, 0, "+temp1+"; //pos this";
-						var l2= "=>, "+temp1+", "+temp2+", stack; // obtenienido apuntador al heap para la lista";
-						var l3= "=>, "+temp2+", "+temp3+", heap; //apauntador al heap para el objeto";
-						var l5= "+, "+temp3+", "+posLista+", "+temp5+"; // pos donde inicia la lista";
-						var l6= "<=, "+temp5+", H, heap;";
-						var l7= "<=, H, -1, heap; // ingresando el size de la lista";
-						var l8= "+, H, 1, H;";
-						var l9= "<=, H, -1, heap; // ingresando el apuntador nulo a la lista";
-						var l10= "+, H, 3, H;";
-						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
-						this.c3d.addCodigo(l1);
-						this.c3d.addCodigo(l2);
-						this.c3d.addCodigo(l3);
-						this.c3d.addCodigo(l5);
-						this.c3d.addCodigo(l6);
-						this.c3d.addCodigo(l7);
-						this.c3d.addCodigo(l8);
-						this.c3d.addCodigo(l9);
-						this.c3d.addCodigo(l10);
-					}else{
-						errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
-					}
-
-				}else{
-					//es una vairable local
-					console.log("es local"+ nombre_lista);
-					var posLista = this.tablaSimbolos.obtenerPosLocal(nombre_lista,ambitos);
-					if(posLista!=-1){
-						var temp1 = this.c3d.getTemporal();
-						var temp2 = this.c3d.getTemporal();
-						var l1= "+, P, "+posLista+", "+temp1+"; //pos de lista  "+nombre_lista;
-						var l2= "<=, "+temp1+", H, stack; //escribiendo apuntador al heap";
-						var l3= "+, H, 1, "+temp2+"; ";
-						var l4= "<=, H, "+temp2+", heap;";
-						var l5= "+, H, 1, H;";
-						var l6= "<=, H, -1, heap; //ingresando el size de la lista";
-						var l7= "+, H, 1, H;";
-						var l8= "<=, H, -1, heap; //ingresando el apuntador a nulo";
-						var l9= "+, H, 3, H;";
-						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
-						this.c3d.addCodigo(l1);
-						this.c3d.addCodigo(l2);
-						this.c3d.addCodigo(l3);
-						this.c3d.addCodigo(l4);
-						this.c3d.addCodigo(l5);
-						this.c3d.addCodigo(l6);
-						this.c3d.addCodigo(l7);
-						this.c3d.addCodigo(l8);
-						this.c3d.addCodigo(l9);
-					}else{
-						errores.insertarError("Semantico", "La lista no existe "+nombre_lista);
-					}
-
-				}
-
-			}else{
-				errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
-			}
+			this.instanciarEstructura(nodo,ambitos,clase, metodo);
 			break;
 		}
 	   
@@ -1261,6 +1192,82 @@ generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,d
 };
 
 
+generacionCodigo.prototype.instanciarEstructura = function(nodo,ambitos,clase,metodo){
+
+	var tipo_lista = nodo.tipoLista;
+			var nombre_lista = nodo.nombreLista;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombre_lista, ambitos);
+			if(esAtributo!=null){
+				if(esAtributo){
+					console.log("es atriuto "+ nombre_lista);
+					var posLista = this.tablaSimbolos.obtenerPosAtributo(nombre_lista,ambitos);
+					if(posLista!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						var temp3 = this.c3d.getTemporal();
+						var temp5 = this.c3d.getTemporal();
+						var l1= "+, P, 0, "+temp1+"; //pos this";
+						var l2= "=>, "+temp1+", "+temp2+", stack; // obtenienido apuntador al heap para la lista";
+						var l3= "=>, "+temp2+", "+temp3+", heap; //apauntador al heap para el objeto";
+						var l5= "+, "+temp3+", "+posLista+", "+temp5+"; // pos donde inicia la lista";
+						var l6= "<=, "+temp5+", H, heap;";
+						var l7= "<=, H, -1, heap; // ingresando el size de la lista";
+						var l8= "+, H, 1, H;";
+						var l9= "<=, H, -1, heap; // ingresando el apuntador nulo a la lista";
+						var l10= "+, H, 3, H;";
+						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l5);
+						this.c3d.addCodigo(l6);
+						this.c3d.addCodigo(l7);
+						this.c3d.addCodigo(l8);
+						this.c3d.addCodigo(l9);
+						this.c3d.addCodigo(l10);
+					}else{
+						errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
+					}
+
+				}else{
+					//es una vairable local
+					console.log("es local"+ nombre_lista);
+					var posLista = this.tablaSimbolos.obtenerPosLocal(nombre_lista,ambitos);
+					if(posLista!=-1){
+						var temp1 = this.c3d.getTemporal();
+						var temp2 = this.c3d.getTemporal();
+						var l1= "+, P, "+posLista+", "+temp1+"; //pos de lista  "+nombre_lista;
+						var l2= "<=, "+temp1+", H, stack; //escribiendo apuntador al heap";
+						var l3= "+, H, 1, "+temp2+"; ";
+						var l4= "<=, H, "+temp2+", heap;";
+						var l5= "+, H, 1, H;";
+						var l6= "<=, H, -1, heap; //ingresando el size de la lista";
+						var l7= "+, H, 1, H;";
+						var l8= "<=, H, -1, heap; //ingresando el apuntador a nulo";
+						var l9= "+, H, 3, H;";
+						this.c3d.addCodigo("// ------------------------ Instanciando una nueva lista atributo --------------------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l4);
+						this.c3d.addCodigo(l5);
+						this.c3d.addCodigo(l6);
+						this.c3d.addCodigo(l7);
+						this.c3d.addCodigo(l8);
+						this.c3d.addCodigo(l9);
+					}else{
+						errores.insertarError("Semantico", "La lista no existe "+nombre_lista);
+					}
+
+				}
+
+			}else{
+				errores.insertarError("Semantica", "No existe la lista "+ nombre_lista);
+			}
+
+};
+
+
 generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, posicionesArreglo, ambitos, clase, metodo){
 		var ret2 = new EleRetorno();
 		ret2.setValoresNulos();
@@ -1918,6 +1925,8 @@ generacionCodigo.prototype.esObjeto = function(tipo){
 return true;
 };
 
+
+
 generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metodo){
 	var nombreVar = nodo.objeto; //nodo id
 	var nombreVariable= nombreVar.nombreId;
@@ -1989,6 +1998,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 				for(var i =0; i<elementosAcceso.length; i++){
 					elementoTemporal = elementosAcceso[i];
 					if(bandera){
+
 						if(elementoTemporal instanceof t_id){
 							nombreElemento = elementoTemporal.nombreId;
 							var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
@@ -2027,20 +2037,79 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 
 							if(nombreF.toUpperCase() == "TAMANIO"){
 
-							}
+							} // fin del tamanio de una arreglo
 							
-
                             if(nombreF.toUpperCase() == "OBTENER" && rolSimbolo.toUpperCase()== "LISTA"){
 								//vamos a insertar en una lista
 								bandera = false;
-								var posSize = this.c3d.getTemporal();
+								return this.obtenerEnLista(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
+							}// FIN del obtener
+
+							if(nombreF.toUpperCase() == "BUSCAR" && rolSimbolo.toUpperCase()== "LISTA"){
+								bandera = false;
+								return this.buscarEnLista(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
+								
+
+							}// fin del buscar de una lista
+
+							if(nombreF.toUpperCase()== "INSERTAR" && rolSimbolo.toUpperCase()== "LISTA"){
+								bandera = false;
+								this.insertarEstructura(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
+							}//fin de insertar en lista
+							
+							if(nombreF.toUpperCase() == "APILAR" && rolSimbolo.toUpperCase()=="PILA"){
+								bandera = false;
+								this.c3d.addCodigo("//-------------- Apiladndo elemento ");
+
+								return this.insertarEstructura(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
+
+							}
+							if(nombreF.toUpperCase() == "DESAPILAR" && rolSimbolo.toUpperCase()=="PILA"){
+								bandera=false;
+							    return this.desapilar(tipoElemento,esAtributo,posFinal,ambitos,clase,metodo);
+								
+							}
+							if(nombreF.toUpperCase() == "ENCOLAR" && rolSimbolo.toUpperCase()=="COLA"){
+								bandera = false;
+								return this.insertarEstructura(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
+								
+							}
+							if(nombreF.toUpperCase() == "DESENCOLAR" && rolSimbolo.toUpperCase()=="COLA"){
+								
+							}
+
+						}	// fin de las funciones nativas
+					}
+				}//fin ciclo de valores acceso
+
+				var ret = new EleRetorno();
+						ret.valor= posFinal;
+						ret.tipo= tipoElemento;
+						return ret;
+
+
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error "+nombreVariable+", no existe");
+				return r;
+			}
+
+return r;
+
+
+};
+
+generacionCodigo.prototype.insertarEstructura= function(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo){
+	var posSize = this.c3d.getTemporal();
 								var valSize = this.c3d.getTemporal();
 								var posPtr= this.c3d.getTemporal();
 								var valPtr = this.c3d.getTemporal();
 								var posIndice= this.c3d.getTemporal();
 								var posValor = this.c3d.getTemporal();
-								var valIndice= this.c3d.getTemporal(); //
-								var valValor = this.c3d.getTemporal();
+								var etiqCiclo = this.c3d.getEtiqueta();
+								var etiqV= this.c3d.getEtiqueta();
+								var etiqF= this.c3d.getEtiqueta();
+								var etiqSalida = this.c3d.getEtiqueta();
+
 								if(esAtributo){
 									//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
 									var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
@@ -2056,62 +2125,43 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 									var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
 									var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
 									var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
-									var l1_5_1= "=>, "+posIndice+", "+valIndice+", heap; // valor del indice";
 									var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
-									var l1_87 = "=>, "+posIndice+", "+valIndice+", heap; // valor del indice actual";
 									this.c3d.addCodigo(l1_2);
 									this.c3d.addCodigo(l1_3);
 									this.c3d.addCodigo(l1_4);
 									this.c3d.addCodigo(l1_5);
 									this.c3d.addCodigo(l1_6);
-									this.c3d.addCodigo(l1_87);
-
-									var etiq1= this.c3d.getEtiqueta();
-									var etiq2= this.c3d.getEtiqueta();
-									var etiq3= this.c3d.getEtiqueta();
-									var etiq4= this.c3d.getEtiqueta();
-									var etiq5= this.c3d.getEtiqueta();
-									var etiq6= this.c3d.getEtiqueta();
-									var etiq7= this.c3d.getEtiqueta();
-									
-									var res= this.resolverExpresion(expresionF,ambitos,clase,metodo);
-									if(res.tipo.toUpperCase() == "ENTERO"){
-										var l1_7 = "jge, "+ res.valor+", 0, "+etiq1+";";
-										var l1_8 = "jmp, , , "+etiq2+";";
-										var l1_9 = "jmp, , , "+etiq1+";";
-										var l1_10= etiq1+":";
-										var l1_11= "jle, "+res.valor+", "+valSize+", "+ etiq3+";";
-										var l1_12= "jmp, , , "+etiq4+";";
-										var l1_13= "jmp, , , "+etiq3+";";
-										var l1_14 = etiq3+":";
-										var l1_15 = "je, "+res.valor+", "+ valIndice+", "+ etiq5+";";
-										var l1_16 = "jmp, , , "+etiq6+";";
-										var l1_17 = "jmp, , , "+etiq5+";";
-										var l1_18 = etiq5+":";
-										var l1_19 = "=>, "+posValor+", "+posFinal+", heap; // valor de la poscion buscanda en la listsa "; ///************************** */
-										var l1_20 = "jmp, , , "+ etiq7+";";
-										var l1_21 = "jmp, , , "+ etiq6+";";
-										var l1_22 = etiq6+":";
-										var l1_23 = "+, "+valPtr+", 0, "+posPtr+";";
-										var l1_24 = "=>, "+posPtr+", "+valPtr+", heap;";
-										var l1_25 = "+, "+posPtr+", 1, "+posIndice+"; // pos indice";
-										var l1_26 = "+, "+posIndice+", 1, "+posValor+"; // pos valor";
-										var l1_27 = "=>, "+posIndice+", "+valIndice+", heap; //val del indice";
-										var l1_28 = "jmp, , , "+etiq3+";";
-										var l1_29_1 = "jmp, , , "+etiq2+";";
-										var l1_30_1 = etiq2+":";
-										var l1_29_2 = "jmp, , , "+etiq4+";";
-										var l1_30_2 = etiq4+":";
-										var l1_29 = "jmp, , , "+etiq7+";";
-										var l1_30 = etiq7+":";
-										this.c3d.addCodigo("// ------ funcion obtener en una lista ---");
-
-										this.c3d.addCodigo(l1_7);
-										this.c3d.addCodigo(l1_8);
-										this.c3d.addCodigo(l1_9);
-										this.c3d.addCodigo(l1_10);
-										this.c3d.addCodigo(l1_11);
-										this.c3d.addCodigo(l1_12);
+									var l1_7 = "jmp, , , "+etiqCiclo+";";
+									var l1_8= etiqCiclo+":";
+									var l1_9= "je, "+valPtr+", -1, "+etiqV+";";
+									var l1_10="jmp, , , "+etiqF+";";
+									var l1_11= "jmp, , ,"+etiqV+";";
+									var l1_12= etiqV+":";
+									this.c3d.addCodigo(l1_7);
+									this.c3d.addCodigo(l1_8);
+									this.c3d.addCodigo(l1_9);
+									this.c3d.addCodigo(l1_10);
+									this.c3d.addCodigo(l1_11);
+									this.c3d.addCodigo(l1_12);
+									var resExpre= this.resolverExpresion(expresionF,ambitos,clase,metodo);
+									if((resExpre.tipo.toUpperCase()!= "NULO") && (resExpre.tipo.toUpperCase() == tipoElemento.toUpperCase())){
+										var l1_13 = "+, "+valSize+", 1, "+valSize+"; // incrementandor en uno el size de la lista";
+										var l1_14 = "<=, "+posSize+", "+valSize+", heap; // guarnado el size de la lista";
+										var l1_15 = "<=, "+posPtr+", H, heap; // guardando el nuevo apuntador ";
+										var l1_16 = "<=, "+posIndice+", "+ valSize+", heap; // guarando el indice del nuevo elemento";
+										var l1_17 = "<=, "+posValor+", "+resExpre.valor+", heap; // guardando el valor del nuevo insert en la lista";
+										var l1_18 = "<=, H, -1, heap; // ingresando el nulo del atributo siguiente";
+										var l1_19 = "+, H, 3, H; // incrementado el h";
+										var l1_20 = "jmp, , , "+etiqSalida+";";
+										var l1_21 = "jmp, , , "+etiqF+";";
+										var l1_22 = etiqF+":";
+										var l1_23 = "+, "+valPtr+", 0, "+posPtr+"; // pos del apuntador";
+										var l1_24 = "=>, "+posPtr+", "+valPtr+", heap; // valor del apuntador";
+										var l1_25 = "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
+										var l1_26 = "+, "+posIndice+", 1, "+posValor+"; //pos valor ";
+										var l1_27 = "jmp, , , "+etiqCiclo+";";
+										var l1_28 = "jmp, , , "+etiqSalida+";";
+										var l1_29 = etiqSalida+":";
 										this.c3d.addCodigo(l1_13);
 										this.c3d.addCodigo(l1_14);
 										this.c3d.addCodigo(l1_15);
@@ -2128,22 +2178,21 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 										this.c3d.addCodigo(l1_26);
 										this.c3d.addCodigo(l1_27);
 										this.c3d.addCodigo(l1_28);
-										this.c3d.addCodigo(l1_29_1);
-										this.c3d.addCodigo(l1_30_1);
-										this.c3d.addCodigo(l1_29_2);
-										this.c3d.addCodigo(l1_30_2);
 										this.c3d.addCodigo(l1_29);
-										this.c3d.addCodigo(l1_30);
+										var ret = new EleRetorno();
+										ret.valor= valSize;
+										ret.tipo= "ENTERO";
+										return ret;
+
 									}else{
-										errores.insertarError("Semantico", "Tipo no valido para el indece de una lista "+ res.tipo);
+										errores.insertarError("SEmantico", "Tipos no coinciden "+ resExpre.tipo+", con "+ tipoElemento);
 									}
 
+};
 
-							}// FIN del obtener
 
-							if(nombreF.toUpperCase() == "BUSCAR" && rolSimbolo.toUpperCase()== "LISTA"){
-								bandera = false;
-								var posSize = this.c3d.getTemporal();
+generacionCodigo.prototype.buscarEnLista = function(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo){
+	                            var posSize = this.c3d.getTemporal();
 								var valSize = this.c3d.getTemporal();
 								var posPtr= this.c3d.getTemporal();
 								var valPtr = this.c3d.getTemporal();
@@ -2246,126 +2295,263 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 										errores.insertarError("Semantico", "Tipo no valido para el indece de una lista "+ res.tipo);
 									}
 
-							}
-
-							if(nombreF.toUpperCase()== "INSERTAR" && rolSimbolo.toUpperCase()== "LISTA"){
-								//vamos a insertar en una lista
-								bandera = false;
-								var posSize = this.c3d.getTemporal();
-								var valSize = this.c3d.getTemporal();
-								var posPtr= this.c3d.getTemporal();
-								var valPtr = this.c3d.getTemporal();
-								var posIndice= this.c3d.getTemporal();
-								var posValor = this.c3d.getTemporal();
-								var etiqCiclo = this.c3d.getEtiqueta();
-								var etiqV= this.c3d.getEtiqueta();
-								var etiqF= this.c3d.getEtiqueta();
-								var etiqSalida = this.c3d.getEtiqueta();
-
-								if(esAtributo){
-									//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
-									var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
-									this.c3d.addCodigo(l1_1);
-
-								}else{
-									//es una local
-									var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
-									this.c3d.addCodigo(l1_1);
-									
-								}
-								    var l1_2= "=>, "+posSize+", "+valSize+", heap; // valor del size de una lista";
-									var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
-									var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
-									var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
-									var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
-									this.c3d.addCodigo(l1_2);
-									this.c3d.addCodigo(l1_3);
-									this.c3d.addCodigo(l1_4);
-									this.c3d.addCodigo(l1_5);
-									this.c3d.addCodigo(l1_6);
-									var l1_7 = "jmp, , , "+etiqCiclo+";";
-									var l1_8= etiqCiclo+":";
-									var l1_9= "je, "+valPtr+", -1, "+etiqV+";";
-									var l1_10="jmp, , , "+etiqF+";";
-									var l1_11= "jmp, , ,"+etiqV+";";
-									var l1_12= etiqV+":";
-									this.c3d.addCodigo(l1_7);
-									this.c3d.addCodigo(l1_8);
-									this.c3d.addCodigo(l1_9);
-									this.c3d.addCodigo(l1_10);
-									this.c3d.addCodigo(l1_11);
-									this.c3d.addCodigo(l1_12);
-									var resExpre= this.resolverExpresion(expresionF,ambitos,clase,metodo);
-									if((resExpre.tipo.toUpperCase()!= "NULO") && (resExpre.tipo.toUpperCase() == tipoElemento.toUpperCase())){
-										var l1_13 = "+, "+valSize+", 1, "+valSize+"; // incrementandor en uno el size de la lista";
-										var l1_14 = "<=, "+posSize+", "+valSize+", heap; // guarnado el size de la lista";
-										var l1_15 = "<=, "+posPtr+", H, heap; // guardando el nuevo apuntador ";
-										var l1_16 = "<=, "+posIndice+", "+ valSize+", heap; // guarando el indice del nuevo elemento";
-										var l1_17 = "<=, "+posValor+", "+resExpre.valor+", heap; // guardando el valor del nuevo insert en la lista";
-										var l1_18 = "<=, H, -1, heap; // ingresando el nulo del atributo siguiente";
-										var l1_19 = "+, H, 3, H; // incrementado el h";
-										var l1_20 = "jmp, , , "+etiqSalida+";";
-										var l1_21 = "jmp, , , "+etiqF+";";
-										var l1_22 = etiqF+":";
-										var l1_23 = "+, "+valPtr+", 0, "+posPtr+"; // pos del apuntador";
-										var l1_24 = "=>, "+posPtr+", "+valPtr+", heap; // valor del apuntador";
-										var l1_25 = "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
-										var l1_26 = "+, "+posIndice+", 1, "+posValor+"; //pos valor ";
-										var l1_27 = "jmp, , , "+etiqCiclo+";";
-										var l1_28 = "jmp, , , "+etiqSalida+";";
-										var l1_29 = etiqSalida+":";
-										this.c3d.addCodigo(l1_13);
-										this.c3d.addCodigo(l1_14);
-										this.c3d.addCodigo(l1_15);
-										this.c3d.addCodigo(l1_16);
-										this.c3d.addCodigo(l1_17);
-										this.c3d.addCodigo(l1_18);
-										this.c3d.addCodigo(l1_19);
-										this.c3d.addCodigo(l1_20);
-										this.c3d.addCodigo(l1_21);
-										this.c3d.addCodigo(l1_22);
-										this.c3d.addCodigo(l1_23);
-										this.c3d.addCodigo(l1_24);
-										this.c3d.addCodigo(l1_25);
-										this.c3d.addCodigo(l1_26);
-										this.c3d.addCodigo(l1_27);
-										this.c3d.addCodigo(l1_28);
-										this.c3d.addCodigo(l1_29);
-
-									}else{
-										errores.insertarError("SEmantico", "Tipos no coinciden "+ resExpre.tipo+", con "+ tipoElemento);
-									}
-
-								
-							}//fin de insertar en lista
-							
-
-						}	// fin de las funciones nativas
-					}
-				}//fin ciclo de valores acceso
-
-				var ret = new EleRetorno();
-						ret.valor= posFinal;
-						ret.tipo= tipoElemento;
-						return ret;
-
-
-			}else{
-				errores.insertarError("Semantico", "Ha ocurrido un error "+nombreVariable+", no existe");
-				return r;
-			}
-
-return r;
-
-
 };
 
-generacionCodigo.prototype.insertarLista= function(tipoElemento,expresionF,ambitos,clase,metodo){
 
+generacionCodigo.prototype.obtenerEnLista = function(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo){
+	var posSize = this.c3d.getTemporal();
+	var valSize = this.c3d.getTemporal();
+	var posPtr= this.c3d.getTemporal();
+	var valPtr = this.c3d.getTemporal();
+	var posIndice= this.c3d.getTemporal();
+	var posValor = this.c3d.getTemporal();
+	var valIndice= this.c3d.getTemporal(); //
+	var valValor = this.c3d.getTemporal();
+	if(esAtributo){
+		//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
 
+	}else{
+		//es una local
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
+		
+	}
+		var l1_2= "=>, "+posSize+", "+valSize+", heap; // valor del size de una lista";
+		var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
+		var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
+		var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
+		var l1_5_1= "=>, "+posIndice+", "+valIndice+", heap; // valor del indice";
+		var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
+		var l1_87 = "=>, "+posIndice+", "+valIndice+", heap; // valor del indice actual";
+		this.c3d.addCodigo(l1_2);
+		this.c3d.addCodigo(l1_3);
+		this.c3d.addCodigo(l1_4);
+		this.c3d.addCodigo(l1_5);
+		this.c3d.addCodigo(l1_6);
+		this.c3d.addCodigo(l1_87);
 
-
+		var etiq1= this.c3d.getEtiqueta();
+		var etiq2= this.c3d.getEtiqueta();
+		var etiq3= this.c3d.getEtiqueta();
+		var etiq4= this.c3d.getEtiqueta();
+		var etiq5= this.c3d.getEtiqueta();
+		var etiq6= this.c3d.getEtiqueta();
+		var etiq7= this.c3d.getEtiqueta();
+		
+		var res= this.resolverExpresion(expresionF,ambitos,clase,metodo);
+		if(res.tipo.toUpperCase() == "ENTERO"){
+			var l1_7 = "jge, "+ res.valor+", 0, "+etiq1+";";
+			var l1_8 = "jmp, , , "+etiq2+";";
+			var l1_9 = "jmp, , , "+etiq1+";";
+			var l1_10= etiq1+":";
+			var l1_11= "jle, "+res.valor+", "+valSize+", "+ etiq3+";";
+			var l1_12= "jmp, , , "+etiq4+";";
+			var l1_13= "jmp, , , "+etiq3+";";
+			var l1_14 = etiq3+":";
+			var l1_15 = "je, "+res.valor+", "+ valIndice+", "+ etiq5+";";
+			var l1_16 = "jmp, , , "+etiq6+";";
+			var l1_17 = "jmp, , , "+etiq5+";";
+			var l1_18 = etiq5+":";
+			var l1_19 = "=>, "+posValor+", "+posFinal+", heap; // valor de la poscion buscanda en la listsa "; ///************************** */
+			var l1_20 = "jmp, , , "+ etiq7+";";
+			var l1_21 = "jmp, , , "+ etiq6+";";
+			var l1_22 = etiq6+":";
+			var l1_23 = "+, "+valPtr+", 0, "+posPtr+";";
+			var l1_24 = "=>, "+posPtr+", "+valPtr+", heap;";
+			var l1_25 = "+, "+posPtr+", 1, "+posIndice+"; // pos indice";
+			var l1_26 = "+, "+posIndice+", 1, "+posValor+"; // pos valor";
+			var l1_27 = "=>, "+posIndice+", "+valIndice+", heap; //val del indice";
+			var l1_28 = "jmp, , , "+etiq3+";";
+			var l1_29_1 = "jmp, , , "+etiq2+";";
+			var l1_30_1 = etiq2+":";
+			var l1_29_2 = "jmp, , , "+etiq4+";";
+			var l1_30_2 = etiq4+":";
+			var l1_29 = "jmp, , , "+etiq7+";";
+			var l1_30 = etiq7+":";
+			this.c3d.addCodigo("// ------ funcion obtener en una lista ---");
+			this.c3d.addCodigo(l1_7);
+			this.c3d.addCodigo(l1_8);
+			this.c3d.addCodigo(l1_9);
+			this.c3d.addCodigo(l1_10);
+			this.c3d.addCodigo(l1_11);
+			this.c3d.addCodigo(l1_12);
+			this.c3d.addCodigo(l1_13);
+			this.c3d.addCodigo(l1_14);
+			this.c3d.addCodigo(l1_15);
+			this.c3d.addCodigo(l1_16);
+			this.c3d.addCodigo(l1_17);
+			this.c3d.addCodigo(l1_18);
+			this.c3d.addCodigo(l1_19);
+			this.c3d.addCodigo(l1_20);
+			this.c3d.addCodigo(l1_21);
+			this.c3d.addCodigo(l1_22);
+			this.c3d.addCodigo(l1_23);
+			this.c3d.addCodigo(l1_24);
+			this.c3d.addCodigo(l1_25);
+			this.c3d.addCodigo(l1_26);
+			this.c3d.addCodigo(l1_27);
+			this.c3d.addCodigo(l1_28);
+			this.c3d.addCodigo(l1_29_1);
+			this.c3d.addCodigo(l1_30_1);
+			this.c3d.addCodigo(l1_29_2);
+			this.c3d.addCodigo(l1_30_2);
+			this.c3d.addCodigo(l1_29);
+			this.c3d.addCodigo(l1_30);
+			var ret = new EleRetorno();
+		    ret.valor= posFinal;
+		    ret.tipo= tipoElemento;
+			return ret;
+		}else{
+			errores.insertarError("Semantico", "Tipo no valido para el indece de una lista "+ res.tipo);
+		}
 };
+
+generacionCodigo.prototype.desapilar = function(tipoElemento,esAtributo,posFinal,ambitos,clase,metodo){
+	var posFinal2= posFinal;
+	var posSize = this.c3d.getTemporal();
+	var valSize = this.c3d.getTemporal();
+	var posPtr= this.c3d.getTemporal();
+	var valPtr = this.c3d.getTemporal();
+	var posIndice= this.c3d.getTemporal();
+	var posValor = this.c3d.getTemporal();
+	var valIndice= this.c3d.getTemporal(); //
+	var valValor = this.c3d.getTemporal();
+	var temp = this.c3d.getTemporal();
+	if(esAtributo){
+		//var l1_1= "=>, "+posFinal+", "+posSize+", heap; //posicion del size de la lista";
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
+
+	}else{
+		//es una local
+		var l1_1= "+, "+posFinal+", 0, "+posSize+"; // posicion de; size de una lista";
+		this.c3d.addCodigo(l1_1);
+		
+	}
+		var l1_2= "=>, "+posSize+", "+valSize+", heap; // valor del size de una lista";
+		var l1_3= "+, "+posSize+", 1, "+posPtr+"; // pos de puntero";
+		var l1_4= "=>, "+posPtr+", "+valPtr+", heap; //valor del puntero";
+		var l1_5= "+, "+posPtr+", 1, "+posIndice+"; // pos del indice";
+		var l1_5_1= "=>, "+posIndice+", "+valIndice+", heap; // valor del indice";
+		var l1_6= "+, "+posIndice+", 1, "+posValor+"; // pos del valor";
+		var l1_87 = "=>, "+posIndice+", "+valIndice+", heap; // valor del indice actual";
+		this.c3d.addCodigo(l1_2);
+		this.c3d.addCodigo(l1_3);
+		this.c3d.addCodigo(l1_4);
+		this.c3d.addCodigo(l1_5);
+		this.c3d.addCodigo(l1_6);
+		this.c3d.addCodigo(l1_87);
+		var penultimo = this.c3d.getTemporal();
+		var l1_88 = "-, "+valSize+", 1, "+penultimo+"; // siguiente poscions a la que apuntara la cabeza de la pila";
+		this.c3d.addCodigo(l1_88);
+
+		var etiq1= this.c3d.getEtiqueta();
+		var etiq2= this.c3d.getEtiqueta();
+		var etiq3= this.c3d.getEtiqueta();
+		var etiq4= this.c3d.getEtiqueta();
+		var etiq5= this.c3d.getEtiqueta();
+		var etiq6= this.c3d.getEtiqueta();
+		var etiq7= this.c3d.getEtiqueta();
+
+		
+		var l1_7 = "jge, "+penultimo+", 0, "+etiq1+";";
+		var l1_8 = "jmp, , , "+etiq2+";";
+		var l1_9 = "jmp, , , "+etiq1+";";
+		var l1_10 = etiq1+":";
+		var l1_11 = "je, "+penultimo+", "+valIndice+", "+etiq3+";";
+		var l1_12 = "jmp, , , "+etiq4+";";
+		var l1_13 = "jmp, , , "+etiq3+";";
+		var l1_14 = etiq3+":";
+
+		var l1_15 =  "+, "+posPtr+", 0, "+temp+"; // pos del puntero donde insertarmemos un nulo";
+		var l1_16 = "+, "+valPtr+", 0, "+posPtr+";";
+		var l1_17 = "=>, "+posPtr+", "+valPtr+", heap; // val del punteor del siguiente elmento";
+		var l1_17_1 = "+, "+posPtr+", 1, "+posIndice+";";
+		var l1_18 = "+, "+posIndice+", 1, "+posValor+";";
+		var l1_19 = "=>, "+posIndice+", "+valIndice+", heap; //valor del proximo indice";
+		var l1_20 = "<=, "+temp+", -1, heap; // direccionando a nulo (nueva cabeza de al pila)";
+		var l1_21 = "jmp, , , "+etiq1+";";
+		
+		var l1_22 = "jmp, , , "+etiq4+";";
+		var l1_23 = etiq4+":";
+		var l1_25 = "je, "+valSize+", "+valIndice+", "+etiq5+";"
+		var l1_26 = "jmp, , , "+etiq6+";";
+		
+		var l1_27 = "jmp, , , "+etiq5+";";
+		var l1_28 = etiq5+":";
+		var l1_29 = "=>, "+posValor+", "+posFinal+", heap; // valor de la posicion que saldra de la pila";
+		var l1_30 = "<=, "+posSize+", "+penultimo+", heap; // cambiando el size de la pila";
+		var l1_31 = "jmp, , , "+etiq7+";";
+		var l1_32= "jmp, , , "+etiq6+";";
+		var l1_33 = etiq6+":";
+
+		var l1_34 = "+, "+valPtr+", 0, "+posPtr+";";
+		var l1_35 = "=>, "+posPtr+", "+valPtr+", heap; // val del punteor del siguiente elmento";
+		var l1_36 = "+, "+posPtr+", 1, "+posIndice+";";
+		var l1_37 = "+, "+posIndice+", 1, "+posValor+";";
+		var l1_38 = "=>, "+posIndice+", "+valIndice+", heap; //valor del proximo indice";
+		var l1_39 = "jmp, , , "+etiq1+";";
+		
+		var l1_40= "jmp, , , "+etiq7+";";
+		var l1_41 = etiq7+":";
+
+		var l1_42= "jmp, , , "+etiq2+";";
+		var l1_43 = etiq2+":";
+	
+			
+
+			this.c3d.addCodigo("// ------ funcion desapilar de una pila  ---");
+			this.c3d.addCodigo(l1_7);
+			this.c3d.addCodigo(l1_8);
+			this.c3d.addCodigo(l1_9);
+			this.c3d.addCodigo(l1_10);
+			this.c3d.addCodigo(l1_11);
+			this.c3d.addCodigo(l1_12);
+			this.c3d.addCodigo(l1_13);
+			this.c3d.addCodigo(l1_14);
+			this.c3d.addCodigo(l1_15);
+			this.c3d.addCodigo(l1_16);
+			this.c3d.addCodigo(l1_17);
+			this.c3d.addCodigo(l1_17_1);
+			this.c3d.addCodigo(l1_18);
+			this.c3d.addCodigo(l1_19);
+			this.c3d.addCodigo(l1_20);
+			this.c3d.addCodigo(l1_21);
+			this.c3d.addCodigo(l1_22);
+			this.c3d.addCodigo(l1_23);
+			
+			this.c3d.addCodigo(l1_25);
+			this.c3d.addCodigo(l1_26);
+			this.c3d.addCodigo(l1_27);
+			this.c3d.addCodigo(l1_28);
+			this.c3d.addCodigo(l1_29);
+			this.c3d.addCodigo(l1_30);
+			this.c3d.addCodigo(l1_31);
+			this.c3d.addCodigo(l1_32);
+			this.c3d.addCodigo(l1_33);
+			this.c3d.addCodigo(l1_34);
+			this.c3d.addCodigo(l1_35);
+			this.c3d.addCodigo(l1_36);
+			this.c3d.addCodigo(l1_37);
+			this.c3d.addCodigo(l1_38);
+			this.c3d.addCodigo(l1_39);
+			this.c3d.addCodigo(l1_40);
+			this.c3d.addCodigo(l1_41);
+			this.c3d.addCodigo(l1_42);
+			this.c3d.addCodigo(l1_43);
+			
+			
+			var ret = new EleRetorno();
+		    ret.valor= posFinal;
+		    ret.tipo= tipoElemento;
+			return ret;
+
+			
+			
+};
+
 
 
 generacionCodigo.prototype.crearPunteroNulo = function(nodo, ambitos, clase, metodo){

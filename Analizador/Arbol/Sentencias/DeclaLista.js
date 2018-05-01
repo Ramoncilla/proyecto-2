@@ -1,10 +1,9 @@
 function DeclaLista(){
 	this.tipoLista ="";
 	this.nombreLista = "";
-}
+} 
 
-
-
+ 
 DeclaLista.prototype.setValores = function(nombre, tipo) {
 	this.tipoLista= tipo;
 	this.nombreLista= nombre;
