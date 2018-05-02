@@ -970,7 +970,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 					}
 				}
-
+ 
 			}else{
 				errores.insertarError("Semantico","Ha ocurrido un error al resolver para imprimir");
 			}

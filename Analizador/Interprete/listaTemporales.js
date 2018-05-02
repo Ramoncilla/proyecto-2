@@ -20,16 +20,16 @@ listaTemporales.prototype.insertarTemporal  = function(temp){
         if(this.existeTemporal(temp)){
             //se debe de modificar
             this.modificarTemporal(temp);
-            //console.log("Se ha modificado "+ temp.nombre+", valor  "+temp.valor);
+            console.log("Se ha modificado "+ temp.nombre+", valor  "+temp.valor);
         }else{
             //se debe de agregar a la lista
             this.listado.push(temp);
-           // console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
+            console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
 
         }
    }else{
        this.listado.push(temp);
-       //console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
+       console.log("Se ha insertado "+ temp.nombre+", valor  "+temp.valor);
    } 
 
 };

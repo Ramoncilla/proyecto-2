@@ -37,8 +37,9 @@ nodoCondicion.prototype.getCodigo = function(){
 nodoCondicion.prototype.getEtiquetasVerdaderas = function(){
     var cadena ="";
     for(var i =0; i<this.verdaderas.length; i++){
-       // cadena+="jmp, , , "+this.verdaderas[i]+";\n";
         cadena +=this.verdaderas[i]+":\n";
+        // cadena+="jmp, , , "+this.verdaderas[i]+";\n";
+        
     }
     return cadena;
 };
@@ -47,8 +48,9 @@ nodoCondicion.prototype.getEtiquetasVerdaderas = function(){
 nodoCondicion.prototype.getEtiquetasFalsas= function(){
     var cadena ="";
     for(var i =0; i<this.falsas.length; i++){
-       // cadena+="jmp, , , "+this.falsas[i]+";\n";
         cadena +=this.falsas[i]+":\n";
+       //cadena+="jmp, , , "+this.falsas[i]+";\n";
+        
     }
     return cadena
 };
