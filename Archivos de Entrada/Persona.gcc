@@ -1,122 +1,35 @@
-/*
-clase llanta {
-
-entero valor1;
-entero valor2;
-
-
-publico llanta(entero val){
-    valor1= val;
-    valor2= val*10;
-    //imprimir(valor2);
-}
-
-publico vacio getValor1(){
-     retorno valor1;
-}
-
-
-}
-
-*/
-clase carro{
-
-pIla l1 = nuevo piLa(entero);
-
-publico carro(){
-
-}
-
-/*
-publico llanta lla1;
-publico llanta lla2;
-publico llanta lla3;
-publico llanta lla4;
-publico llanta repuesto= nuevo llanta(15);
-publico entero color;
-
-publico carro(){
-    lla1= nuevo llanta(19800);
-    lla2 = nuevo llanta(19801);
-    lla3 = nuevo llanta(19802);
-    lla4 = nuevo llanta(19803);
-    color =11500;
-     imprimir('b');
-    
-     imprimir(lla2.valor2);
-     imprimir('c');
-}
-*/
-
-}
 
 
 
 
 clase persona {
    
-  carro c = nuevo carro();
- persona()
-    {
-       imprimir(C.l1.ApIlar(100));
-       imprimir(c.L1.apILAR(200));
-       imprimir(c.L1.aPILAr(300));
-       imprimir(c.l1.desaPIlAR());
-       imprimir(c.l1.Desapilar());
-      //imprimir(c.l1.desaPIlAR());
-       //c.l1.inSertar(88*2);
-       //imprimir(c.l1.obtener(0));
-        
-        /* 
-       l1.insertar(88*1);
-       l1.insertar(100-1);
-       l1.insertar(1020);
-       imprimir(l1.obtener(1));
-       imprimir(l1.obtener(0));
-       imprimir(l1.obtener(2));
-       imprimir(l1.obtener(3));
-
-       lista l2 = nuevo lista(caracter);
-        l2.insertar('p');
-        imprimir(l2.obtener(0));
-        imprimir('Z');
-        imprimir(l1.buscar(99));
-        imprimir(l2.buscar('p'));
-       */
-    }
-
-
-
-/*
-   entero edad=88;
-   caracter a = 'a';
-   carro car;
-
-    persona()
-    {
-        car = nuevo carro();
-        imprimir('Z');
-        imprimir(car.lla4.valor2);
-         
-    }*/
-
     principal(){ 
-        caracter nombre[20]="Alina Urbina";
-        imprimir(nombre.tamanio);
+       // caracter nombre[20]="Alina Urbina";
+       // imprimir(nombre.tamanio);
         entero i=0;
-        repetir_mientras (i<nombre.tamanio){
+        booleano A= true;
+        booleano B= true;
+        booleano C = true;
+       
+
+        /*repetir_mientras ((i<nombre.tamanio) && ((a && b)&& false)){
             imprimir(nombre[i]);
             i+=1;
+        }*/
+        
+        
+        
+        // repetir_mientras (((!true && !true) || (!true && true) || (true && !true))?? ((!(!true && (true || !true)) && (true && !(!true && true))) && i <1)){
+      repetir_mientras (((!A && !B) || (!A && C) || (A && !C)) ?? ((!(!B && (C || !B)) && (A && !(!C && A))) && i <1)){
+
+            //repetir_mientras((!true) || (i<=1)){
+            imprimir('Z');
+            i+=1;
+
         }
         
-    /*
-    persona p = nuevo persona();
-        imprimir(p.car.lla1.valor1);
-        imprimir(p.car.lla4.valor2);
-        imprimir(p.a);
-        imprimir(p.car.color);
-        imprimir(p.a);*/
-       //lista l1 = nuevo lista(entero);
+    
        
     }
 

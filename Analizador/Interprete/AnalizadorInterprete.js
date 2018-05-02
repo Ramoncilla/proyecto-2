@@ -208,7 +208,9 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
         }
 
         case "RELACIONAL":{
+            console.log("Ir a:   "+ this.ir_a+"                etiqueta:   "+ this.etiqueta);
             if(this.ir_a.toUpperCase()== this.etiqueta.toUpperCase()){
+              //  console.log("Ir a:   "+ this.ir_a+"                etiqueta:   "+ this.etiqueta);
                 var simbolo = instruccion.signo;
             var operando1 = instruccion.operando1;
             var operando2 = instruccion.operando2;
@@ -217,10 +219,12 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
             var res = this.evaluarCondicion(simbolo, operando1, operando2);
             if(res == true){
                 this.ir_a= etiqV;
+                //this.etiqueta = etiqV; ///
                 this.evaluar();
                 bandera =1;
             }else{
                 this.ir_a= etiqF;
+                //this.etiqueta= etiqF; ///
                 this.evaluar();
                 bandera =1;
             }
@@ -322,7 +326,7 @@ AnalizadorInterprete.prototype.evaluarCondicion = function(simbolo, operando1, o
                     }else{
                         return false;
                     }
-                    break;
+                    break; 
                 }
                 case "<=":{
                     if(val1 <= val2){

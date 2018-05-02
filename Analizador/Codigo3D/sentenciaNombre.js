@@ -138,7 +138,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
     if(sent instanceof notLogica){
-        return "notLogica";
+        return "NOT_LOGICA";
     }
 
     

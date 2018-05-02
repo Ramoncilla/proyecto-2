@@ -1661,17 +1661,17 @@ case 58:return 157
 break;
 case 59:'nulo'
 break;
-case 60:return 137
+case 60:return 139
 break;
-case 61:return 138
+case 61:return 140
 break;
-case 62:return 139
+case 62:return 142
 break;
-case 63:return 140
+case 63:return 141
 break;
-case 64:return 142
+case 64:return 137
 break;
-case 65:return 141
+case 65:return 138
 break;
 case 66:return 17
 break;
@@ -1759,7 +1759,7 @@ case 107:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[\/][*][^*]*[*]+([^\/*][^*]*[*]+)*[\/])/i,/^(?:\/=)/i,/^(?:\/)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:desapilar\b)/i,/^(?:apilar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[\/][*][^*]*[*]+([^\/*][^*]*[*]+)*[\/])/i,/^(?:\/=)/i,/^(?:\/)/i,/^(?:crearPuntero\b)/i,/^(?:obtenerDireccion\b)/i,/^(?:reservarMemoria\b)/i,/^(?:consultarTamnio\b)/i,/^(?:->)/i,/^(?:destruirPuntero\b)/i,/^(?:tamanio\b)/i,/^(?:Repetir_Mientras\b)/i,/^(?:hacer\b)/i,/^(?:mientras\b)/i,/^(?:Ciclo_doble_condicion\b)/i,/^(?:Repetir\b)/i,/^(?:hasta_que\b)/i,/^(?:Repetir_contando\b)/i,/^(?:variable\b)/i,/^(?:desde\b)/i,/^(?:hasta\b)/i,/^(?:Enciclar\b)/i,/^(?:Contador\b)/i,/^(?:Leer_Teclado\b)/i,/^(?:Evaluar_si\b)/i,/^(?:Es_igual_a\b)/i,/^(?:defecto\b)/i,/^(?:Es_falso\b)/i,/^(?:Es_verdadero\b)/i,/^(?:Si\b)/i,/^(?:Lista\b)/i,/^(?:Pila\b)/i,/^(?:Cola\b)/i,/^(?:insertar\b)/i,/^(?:obtener\b)/i,/^(?:buscar\b)/i,/^(?:Encolar\b)/i,/^(?:Desencolar\b)/i,/^(?:desapilar\b)/i,/^(?:apilar\b)/i,/^(?:importar\b)/i,/^(?:@)/i,/^(?:Sobreescribir\b)/i,/^(?:concatenar\b)/i,/^(?:,)/i,/^(?:convertirAEntero\b)/i,/^(?:convertirACadena\b)/i,/^(?:imprimir\b)/i,/^(?:retorno\b)/i,/^(?:romper\b)/i,/^(?:principal\b)/i,/^(?:nuevo\b)/i,/^(?:publico\b)/i,/^(?:protegido\b)/i,/^(?:privado\b)/i,/^(?:continuar\b)/i,/^(?:Nada\b)/i,/^(?:\{'\\0'\})/i,/^(?:\{"\\0"\}return\b)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:hereda_de\b)/i,/^(?:clase\b)/i,/^(?:este\b)/i,/^(?:puntero\b)/i,/^(?:vacio\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:estructura\b)/i,/^(?:\.)/i,/^(?:entero\b)/i,/^(?:caracter\b)/i,/^(?:booleano\b)/i,/^(?:decimal\b)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:=)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:\*)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:\^)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:\?\?)/i,/^(?:!)/i,/^(?:;)/i,/^(?::)/i,/^(?:"(\\.|[^"])*")/i,/^(?:(([a-zA-Z_])(([a-zA-Z_])|([0-9]))*))/i,/^(?:([0-9]+(\.[0-9]+)\b))/i,/^(?:([0-9]+))/i,/^(?:('([0-9]|[a-zA-Z])'))/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107],"inclusive":true}}
 });
 return lexer;

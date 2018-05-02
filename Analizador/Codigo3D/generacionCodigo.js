@@ -1460,7 +1460,17 @@ generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, 
 
 /* ================================================ Resolver Expresiones ===================================================== */
 
-
+generacionCodigo.prototype.crearCondicionBooleano = function(valBool){
+	
+	var etiqV = this.c3d.getEtiqueta();
+	var etiqF = this.c3d.getEtiqueta();
+	var codigoBool = "je, 1, "+valBool.valor+", "+etiqV+"; \n";
+	codigoBool+="jmp, , , "+etiqF+";\n";
+	var cond = new nodoCondicion(codigoBool);
+	cond.addFalsa(etiqF);
+	cond.addVerdadera(etiqV);
+	return cond;
+};
 
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
 	console.dir(nodo);
@@ -1663,65 +1673,233 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			switch(operando){
 
 				case "&&":{
-					if(val1 instanceof nodoCondicion){
-						if(val2 instanceof nodoCondicion){
-							var codigoAnd = val1.getCodigo() + "\n" +
-									val1.getEtiquetasVerdaderas() + "\n"+
-									val2.getCodigo()+"\n";
-							var resultadoAnd = new nodoCondicion(codigoAnd);
-							resultadoAnd.addEtiquetasVerdaderas(val2.verdaderas);
-							resultadoAnd.addEtiquetasFalsas(val1.falsas);
-							resultadoAnd.addEtiquetasFalsas(val2.falsas);
-							return resultadoAnd;
 
-						}else{
-							errores.insertarError("Semantico","Segundo operando de la operacion AND, no es valido");
-							var ret = new EleRetorno();
-							ret.setValoresNulos();
-							return ret;
-						}
+					var nodo1;
+					var nodo2;
+					var tipo=0;
+					if((val1 instanceof nodoCondicion) && (val2 instanceof nodoCondicion)){
+						tipo=1;
+						nodo1 = val1;
+						nodo2 = val2;
+					} else if((val1 instanceof nodoCondicion) && ( (val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = val1;
+						nodo2= this.crearCondicionBooleano(val2);
+					} else if((val2 instanceof nodoCondicion) && ( (val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1= this.crearCondicionBooleano(val1);
+						nodo2= val2;
+
+					}else  if(((val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO") && 
+					   ((val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = this.crearCondicionBooleano(val1);
+						nodo2 = this.crearCondicionBooleano(val2);
 					}else{
-						errores.insertarError("Semantico","Primero operando de la operacion AND, no es valido");
+						errores.insertarError("Semantico","Segundo operando de la operacion AND, no es valido");
 						var ret = new EleRetorno();
 						ret.setValoresNulos();
 						return ret;
+					}
 
+					if(tipo == 1){
+						if(nodo1 instanceof nodoCondicion){
+							if(nodo2 instanceof nodoCondicion){
+								var codigoAnd = nodo1.getCodigo() + "\n" +
+										nodo1.getEtiquetasVerdaderas() + "\n"+
+										nodo2.getCodigo()+"\n";
+								var resultadoAnd = new nodoCondicion(codigoAnd);
+								resultadoAnd.addEtiquetasVerdaderas(nodo2.verdaderas);
+								resultadoAnd.addEtiquetasFalsas(nodo1.falsas);
+								resultadoAnd.addEtiquetasFalsas(nodo2.falsas);
+								return resultadoAnd;
+
+							}else{
+								errores.insertarError("Semantico","Segundo operando de la operacion AND, no es valido");
+								var ret = new EleRetorno();
+								ret.setValoresNulos();
+								return ret;
+							}
+						}else{
+							errores.insertarError("Semantico","Primero operando de la operacion AND, no es valido");
+							var ret = new EleRetorno();
+							ret.setValoresNulos();
+							return ret;
+
+						}
+					}else{
+						errores.insertarError("Semantico","Segundo operando de la operacion AND, no es valido");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
 					}
 
 					break;
 				}
 
 				case "||":{
-					if(val1 instanceof nodoCondicion){
-						if(val2 instanceof nodoCondicion){
 
-							var codigoOr = val1.getCodigo()+ "\n" +
-										   val1.getEtiquetasFalsas()+ "\n" +
-										   val2.getCodigo()+ "\n" ;
+					var nodo1;
+					var nodo2;
+					var tipo=0;
+					if((val1 instanceof nodoCondicion) && (val2 instanceof nodoCondicion)){
+						tipo=1;
+						nodo1 = val1;
+						nodo2 = val2;
+					} else if((val1 instanceof nodoCondicion) && ( (val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = val1;
+						nodo2= this.crearCondicionBooleano(val2);
+					} else if((val2 instanceof nodoCondicion) && ( (val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1= this.crearCondicionBooleano(val1);
+						nodo2= val2;
+
+					}else  if(((val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO") && 
+					   ((val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = this.crearCondicionBooleano(val1);
+						nodo2 = this.crearCondicionBooleano(val2);
+					}else{
+						errores.insertarError("Semantico","Segundo operando de la operacion OR, no es valido");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+
+				if(tipo ==1){
+					if(nodo1 instanceof nodoCondicion){
+						if(nodo2 instanceof nodoCondicion){
+
+							var codigoOr = nodo1.getCodigo()+ "\n" +
+										   nodo1.getEtiquetasFalsas()+ "\n" +
+										   nodo2.getCodigo()+ "\n" ;
 							var resultadoOr = new nodoCondicion(codigoOr);
-							resultadoOr.addEtiquetasVerdaderas(val1.verdaderas);
-							resultadoOr.addEtiquetasVerdaderas(val1.verdaderas);
-							resultadoOr.addEtiquetasFalsas(val2.falsas);
+							resultadoOr.addEtiquetasVerdaderas(nodo1.verdaderas);
+							resultadoOr.addEtiquetasVerdaderas(nodo2.verdaderas);
+							resultadoOr.addEtiquetasFalsas(nodo2.falsas);
 							return resultadoOr;
 
 						}else{
-							errores.insertarError("Semantico","Segundo operando de la operacion AND, no es valido");
+							errores.insertarError("Semantico","Segundo operando de la operacion OR, no es valido");
 							var ret = new EleRetorno();
 							ret.setValoresNulos();
 							return ret;
 						}
 					}else{
-						errores.insertarError("Semantico","Primero operando de la operacion AND, no es valido");
+						errores.insertarError("Semantico","Primero operando de la operacion OR, no es valido");
 						var ret = new EleRetorno();
 						ret.setValoresNulos();
 						return ret;
 
 					}
+				}else{
+					errores.insertarError("Semantico","Segundo operando de la operacion OR, no es valido");
+					var ret = new EleRetorno();
+					ret.setValoresNulos();
+					return ret;
+				}
 
 					break;
 				}
 
 				case "??":{//xor
+
+					var nodo1;
+					var nodo2;
+					var tipo=0;
+					if((val1 instanceof nodoCondicion) && (val2 instanceof nodoCondicion)){
+						tipo=1;
+						nodo1 = val1;
+						nodo2 = val2;
+					} else if((val1 instanceof nodoCondicion) && ( (val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = val1;
+						nodo2= this.crearCondicionBooleano(val2);
+					} else if((val2 instanceof nodoCondicion) && ( (val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1= this.crearCondicionBooleano(val1);
+						nodo2= val2;
+
+					}else  if(((val1 instanceof EleRetorno) && val1.tipo.toUpperCase() == "BOOLEANO") && 
+					   ((val2 instanceof EleRetorno) && val2.tipo.toUpperCase() == "BOOLEANO")){
+						tipo = 1;
+						nodo1 = this.crearCondicionBooleano(val1);
+						nodo2 = this.crearCondicionBooleano(val2);
+					}else{
+						errores.insertarError("Semantico","Segundo operando de la operacion XOR, no es valido");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+					}
+
+
+				if(tipo==1){
+
+					if(nodo1 instanceof nodoCondicion){
+						if(nodo2 instanceof nodoCondicion){
+							var codigoXor="";
+							var temp1= this.c3d.getTemporal();
+							var temp2= this.c3d.getTemporal();
+							var etiqI = this.c3d.getEtiqueta();
+							var etiq1= this.c3d.getEtiqueta();
+							var etiq2 = this.c3d.getEtiqueta();
+							
+							var etiqV = this.c3d.getEtiqueta();
+							var etiqF = this.c3d.getEtiqueta();
+
+
+							//codigoXor+="jmp, , , "+etiqI+";";
+							//codigoXor+=etiqI+":";
+							codigoXor+= nodo1.getCodigo()+"\n";
+							codigoXor+=nodo1.getEtiquetasVerdaderas()+"\n";
+							codigoXor+="+, 1, 0, "+temp1+";\n";
+							codigoXor+="jmp, , , "+etiq1+";\n";
+							codigoXor+=nodo1.getEtiquetasFalsas()+"\n";
+							codigoXor+="+, 0, 0, "+temp1+";\n";
+							codigoXor+="jmp, , , "+etiq1+";\n";
+							codigoXor+="jmp, , , "+etiq1+";\n";
+							codigoXor+=etiq1+":\n";
+							codigoXor+= nodo2.getCodigo()+"\n";
+							codigoXor+=nodo2.getEtiquetasVerdaderas()+"\n";
+							codigoXor+="+, 1, 0, "+temp2+";\n";
+							codigoXor+="jmp, , , "+etiq2+";\n";
+							codigoXor+=nodo2.getEtiquetasFalsas()+"\n";
+							codigoXor+="+, 0, 0, "+temp2+";\n";
+							codigoXor+="jmp, , , "+etiq2+";\n";
+							codigoXor+="jmp, , , "+etiq2+";\n";
+							codigoXor+=etiq2+":\n";
+							codigoXor+="jne, "+temp1+", "+temp2+", "+etiqV+";";
+							codigoXor+="jmp, , , "+etiqF+";";
+							var resultadoXor = new nodoCondicion(codigoXor);
+							resultadoXor.addFalsa(etiqF);
+							resultadoXor.addVerdadera(etiqV);
+							return resultadoXor;
+
+						}else{
+							errores.insertarError("Semantico","Segundo operando de la operacion XOR, no es valido");
+							var ret = new EleRetorno();
+							ret.setValoresNulos();
+							return ret;
+						}
+					}else{
+						errores.insertarError("Semantico","Primero operando de la operacion XOR, no es valido");
+						var ret = new EleRetorno();
+						ret.setValoresNulos();
+						return ret;
+
+					}
+				}else{
+					errores.insertarError("Semantico","Segundo operando de la operacion XOR, no es valido");
+					var ret = new EleRetorno();
+					ret.setValoresNulos();
+					return ret;
+				}
+
+
+
+
+
 					break;
 				}
 
@@ -1729,6 +1907,23 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			break;
 		}//fin de operaciones logica
 
+		case "NOT_LOGICA":{
+			var val = this.resolverExpresion(nodo.getExpresion(),ambitos,clase,metodo);
+			if(val instanceof nodoCondicion){
+				val.cambiarEtiquetas();
+				return val;
+			}else if((val instanceof EleRetorno) && (val.tipo.toUpperCase() == "BOOLEANO")){
+				var ret = this.crearCondicionBooleano(val);
+				ret.cambiarEtiquetas();
+				return ret;
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver NOT "+ val.tipo);
+				var ret = new EleRetorno();
+				ret.setValoresNulos();
+				return ret;
+			}
+			break;
+		}
 		case "IDENTIFICADOR":{
 			var nombreId = nodo.nombreId;
 			var esAtributo = this.tablaSimbolos.esAtributo(nombreId, ambitos);
@@ -2064,6 +2259,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 								return this.insertarEstructura(tipoElemento,esAtributo,posFinal,expresionF,ambitos,clase,metodo);
 								
 							}
+
 							if(nombreF.toUpperCase() == "DESENCOLAR" && rolSimbolo.toUpperCase()=="COLA"){
 								
 							}

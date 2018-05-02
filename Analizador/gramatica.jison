@@ -153,13 +153,14 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "Nada" return 'nulo'
 "{'\0'}" return 'nulo'
 "{\"\0\"}"return 'nulo'
- 
-"<"                   return 'menor'
-">"                   return 'mayor'
 "<="                   return 'menorIgual'
 ">="                   return 'mayorIgual'
 "=="                   return 'igualIgual'
 "!="                   return 'distintoA'
+  
+"<"                   return 'menor'
+">"                   return 'mayor'
+
 
 "hereda_de" return 'hereda_de'
 "clase" return 'clase'
