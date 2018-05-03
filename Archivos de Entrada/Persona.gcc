@@ -1,16 +1,48 @@
+clase popo {
 
+    publico popo (caracter nombre){
+        entero i=0;
+        repetir_mientras(i<nombre.tamanio){
+            imprimir(nombre[i]);
+            i+=1;
+        }
+
+    }
+}
 
 
 
 clase persona {
+
+   // lista l1 = nuevo lista(entero);
+
+    publico persona(){
+        imprimir('A');
+        l1.insertar(800);
+        imprimir(l1.obtener(0));
+        caracter nombre[20]= "Alina Urbina";
+        entero i=0;
+        repetir_mientras(i<4){
+            imprimir('p');
+            i+=1;
+        }
+        popo n = nuevo popo(nombre);
+
+
+    }
    
     principal(){ 
        // caracter nombre[20]="Alina Urbina";
        // imprimir(nombre.tamanio);
         entero i=0;
-        booleano A= true;
-        booleano B= true;
+       /* booleano A= true;
+       booleano B= true;
         booleano C = true;
+       entero u = 25;
+       imprimir(i+u);
+       entero X = i+u*10;
+       imprimir(x);*/
+       persona per = nuevo persona();
        
 
         /*repetir_mientras ((i<nombre.tamanio) && ((a && b)&& false)){
@@ -20,16 +52,16 @@ clase persona {
         
         
         
-        // repetir_mientras (((!true && !true) || (!true && true) || (true && !true))?? ((!(!true && (true || !true)) && (true && !(!true && true))) && i <1)){
-      repetir_mientras (((!A && !B) || (!A && C) || (A && !C)) ?? ((!(!B && (C || !B)) && (A && !(!C && A))) && i <1)){
-
-            //repetir_mientras((!true) || (i<=1)){
+        // repetir_mientras (((!true && !true) || (!true && true) || (true && !true))?? ((!(!true && (true || !true)) && (true && !(!true && true))) && i <=5)){
+     // repetir_mientras (((!A && !B) || (!A && C) || (A && !C)) ?? ((!(!B && (C || !B)) && (A && !(!C && A))) && i <1)){
+   repetir_mientras(i<5){
+       
             imprimir('Z');
             i+=1;
 
         }
         
-    
+    //persona a = nuevo persona();
        
     }
 

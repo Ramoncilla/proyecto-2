@@ -864,7 +864,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											this.c3d.addCodigo(l1_1);
 											this.c3d.addCodigo(l2_1);
 											if(retExpresion.tipo.toUpperCase() != "NULO"){
-												l3_1= "<=, ",temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
+												l3_1= "<=, "+temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
 												
 												this.c3d.addCodigo(l3_1);
 											} 

@@ -2,4 +2,4 @@ function Etiqueta(et){
     this.etiqueta= et;
 }
 
-module.exports = Etiqueta;
+module.exports = Etiqueta; 

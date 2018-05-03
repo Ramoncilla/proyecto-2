@@ -8,6 +8,9 @@ var obtenerNombres = require("../Codigo3D/sentenciaNombre");
 
 var inicioFun = require("./ArbolInterprete/InicioFuncion");
 var finFun = require("./ArbolInterprete/FinalFuncion");
+var salto = require("./ArbolInterprete/Salto");
+var nodoEtiqueta = require("./ArbolInterprete/Etiqueta");
+var relacional = require("./ArbolInterprete/Relacional");
 
 var errores = new listaErrores();
 var nombres = new obtenerNombres();
@@ -54,21 +57,21 @@ AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
         this.temporales.insertarTemporal(p);
         this.temporales.insertarTemporal(h);
 
-       this.funciones = grammarInterprete.parse(codigo3D);
+       this.sentencias = grammarInterprete.parse(codigo3D);
        
        var sentTemporal;
        var nombreFun ;
        var sentTempo2;
        var banderaE=true;
 
-/*       
+      
        for(var i=0; i<this.sentencias.length; i++){
            if(banderaE==true){
             sentTemporal= this.sentencias[i];
             if(sentTemporal instanceof inicioFun){
                 nombreFun = sentTemporal.nombre;
                 if(nombreFun.toUpperCase() == principal.toUpperCase()){
-                    for(var j = i+1; j<this.sentencias.length; j++){
+                    for(var j = i; j<this.sentencias.length; j++){
                         sentTempo2= this.sentencias[j];
                         if(sentTempo2 instanceof finFun){
                             if(sentTempo2.nombre.toUpperCase() == principal.toUpperCase()){
@@ -76,15 +79,27 @@ AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
                                 break;
                             }
                         }
+                        if(sentTempo2 instanceof salto){
+                            this.ejecutarInstruccion(sentTempo2);
+                            banderaE= false;
+                            break;
+                        }
+                        if(sentTempo2 instanceof relacional){
+                            this.ejecutarInstruccion(sentTempo2);
+                            banderaE=false;
+                            break;
+                        }
                         this.ejecutarInstruccion(sentTempo2);
                     }
                 }
  
             }
+           }else{
+               break;
            }
          
        }
-*/
+/*
         var funTemporal, sentTemporal;
         //buscamos la funcion princiapl la cual vamos a iniciar a ejecutar
         for(var i = 0; i< this.funciones.length; i++){
@@ -100,7 +115,7 @@ AnalizadorInterprete.prototype.Ejecutar3D= function(codigo3D, principal){
                 
             }
 
-        }
+        }*/
 
         this.ir_a="";
         this.etiqueta="";
@@ -133,11 +148,11 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
         case "ARITMETICA":{
            // this.resolverOperacion(instruccion);
-            if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
+            //if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
                 this.resolverOperacion(instruccion);
-            }else{
+           /* }else{
                 break;
-            }
+            }*/
             break;
             
             
@@ -146,15 +161,15 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
         case "GET_ASIG_ED_3D":{
            
             //console.dir(instruccion);
-            if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
+            //if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
                 this.resolverEDD(instruccion);
-            }else{
+           /* }else{
                 console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
                 console.log(this.ir_a);
                 console.log(this.etiqueta);
                 console.dir(instruccion);
                 break;
-            }
+            }*/
             break;
         }
 
@@ -165,27 +180,12 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
         case "LLAMADA":{
             var nombre = instruccion.nombreFuncion;
-            var funTemporal, sentTemporal;
-            for(var i = 0; i< this.funciones.length; i++){
-                funTemporal = this.funciones[i];
-                if(funTemporal.nombre.toUpperCase() == nombre.toUpperCase()){
-                    console.log("------------------ Ejecutando llamada a "+nombre+" ----------");
-                    for(var j = 0; j <funTemporal.instrucciones.length; j++){
-                        sentTemporal = funTemporal.instrucciones[j];
-                        if(this.bandera==1){
-                            break;
-                        }
-                        this.ejecutarInstruccion(sentTemporal);
-                    }
-                    
-                }
-    
-            }
+            this.llamadaFuncion(nombre);
             break;
         }
 
         case "IMPRIMIR":{
-            if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
+            //if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
             var tipo = instruccion.tipoImpresion;
             var exp = instruccion.expresion;
             var vVal = this.resolverValor(exp);
@@ -212,17 +212,17 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
             }
 
-            }else{
-                break;
-            }
+            //}else{
+           //     break;
+           // }
             break;
         }
 
         case "RELACIONAL":{
             //console.log("Ir a:   "+ this.ir_a+"                etiqueta:   "+ this.etiqueta);
-            if(this.ir_a.toUpperCase()== this.etiqueta.toUpperCase()){
-               console.log("Ir a:   "+ this.ir_a+"                etiqueta:   "+ this.etiqueta);
-                var simbolo = instruccion.signo;
+            //if(this.ir_a.toUpperCase()== this.etiqueta.toUpperCase()){
+           // console.log("Ir a:   "+ this.ir_a+"                etiqueta:   "+ this.etiqueta);
+            var simbolo = instruccion.signo;
             var operando1 = instruccion.operando1;
             var operando2 = instruccion.operando2;
             var etiqV= instruccion.etiquetaV;
@@ -230,48 +230,54 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
             var res = this.evaluarCondicion(simbolo, operando1, operando2);
             if(res == true){
                 this.ir_a= etiqV;
+                this.saltar(etiqV);
                // this.etiqueta = etiqV; ///
-                this.evaluar();
+               // this.evaluar();
                 bandera =1;
             }else{
                 this.ir_a= etiqF;
+                this.saltar(etiqF);
                 //this.etiqueta= etiqF; ///
-                this.evaluar();
+                //this.evaluar();
                 bandera =1;
             }
 
-            }else{
-                console.log("no se pudo :( ");
-                break;
-            }
+            //}else{
+             //   console.log("no se pudo :( ");
+               // break;
+          //  }
             
             break;
         } 
 
         case "ETIQUETA":{
             var nombreEtiqueta = instruccion.etiqueta;
-            if(this.ir_a==""){
+            this.etiqueta= instruccion.etiqueta;
+            /*if(this.ir_a==""){
                 this.etiqueta = nombreEtiqueta;
                 this.ir_a= nombreEtiqueta;
             }else{
                 this.etiqueta = nombreEtiqueta;
                 //
                 //this.ir_a= nombreEtiqueta;
-            }
+            }*/
             break;
         }
 
         case "SALTO":{
             var nombreSalto = instruccion.etiqueta;
+            this.saltar(nombreSalto);
 
 
+
+            /*
             if(this.ir_a.toUpperCase() == this.etiqueta.toUpperCase()){
                 this.ir_a= nombreSalto;
                 //
                 //this.etiqueta= nombreSalto;
                 this.evaluar();
                 this.bandera=1;
-            }
+            }*/
             break;
         }
 
@@ -283,7 +289,90 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
 };
 
+AnalizadorInterprete.prototype.llamadaFuncion= function(nombreFuncion){
+    var sentTemporal;
+       var nombreFun ;
+       var sentTempo2;
+       var banderaE=true;
+       for(var i=0; i<this.sentencias.length; i++){
+           if(banderaE==true){
+            sentTemporal= this.sentencias[i];
+            if(sentTemporal instanceof inicioFun){
+                nombreFun = sentTemporal.nombre;
+                if(nombreFun.toUpperCase() == nombreFuncion.toUpperCase()){
+                    for(var j = i; j<this.sentencias.length; j++){
+                        sentTempo2= this.sentencias[j];
+                        if(sentTempo2 instanceof finFun){
+                            if(sentTempo2.nombre.toUpperCase() == nombreFuncion.toUpperCase()){
+                                banderaE=false;
+                                break;
+                            }
+                        }
+                        if(sentTempo2 instanceof salto){
+                            this.ejecutarInstruccion(sentTempo2);
+                            banderaE= false;
+                            break;
+                        }
+                        if(sentTempo2 instanceof relacional){
+                            this.ejecutarInstruccion(sentTempo2);
+                            banderaE=false;
+                            break;
+                        }
+                        this.ejecutarInstruccion(sentTempo2);
+                    }
+                }
+ 
+            }
+           }else{
+               break;
+           }
+         
+       }
 
+};
+
+AnalizadorInterprete.prototype.saltar= function(nombreSalto){
+    var sentTemporal, sentTempo2;
+            var banderaE = true;
+            for(var i=0; i<this.sentencias.length; i++){
+                if(banderaE == true){
+                 sentTemporal= this.sentencias[i];
+                 if(sentTemporal instanceof nodoEtiqueta){
+                     if(sentTemporal.etiqueta.toUpperCase() == nombreSalto.toUpperCase()){
+                        for(var j = i; j<this.sentencias.length; j++){
+                            sentTempo2= this.sentencias[j];
+
+                            if(sentTempo2 instanceof inicioFun){
+                                banderaE= false;
+                                break;
+                            }
+                            if(sentTempo2 instanceof finFun){
+                                banderaE= false;
+                                break;
+                            }
+                            if(sentTempo2 instanceof salto){
+                                this.ejecutarInstruccion(sentTempo2);
+                                banderaE= false;
+                                break;
+                            }
+                            if(sentTempo2 instanceof relacional){
+                                this.ejecutarInstruccion(sentTempo2);
+                                banderaE=false;
+                                break;
+                            }
+                            this.ejecutarInstruccion(sentTempo2);
+                        }
+
+                     }
+                 }
+                 
+                }else{
+                    break;
+                }
+              
+            }
+
+};
 AnalizadorInterprete.prototype.evaluar = function(){
     for(var j = 0; j <funActual.instrucciones.length; j++){
         sentTemporal = funActual.instrucciones[j];
@@ -473,8 +562,8 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                 this.temporales.insertarTemporal(temp);
             }else{
                 console.log("888888888888888888888888888888888888888888888");
-                console.dir(v1);
-                console.dir(v2);
+               // console.dir(v1);
+               // console.dir(v2);
                 errores.insertarError("Semantico", "hubo un error em la suma");
             }
 
@@ -541,7 +630,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                 }
                 var res = parseFloat(v1) /parseFloat(v2);
                 
-                console.dir(res);
+              //  console.dir(res);
                 var temp = new temporal(varAsig,res);
                 this.temporales.insertarTemporal(temp);
             }else{

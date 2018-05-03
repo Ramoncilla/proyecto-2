@@ -96,7 +96,7 @@ INSTRUCCION: EXP {$$=$1;}
     |IMPRIMIR{$$=$1;}
     |RELACIONAL{$$=$1;}
     |ETIQUETA{$$=$1;}
-    |SALTO{$$=$1;};
+    |SALTO{$$=$1;}
     |INICIO_FUNCION{$$=$1;}
     |FINAL_FUNCION{$$=$1;};
 
