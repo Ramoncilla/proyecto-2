@@ -4,7 +4,7 @@ function retorno(){
     this.estructura = "nulo";
     this.referencia = "nulo";
 }
-
+ 
 retorno.prototype.setValorCadena = function(valor){
     this.tipo= "CADENA";
     this.valor = valor;

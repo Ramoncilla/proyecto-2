@@ -223,6 +223,14 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
 
+    if(sent instanceof llamada){
+        return "LLAMADA";
+    }
+
+    if(sent instanceof Concatenar){
+        return "CONCATENAR";
+    }
+
     if(sent instanceof decla_puntero){
         return "DECLA_PUNTERO";
     }

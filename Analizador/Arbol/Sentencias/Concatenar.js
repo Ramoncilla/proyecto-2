@@ -6,7 +6,7 @@ function Concatenar(){
 }
 
 
-Concatenar.prototype.setValores = function(nombre, exp1,exp2,tipo) {
+Concatenar.prototype.setValores = function(nombre,exp1,exp2,tipo) {
 	this.nombreVariable= nombre;
 	this.expresion1= exp1;
 	this.expresion2= exp2;

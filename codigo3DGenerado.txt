@@ -1,79 +1,24 @@
 
 
-begin, , , popo_vacio_popo_caracter
-
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t1; // pos de i
-<=, t1, 0, stack; // asignando a i
-// Resolviendo un repetur mientras
-jmp, , ,L1; //regresando a la etiqueral del ciclo repetir- mientras
-L1:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t2; // pos de i
-=>, t2, t3, stack; // valor de lo que trae en el stack i
-// ----------------- Resolviendo acceso local 
-+, P, 1, t4; // pos del objeto
-=>, t4, t5, stack; //apuntador al heap del obejto
-=>, t5, t6, heap; // pos donde inicial el objeto nombre
-jl, t3, t6, L2;
-jmp, , , L3;
-L2:
-
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t7; // pos de i
-=>, t7, t8, stack; //obtenidoe el valor de i
-+, t8, 1, t9;
-<=, t7, t9, stack; // asignando a i
-jmp, , ,L1; //regresando a la etiqueral del ciclo repetir mientras
-L3:
-
-
-end, , popo_vacio_popo_caracter
-
-
-
-
 begin, , , persona_PRINCIPAL
 
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t10; // pos de i
-<=, t10, 0, stack; // asignando a i
 // ----------- Instancia a una variable local --------------
-+, p, 1, t11; // pos de per
-<=, t11, h, stack; //guardando referencia del heap para el objeto per
-+, h, 1, t12; // guardo la posicion donde inicia el objeto 
-<=, h, t12, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 0, t1; // pos de p
+<=, t1, h, stack; //guardando referencia del heap para el objeto p
++, h, 1, t2; // guardo la posicion donde inicia el objeto 
+<=, h, t2, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 0, h; // reservando espacio para el objeto per
-//Ingresando referencia al this del objeto per
-+, p, 1, t13; // pos de per
-=>, t13, t14, stack; // obteniendo apuntador de per
-+, p, 2, t15; // simulando cambio de ambito
-+, t15, 0, t16; //pos del this de per
-<=, t16, t14, stack; // insertando apuntador del heap al stack del obeto per
++, h, 0, h; // reservando espacio para el objeto p
+//Ingresando referencia al this del objeto p
++, p, 0, t3; // pos de p
+=>, t3, t4, stack; // obteniendo apuntador de p
++, p, 1, t5; // simulando cambio de ambito
++, t5, 0, t6; //pos del this de p
+<=, t6, t4, stack; // insertando apuntador del heap al stack del obeto p
 // No posee parametros 
-+, p, 2, p; // simulando cambio de ambito
++, p, 1, p; // simulando cambio de ambito
 call, , , persona_vacio_persona;
--, p, 2, p; // regresando al ambito acutal
-
-// Resolviendo un repetur mientras
-jmp, , ,L4; //regresando a la etiqueral del ciclo repetir- mientras
-L4:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t17; // pos de i
-=>, t17, t18, stack; // valor de lo que trae en el stack i
-jl, t18, 5, L5;
-jmp, , , L6;
-L5:
-
-print("%c", 90);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t19; // pos de i
-=>, t19, t20, stack; //obtenidoe el valor de i
-+, t20, 1, t21;
-<=, t19, t21, stack; // asignando a i
-jmp, , ,L4; //regresando a la etiqueral del ciclo repetir mientras
-L6:
+-, p, 1, p; // regresando al ambito acutal
 
 
 end, , persona_PRINCIPAL
@@ -81,128 +26,42 @@ end, , persona_PRINCIPAL
 
 
 
+begin, , , persona_vacio_molestar
+
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t7; // pos de numero
+*, 10, 1, t8;
+<=, t7, t8, stack; // asignando a numero
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 2, t9; // pos de i
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t10; // pos de numero
+=>, t10, t11, stack; // valor de lo que trae en el stack numero
+*, 5, t11, t12;
+<=, t9, t12, stack; // asignando a i
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 2, t13; // pos de i
+=>, t13, t14, stack; // valor de lo que trae en el stack i
+print("%d", t14);
+print("%c", 83);
+
+end, , persona_vacio_molestar
+
+
+
+
 begin, , , persona_vacio_persona
 
-print("%c", 65);
-// ------------------------ Creando arreglo local nombre
-+, P, 1, t22; //pos de arreglo nombre
-<=, t22, H, stack; // ingrensando al stack apunt del heap para nombre
-+, H, 1, t23;
-<=, H, t23, heap; //insetnado donde inicia el arreglo nombre
-+, H, 1, H;
-// calculando el tamanho del arreglo
--, 20, 1, t24; //calculando el n real
--, t24, 0, t25; //iReal columna 0
-+, t25, 1, t25; //size del arreglo nombre
-<=, H, t25, heap; // insertando el tamanio del arreglo linealizado nombre
-+, H, 1, H;
-+, h, t25, h; // reservnado el espacio del arreglo nombre
-+, P, 1, t28; // pos del arreglo 
-=>, t28, t29, stack; //apuntador al heap del arreglo
-=>, t29, t30, heap; // apuntador del heap al heap donde inicia la cadena
-=>, t30, t26, heap; // size del arreglo nombre
-+, t30, 1, t27; // pos 0 donde inicia el arreglo nombre
-// Resolviendo una cadena 
-+, H, 0, t31; //apuntaodr a cadena 
-+, H, 1, t32; //apu donde inicia la cadena
-<=, t31, t32, heap; //guaradnod donde inicia la cadena 
-+, H, 1, H;
-<=, H, 12, heap; //guardando el tamanio de la cadena
-+, H, 1, H;
-+, H, 0, t33; // referencia de donde iniciar el primer caracter de la cadena
-<=, H, 65, heap; //guardadndo A
-+, H, 1, H;
-<=, H, 108, heap; //guardadndo l
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 110, heap; //guardadndo n
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 85, heap; //guardadndo U
-+, H, 1, H;
-<=, H, 114, heap; //guardadndo r
-+, H, 1, H;
-<=, H, 98, heap; //guardadndo b
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 110, heap; //guardadndo n
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 34, heap; // ingresando caracter de escape de la cadena
-+, H, 1, H;
-=>, t31, t34, heap; // pos que apunta al size de la cadena
-=>, t34, t35, heap; // size de la cadena
-+, t34, 1, t36; // Pos 0 de la cadena
-=>, t36, t37, heap; // sacandor el caracter del heap cadena
-jle, t35, t26, L7;
-jmp, , , L8;
-jmp, , , L7;
-L7:
-jne, t37, 34, L9;
-jmp, , , L10;
-jmp, , , L9;
-L9:
-<=, t27, t37, heap; // guardando el caracter 
-+, t27, 1, t27; // incremnetnado la pos del arreglo
-+, t36, 1, t36; // incrementando la pos de la cadena
-=>, t36, t37, heap; // sacandor el caracter del heap cadena
-jmp, , , L7;
-jmp, , , L10;
-L10:
-jmp, , , L8;
-L8:
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t38; // pos de i
-<=, t38, 0, stack; // asignando a i
-// Resolviendo un repetur mientras
-jmp, , ,L11; //regresando a la etiqueral del ciclo repetir- mientras
-L11:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t39; // pos de i
-=>, t39, t40, stack; // valor de lo que trae en el stack i
-jl, t40, 4, L12;
-jmp, , , L13;
-L12:
-
-print("%c", 112);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t41; // pos de i
-=>, t41, t42, stack; //obtenidoe el valor de i
-+, t42, 1, t43;
-<=, t41, t43, stack; // asignando a i
-jmp, , ,L11; //regresando a la etiqueral del ciclo repetir mientras
-L13:
-
-// ----------- Instancia a una variable local --------------
-+, p, 3, t44; // pos de n
-<=, t44, h, stack; //guardando referencia del heap para el objeto n
-+, h, 1, t45; // guardo la posicion donde inicia el objeto 
-<=, h, t45, heap; // guardando donde es que inicia el objeto dentro del heap
-+, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 0, h; // reservando espacio para el objeto n
-//Ingresando referencia al this del objeto n
-+, p, 3, t46; // pos de n
-=>, t46, t47, stack; // obteniendo apuntador de n
-+, p, 5, t48; // simulando cambio de ambito
-+, t48, 0, t49; //pos del this de n
-<=, t49, t47, stack; // insertando apuntador del heap al stack del obeto n
-// Asignando parametros  
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t52; // pos de nombre
-=>, t52, t53, stack; // valor de lo que trae en el stack nombre
-+, p, 5, t50; // size de funcion actual
-+, t50, 1, t51; //pos del parametro 1
-<=, t51, t53, stack; // asignado al stack el parametro
-+, p, 5, p; // simulando cambio de ambito
-call, , , popo_vacio_popo_caracter;
--, p, 5, p; // regresando al ambito acutal
-
++, P, 0, t15;
+=>, t15, t16, stack; 
++, P, 2, t17;
++, t16, 0, t18;
+<=, t17, t16, stack; 
++, P, 2, P;
+call, , , persona_vacio_molestar;
++, P, 3, t19;
+=>, t19, t20, stack; // valor del return
+-, P, 2, P;
 
 end, , persona_vacio_persona
 

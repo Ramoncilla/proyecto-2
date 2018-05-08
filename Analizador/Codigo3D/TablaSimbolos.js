@@ -736,7 +736,7 @@ TablaSimbolos.prototype.obtenerFirmaMetodo = function(nombreClase, noParametros,
 
 };
 
-
+ 
 
 
 TablaSimbolos.prototype.sizeFuncion = function(nombreClase, firmaMetodo){

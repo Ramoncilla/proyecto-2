@@ -2,7 +2,7 @@ function Cadena(){
 	this.valorCadena = "";
 }
 
-
+ 
 
 Cadena.prototype.setCadena = function(valor) {
 	this.valorCadena= valor.replace("\"", "");

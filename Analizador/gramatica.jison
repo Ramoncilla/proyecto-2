@@ -570,7 +570,10 @@ SENTENCIA: DECLARACION{$$=$1;}
 	|ACCESO puntoComa{$$=$1;}
 	|ASIGNACION puntoComa{$$=$1;}
 	|DESTRUIR_PUNTERO puntoComa{$$=$1;}
-	|DECLA_PUNTERO puntoComa{$$=$1;};
+	|DECLA_PUNTERO puntoComa{$$=$1;}
+	|LLAMADA puntoComa{$$=$1;};
+
+	LLAMADA: id PARAMETROS_LLAMADA {var i = new Llamada(); i.setValoresLlamada($1, $2); $$= i;};
 
 
 DECLA_LISTA: Lista id igual nuevo Lista abrePar TIPO_DECLARACION cierraPar puntoComa
@@ -976,6 +979,7 @@ VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|RESERVAR_MEMORIA{$$=$1;}
 	|OBTENER_TAMANIO{$$=$1;}
 	|VALOR_PUNTERO{$$=$1;};
+
 
 
 
