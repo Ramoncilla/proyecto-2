@@ -487,14 +487,18 @@ LISTA_PARAMETROS : abrePar PARAMETROS cierraPar {$$=$2;}
 
 PARAMETRO: TIPO_DECLARACION id 
 		{
+			var idA= new t_id();
+		    idA.setValorId($2);
 			var a = new Parametro();
-			a.setValores($1,1,$2);
+			a.setValores($1,1,idA);
 			$$=a;
 		}
 	|TIPO_DECLARACION puntero id
 		{
+			var idA= new t_id();
+		    idA.setValorId($3);
 			var a = new Parametro();
-			a.setValores($1,2,$3);
+			a.setValores($1,2,idA);
 			$$=a;
 		}
 	|TIPO_DECLARACION id COL_ARREGLO
@@ -513,6 +517,8 @@ PARAMETRO: TIPO_DECLARACION id
 			a.setValores($1,2,b);
 			$$=a;
 		};
+
+
 
 PARAMETROS: PARAMETRO 
 		{

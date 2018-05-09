@@ -3,6 +3,20 @@ function TablaSimbolos(){
 	this.listaSimbolos=[];
 }
 
+TablaSimbolos.prototype.obtenerTipoFuncion = function(nombreFuncion, nombreClase){
+  
+  var simboloTemporal;
+  for(var i =0; i<this.listaSimbolos.length; i++){
+    simboloTemporal = this.listaSimbolos[i];
+    if(simboloTemporal.rol.toUpperCase() == "FUNCION"){
+      if(simboloTemporal.nombreFuncion.toUpperCase()== nombreFuncion.toUpperCase() &&
+         simboloTemporal.ambito.toUpperCase() == nombreClase.toUpperCase()){
+           return simboloTemporal.tipoElemento;
+         }
+    }
+  }
+  return "";
+};
 
 TablaSimbolos.prototype.insertarSimbolosClase = function(simbolos) {
 	for(var i =0; i<simbolos.length; i++){

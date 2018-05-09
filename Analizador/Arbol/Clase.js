@@ -395,7 +395,7 @@ Clase.prototype.generarSimbolosClase = function() {
 		thisTemporal.setValoresVariable("THIS","THIS","THIS",ambitos.getAmbitos(),"THIS",apuntador,1);
 		apuntador++;
 
-
+ 
 		  // Creamos parametros de la funcion
 
 		  var simbParametros =[];
@@ -409,6 +409,7 @@ Clase.prototype.generarSimbolosClase = function() {
 			 // simbTemporal.setValoresVariable(parTemp.getNombre(),parTemp.getTipo(),this.obtenerTipoSimbolo(parTemp.getTipo()),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
               simbTemporal.setValoresVariable(parTemp.getNombre(),this.obtenerTipoSimbolo(parTemp.getTipo()),parTemp.getTipo(),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
               simbTemporal.setPasoReferencia(parTemp.getPaso());
+              simbTemporal.setExpresionAtributo(parTemp.obtenerObjetoParametro());
 			  apuntador++;
 			  simbParametros.push(simbTemporal);
 

@@ -1,15 +1,15 @@
+var posArreglo = require("../Expresion/PosArreglo");
+var elementoId = require("../Expresion/t_id");
+
 function Parametro(){
 	this.tipoParametro ="";
 	this.pasoParametro=0; //1 valor 2 referencia
-	this.nombreParametro = "";
+	this.objetoParametro = null;
 }
 
-
-
-
-Parametro.prototype.setValores = function(tipo,paso,nombre) {
+Parametro.prototype.setValores = function(tipo,paso,objeto) {
 	this.tipoParametro= tipo;
-	this.nombreParametro= nombre;
+	this.objetoParametro= objeto;
 	this.pasoParametro=paso;
 
 };
@@ -22,14 +22,20 @@ Parametro.prototype.getPaso= function(){
 	}
 };
 
-
 Parametro.prototype.getTipo= function(){
 	return this.tipoParametro;
 };
 
+Parametro.prototype.obtenerObjetoParametro = function(){
+	return this.objetoParametro;
+};
 
 Parametro.prototype.getNombre= function(){
-	return this.nombreParametro;
+    if(this.objetoParametro instanceof elementoId){
+		return this.objetoParametro.getValorId();
+	}else{
+		return this.objetoParametro.nombreArreglo;
+	}
 };
 
 module.exports=Parametro;

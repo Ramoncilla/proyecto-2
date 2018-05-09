@@ -1026,10 +1026,53 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+		case "RETORNO":{
+			this.operarRetorno(nodo,ambitos, clase, metoodo);
+			break;
+		}
+
 	}//fin switch sentencia
 };
 
 /* ---------------------------------------------- Acciones de ASignaciones ------------------------------------------------- */
+generacionCodigo.prototype.operarRetorno = function (nodo, ambitos,clase, metodo){
+	var expRetorno = nodo.expresionRetorno;
+	var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(metodo,clase);
+	if(tipoFuncion!=""){
+		if(expRetorno!=null){
+			var resultadoRetorno = this.resolverExpresion(expRetorno,ambitos,clase,metodo);
+			if(resultadoRetorno instanceof EleRetorno){
+				if(resultadoRetorno.tipo.toUpperCase() != "NULO"){
+					if(resultadoRetorno.tipo.toUpperCase() == tipoFuncion.toUpperCase()){
+						var posRetorno = this.tablaSimbolos.obtenerPosLocal("RETORNO",ambitos);
+						if(posRetorno!=-1){
+							var temp1 = this.c3d.getTemporal();
+							var l1 = "+, P, "+posRetorno+", "+temp1+"; // pos de retorno de a funcion "+ metodo;
+							var l2 = "<=, "+temp1+", "+resultadoRetorno.valor+", stack; //asignando el retorno con su valor";
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+						}else{
+							errores.insertarError("Semantio", "No se ha encontrador retornor en "+ metodo);
+						}
+					}else{
+						errores.insertarError("Semantico", "No coincide el tipo de la funcion "+ tipoFuncion+", con el retorno de tipo "+resultadoRetorno.tipo+", en la fucnion "+ metodo);
+					}
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver a exprresion del retorno en "+ metodo);
+				}
+			}else{
+				errorres.insertarError("Semantico", "Expresion no valida para evaluar un retorno en "+ metodo);
+			}		
+		}else{
+			//salir del ambito actual
+	
+		}
+	}else{
+		errores.insertarError("Semantico", "No se ha encontrado la funcion con el nombre de "+ metodo);
+	}
+	
+    
+};
 
 generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,dimensionesArreglo,ambitos,clase,metodo){
 	var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo,ambitos);
@@ -1482,6 +1525,7 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 	ret.setValoresNulos();
 	var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
 	var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(clase,parametrosFunc.length,nombreFunc);
+    var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(nombreFunc, clase);	
 	if((sizeFuncActual!= -1) && (firmaMetodo!="")){
 		var temp1 = this.c3d.getTemporal();
 		var temp2 = this.c3d.getTemporal();
@@ -1493,6 +1537,8 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		var l4 = "+, "+temp2+", 0, "+temp4+";";
 		var l5 = "<=, "+temp3+", "+temp2+", stack; ";
 
+		
+
 		//van los parametros 
 
 		var l6 = "+, P, "+sizeFuncActual+", P;";
@@ -1503,8 +1549,6 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		var l8 = "+, P, "+sizeFirma+", "+temp5+";";
 		var l9 = "=>, "+temp5+", "+temp6+", stack; // valor del return";
 		var l10 = "-, P, "+sizeFuncActual+", P;";
-
-
 		this.c3d.addCodigo(l1);
 		this.c3d.addCodigo(l2);
 		this.c3d.addCodigo(l3);
@@ -1515,7 +1559,11 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		this.c3d.addCodigo(l8);
 		this.c3d.addCodigo(l9);
 		this.c3d.addCodigo(l10);
-
+		var retornoFuncion = new EleRetorno();
+		retornoFuncion.tipo= tipoFuncion;
+		retornoFuncion.valor = temp6;
+		retornoFuncion.setReferencia("STACK", temp5);
+		return retornoFuncion;
 	}else{
 		errores.insertarError("Semantico", "La funcion "+ nombreFunc+", no existe");
 		return ret;
@@ -2722,7 +2770,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 				for(var i =0; i<elementosAcceso.length; i++){
 					elementoTemporal = elementosAcceso[i];
 					if(bandera){
-
 						if(elementoTemporal instanceof t_id){
 							nombreElemento = elementoTemporal.nombreId;
 							var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
@@ -2731,7 +2778,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 								var temp1_4= this.c3d.getTemporal();
 								var l1_4= "=>, "+posFinal+", "+temp1_4+", heap; // recuperando pos incial del objeto";
 								this.c3d.addCodigo(l1_4);
-
 								//
 								//var temp4 = this.c3d.getTemporal();
 								var l4 = "+, "+temp1_4 +", "+posVar+", "+posFinal+";";
@@ -2758,7 +2804,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							var parametros = elementoTemporal.parametros;
 							var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(tipoElemento,parametros.length,nombreElemento);
 							var sizeFunActual = this.tablaSimbolos.sizeFuncion(tipoElemento,firmaMetodo);
-
 							var temp1_1= this.c3d.getTemporal();
 							var temp1_2 = this.c3d.getTemporal();
 
@@ -2767,8 +2812,6 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							var l1_3="<=, "+temp1_2+", "+posFinal+", stack; // pasadon como refeenria el valor del this";
 
 							// parametros
-
-
 							var l1_4 = "+, P, "+sizeFunActual+", P;";
 							var l1_5 = "call, , , "+firmaMetodo+";";
 							//retornor
