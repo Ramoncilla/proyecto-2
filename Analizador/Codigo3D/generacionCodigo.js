@@ -600,6 +600,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										}
 										
 									}else{
+
 										errores.insertarError("Semantico", "Hubo un error al reslver para "+ nombreVar);
 									}
 
@@ -783,6 +784,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
 											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+											cont++;
 											this.c3d.addCodigo(l1_1);
 											this.c3d.addCodigo(l2_1);
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
@@ -791,6 +793,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 												l3_1= "<=, "+temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
 												this.c3d.addCodigo(l3_1);
 											} 
+											
 										}
 
 									}else{
@@ -860,6 +863,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
 											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+											cont++;
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
 											var l3_1="";
 											this.c3d.addCodigo(l1_1);
@@ -869,6 +873,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 												
 												this.c3d.addCodigo(l3_1);
 											} 
+											
 										}
 
 									}else{
@@ -1510,7 +1515,6 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		this.c3d.addCodigo(l8);
 		this.c3d.addCodigo(l9);
 		this.c3d.addCodigo(l10);
-
 
 	}else{
 		errores.insertarError("Semantico", "La funcion "+ nombreFunc+", no existe");
@@ -2655,15 +2659,15 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 	var r = new EleRetorno();
 	r.setValoresNulos();
 	var esAtributo = this.tablaSimbolos.esAtributo(nombreVariable, ambitos);
-			if(esAtributo!=null){
-				var posVariable;
-				var tipoElemento;
-				var posFinal;
-				var esObj;
-				var nombreElemento;
-				var simbolo = this.tablaSimbolos.obtenerSimbolo(nombreVariable,ambitos,esAtributo);
-				var rolSimbolo =simbolo.tipoSimbolo;
-				if(esAtributo){
+	if(esAtributo!=null){
+		var posVariable;
+		var tipoElemento;
+		var posFinal;
+		var esObj;
+		var nombreElemento;
+		var simbolo = this.tablaSimbolos.obtenerSimbolo(nombreVariable,ambitos,esAtributo);
+		var rolSimbolo =simbolo.tipoSimbolo;
+		if(esAtributo){
 					//es un atributo
 					var posVariable = this.tablaSimbolos.obtenerPosAtributo(nombreVariable,ambitos);
 					tipoElemento = this.tablaSimbolos.obtenerTipo(nombreVariable, ambitos);
@@ -2676,14 +2680,15 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						var l1 = "+, P, 0, "+temp1+"; ";
 						var l2 = "=>, "+temp1+", "+ temp2+", stack; // apuntador al heap";
 						var l3 = "=>, "+temp2+", "+temp3+", heap;";
-						var l4 ="+, "+temp3+", "+posVariable+", "+temp4+"; ";
-						var l5= "=>, "+temp4+", "+posFinal+", heap; // recuperando pos incial del objeto";
+						var l4 ="+, "+temp3+", "+posVariable+", "+posFinal+"; ";
+						//var l4 ="+, "+temp3+", "+posVariable+", "+temp4+"; ";
+						//var l5= "=>, "+temp4+", "+posFinal+", heap; // recuperando pos incial del objeto";
 						this.c3d.addCodigo("// Resolviendo un acceso para un atrinuto");
 						this.c3d.addCodigo(l1);
 						this.c3d.addCodigo(l2);
 						this.c3d.addCodigo(l3);
 						this.c3d.addCodigo(l4);		
-						this.c3d.addCodigo(l5);
+						//this.c3d.addCodigo(l5);
 						esObj= this.esObjeto(tipoElemento);
 					}else{
 						errores.insertarError("Semantico", "No existe la variable para el acceso atributo "+ nombreVariable);
@@ -2698,12 +2703,13 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						var temp2 = this.c3d.getTemporal();
 						posFinal = this.c3d.getTemporal();
 						var l1 = "+, P, "+posVariable+", "+temp1+"; // pos del objeto";
-						var l2 = "=>, "+temp1+", "+temp2+", stack; //apuntador al heap del obejto";
-						var l3 = "=>, "+temp2+", "+posFinal+", heap; // pos donde inicial el objeto "+ nombreVariable;
+						var l2 = "=>, "+temp1+", "+posFinal+", stack; //apuntador al heap del obejto";
+						//var l2 = "=>, "+temp1+", "+temp2+", stack; //apuntador al heap del obejto";
+						//var l3 = "=>, "+temp2+", "+posFinal+", heap; // pos donde inicial el objeto "+ nombreVariable;
 						this.c3d.addCodigo("// ----------------- Resolviendo acceso local ");
 						this.c3d.addCodigo(l1);
 						this.c3d.addCodigo(l2);
-						this.c3d.addCodigo(l3);
+						//this.c3d.addCodigo(l3);
 						esObj= this.esObjeto(tipoElemento);
 					}else{
 						errores.insertarError("Semantico", "No existe la variable para el acceso local "+ nombreVariable);
@@ -2722,11 +2728,16 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							var posVar = this.tablaSimbolos.obtenerPosAtributoAcceso(tipoElemento, nombreElemento);
 							rolSimbolo= this.tablaSimbolos.obtenerPosTipoSimboloAcceso(tipoElemento,nombreElemento);
 							if(posVar!=-1 && rolSimbolo!= ""){
-								var temp4 = this.c3d.getTemporal();
-								var l4 = "+, "+posFinal +", "+posVar+", "+temp4+";";
-								var l5 = "=>, "+temp4+", "+posFinal+", heap; // pos inicial de otro objeto o valor de una vairble comun ";
+								var temp1_4= this.c3d.getTemporal();
+								var l1_4= "=>, "+posFinal+", "+temp1_4+", heap; // recuperando pos incial del objeto";
+								this.c3d.addCodigo(l1_4);
+
+								//
+								//var temp4 = this.c3d.getTemporal();
+								var l4 = "+, "+temp1_4 +", "+posVar+", "+posFinal+";";
+								//var l5 = "=>, "+temp4+", "+posFinal+", heap; // pos inicial de otro objeto o valor de una vairble comun ";
 								this.c3d.addCodigo(l4);
-								this.c3d.addCodigo(l5);
+								//this.c3d.addCodigo(l5);
 								tipoElemento = this.tablaSimbolos.obtenerTipoAtributoAcceso(tipoElemento, nombreElemento);
 								//esObj= this.esObjeto(tipoElemento);	
 							}else{
@@ -2745,6 +2756,31 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						if(elementoTemporal instanceof llamada_funcion){
 							nombreElemento = elementoTemporal.nombreFuncion;
 							var parametros = elementoTemporal.parametros;
+							var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(tipoElemento,parametros.length,nombreElemento);
+							var sizeFunActual = this.tablaSimbolos.sizeFuncion(tipoElemento,firmaMetodo);
+
+							var temp1_1= this.c3d.getTemporal();
+							var temp1_2 = this.c3d.getTemporal();
+
+							var l1_1="+, P, "+sizeFunActual+", "+temp1_1+";";
+							var l1_2="+, "+ temp1_1+", 0, "+temp1_2+";";
+							var l1_3="<=, "+temp1_2+", "+posFinal+", stack; // pasadon como refeenria el valor del this";
+
+							// parametros
+
+
+							var l1_4 = "+, P, "+sizeFunActual+", P;";
+							var l1_5 = "call, , , "+firmaMetodo+";";
+							//retornor
+							var l1_6 = "-, P, "+sizeFunActual+", P;";
+
+							this.c3d.addCodigo(l1_1);
+							this.c3d.addCodigo(l1_2);
+							this.c3d.addCodigo(l1_3);
+							this.c3d.addCodigo(l1_4);
+							this.c3d.addCodigo(l1_5);
+							this.c3d.addCodigo(l1_6);
+
 
 						}
 
@@ -2752,6 +2788,11 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 
 							var nombreF = elementoTemporal.nombreFuncion;
 							var expresionF = elementoTemporal.expresion;
+							
+							    var temp1_4= this.c3d.getTemporal();
+								var l1_4= "=>, "+posFinal+", "+temp1_4+", heap; // recuperando pos incial del objeto";
+								this.c3d.addCodigo(l1_4);
+								posFinal=temp1_4;
 
 							if(nombreF.toUpperCase() == "TAMANIO" && rolSimbolo.toUpperCase()=="ARREGLO"){
 								bandera =false;
@@ -2806,8 +2847,11 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 					}
 				}//fin ciclo de valores acceso
 
+						var tempR = this.c3d.getTemporal();
+						var l_R = "=>, "+posFinal+", "+tempR+", heap; // valor a retoranar del acceso";
+						this.c3d.addCodigo(l_R);
 				        var ret = new EleRetorno();
-						ret.valor= posFinal;
+						ret.valor= tempR;
 						ret.tipo= tipoElemento;
 						return ret;
 

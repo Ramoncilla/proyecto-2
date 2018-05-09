@@ -458,7 +458,7 @@ return false;
 
 
 AnalizadorInterprete.prototype.agregarImpresion = function(cad){
-    this.cadenaImpresion+=cad;
+    this.cadenaImpresion+=cad+"\n";
 };
 
 

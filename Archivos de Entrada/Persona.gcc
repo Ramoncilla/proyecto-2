@@ -1,36 +1,83 @@
+clase llanta{
 
+     entero valor1Llanta;
+     entero valor2Llanta;
+
+
+     publico llanta(entero val1, entero val2){
+         valor1Llanta = val1;
+         valor2Llanta = val2;
+     }
+
+
+     publico vacio mostrarVAlor1(){
+         imprimir(valor1Llanta);
+     }
+
+     publico vacio mostrarVAlor2(){
+         imprimir(valor2Llanta);
+     }
+
+
+
+}
+clase carro {
+
+      caracter col ;
+      llanta lla1;
+    publico carro(caracter Color, entero rinLlanta){
+        col = color;
+        lla1 = nuevo llaNTA(rinLlanta*2, rinLlanta*3);
+        
+    }
+
+
+    publico vacio imprimir_Color(){
+        imprimir(col);
+    }
+}
 
 clase persona {
 
-  
+  entero edad;
+  carro car;
    
      vacio molestar(){
-         entero numero = 10*1;
-         entero i = 5*numero;
-         imprimir(i);
-         imprimir('S');
+         imprimir(edad);
      }
  
 
-    publico persona(){
-        molestar();
+    publico persona(entero val, caracter val2){
+        car = nuevo carro(val2, val2+3);
+        edad = val+1;
     }
 
     principal(){ 
 
-        persona p = nuevo persona();
-        /*
-        caracter nombrek[30]= "Pedro ";
-        caracter apellido [10]= "Cruz";
-        concatenar(nombrek,apellido);
-        concatenar(nombrek, " de Urbina");
-        concatenar(nombrek,"hola #E" ,65);
-        entero i=0;
-        repetir_mientras(i<nombrek.tamanio){
-            imprimir(nombrek[i]);
-            i+=1;
-        }
-       */
+        persona p1 = nuevo persona(888, 'A');
+        p1.molestar();
+        imprimir(p1.car.col);
+        p1.car.imprimir_Color();
+        p1.car.lla1.mostrarVAlor1();
+        p1.car.lla1.mostrarVAlor2();
+        imprimir(p1.CAR.llA1.valor2Llanta);
+        imprimir(p1.cAr.LLA1.valor1Llanta);
+
+
+        //persona p2 = nuevo persona(999, 'B');
+        //p1.molestar();
+        //p2.molestar();
+        
+        //caracter nombre[10]= "alina";
+        //entero i =0;
+
+        //repetir_mientras(i<nombre.tamanio){
+          //  imprimir(nombre[i]);
+          //  i+=1;
+       // }
+
+       
+       // p2.car.imprimir_Color();
        
     }
 
