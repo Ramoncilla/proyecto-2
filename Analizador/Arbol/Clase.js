@@ -30,6 +30,11 @@ var Selecciona = require("../Arbol/Sentencias/Selecciona");
 var Si = require("../Arbol/Sentencias/Si");
 
 
+var terminoID = require("./Expresion/t_id");
+var posArreglo = require("./Expresion/PosArreglo");
+
+
+
 var lErrores = new listaErrores();
 var apuntador = 0;
 var lista2=[];
@@ -405,9 +410,13 @@ Clase.prototype.generarSimbolosClase = function() {
 		  for(var j = 0; j<funTemporal.parametros.parametros.length;j++){
 			  noPametros++;
 			  parTemp= funTemporal.parametros.parametros[j];
-			  simbTemporal= new Simbolo();
+              simbTemporal= new Simbolo();
+              var tipoSimbolo = this.obtenerTipoSimbolo(parTemp.getTipo());
+              if(parTemp.obtenerObjetoParametro() instanceof posArreglo){
+                  tipoSimbolo= "ARREGLO";
+              }
 			 // simbTemporal.setValoresVariable(parTemp.getNombre(),parTemp.getTipo(),this.obtenerTipoSimbolo(parTemp.getTipo()),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
-              simbTemporal.setValoresVariable(parTemp.getNombre(),this.obtenerTipoSimbolo(parTemp.getTipo()),parTemp.getTipo(),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
+              simbTemporal.setValoresVariable(parTemp.getNombre(),tipoSimbolo,parTemp.getTipo(),ambitos.getAmbitos(),"PARAMETRO",apuntador,1);
               simbTemporal.setPasoReferencia(parTemp.getPaso());
               simbTemporal.setExpresionAtributo(parTemp.obtenerObjetoParametro());
 			  apuntador++;

@@ -283,15 +283,19 @@ this.$=$$[$0-1];
 break;
 case 42:
 
+			var idA= new t_id();
+		    idA.setValorId($$[$0]);
 			var a = new Parametro();
-			a.setValores($$[$0-1],1,$$[$0]);
+			a.setValores($$[$0-1],1,idA);
 			this.$=a;
 		
 break;
 case 43:
 
+			var idA= new t_id();
+		    idA.setValorId($$[$0]);
 			var a = new Parametro();
-			a.setValores($$[$0-2],2,$$[$0]);
+			a.setValores($$[$0-2],2,idA);
 			this.$=a;
 		
 break;

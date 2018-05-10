@@ -18,17 +18,30 @@ clase llanta{
          imprimir(valor2Llanta);
      }
 
-
-
 }
+
+
 clase carro {
 
       caracter col ;
       llanta lla1;
+
     publico carro(caracter Color, entero rinLlanta){
         col = color;
         lla1 = nuevo llaNTA(rinLlanta*2, rinLlanta*3);
         
+    }
+
+     carro(caracter n){
+       
+       col = n;
+       lla1 = nuevo llANTA(10, 20);
+       
+   }
+     
+
+    publico caracter obtenerColor(){
+        retorno col;
     }
 
 
@@ -42,32 +55,57 @@ clase persona {
   entero edad;
   carro car;
    
-     vacio molestar(){
+
+   vacio molestar(){
          imprimir(edad);
      }
  
+    publico carro obtenerCarro(){
+      carro c = nuevo carro('H');
+      retorno c;
+    }
 
     publico persona(entero val, caracter val2){
+        //caracter nombre[20]= "Alina Urbina";
+       // carro g = nuevo carro(nombre);
         car = nuevo carro(val2, val2+3);
         edad = val+1;
+       // imprimir(obtenerChar());
+       // carro c = obtenerCarro();
+       // imprimir('I');
+       // imprimir(c.col);
+       
+
+
+        //asignarNombre(nombre);
+    }
+
+    publico caracter obtenerChar(){
+        caracter c = 'U';
+        IMPrimir(c);
+        retorno c;
     }
 
     principal(){ 
-
         persona p1 = nuevo persona(888, 'A');
         p1.molestar();
         imprimir(p1.car.col);
-        p1.car.imprimir_Color();
+       p1.car.imprimir_Color();
         p1.car.lla1.mostrarVAlor1();
         p1.car.lla1.mostrarVAlor2();
-        imprimir(p1.CAR.llA1.valor2Llanta);
+     imprimir(p1.CAR.llA1.valor2Llanta);
         imprimir(p1.cAr.LLA1.valor1Llanta);
-
-
-        //persona p2 = nuevo persona(999, 'B');
-        //p1.molestar();
-        //p2.molestar();
         
+        imprimir('X');
+       entero c = p1.obtenerCarro().lla1.valor1Llanta;
+       imprimir (c);
+       
+
+
+        persona p2 = nuevo persona(999, 'B');
+        //p1.molestar();
+        p2.molestar();
+        imprimir(p2.obtenerCarro().col);
         //caracter nombre[10]= "alina";
         //entero i =0;
 

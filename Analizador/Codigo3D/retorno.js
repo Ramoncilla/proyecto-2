@@ -20,7 +20,7 @@ retorno.prototype.setValorEntero = function(valor){
     this.tipo = "ENTERO";
     this.valor = valor;
 };
-
+ 
 retorno.prototype.setValorChar = function(valor){
     this.tipo = "CARACTER";
     this.valor = valor;

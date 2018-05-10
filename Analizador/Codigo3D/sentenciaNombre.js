@@ -129,7 +129,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
    
     if(sent instanceof llamada){
-        return "llamada";
+        return "LLAMADA";
     }
     
 
@@ -222,6 +222,9 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
+    if (sent instanceof Retorno){
+        return "RETORNO";
+    }
 
     if(sent instanceof llamada){
         return "LLAMADA";

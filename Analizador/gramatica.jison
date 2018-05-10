@@ -965,7 +965,7 @@ UNARIO: NEG masMas {var a = new Unario(); a.setValores($1,"++"); $$=a;}
 NEG: menos VALOR { var a = new Negativo(); a.setExpresion($2); $$=a;}
 	|VALOR{$$=$1;};
 
-
+ 
 VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|decimal{var num = new Decimal(); num.setNumero($1); $$=num;}
 	|caracter{var car= new Caracter(); car.setValorCaracter($1); $$=car;}

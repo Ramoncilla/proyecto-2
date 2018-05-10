@@ -9,7 +9,7 @@ TablaSimbolos.prototype.obtenerTipoFuncion = function(nombreFuncion, nombreClase
   for(var i =0; i<this.listaSimbolos.length; i++){
     simboloTemporal = this.listaSimbolos[i];
     if(simboloTemporal.rol.toUpperCase() == "FUNCION"){
-      if(simboloTemporal.nombreFuncion.toUpperCase()== nombreFuncion.toUpperCase() &&
+      if(simboloTemporal.nombreCorto.toUpperCase()== nombreFuncion.toUpperCase() &&
          simboloTemporal.ambito.toUpperCase() == nombreClase.toUpperCase()){
            return simboloTemporal.tipoElemento;
          }
