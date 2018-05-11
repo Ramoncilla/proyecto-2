@@ -2,7 +2,7 @@ function Hacer_Mientras(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-
+ 
 
 
 Hacer_Mientras.prototype.setValores = function(sent, exp) {

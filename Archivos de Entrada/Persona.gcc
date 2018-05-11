@@ -62,6 +62,10 @@ clase persona {
 
    vacio molestar(){
          imprimir(edad);
+         entero a = 189;
+         imprimir(a);
+         retorno;
+         imprimir('T');
      }
  
     publico carro obtenerCarro(){
@@ -74,35 +78,34 @@ entero obtenernUmero(){
     retorno 5*8;
 }
     publico persona(entero val, caracter val2){
-       /* //caracter nombre[20]= "Alina Urbina";
-       // carro g = nuevo carro(nombre);
-       entero a = obtenernUmero();
-        car = nuevo carro(val2, a);
-        imprimir(car.valorCarro);
-        edad = val+1;
-       // 
-       // carro c = obtenerCarro();
-       // imprimir('I');
-       // imprimir(c.col);*/
-       
-imprimir(obtenerChar(125));
-
-        //asignarNombre(nombre);
+      edad = val;
     }
 
-    publico caracter obtenerChar(entero a){
+    publico caracter obtenerChar(){
         caracter c = 'U';
         IMPrimir(c);
         retorno c;
+        imprimir('A');
+        imprimir('A');
     }
 
     principal(){ 
 
 
-   
+caracter nombre[20]= "Pedro Cruz";
+
+entero i = 0;
+
+hacer{
+    imprimir(nombre[i]);
+    i+=1;
+}mientras (i<nombre.tamanio);
+
+    /*
         persona p1 = nuevo persona(888, 'A');
-        /*
+        
         p1.molestar();
+       
         imprimir(p1.car.col);
        p1.car.imprimir_Color();
         p1.car.lla1.mostrarVAlor1();

@@ -21,11 +21,14 @@ var posicion_arreglo = require("../Arbol/Expresion/PosArreglo");
 var llamada_funcion = require("../Arbol/Expresion/Llamada");
 var funNativa = require("../Arbol/Expresion/FuncionNativa");
 
-
+var listaEtiquetas = require("../Codigo3D/Etiquetas");
 
 
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
+var etiquetasRetorno = new listaEtiquetas();
+var etiquetasContinuar = new listaEtiquetas();
+var etiquetasBreak = new listaEtiquetas();
 
 /* -------------------------- Constructor ----------------------------------- */
 function generacionCodigo(){
@@ -34,8 +37,12 @@ function generacionCodigo(){
 	this.listaClase=[];
 	this.importaciones=[];
 	this.tablaSimbolos = new tabla_Simbolos();
-
+	
 }
+
+
+
+
 
 generacionCodigo.prototype.setValores = function(sentAr){
 	this.sentenciasArchivo = sentAr;
@@ -78,15 +85,20 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+nombreAmb);
 			this.c3d.addCodigo("");
+			var etiquetaReturn = this.c3d.getEtiqueta();
+			etiquetasRetorno.insertarEtiqueta(etiquetaReturn);
 			for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
 				sentTemporal = claseTemporal.principal_met.sentencias[j];
 				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreAmb);
 			}
 			this.c3d.addCodigo("");
+			this.c3d.addCodigo(etiquetaReturn+":");
+			etiquetasRetorno.eliminarActual();
 			this.c3d.addCodigo("end, , "+nombreAmb);
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
+			
 		}
 		//2. Traducimos funcion por funcion
   
@@ -98,6 +110,8 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
 			this.c3d.addCodigo("");
+			var etiquetaRetorno = this.c3d.getEtiqueta();
+		    etiquetasRetorno.insertarEtiqueta(etiquetaRetorno);
 			//hacemos la diferencia entre constructores y funciones normales 
 			if(funTemporal.esConstructor){
 				//buscamos los atributos que poseen asignacion
@@ -116,6 +130,8 @@ generacionCodigo.prototype.generar3D= function(){
 				this.escribir3D(sentTemporal,ambitos,nombreClase,funTemporal.obtenerFirma());
 			}
 			this.c3d.addCodigo("");
+			this.c3d.addCodigo(etiquetaRetorno+":");
+			etiquetasRetorno.eliminarActual();
 			this.c3d.addCodigo("end, , "+funTemporal.obtenerFirma());
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
@@ -1020,6 +1036,45 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}//fin repetir mientras
 
+ 
+
+		case "HACER_MIENTRAS":{
+			var expCiclo = nodo.expresion;
+			var cuerpoCiclo = nodo.cuerpo;
+			this.c3d.addCodigo("// ---------- Resolver Hacer Mientras ----------- ");
+			var etiqCiclo = this.c3d.getEtiqueta();
+			var etiqBreak = this.c3d.getEtiqueta();
+			var etiqContinue = this.c3d.getEtiqueta();
+			etiquetasBreak.insertarEtiqueta(etiqBreak);
+			etiquetasContinuar.insertarEtiqueta(etiqContinue);
+
+			this.c3d.addCodigo(etiqCiclo+":");
+			ambitos.addHacerMientras();
+			if(cuerpoCiclo!=0){
+				var sentTemp;
+				for(var i = 0; i<cuerpoCiclo.length; i++){
+					sentTemp= cuerpoCiclo[i];
+					this.escribir3D(sentTemp,ambitos,clase,metodo);
+				}
+				this.c3d.addCodigo(etiqContinue+": //etiqueta del conituar");
+				var retExpresion = this.resolverExpresion(expCiclo,ambitos,clase, metodo);
+				if(retExpresion instanceof nodoCondicion){
+					this.c3d.addCodigo(retExpresion.codigo);
+					this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
+					this.c3d.addCodigo("jmp, , , "+etiqCiclo+";");
+					this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
+				    this.c3d.addCodigo(etiqBreak+":");
+					ambitos.ambitos.shift();
+					etiquetasBreak.eliminarActual();
+					etiquetasContinuar.eliminarActual();
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion para repetir mientras");
+				}
+	
+			}
+
+			break;
+		}
 		case "LLAMADA":{
 
 			this.llamada_funcion(nodo,ambitos,clase,metodo, 0, true);
@@ -1052,6 +1107,7 @@ generacionCodigo.prototype.operarRetorno = function (nodo, ambitos,clase, metodo
 							var l2 = "<=, "+temp1+", "+resultadoRetorno.valor+", stack; //asignando el retorno con su valor";
 							this.c3d.addCodigo(l1);
 							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo("jmp, , , "+etiquetasRetorno.obtenerActual()+";");
 						}else{
 							errores.insertarError("Semantio", "No se ha encontrador retornor en "+ metodo);
 						}
@@ -1066,6 +1122,7 @@ generacionCodigo.prototype.operarRetorno = function (nodo, ambitos,clase, metodo
 			}		
 		}else{
 			//salir del ambito actual
+			this.c3d.addCodigo("jmp, , , "+etiquetasRetorno.obtenerActual()+";");
 	
 		}
 	}else{
@@ -1528,7 +1585,8 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 	var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(clase,parametrosFunc.length,nombreFunc);
     var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo);	
 	if((sizeFuncActual!= -1) && (firmaMetodo!="")){
-		
+		//var etiqSalida= this.c3d.getEtiqueta();
+		///etiquetasRetorno.insertarEtiqueta(etiqSalida);
 		if(modo){
 			var temp1 = this.c3d.getTemporal();
 			var temp2 = this.c3d.getTemporal();
@@ -1572,11 +1630,8 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 
 
 					}
-					
 
 				}
-
-
 			}else{
 				errores.insertarError("Semantico", "No existe la funcion "+ firmaMetodo+", con "+ parametrosFunc.length+" parametros");
 				return;
@@ -1597,9 +1652,11 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		var l10 = "-, P, "+sizeFuncActual+", P;";
 		this.c3d.addCodigo(l6);
 		this.c3d.addCodigo(l7);
+		//this.c3d.addCodigo(etiquetasRetorno.eliminarActual()+":");
 		this.c3d.addCodigo(l8);
 		this.c3d.addCodigo(l9);
 		this.c3d.addCodigo(l10);
+		
 		var retornoFuncion = new EleRetorno();
 		retornoFuncion.tipo= tipoFuncion;
 		retornoFuncion.valor = temp6;
@@ -1612,6 +1669,7 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 
 	return ret;
 };
+
 
 /* ================================================ Resolver Expresiones ===================================================== */
 
