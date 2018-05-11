@@ -3,7 +3,7 @@ function Si(){
 	this.sentV=[];
 	this.sentF = [];
 }
-
+ 
 Si.prototype.setValores = function(exp,verdaderas,falsas) {
 	this.expresion= exp;
 	this.sentV= verdaderas;

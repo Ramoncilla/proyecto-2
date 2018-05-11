@@ -1116,7 +1116,73 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+		case "ENCICLAR":{
 
+			//if(nodo.esValido()){
+				var cuerpoCiclo = nodo.cuerpo;
+				var etiqCiclo = this.c3d.getEtiqueta();
+				var etiqBreak = this.c3d.getEtiqueta();
+				//var etiqContinue = this.c3d.getEtiqueta();
+				this.c3d.addCodigo(etiqCiclo+":");
+				etiquetasBreak.insertarEtiqueta(etiqBreak);
+				etiquetasContinuar.insertarEtiqueta(etiqCiclo);
+				ambitos.addEnciclar();
+				var sentTemp;
+				for(var i = 0; i<cuerpoCiclo.length; i++){
+					sentTemp= cuerpoCiclo[i];
+					this.escribir3D(sentTemp,ambitos,clase,metodo);
+				}
+				this.c3d.addCodigo("jmp, , , "+ etiqCiclo+";");
+				this.c3d.addCodigo(etiqBreak+":");
+				ambitos.ambitos.shift();
+				etiquetasBreak.eliminarActual();
+				etiquetasContinuar.eliminarActual();
+
+		//	}else{
+			//	errores.insertarError("Semantico", "Un ciclo Enciclar, debe traer por fuerza una sentencia romper");
+		//	}
+			break;
+		}
+
+
+		case "SI":{
+			var expresionSi = nodo.expresion;
+			var sentVerdaderas = nodo.sentV;
+			var sentFalsas = nodo.sentF;
+			var etiqSalida = this.c3d.getEtiqueta();
+			var retExpresion = this.resolverExpresion(expresionSi,ambitos, clase, metodo);
+
+			if(retExpresion instanceof nodoCondicion){
+				this.c3d.addCodigo(retExpresion.codigo);
+				this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
+				if(sentVerdaderas!= 0){
+					ambitos.addSi();
+					var sentTemp;
+					for(var i = 0; i<sentVerdaderas.length; i++){
+						sentTemp= sentVerdaderas[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					ambitos.ambitos.shift();
+				}
+				this.c3d.addCodigo("jmp, , , "+ etiqSalida+"; // salida del if");
+				this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
+				if(sentFalsas!=0){
+					ambitos.addElse();
+					var sentTemp;
+					for(var i = 0; i<sentFalsas.length; i++){
+						sentTemp= sentFalsas[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					ambitos.ambitos.shift();
+				}
+				this.c3d.addCodigo(etiqSalida+":");
+
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expreison para SI");
+			}
+
+			break;
+		}
 
 		case "CONTINUAR":{
 			this.c3d.addCodigo("jmp, , , "+etiquetasContinuar.obtenerActual()+"; // haciendo un continuar ");

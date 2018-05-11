@@ -92,17 +92,30 @@ entero obtenernUmero(){
     principal(){ 
 
 
-caracter nombre[20]= "Pedro Cruz";
+//caracter nombre[20]= "Pedro Cruz";
 
 entero i = 0;
+enciclar ciclo1{
+  si(i<10){
+    es_VerDadero{
+        imprimir(i);
 
+    }// fin del verdadero
+    es_Falso{
+        romper;
+
+    }//fin del falso
+  }//fin del si
+ i+=1;
+}
+/*
 repetir{
     imprimir(nombre[i]);
     i+=1;
     imprimir('A');
     continuar;
     imprimir('Z');
-}hasta_que (!(i<nombre.tamanio));
+}hasta_que (!(i<nombre.tamanio));*/
 
     /*
         persona p1 = nuevo persona(888, 'A');
