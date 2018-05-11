@@ -306,6 +306,9 @@ print("%c", t115);
 =>, t116, t117, stack; //obtenidoe el valor de i
 +, t117, 1, t118;
 <=, t116, t118, stack; // asignando a i
+print("%c", 65);
+jmp, , , L15; // haciendo un continuar 
+print("%c", 90);
 L15: //etiqueta del conituar
 // -------------- Resolviendo para un ID (var local) ------------
 +, p, 1, t119; // pos de i

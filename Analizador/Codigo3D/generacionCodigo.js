@@ -1116,6 +1116,18 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+
+
+		case "CONTINUAR":{
+			this.c3d.addCodigo("jmp, , , "+etiquetasContinuar.obtenerActual()+"; // haciendo un continuar ");
+			break;
+		}
+
+		case "ROMPER":{
+			this.c3d.addCodigo("jmp, , , "+etiquetasBreak.obtenerActual()+"; // haciendo un romper ");
+			break;
+		}
+
 		case "LLAMADA":{
 
 			this.llamada_funcion(nodo,ambitos,clase,metodo, 0, true);

@@ -99,6 +99,9 @@ entero i = 0;
 repetir{
     imprimir(nombre[i]);
     i+=1;
+    imprimir('A');
+    continuar;
+    imprimir('Z');
 }hasta_que (!(i<nombre.tamanio));
 
     /*

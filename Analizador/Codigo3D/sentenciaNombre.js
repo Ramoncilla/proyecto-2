@@ -225,6 +225,14 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
 
+    if(sent instanceof Romper){
+        return "ROMPER";
+    }
+
+    if(sent instanceof Continuar){
+        return "CONTINUAR";
+    }
+
     if(sent instanceof repetir){
         return "repetir";
     }
