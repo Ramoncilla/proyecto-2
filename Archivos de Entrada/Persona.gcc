@@ -25,9 +25,13 @@ clase carro {
 
       caracter col ;
       llanta lla1;
+      entero valorCarro;
 
     publico carro(caracter Color, entero rinLlanta){
         col = color;
+        imprimir('Y');
+        imprimir(rinLlanta);
+        valorCarro = rinLlanta;
         lla1 = nuevo llaNTA(rinLlanta*2, rinLlanta*3);
         
     }
@@ -65,29 +69,39 @@ clase persona {
       retorno c;
     }
 
+
+entero obtenernUmero(){
+    retorno 5*8;
+}
     publico persona(entero val, caracter val2){
-        //caracter nombre[20]= "Alina Urbina";
+       /* //caracter nombre[20]= "Alina Urbina";
        // carro g = nuevo carro(nombre);
-        car = nuevo carro(val2, val2+3);
+       entero a = obtenernUmero();
+        car = nuevo carro(val2, a);
+        imprimir(car.valorCarro);
         edad = val+1;
-       // imprimir(obtenerChar());
+       // 
        // carro c = obtenerCarro();
        // imprimir('I');
-       // imprimir(c.col);
+       // imprimir(c.col);*/
        
-
+imprimir(obtenerChar(125));
 
         //asignarNombre(nombre);
     }
 
-    publico caracter obtenerChar(){
+    publico caracter obtenerChar(entero a){
         caracter c = 'U';
         IMPrimir(c);
         retorno c;
     }
 
     principal(){ 
+
+
+   
         persona p1 = nuevo persona(888, 'A');
+        /*
         p1.molestar();
         imprimir(p1.car.col);
        p1.car.imprimir_Color();
@@ -115,7 +129,7 @@ clase persona {
        // }
 
        
-       // p2.car.imprimir_Color();
+       // p2.car.imprimir_Color();*/
        
     }
 

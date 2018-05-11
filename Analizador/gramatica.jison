@@ -1132,8 +1132,8 @@ ATRI: ATRI_
 		};
 
 
-LISTA_EXPRESIONES: EXPRESION { var arreglo = []; var g= arreglo.push($1); console.log("size "+ g); $$= arreglo;}
-	|LISTA_EXPRESIONES coma EXPRESION{var arreglo = $1; var g= arreglo.push($3); console.log("size "+ g);; $$= arreglo;};
+LISTA_EXPRESIONES: EXPRESION { var arreglo = []; var g= arreglo.push($1); $$= arreglo;}
+	|LISTA_EXPRESIONES coma EXPRESION{var arreglo = $1; var g= arreglo.push($3);  $$= arreglo;};
 }
 
 

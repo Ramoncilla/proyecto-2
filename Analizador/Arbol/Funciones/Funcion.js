@@ -68,7 +68,7 @@ Funcion.prototype.iniciarParametros= function(){
 		this.parametros.insertarParametro(temporal);
 	}
 
-	console.log("la funcion " + this.nombreFuncion+" posee "+ this.parametros.parametros.length+" parametros");
+	//console.log("la funcion " + this.nombreFuncion+" posee "+ this.parametros.parametros.length+" parametros");
 };
 
 

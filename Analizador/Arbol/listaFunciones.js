@@ -21,7 +21,7 @@ listaFunciones.prototype.existeFuncion = function(nuevaFunc){
 
         }else{
             lErrores.insertarError("Semantico","Constructor no valido, "+ nuevaFunc.nombreFuncion+", debe llamarse "+ nuevaFunc.nombreClase);
-            console.log("constructor no valido ");
+            //console.log("constructor no valido ");
             return true;
         }
 
@@ -42,10 +42,10 @@ listaFunciones.prototype.insertarFuncion = function(nuevaFunc){
 
     if(!this.existeFuncion(nuevaFunc)){
         this.funciones.push(nuevaFunc);
-        console.log("se ha guardado la funcion " + nuevaFunc.obtenerFirma());
+        //console.log("se ha guardado la funcion " + nuevaFunc.obtenerFirma());
     }else{
         lErrores.insertarError("Semantico","Ha ocurrido un error, no se ha podido guardar la funcion  "+nuevaFunc.nombreFuncion);
-        console.log("Error, la funcion con el nombre ya existe o ya fue sobreescrita "+ nuevaFunc.obtenerFirma());
+       // console.log("Error, la funcion con el nombre ya existe o ya fue sobreescrita "+ nuevaFunc.obtenerFirma());
     } 
    
 

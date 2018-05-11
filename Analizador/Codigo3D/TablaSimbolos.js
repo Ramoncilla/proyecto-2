@@ -3,14 +3,31 @@ function TablaSimbolos(){
 	this.listaSimbolos=[];
 }
 
-TablaSimbolos.prototype.obtenerTipoFuncion = function(nombreFuncion, nombreClase){
+
+
+TablaSimbolos.prototype.obtenerParametros = function(firmaFuncion){
+
+  var simboloTemporal;
+  var parametros = [];
+  for(var i =0; i<this.listaSimbolos.length; i++){
+    simboloTemporal = this.listaSimbolos[i];
+    if(simboloTemporal.rol.toUpperCase() == "PARAMETRO"){
+      if(simboloTemporal.ambito.toUpperCase()== firmaFuncion.toUpperCase()){
+           parametros.push(simboloTemporal);
+         }
+    }
+  }
+  return parametros;
+};
+
+
+TablaSimbolos.prototype.obtenerTipoFuncion = function(nombreFuncion){
   
   var simboloTemporal;
   for(var i =0; i<this.listaSimbolos.length; i++){
     simboloTemporal = this.listaSimbolos[i];
     if(simboloTemporal.rol.toUpperCase() == "FUNCION"){
-      if(simboloTemporal.nombreCorto.toUpperCase()== nombreFuncion.toUpperCase() &&
-         simboloTemporal.ambito.toUpperCase() == nombreClase.toUpperCase()){
+      if(simboloTemporal.nombreCorto.toUpperCase()== nombreFuncion.toUpperCase()){
            return simboloTemporal.tipoElemento;
          }
     }
@@ -23,6 +40,8 @@ TablaSimbolos.prototype.insertarSimbolosClase = function(simbolos) {
 		this.listaSimbolos.push(simbolos[i]);
 	}
 };
+
+
 
 
 
@@ -345,7 +364,7 @@ TablaSimbolos.prototype.existeListaGlobal = function(cadenaAmbito, nombre ){
           if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
             if(simTemporal.rol.toUpperCase()=="ATRIBUTO"){
              //return false;
-              console.log("existe el simbolo "+nombre);
+              //console.logconsole.log("existe el simbolo "+nombre);
               cont++;
             }
               
@@ -365,7 +384,7 @@ TablaSimbolos.prototype.existeListaLocal = function(cadenaAmbito, nombre ){
           if(simTemporal.nombreCorto.toUpperCase() == nombre.toUpperCase()){
             if(simTemporal.rol.toUpperCase()!="ATRIBUTO"){
              //return false;
-              console.log("existe el simbolo "+nombre);
+              //console.log("existe el simbolo "+nombre);
               cont++;
             }
               
@@ -756,7 +775,7 @@ TablaSimbolos.prototype.obtenerFirmaMetodo = function(nombreClase, noParametros,
 TablaSimbolos.prototype.sizeFuncion = function(nombreClase, firmaMetodo){
 
   var item;
-  console.log("ESTOY BUSANDO    "+ nombreClase+ firmaMetodo);
+  //console.log("ESTOY BUSANDO    "+ nombreClase+ firmaMetodo);
   for(var i =0; i<this.listaSimbolos.length; i++){
     item = this.listaSimbolos[i];
     if(item.ambito.toUpperCase() == nombreClase.toUpperCase() &&

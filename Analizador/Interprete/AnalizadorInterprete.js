@@ -561,10 +561,10 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                 var temp = new temporal(varAsig,res);
                 this.temporales.insertarTemporal(temp);
             }else{
-                console.log("888888888888888888888888888888888888888888888");
+              //  console.log("888888888888888888888888888888888888888888888");
                // console.dir(v1);
                // console.dir(v2);
-                errores.insertarError("Semantico", "hubo un error em la suma");
+               // errores.insertarError("Semantico", "hubo un error em la suma");
             }
 
             break;

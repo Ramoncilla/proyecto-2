@@ -82,7 +82,7 @@ Clase.prototype.iniciarValores = function() {
         }
     } else {
         lErrores.insertarError("Semantico","Hubo un error al crear el arbol de analisis");
-        console.log("las senticas son nulas");
+        //console.log("las senticas son nulas");
     }
 };
 
@@ -168,7 +168,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                     } else {
                         lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreC);
-						console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
+						//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
                     }
                 } else if (enteroDecla == 2) {
                     //es un arreglo
@@ -192,7 +192,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                     } else {
                         lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreArreglo);
-						console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
+						//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
                     }
 
 
@@ -217,7 +217,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreArreglo);
-					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
+					//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreArreglo);
                 }
 
 
@@ -237,7 +237,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
             } else {
                 lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePuntero);
-                console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
+                //console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
 
             }
 
@@ -259,7 +259,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreCola);
-					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreCola);
+					//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreCola);
                 }
 
 
@@ -279,7 +279,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreLista);
-					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreLista);
+					//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreLista);
                 }
                 break;
 
@@ -296,7 +296,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePila);
-					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePila);
+					//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePila);
                 }
 
  
@@ -317,7 +317,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombrePuntero);
-					console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
+					//console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
 
                 }
 
@@ -337,7 +337,7 @@ Clase.prototype.generarSimbolosAtributos = function() {
 
                 } else {
                     lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un atributo con el nombre de "+ nombreC);
-                    console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
+                    //console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombreC);
                 }
                 break;
         }
@@ -390,7 +390,7 @@ Clase.prototype.generarSimbolosClase = function() {
 		var noPametros =0;
         var banderaConstructor=funTemporal.esConstructor;
 		ambitos = new Ambito();
-        console.log(funTemporal.obtenerFirma());
+        //console.log(funTemporal.obtenerFirma());
         ambitos.addAmbito(this.nombre);
 		ambitos.addAmbito(funTemporal.obtenerFirma());
 		apuntador=0;
@@ -426,7 +426,7 @@ Clase.prototype.generarSimbolosClase = function() {
           //aqui se genera los simbolos de las sentencias de la funcion
           var sentFuncion = funTemporal.getSentencias();
           lista2=[];
-          console.log("esta funcion tiene  "+ sentFuncion.length+" SENTENCIAS");
+         // //console.log("esta funcion tiene  "+ sentFuncion.length+" SENTENCIAS");
           this.obtenerSimbolosMetodo(sentFuncion,ambitos,simbParametros);
          
 
@@ -717,7 +717,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
 
         }else{
             lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
-            console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+           // //console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
         }
          
         
@@ -738,7 +738,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
-        console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
+       // //console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
     }
 
     }
@@ -761,7 +761,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreCola+", debido a que existe en el ambito actual");
-        console.log("No se ha podido crear el simbolo "+nombreCola+", ya existe en el ambito actual");
+////console.log("No se ha podido crear el simbolo "+nombreCola+", ya existe en el ambito actual");
     }
     }
 
@@ -779,7 +779,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreLista+", debido a que existe en el ambito actual");
-            console.log("No se ha podido crear el simbolo "+nombreLista+", ya existe en el ambito actual");
+        //   //console.log("No se ha podido crear el simbolo "+nombreLista+", ya existe en el ambito actual");
         }
     }
 
@@ -796,7 +796,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePila+", debido a que existe en el ambito actual");
-            console.log("No se ha podido crear el simbolo "+nombrePila+", ya existe en el ambito actual");
+          //  //console.log("No se ha podido crear el simbolo "+nombrePila+", ya existe en el ambito actual");
         }
     }
 
@@ -819,7 +819,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
     apuntador++;
 }else{
     lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
-    console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
+    ////console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
 }
   }
 
@@ -827,8 +827,8 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
     if (sent instanceof DeclaPuntero) {
         var puntero = sent.getPuntero();
         var nombrePuntero = puntero.getNombrePuntero();
-        console.log(nombrePuntero);
-        console.dir(sent);
+       // //console.log(nombrePuntero);
+       // console.dir(sent);
          var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePuntero,parametros);
         
         if(cont==0){
@@ -839,7 +839,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         apuntador++;
     }else{
         lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
-        console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
+        ////console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
     }
     }
 
@@ -863,7 +863,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
                 apuntador++;
             }else{
                 lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
-                console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+                //console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
             }
         
             
@@ -884,7 +884,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
             apuntador++;
         }else{
             lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
-            console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
+            //console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
         }
         }
 
@@ -913,7 +913,7 @@ Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre, parametros
 
         for(var i =0; i<ambitos.ambitos.length; i++){
             cadenaAmbito = ambitoTemporal2.getAmbitos();
-            console.log("ambito a analizar de los prametros "+ cadenaAmbito);
+            //console.log("ambito a analizar de los prametros "+ cadenaAmbito);
             cont=cont + this.existeLista(cadenaAmbito,nombre,parametros);
             ambitoTemporal2.ambitos.shift();
         }
@@ -927,12 +927,12 @@ Clase.prototype.existeEnAmbitoLocal= function(lista, ambitos, nombre, parametros
  else{
     for(var i =0; i<ambitos.ambitos.length; i++){
         cadenaAmbito = ambitoTemporal.getAmbitos();
-        console.log("ambito a analizar "+ cadenaAmbito);
+        //console.log("ambito a analizar "+ cadenaAmbito);
 
         cont=cont + this.existeLista(cadenaAmbito,nombre,lista);
         ambitoTemporal.ambitos.shift();
     }
-    console.log(cont+"<----- Contador para la vairable " + nombre);
+    //console.log(cont+"<----- Contador para la vairable " + nombre);
     
 
  }
@@ -948,7 +948,7 @@ Clase.prototype.existeLista = function(cadenaAmbito, nombre , lista){
         simTemporal  = lista[i];
         if(simTemporal.getAmbito().toUpperCase() == cadenaAmbito.toUpperCase()){
             if(simTemporal.getNombreCorto().toUpperCase() == nombre.toUpperCase()){
-                console.log("existe el simbolo "+nombre);
+                //console.log("existe el simbolo "+nombre);
                 cont++;
             }
         }

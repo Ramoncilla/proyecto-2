@@ -1022,7 +1022,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 		case "LLAMADA":{
 
-			this.llamada_funcion(nodo,ambitos,clase,metodo);
+			this.llamada_funcion(nodo,ambitos,clase,metodo, 0, true);
 			break;
 		}
 
@@ -1038,7 +1038,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 /* ---------------------------------------------- Acciones de ASignaciones ------------------------------------------------- */
 generacionCodigo.prototype.operarRetorno = function (nodo, ambitos,clase, metodo){
 	var expRetorno = nodo.expresionRetorno;
-	var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(metodo,clase);
+	var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(metodo);
 	if(tipoFuncion!=""){
 		if(expRetorno!=null){
 			var resultadoRetorno = this.resolverExpresion(expRetorno,ambitos,clase,metodo);
@@ -1526,7 +1526,7 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 	ret.setValoresNulos();
 	var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
 	var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(clase,parametrosFunc.length,nombreFunc);
-    var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo, clase);	
+    var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo);	
 	if((sizeFuncActual!= -1) && (firmaMetodo!="")){
 		
 		if(modo){
@@ -1554,12 +1554,39 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 			this.c3d.addCodigo(l1_2);
 			this.c3d.addCodigo(l1_3);
 		}
+
+
+		if(parametrosFunc.length>0){
+			// posee parametros 
+			var parametros = this.tablaSimbolos.obtenerParametros(clase+"_"+firmaMetodo);
+			if(parametros!=0){
+				var parametroTemporal;
+				var nodoParametro;
+				for(var i=0; i<parametros.length; i++){
+					parametroTemporal = parametros[i];
+					nodoParametro= parametroTemporal.expresionAtributo;
+					if(nodoParametro instanceof t_id){
+
+					}
+					if(nodoParametro instanceof posicion_arreglo){
+
+
+					}
+					
+
+				}
+
+
+			}else{
+				errores.insertarError("Semantico", "No existe la funcion "+ firmaMetodo+", con "+ parametrosFunc.length+" parametros");
+				return;
+			}
+		}
 		
 
 		
 
 		//van los parametros 
-
 		var l6 = "+, P, "+sizeFuncActual+", P;";
 		var l7 = "call, , , "+ firmaMetodo+";";
 		var sizeFirma = this.tablaSimbolos.sizeFuncion(clase, firmaMetodo)-1;
@@ -2159,7 +2186,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 		}
 
 		case "LLAMADA":{
-			var v = this.llamada_funcion(nodo, ambitos,clase,metodo);
+			var v = this.llamada_funcion(nodo, ambitos,clase,metodo, 0, true);
 			return v;
 			break;
 		}
@@ -2786,7 +2813,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						return r;
 					}
 				}// final del else una vairbale local  y del atributo
-
+ 
 				var bandera=true;
 				var elementoTemporal; 
 				for(var i =0; i<elementosAcceso.length; i++){
@@ -2840,33 +2867,15 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(tipoElemento,parametros.length,nombreElemento);
 							var sizeFunActual = this.tablaSimbolos.sizeFuncion(tipoElemento,firmaMetodo);
 							var retLlamada = this.llamada_funcion(elementoTemporal,ambitos,tipoElemento,firmaMetodo,posFinal,false);
-							var clase5 = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo,tipoElemento);
-							tipoElemento = retLlamada.tipo;
-							posFinal = retLlamada.referencia;
-							//return retLlamada;
-							/*
+							var clase5 = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo);
+							if(retLlamada.tipo.toUpperCase() == clase5.toUpperCase()){
+								tipoElemento = retLlamada.tipo;
+								posFinal = retLlamada.referencia;
+							}else{
+								errores.insertarError("Semantico", "Tipos no coinciden para la funcion en un acceso "+ clase5+", con "+ retLlamada.tipo);
+								break;
+							}
 							
-							var temp1_1= this.c3d.getTemporal();
-							var temp1_2 = this.c3d.getTemporal();
-
-							var l1_1="+, P, "+sizeFunActual+", "+temp1_1+";";
-							var l1_2="+, "+ temp1_1+", 0, "+temp1_2+";";
-							var l1_3="<=, "+temp1_2+", "+posFinal+", stack; // pasadon como refeenria el valor del this";
-
-							// parametros
-							var l1_4 = "+, P, "+sizeFunActual+", P;";
-							var l1_5 = "call, , , "+firmaMetodo+";";
-							//retornor
-							var l1_6 = "-, P, "+sizeFunActual+", P;";
-
-							this.c3d.addCodigo(l1_1);
-							this.c3d.addCodigo(l1_2);
-							this.c3d.addCodigo(l1_3);
-							this.c3d.addCodigo(l1_4);
-							this.c3d.addCodigo(l1_5);
-							this.c3d.addCodigo(l1_6);
-*/
-
 						}
 
 						if(elementoTemporal instanceof funNativa){
