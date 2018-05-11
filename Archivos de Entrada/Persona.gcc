@@ -96,10 +96,10 @@ caracter nombre[20]= "Pedro Cruz";
 
 entero i = 0;
 
-hacer{
+repetir{
     imprimir(nombre[i]);
     i+=1;
-}mientras (i<nombre.tamanio);
+}hasta_que (!(i<nombre.tamanio));
 
     /*
         persona p1 = nuevo persona(888, 'A');

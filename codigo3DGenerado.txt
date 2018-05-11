@@ -284,7 +284,7 @@ L10:
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
 +, p, 1, t104; // pos de i
 <=, t104, 0, stack; // asignando a i
-// ---------- Resolver Hacer Mientras ----------- 
+// ---------- Resolver Repetir ----------- 
 L13:
 +, P, 0, t105; // pos de arreglo nombre
 =>, t105, t106, stack; // apunt al heap de arreglo nombre

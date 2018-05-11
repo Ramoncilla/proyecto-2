@@ -2,7 +2,7 @@ function Repetir(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-
+ 
 
 Repetir.prototype.setValores = function(sent, exp) {
 	this.expresion= exp;

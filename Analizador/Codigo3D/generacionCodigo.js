@@ -1047,7 +1047,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			var etiqContinue = this.c3d.getEtiqueta();
 			etiquetasBreak.insertarEtiqueta(etiqBreak);
 			etiquetasContinuar.insertarEtiqueta(etiqContinue);
-
 			this.c3d.addCodigo(etiqCiclo+":");
 			ambitos.addHacerMientras();
 			if(cuerpoCiclo!=0){
@@ -1075,6 +1074,48 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 			break;
 		}
+
+
+		case "REPETIR":{
+			var expCiclo = nodo.expresion;
+			var cuerpoCiclo = nodo.cuerpo;
+			this.c3d.addCodigo("// ---------- Resolver Repetir ----------- ");
+			var etiqCiclo = this.c3d.getEtiqueta();
+			var etiqBreak = this.c3d.getEtiqueta();
+			var etiqContinue = this.c3d.getEtiqueta();
+			etiquetasBreak.insertarEtiqueta(etiqBreak);
+			etiquetasContinuar.insertarEtiqueta(etiqContinue);
+			this.c3d.addCodigo(etiqCiclo+":");
+			ambitos.addRepetir();
+			if(cuerpoCiclo!=0){
+				var sentTemp;
+				for(var i = 0; i<cuerpoCiclo.length; i++){
+					sentTemp= cuerpoCiclo[i];
+					this.escribir3D(sentTemp,ambitos,clase,metodo);
+				}
+				this.c3d.addCodigo(etiqContinue+": //etiqueta del conituar");
+				var retExpresion = this.resolverExpresion(expCiclo,ambitos,clase, metodo);
+				if(retExpresion instanceof nodoCondicion){
+					this.c3d.addCodigo(retExpresion.codigo);
+					this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
+					this.c3d.addCodigo("jmp, , , "+etiqCiclo+";");
+					this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
+				    this.c3d.addCodigo(etiqBreak+":");
+					ambitos.ambitos.shift();
+					etiquetasBreak.eliminarActual();
+					etiquetasContinuar.eliminarActual();
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion para repetir mientras");
+				}
+	
+			}
+
+			break;
+			
+
+			break;
+		}
+
 		case "LLAMADA":{
 
 			this.llamada_funcion(nodo,ambitos,clase,metodo, 0, true);

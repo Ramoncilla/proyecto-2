@@ -21,7 +21,7 @@ var repetir_mientras = require("../Arbol/Sentencias/Repetir_Mientras");
 var decla_puntero = require("../Arbol/Sentencias/DeclaPuntero");
 var decla_asigna_puntero = require("../Arbol/Sentencias/DeclaAsignaPuntero");
 var hacer_mientras = require("../Arbol/Sentencias/Hacer_Mientras");
-
+var repetir = require("../Arbol/Sentencias/Repetir");
 
 var decla_lista = require("../Arbol/Sentencias/DeclaLista");
 var decla_cola = require("../Arbol/Sentencias/DeclaCola");
@@ -224,6 +224,11 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
+
+    if(sent instanceof repetir){
+        return "repetir";
+    }
+
     if(sent instanceof hacer_mientras){
         return "HACER_MIENTRAS";
     }
