@@ -94,6 +94,16 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
 "/="				return 'divIgual'
 "/"                   return 'division'
+"{%"     return 'abreLeccion'
+"%}"     return 'cierraLeccion'
+"a-coach" return 'acoach'
+"g-coach" return 'gcoach'
+"titulo"     return 'titulo'
+"descripcion"       return 'descripcion'
+"tipo"                return 'tipo'
+"ejemplo"             return 'ejemplo'
+"tarea"     return 'tarea'
+"resultado"     return 'resultado'
 
 "crearPuntero" return 'crearPuntero'
 "obtenerDireccion" return 'obtenerDireccion'
@@ -240,7 +250,55 @@ INICIO: ARCHIVO EOF
 		a.setValores($1);
 		console.log("llegue hasta aqui");
 		return a;
-	};
+	}
+	|LECCIONES EOF;
+/*--------------------------------- Lecciones  ---------------------------------------------------*/
+
+    VAL_TERM_TITULO: id
+		|entero
+		|decimal;
+
+	TERM_TITULO: TERM_TITULO VAL_TERM_TITULO
+		|VAL_TERM_TITULO;
+
+	TITULO: titulo abreLlave TERM_TITULO cierraLlave;
+
+	DESCRIPCION: descripcion abreLlave TERM_TITULO cierraLlave;
+	
+	TAREA: tarea abreLlave TERM_TITULO cierraLlave;
+
+	RESULTADO: resultado abreLlave TERM_TITULO cierraLlave;
+
+	TIPO_LECCION: tipo abrellave tipoLeccion cierraLlave;
+
+	EJEMPLO: ejemplo abrellave FUNCION cierraLlave;
+	EJEMPLO2: ejemplo abreLlave SENTENCIAS cierraLlave;
+
+	
+	tipoLeccion: gcoach
+    	|acoach;
+
+		LECCIONES: LECCION
+			|LECCIONES LECCION;
+
+
+		LECCION: abreLeccion VALORES_LECCION cierraLeccion;
+
+		VALORES_LECCION: VALOR_LECCION
+			|VALORES_LECCION VALOR_LECCION;
+
+
+		VALOR_LECCION: TITULO
+			|DESCRIPCION
+			|TAREA
+			|RESULTADO
+			|TIPO_LECCION
+			|EJEMPLO
+			|EJEMPLO2; 
+
+	/*------------------------------- fin lecciones --------------------------------------------------*/
+
+	
 
 ARCHIVO: SENT_ARCHIVO 
 		{
