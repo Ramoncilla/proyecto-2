@@ -91,65 +91,35 @@ entero obtenernUmero(){
 
     principal(){ 
 
+        repetir_CONTANDO(vaRIable:i; desde:10; hasta:20){
 
-//caracter nombre[20]= "Pedro Cruz";
-
-entero i = 0;
-enciclar ciclo1{
-  si(i<10){
-    es_VerDadero{
-        imprimir(i);
-
-    }// fin del verdadero
-    es_Falso{
-        romper;
-
-    }//fin del falso
-  }//fin del si
- i+=1;
-}
-/*
-repetir{
-    imprimir(nombre[i]);
-    i+=1;
-    imprimir('A');
-    continuar;
-    imprimir('Z');
-}hasta_que (!(i<nombre.tamanio));*/
-
-    /*
-        persona p1 = nuevo persona(888, 'A');
-        
-        p1.molestar();
-       
-        imprimir(p1.car.col);
-       p1.car.imprimir_Color();
-        p1.car.lla1.mostrarVAlor1();
-        p1.car.lla1.mostrarVAlor2();
-     imprimir(p1.CAR.llA1.valor2Llanta);
-        imprimir(p1.cAr.LLA1.valor1Llanta);
-        
-        imprimir('X');
-       entero c = p1.obtenerCarro().lla1.valor1Llanta;
-       imprimir (c);
-       
+            si(i==13){
+                eS_VERDAdero{
+                    continuar;
+                }
+            }
+            si(i==18){
+                eS_VERDAdero{
+                    romper;
+                }
+            }
+            imprimir(i);
+        }
 
 
-        persona p2 = nuevo persona(999, 'B');
-        //p1.molestar();
-        p2.molestar();
-        imprimir(p2.obtenerCarro().col);
-        //caracter nombre[10]= "alina";
-        //entero i =0;
 
-        //repetir_mientras(i<nombre.tamanio){
-          //  imprimir(nombre[i]);
-          //  i+=1;
-       // }
+       entero i= 8;
+        entero c;
+           c=0;
+       contador (i){
+           
+           imprimir(c);
+           c+=1;
 
-       
-       // p2.car.imprimir_Color();*/
-       
+       }
+
     }
 
 }
+
+

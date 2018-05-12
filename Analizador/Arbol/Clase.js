@@ -641,7 +641,9 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
 
     if(sent instanceof Repetir_Contando){
         var cuerpo = sent.getCuerpo();
+        var variableControl = sent.getDeclaracion();
         ambitos.addRepetirContando();
+        this.simbMet(variableControl,ambitos,parametros);
         for(var i =0; i< cuerpo.length; i++){
             this.simbMet(cuerpo[i],ambitos, parametros);
         }

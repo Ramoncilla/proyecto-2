@@ -3,7 +3,7 @@ function Contador(){
 	this.expresion = null;
 	this.cuerpo=[];
 }
-
+ 
 
 Contador.prototype.setValores = function(exp, sent) {
 	this.expresion= exp;

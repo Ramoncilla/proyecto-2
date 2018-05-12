@@ -3,7 +3,7 @@ function DeclaVariable(){
 	this.nombreVariable = "";
 }
 
-
+ 
 DeclaVariable.prototype.setValores = function(tipo, nombre) {
 	this.tipoVariable= tipo;
 	this.nombreVariable= nombre;

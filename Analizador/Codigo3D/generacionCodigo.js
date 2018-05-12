@@ -1184,6 +1184,210 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+
+		case "CONTADOR":{
+			var expresionContador = nodo.expresion;
+			var cuerpoCiclo = nodo.cuerpo;
+			var resultadoExpresion = this.resolverExpresion(expresionContador,ambitos,clase,metodo);
+			if(resultadoExpresion instanceof EleRetorno){
+				if(resultadoExpresion.tipo.toUpperCase() == "ENTERO"){
+					var temp1 = this.c3d.getTemporal();
+					var etiq1 = this.c3d.getEtiqueta();
+					var etiq2 = this.c3d.getEtiqueta();
+					var etiq3 = this.c3d.getEtiqueta();
+					var etiq4 = this.c3d.getEtiqueta();
+					var etiqContinuar = this.c3d.getEtiqueta();
+					var etiqBreak = this.c3d.getEtiqueta();
+					etiquetasBreak.insertarEtiqueta(etiqBreak);
+					etiquetasContinuar.insertarEtiqueta(etiqContinuar);
+					ambitos.addContador();
+
+					var l1= "+, 0, 0, "+temp1+"; // variable de control para el ciclo contador";
+					var l2 = "jg, "+resultadoExpresion.valor+", 0, "+etiq1+";";
+					var l3 = "jmp, , , "+ etiq2+";";
+					var l4 = etiq1+":";
+					var l5 = "jl, "+temp1+", "+resultadoExpresion.valor+", "+etiq3+";";
+					var l6 = "jmp, , , "+etiq4+";";
+					var l7 = etiq3+":";
+					this.c3d.addCodigo(" // ------------------ Inicio ciclo contador -----------------");
+					this.c3d.addCodigo(l1);
+					this.c3d.addCodigo(l2);
+					this.c3d.addCodigo(l3);
+					this.c3d.addCodigo(l4);
+					this.c3d.addCodigo(l5);
+					this.c3d.addCodigo(l6);
+					this.c3d.addCodigo(l7);
+					var sentTemp;
+					for(var i = 0; i<cuerpoCiclo.length; i++){
+						sentTemp= cuerpoCiclo[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					var l8 = etiqContinuar+":";
+					var l9 = "+, "+temp1+", 1, "+temp1+"; // incrementando en uno la vairable del ciclo contador";
+					var l10 = "jmp, , , "+etiq1+"; // retornando al ciclo continuar";
+					var l11 = etiq4+":";
+					var l12 = etiq2+":";
+					var l13 = etiqBreak+":";
+
+					this.c3d.addCodigo(l8);
+					this.c3d.addCodigo(l9);
+					this.c3d.addCodigo(l10);
+					this.c3d.addCodigo(l11);
+					this.c3d.addCodigo(l12);
+					this.c3d.addCodigo(l13);
+					this.c3d.addCodigo(" // ------------------ Fin ciclo contador -----------------");
+					ambitos.ambitos.shift();
+					etiquetasBreak.eliminarActual();
+					etiquetasContinuar.eliminarActual();
+
+
+				}else{
+					errores.insertarError("Semantico", "La variable pivote para un ciclo contador debe de ser de tipo entero no, "+ resultadoExpresion.tipo);
+				}
+
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver un numero pivote para el ciclo contador");
+			}
+
+			
+			break;
+		}
+
+
+		case "REPETIR_CONTANDO":{
+
+			var declaVar = nodo.declaracion;
+			var desde = nodo.expresionDesde;
+			var hasta = nodo.expresionHasta;
+			var cuerpoCiclo = nodo.cuerpo;
+
+			this.c3d.addCodigo("// ----------------  Inicio Repetir Contando ----------------------");
+			var retDesde = this.resolverExpresion(desde,ambitos,clase,metodo);
+			var retHasta = this.resolverExpresion(hasta,ambitos,clase,metodo);
+			if(retDesde instanceof EleRetorno){
+				if(retHasta instanceof EleRetorno){
+					if (retDesde.tipo.toUpperCase() == "ENTERO"){
+						if(retHasta.tipo.toUpperCase() == "ENTERO"){
+							//asignamos vairable con el valor de desde
+							ambitos.addRepetirContando();
+							var nombreVar = declaVar.nombreVariable;
+							var posVar = this.tablaSimbolos.obtenerPosLocal(nombreVar, ambitos);
+							if(posVar!=-1){
+								var etiq1 = this.c3d.getEtiqueta();
+								var etiq2 = this.c3d.getEtiqueta();
+								var etiq3 = this.c3d.getEtiqueta();
+								var etiq4 = this.c3d.getEtiqueta();
+								var etiq5 = this.c3d.getEtiqueta();
+								var etiq6 = this.c3d.getEtiqueta();
+								var etiq7 = this.c3d.getEtiqueta();
+								var etiq8 = this.c3d.getEtiqueta();
+								var etiqContinue = this.c3d.getEtiqueta();
+								var etiqBreak = this.c3d.getEtiqueta();
+								etiquetasBreak.insertarEtiqueta(etiqBreak);
+								etiquetasContinuar.insertarEtiqueta(etiqContinue);
+								
+
+								var temp1 = this.c3d.getTemporal();
+								var l1 = "+, P, "+posVar+", "+temp1+"; // pos de "+ nombreVar;
+								var l2 = "<=, "+temp1+", "+retDesde.valor+", stack; // asignando con el valor de desde la vairable "+ nombreVar;
+								var temp2 = this.c3d.getTemporal();
+								var l3 = "=>, "+temp1+", "+temp2+", stack; // obteniendo el valor de  desde "+ nombreVar;
+								var l4 = "jne, "+temp2+", "+ retHasta.valor+", "+etiq1+";";
+								var l5 = "jmp, , , "+ etiq2+";";
+								var l6 = etiq1+":";
+								var l7 = "jl, "+temp2+", "+retHasta.valor+", "+etiq3+";";
+								var l8 = "jmp, , , "+ etiq4+";";
+								var temp3 = this.c3d.getTemporal();
+								var l9 = etiq3+":";
+								var l10 = "+, 1, 0, "+temp3+";";
+								var l11 = "jmp, , , "+ etiq5+";";
+								var l12 = etiq4+":";
+								var l13 = "+, -1, 0, "+temp3+";";
+								var l14 = "jmp, , , "+ etiq5+";";
+								var l15= etiq5+":";
+								var temp4 = this.c3d.getTemporal();
+								var l16 = "-, "+retHasta.valor+", "+temp2+", "+temp4+";";
+								var l17 = "*, "+temp4+", "+temp3+", "+temp4+";";
+								var temp5 = this.c3d.getTemporal();
+								var l18 = "+, 0, 0, "+temp5+"; // iniciando la viairrble pivote del ciclo repetir contando";
+								var l19 = etiq6+":";
+								var l20 = "jle, "+temp5+", "+temp4+", "+etiq7+";";
+								var l21 = "jmp, , , "+etiq8+";";
+								var l22 = etiq7+":";
+								this.c3d.addCodigo(" // ------------------ Inicio ciclo repetir contando -----------------");
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+								this.c3d.addCodigo(l5);
+								this.c3d.addCodigo(l6);
+								this.c3d.addCodigo(l7);
+								this.c3d.addCodigo(l8);
+								this.c3d.addCodigo(l9);
+								this.c3d.addCodigo(l10);
+								this.c3d.addCodigo(l11);
+								this.c3d.addCodigo(l12);
+								this.c3d.addCodigo(l13);
+								this.c3d.addCodigo(l14);
+								this.c3d.addCodigo(l15);
+								this.c3d.addCodigo(l16);
+								this.c3d.addCodigo(l17);
+								this.c3d.addCodigo(l18);
+								this.c3d.addCodigo(l19);
+								this.c3d.addCodigo(l20);
+								this.c3d.addCodigo(l21);
+								this.c3d.addCodigo(l22);
+								var sentTemp;
+								for(var i = 0; i<cuerpoCiclo.length; i++){
+									sentTemp= cuerpoCiclo[i];
+									this.escribir3D(sentTemp,ambitos,clase,metodo);
+								}
+								var l23 = etiqContinue+":";
+								var l24 = "+, "+temp2+", "+temp3+", "+temp2+"; // nuevo valor de la variable del ciclo "+nombreVar;
+								var l25 = "+, "+temp5+", 1, "+temp5+";";
+								var l26 = "<=, "+temp1+", "+temp2+", stack; // asignando a "+ nombreVar;
+								var l27 = "jmp, , , "+ etiq6+";"
+								var l28 = etiq8+":";
+								var l29 = etiq2+":";
+								var l30 = etiqBreak+":";
+
+								this.c3d.addCodigo(l23);
+								this.c3d.addCodigo(l24);
+								this.c3d.addCodigo(l25);
+								this.c3d.addCodigo(l26);
+								this.c3d.addCodigo(l27);
+								this.c3d.addCodigo(l28);
+								this.c3d.addCodigo(l29);
+								this.c3d.addCodigo(l30);
+								this.c3d.addCodigo(" // ------------------ Fin ciclo repetir contando-----------------");
+								ambitos.ambitos.shift();
+								etiquetasBreak.eliminarActual();
+								etiquetasContinuar.eliminarActual();
+
+							}else{
+								errores.insertarError("Semantico", "La vairable "+ nombreVar+", no existe en el ambito local");
+							}
+						}else{
+							errores.insertarError("Semantico", "La expresion hasta debe de ser de tipo entero "+ retHasta.tipo);
+						}
+					}else{
+						errores.insertarError("Semantico", "La expresion desde debe de ser de tipo entero "+ retDesde.tipo);
+					}
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion Hasta para repetir contando");
+				}
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion Desde para repetir contando");
+			}
+
+
+
+			break;
+		}
+
+
+
+		
 		case "CONTINUAR":{
 			this.c3d.addCodigo("jmp, , , "+etiquetasContinuar.obtenerActual()+"; // haciendo un continuar ");
 			break;

@@ -5,11 +5,11 @@ function Repetir_Contando(){
 	this.cuerpo=[];
 }
 
-
+ 
 
 Repetir_Contando.prototype.setValores = function(decla,expD,expH,sent) {
 	this.declaracion=decla;
-	this.expresionDesdeexpD;
+	this.expresionDesde=expD;
 	this.expresionHasta=expH;
 	this.cuerpo= sent;
 
