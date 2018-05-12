@@ -91,7 +91,7 @@ entero obtenernUmero(){
 
     principal(){ 
 
-        repetir_CONTANDO(vaRIable:i; desde:10; hasta:20){
+        /*repetir_CONTANDO(vaRIable:i; desde:10; hasta:20){
 
             si(i==13){
                 eS_VERDAdero{
@@ -116,6 +116,18 @@ entero obtenernUmero(){
            imprimir(c);
            c+=1;
 
+       }
+
+        
+        i= 0;
+        imprimir('A');*/
+
+        booleano bandera =true;
+        entero i = 0;
+       ciclo_doble_condicion(!bandera, i<10){
+           bandera = false;
+           imprimir(i);
+           i+=1;
        }
 
     }

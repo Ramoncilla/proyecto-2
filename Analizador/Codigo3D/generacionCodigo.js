@@ -54,6 +54,7 @@ generacionCodigo.prototype.setValores = function(sentAr){
 /*---------------------------- Generacion del Codigo 3D ---------------------------- */
 
 generacionCodigo.prototype.generar3D= function(){
+	errores.reiniciar();
 
 	// 1. se llena las estructuras de clases y de importaciones
 	this.generarClases();
@@ -1261,7 +1262,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			var hasta = nodo.expresionHasta;
 			var cuerpoCiclo = nodo.cuerpo;
 
-			this.c3d.addCodigo("// ----------------  Inicio Repetir Contando ----------------------");
+			//this.c3d.addCodigo("// ----------------  Inicio Repetir Contando ----------------------");
 			var retDesde = this.resolverExpresion(desde,ambitos,clase,metodo);
 			var retHasta = this.resolverExpresion(hasta,ambitos,clase,metodo);
 			if(retDesde instanceof EleRetorno){
@@ -1382,6 +1383,91 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 
+			break;
+		}
+
+
+		case "DOBLE_CONDICION":{
+			var cond1 = nodo.expresion1;
+			var cond2 = nodo.expresion2;
+			var cuerpoCiclo = nodo.cuerpo;
+			var temp3 = this.c3d.getTemporal();
+			var etiq0 = this.c3d.getEtiqueta();
+			var temp1 = this.c3d.getTemporal();
+					var temp2 = this.c3d.getTemporal();
+					var etiq1 = this.c3d.getEtiqueta();
+					var etiq2 = this.c3d.getEtiqueta();
+					var etiq3 = this.c3d.getEtiqueta();
+					var etiq4 = this.c3d.getEtiqueta();
+					var etiq5 = this.c3d.getEtiqueta();
+					var etiq6 = this.c3d.getEtiqueta();
+					//var etiq7 = this.c3d.getEtiqueta();
+					var etiq8 = this.c3d.getEtiqueta();
+					var etiqContinue = this.c3d.getEtiqueta();
+					var etiqBreak = this.c3d.getEtiqueta();
+					etiquetasBreak.insertarEtiqueta(etiqBreak);
+					etiquetasContinuar.insertarEtiqueta(etiqContinue);
+					ambitos.addCicloX();
+					this.c3d.addCodigo(" // ------------------ Inicio ciclo X -----------------");
+			var l1= "+, 0, 0, "+temp3+"; // vairable comparacion";
+			this.c3d.addCodigo(l1);
+			var l2 = etiq0+":";
+			this.c3d.addCodigo(l2);
+			
+			var resCond1 = this.resolverExpresion(cond1, ambitos, clase, metodo);
+			var resCond2 = this.resolverExpresion(cond2, ambitos, clase, metodo);
+
+			if(resCond1 instanceof nodoCondicion){
+				if(resCond2 instanceof nodoCondicion){
+					
+					//this.c3d.addCodigo(l2);
+					this.c3d.addCodigo(resCond1.codigo);
+					this.c3d.addCodigo(resCond1.getEtiquetasVerdaderas());
+					this.c3d.addCodigo("+, 1, 0, "+temp1+"; // Primera condicion es verdadera");
+					this.c3d.addCodigo("jmp, , , "+etiq1+";");
+					this.c3d.addCodigo(resCond1.getEtiquetasFalsas());
+					this.c3d.addCodigo("+, 0, 0, "+temp1+"; //primera condicion es falsa");
+					this.c3d.addCodigo("jmp, , , "+etiq1+";");
+					this.c3d.addCodigo(etiq1+":");
+					this.c3d.addCodigo(resCond2.codigo);
+					this.c3d.addCodigo(resCond2.getEtiquetasVerdaderas());
+					this.c3d.addCodigo("+, 1, 0, "+temp2+"; // segunda condicion es verdadera");
+					this.c3d.addCodigo("jmp, , , "+etiq2+";");
+					this.c3d.addCodigo(resCond2.getEtiquetasFalsas());
+					this.c3d.addCodigo("+, 0, 0, "+temp2+"; // segunda concion es falsa");
+					this.c3d.addCodigo("jmp, , , "+etiq2+";");
+					this.c3d.addCodigo(etiq2+":");
+					this.c3d.addCodigo("jne, "+temp1+", "+temp2+", "+etiq3+";");
+					this.c3d.addCodigo("jmp, , , "+etiq4+";");
+					this.c3d.addCodigo(etiq3+":");
+					this.c3d.addCodigo("je, "+temp3+", 0, "+etiq5+";");
+					this.c3d.addCodigo("jmp, , , "+etiq6+";");
+					this.c3d.addCodigo(etiq5+":");
+					var sentTemp;
+					for(var i = 0; i<cuerpoCiclo.length; i++){
+						sentTemp= cuerpoCiclo[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					this.c3d.addCodigo(etiqContinue+": // continuar doble condicion");
+					this.c3d.addCodigo("+, 1, 0, "+temp3+";");
+					this.c3d.addCodigo("jmp, , , "+etiq0+";");
+
+					this.c3d.addCodigo(etiq4+":");
+					this.c3d.addCodigo("je, "+temp3+", 1, "+etiq5+";");
+					this.c3d.addCodigo("jmp, , , "+etiq8+";");
+					this.c3d.addCodigo(etiq8+":");
+					this.c3d.addCodigo(etiq6+":");
+					this.c3d.addCodigo(etiqBreak+": // break doble condicion");
+					this.c3d.addCodigo(" // ------------------ Fin ciclo X -----------------");
+					ambitos.ambitos.shift();
+					etiquetasBreak.eliminarActual();
+					etiquetasContinuar.eliminarActual();
+				}else{
+					errores.insertarError("Semantico", "La segunda expresion para el ciclo x,  no es una condicion");
+				}
+			}else{
+				errores.insertarError("Semantico", "La primera expresion para el ciclo x,  no es una condicion");
+			}
 			break;
 		}
 

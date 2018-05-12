@@ -4,7 +4,7 @@ function Ciclo_X(){
 	this.cuerpo=[];
 }
 
-
+ 
 
 Ciclo_X.prototype.setValores = function(exp1,exp2,sent) {
 	this.expresion1=exp1;

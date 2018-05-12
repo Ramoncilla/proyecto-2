@@ -26,6 +26,7 @@ var enciclar = require("../Arbol/Sentencias/Enciclar");
 var si = require("../Arbol/Sentencias/Si");
 var contador = require("../Arbol/Sentencias/Contador");
 var repetirContado = require("../Arbol/Sentencias/Repetir_Contando");
+var ciclox = require("../Arbol/Sentencias/Ciclo_X");
 
 
 var decla_lista = require("../Arbol/Sentencias/DeclaLista");
@@ -230,6 +231,9 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
 
+    if(sent instanceof ciclox){
+        return "DOBLE_CONDICION";
+    }
 
 if(sent instanceof repetirContado){
     return "REPETIR_CONTANDO";

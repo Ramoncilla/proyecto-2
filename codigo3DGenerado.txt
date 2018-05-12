@@ -212,100 +212,72 @@ end, , carro_vacio_imprimir_Color
 
 begin, , , persona_PRINCIPAL
 
-// ----------------  Inicio Repetir Contando ----------------------
- // ------------------ Inicio ciclo repetir contando -----------------
-+, P, 0, t88; // pos de i
-<=, t88, 10, stack; // asignando con el valor de desde la vairable i
-=>, t88, t89, stack; // obteniendo el valor de  desde i
-jne, t89, 20, L9;
-jmp, , , L10;
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 0, t88; // pos de bandera
+<=, t88, 1, stack; // asignando a bandera
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t89; // pos de i
+<=, t89, 0, stack; // asignando a i
+ // ------------------ Inicio ciclo X -----------------
++, 0, 0, t90; // vairable comparacion
 L9:
-jl, t89, 20, L11;
-jmp, , , L12;
-L11:
-+, 1, 0, t90;
-jmp, , , L13;
-L12:
-+, -1, 0, t90;
-jmp, , , L13;
-L13:
--, 20, t89, t91;
-*, t91, t90, t91;
-+, 0, 0, t92; // iniciando la viairrble pivote del ciclo repetir contando
-L14:
-jle, t92, t91, L15;
-jmp, , , L16;
-L15:
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t93; // pos de i
-=>, t93, t94, stack; // valor de lo que trae en el stack i
-je, t94, 13, L20;
-jmp, , , L21;
++, p, 0, t93; // pos de bandera
+=>, t93, t94, stack; // valor de lo que trae en el stack bandera
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t95; // pos de i
+=>, t95, t96, stack; // valor de lo que trae en el stack i
+je, 1, t94, L19; 
+jmp, , , L20;
+
 L20:
 
-jmp, , , L17; // haciendo un continuar 
-jmp, , , L19; // salida del if
++, 1, 0, t91; // Primera condicion es verdadera
+jmp, , , L10;
+L19:
+
++, 0, 0, t91; //primera condicion es falsa
+jmp, , , L10;
+L10:
+jl, t96, 10, L21;
+jmp, , , L22;
 L21:
 
-L19:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t95; // pos de i
-=>, t95, t96, stack; // valor de lo que trae en el stack i
-je, t96, 18, L23;
-jmp, , , L24;
-L23:
-
-jmp, , , L18; // haciendo un romper 
-jmp, , , L22; // salida del if
-L24:
-
++, 1, 0, t92; // segunda condicion es verdadera
+jmp, , , L11;
 L22:
+
++, 0, 0, t92; // segunda concion es falsa
+jmp, , , L11;
+L11:
+jne, t91, t92, L12;
+jmp, , , L13;
+L12:
+je, t90, 0, L14;
+jmp, , , L15;
+L14:
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 0, t97; // pos de bandera
+<=, t97, 0, stack; // asignando a bandera
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t97; // pos de i
-=>, t97, t98, stack; // valor de lo que trae en el stack i
-print("%d", t98);
-L17:
-+, t89, t90, t89; // nuevo valor de la variable del ciclo i
-+, t92, 1, t92;
-<=, t88, t89, stack; // asignando a i
-jmp, , , L14;
++, p, 1, t98; // pos de i
+=>, t98, t99, stack; // valor de lo que trae en el stack i
+print("%d", t99);
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 1, t100; // pos de i
+=>, t100, t101, stack; //obtenidoe el valor de i
++, t101, 1, t102;
+<=, t100, t102, stack; // asignando a i
+L17: // continuar doble condicion
++, 1, 0, t90;
+jmp, , , L9;
+L13:
+je, t90, 1, L14;
+jmp, , , L16;
 L16:
-L10:
-L18:
- // ------------------ Fin ciclo repetir contando-----------------
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t99; // pos de i
-<=, t99, 8, stack; // asignando a i
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t100; // pos de c
-<=, t100, 0, stack; // asignando a c
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t101; // pos de i
-=>, t101, t102, stack; // valor de lo que trae en el stack i
- // ------------------ Inicio ciclo contador -----------------
-+, 0, 0, t103; // variable de control para el ciclo contador
-jg, t102, 0, L25;
-jmp, , , L26;
-L25:
-jl, t103, t102, L27;
-jmp, , , L28;
-L27:
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t104; // pos de c
-=>, t104, t105, stack; // valor de lo que trae en el stack c
-print("%d", t105);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t106; // pos de c
-=>, t106, t107, stack; //obtenidoe el valor de c
-+, t107, 1, t108;
-<=, t106, t108, stack; // asignando a c
-L29:
-+, t103, 1, t103; // incrementando en uno la vairable del ciclo contador
-jmp, , , L25; // retornando al ciclo continuar
-L28:
-L26:
-L30:
- // ------------------ Fin ciclo contador -----------------
+L15:
+L18: // break doble condicion
+ // ------------------ Fin ciclo X -----------------
 
 L8:
 end, , persona_PRINCIPAL
@@ -316,24 +288,24 @@ end, , persona_PRINCIPAL
 begin, , , persona_vacio_molestar
 
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t109; // pos this 
-=>, t109, t110, stack; // obtenido apuntador al heap 
-=>, t110, t111, heap; // apuntador 
-+, t111, 0, t112; // pos de edad
-=>, t112, t113, heap; // obtengo el valor que se encuentre en el heap 
-print("%d", t113);
++, p, 0, t103; // pos this 
+=>, t103, t104, stack; // obtenido apuntador al heap 
+=>, t104, t105, heap; // apuntador 
++, t105, 0, t106; // pos de edad
+=>, t106, t107, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t107);
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t114; // pos de a
-<=, t114, 189, stack; // asignando a a
++, p, 1, t108; // pos de a
+<=, t108, 189, stack; // asignando a a
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t115; // pos de a
-=>, t115, t116, stack; // valor de lo que trae en el stack a
-print("%d", t116);
++, p, 1, t109; // pos de a
+=>, t109, t110, stack; // valor de lo que trae en el stack a
+print("%d", t110);
 // RESOLVIENDO UN RETORNO
-jmp, , , L31;
+jmp, , , L23;
 print("%c", 84);
 
-L31:
+L23:
 end, , persona_vacio_molestar
 
 
@@ -342,35 +314,35 @@ end, , persona_vacio_molestar
 begin, , , persona_carro_obtenerCarro
 
 // ----------- Instancia a una variable local --------------
-+, p, 1, t117; // pos de c
-<=, t117, h, stack; //guardando referencia del heap para el objeto c
-+, h, 1, t118; // guardo la posicion donde inicia el objeto 
-<=, h, t118, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 1, t111; // pos de c
+<=, t111, h, stack; //guardando referencia del heap para el objeto c
++, h, 1, t112; // guardo la posicion donde inicia el objeto 
+<=, h, t112, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 3, h; // reservando espacio para el objeto c
 //Ingresando referencia al this del objeto c
-+, p, 1, t119; // pos de c
-=>, t119, t120, stack; // obteniendo apuntador de c
-+, p, 3, t121; // simulando cambio de ambito
-+, t121, 0, t122; //pos del this de c
-<=, t122, t120, stack; // insertando apuntador del heap al stack del obeto c
++, p, 1, t113; // pos de c
+=>, t113, t114, stack; // obteniendo apuntador de c
++, p, 3, t115; // simulando cambio de ambito
++, t115, 0, t116; //pos del this de c
+<=, t116, t114, stack; // insertando apuntador del heap al stack del obeto c
 // Asignando parametros  
-+, p, 3, t123; // size de funcion actual
-+, t123, 1, t124; //pos del parametro 1
-<=, t124, 72, stack; // asignado al stack el parametro
++, p, 3, t117; // size de funcion actual
++, t117, 1, t118; //pos del parametro 1
+<=, t118, 72, stack; // asignado al stack el parametro
 +, p, 3, p; // simulando cambio de ambito
 call, , , carro_vacio_carro_caracter;
 -, p, 3, p; // regresando al ambito acutal
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t125; // pos de c
-=>, t125, t126, stack; // valor de lo que trae en el stack c
-+, P, 2, t127; // pos de retorno de a funcion persona_carro_obtenerCarro
-<=, t127, t126, stack; //asignando el retorno con su valor
-jmp, , , L32;
++, p, 1, t119; // pos de c
+=>, t119, t120, stack; // valor de lo que trae en el stack c
++, P, 2, t121; // pos de retorno de a funcion persona_carro_obtenerCarro
+<=, t121, t120, stack; //asignando el retorno con su valor
+jmp, , , L24;
 
-L32:
+L24:
 end, , persona_carro_obtenerCarro
 
 
@@ -379,12 +351,12 @@ end, , persona_carro_obtenerCarro
 begin, , , persona_entero_obtenernUmero
 
 // RESOLVIENDO UN RETORNO
-*, 5, 8, t128;
-+, P, 1, t129; // pos de retorno de a funcion persona_entero_obtenernUmero
-<=, t129, t128, stack; //asignando el retorno con su valor
-jmp, , , L33;
+*, 5, 8, t122;
++, P, 1, t123; // pos de retorno de a funcion persona_entero_obtenernUmero
+<=, t123, t122, stack; //asignando el retorno con su valor
+jmp, , , L25;
 
-L33:
+L25:
 end, , persona_entero_obtenernUmero
 
 
@@ -393,16 +365,16 @@ end, , persona_entero_obtenernUmero
 begin, , , persona_vacio_persona_entero_caracter
 
 // Asignando atributo edad
-+, p, 0, t130; //pos this 
-=>, t130, t131, stack; // apuntador al heap
-=>, t131, t132, heap; // apuntador donde inicia el objeto
-+, t132, 0, t133; // pos real  de edad
++, p, 0, t124; //pos this 
+=>, t124, t125, stack; // apuntador al heap
+=>, t125, t126, heap; // apuntador donde inicia el objeto
++, t126, 0, t127; // pos real  de edad
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t134; // pos de val
-=>, t134, t135, stack; // valor de lo que trae en el stack val
-<=, t133, t135, heap; //guardando en el heap el valor del atributo
++, p, 1, t128; // pos de val
+=>, t128, t129, stack; // valor de lo que trae en el stack val
+<=, t127, t129, heap; //guardando en el heap el valor del atributo
 
-L34:
+L26:
 end, , persona_vacio_persona_entero_caracter
 
 
@@ -411,23 +383,23 @@ end, , persona_vacio_persona_entero_caracter
 begin, , , persona_caracter_obtenerChar
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t136; // pos de c
-<=, t136, 85, stack; // asignando a c
++, p, 1, t130; // pos de c
+<=, t130, 85, stack; // asignando a c
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t137; // pos de c
-=>, t137, t138, stack; // valor de lo que trae en el stack c
-print("%c", t138);
++, p, 1, t131; // pos de c
+=>, t131, t132, stack; // valor de lo que trae en el stack c
+print("%c", t132);
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t139; // pos de c
-=>, t139, t140, stack; // valor de lo que trae en el stack c
-+, P, 2, t141; // pos de retorno de a funcion persona_caracter_obtenerChar
-<=, t141, t140, stack; //asignando el retorno con su valor
-jmp, , , L35;
++, p, 1, t133; // pos de c
+=>, t133, t134, stack; // valor de lo que trae en el stack c
++, P, 2, t135; // pos de retorno de a funcion persona_caracter_obtenerChar
+<=, t135, t134, stack; //asignando el retorno con su valor
+jmp, , , L27;
 print("%c", 65);
 print("%c", 65);
 
-L35:
+L27:
 end, , persona_caracter_obtenerChar
 
 

@@ -36,11 +36,10 @@ listaErrores.prototype.obtenerErroresHTML = function(){
 
 
 return tabla;
-
-
-
 };
 
-
+listaErrores.prototype.reiniciar= function(){
+    listaErrores.prototype.errores =[];
+};
 
 module.exports = listaErrores;
