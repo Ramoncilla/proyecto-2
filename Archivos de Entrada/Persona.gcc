@@ -120,7 +120,7 @@ entero obtenernUmero(){
 
         
         i= 0;
-        imprimir('A');*/
+        imprimir('A');
 
         booleano bandera =true;
         entero i = 0;
@@ -128,6 +128,33 @@ entero obtenernUmero(){
            bandera = false;
            imprimir(i);
            i+=1;
+       }*/
+
+
+
+       ENtero a= 0;
+       entero b=10;
+       entero x=40;
+       entero z=90;
+
+       eVaLuaR_Si(a){
+
+           es_iguAl_A 20:
+                imprimir(20);
+                romper;
+            es_iguAl_A 'A':
+                imprimir(30);
+                romper;
+            es_iguAl_A "alina":
+                imprimir(x);
+            es_iguAl_A x+10:
+                imprimir(50);
+            es_iguAl_A z+(2*5):
+                imprimir(100);
+            es_iguAl_A 110:
+                imprimir(110);
+            defecto:
+                imprimir(1050);
        }
 
     }

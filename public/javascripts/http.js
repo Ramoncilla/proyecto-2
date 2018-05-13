@@ -10,8 +10,6 @@ $(document).ready(function(){
       e.preventDefault(); 
     });*/
 
-    
-
     $('#post-lesson').on("submit", function(e){
       e.preventDefault();
       var formData = new FormData($('#post-lesson')[0]);
@@ -61,12 +59,9 @@ $(document).ready(function(){
   
       }
     )
-
-
-   
-
  });
 
+ /*
     document.getElementById("openFile").addEventListener('change', function(){
         var fr = new FileReader();
         fr.onload=function(){
@@ -76,7 +71,7 @@ $(document).ready(function(){
         fr.readAsText(this.files[0]);
       
       });
-
+*/
       
  
      

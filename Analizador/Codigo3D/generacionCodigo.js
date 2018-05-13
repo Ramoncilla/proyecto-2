@@ -52,7 +52,7 @@ generacionCodigo.prototype.setValores = function(sentAr){
 
 
 /*---------------------------- Generacion del Codigo 3D ---------------------------- */
-
+ 
 generacionCodigo.prototype.generar3D= function(){
 	errores.reiniciar();
 
@@ -1146,46 +1146,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 		}
 
 
-		case "SI":{
-			var expresionSi = nodo.expresion;
-			var sentVerdaderas = nodo.sentV;
-			var sentFalsas = nodo.sentF;
-			var etiqSalida = this.c3d.getEtiqueta();
-			var retExpresion = this.resolverExpresion(expresionSi,ambitos, clase, metodo);
-
-			if(retExpresion instanceof nodoCondicion){
-				this.c3d.addCodigo(retExpresion.codigo);
-				this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
-				if(sentVerdaderas!= 0){
-					ambitos.addSi();
-					var sentTemp;
-					for(var i = 0; i<sentVerdaderas.length; i++){
-						sentTemp= sentVerdaderas[i];
-						this.escribir3D(sentTemp,ambitos,clase,metodo);
-					}
-					ambitos.ambitos.shift();
-				}
-				this.c3d.addCodigo("jmp, , , "+ etiqSalida+"; // salida del if");
-				this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
-				if(sentFalsas!=0){
-					ambitos.addElse();
-					var sentTemp;
-					for(var i = 0; i<sentFalsas.length; i++){
-						sentTemp= sentFalsas[i];
-						this.escribir3D(sentTemp,ambitos,clase,metodo);
-					}
-					ambitos.ambitos.shift();
-				}
-				this.c3d.addCodigo(etiqSalida+":");
-
-			}else{
-				errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expreison para SI");
-			}
-
-			break;
-		}
-
-
 		case "CONTADOR":{
 			var expresionContador = nodo.expresion;
 			var cuerpoCiclo = nodo.cuerpo;
@@ -1471,9 +1431,145 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+		case "SI":{
+			var expresionSi = nodo.expresion;
+			var sentVerdaderas = nodo.sentV;
+			var sentFalsas = nodo.sentF;
+			var etiqSalida = this.c3d.getEtiqueta();
+			var retExpresion = this.resolverExpresion(expresionSi,ambitos, clase, metodo);
+
+			if(retExpresion instanceof nodoCondicion){
+				this.c3d.addCodigo(retExpresion.codigo);
+				this.c3d.addCodigo(retExpresion.getEtiquetasVerdaderas());
+				if(sentVerdaderas!= 0){
+					ambitos.addSi();
+					var sentTemp;
+					for(var i = 0; i<sentVerdaderas.length; i++){
+						sentTemp= sentVerdaderas[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					ambitos.ambitos.shift();
+				}
+				this.c3d.addCodigo("jmp, , , "+ etiqSalida+"; // salida del if");
+				this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
+				if(sentFalsas!=0){
+					ambitos.addElse();
+					var sentTemp;
+					for(var i = 0; i<sentFalsas.length; i++){
+						sentTemp= sentFalsas[i];
+						this.escribir3D(sentTemp,ambitos,clase,metodo);
+					}
+					ambitos.ambitos.shift();
+				}
+				this.c3d.addCodigo(etiqSalida+":");
+
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expreison para SI");
+			}
+
+			break;
+		}
 
 
-		
+		case "SELECCIONA":{
+
+			var expSelect = nodo.expresion;
+			var listaCasos = nodo.casos;
+			var casoDefecto = nodo.defecto;
+			
+			this.c3d.addCodigo("// --------------------- Inicio evaluar_si --------------------------");
+			var etiqBreak = this.c3d.getEtiqueta();
+			etiquetasBreak.insertarEtiqueta(etiqBreak);
+			//1 Resolver la expresion pivote del selecciona
+			var retExpresion = this.resolverExpresion(expSelect,ambitos,clase,metodo);
+			if(retExpresion instanceof EleRetorno){
+				if(retExpresion.tipo.toUpperCase() != "NULO"){
+					//2. Resolver las expresion de todos los casos
+					var bandera = true;
+					var casoTemporal, resExpCaso, etiqTemp;
+					var valoresCasos = [];
+					var casosEtiquetas = [];
+					for(var i =0; i<listaCasos.length; i++){
+						casoTemporal = listaCasos[i];
+						resExpCaso = this.resolverExpresion(casoTemporal.expresion, ambitos,clase,metodo);
+						if(resExpCaso instanceof EleRetorno){
+							if(resExpCaso.tipo.toUpperCase() == retExpresion.tipo.toUpperCase()){
+								bandera = bandera && true;
+								etiqTemp = this.c3d.getEtiqueta();
+								valoresCasos.push(resExpCaso.valor);
+								casosEtiquetas.push(etiqTemp);
+							}else{
+								etiqTemp = this.c3d.getEtiqueta();
+								valoresCasos.push(resExpCaso.valor);
+								casosEtiquetas.push(etiqTemp);
+								bandera=false;
+								//errores.insertarError("Semantico", "La expresion del caso no. "+ (i+1)+", es de tipo "+ resExpCaso.tipo+" y tiene que ser de tipo "+ retExpresion.tipo);
+							}
+						}else{
+							bandera = false;
+							//errores.insertarError("Semantico", "Expresion no validad para el caso no. "+(i+1)+", de Evaluar_Si");
+						}
+					}// fin del ciclo donde se calcula todos los valores
+
+					if(/*bandera== true && */
+						valoresCasos.length == listaCasos.length &&
+						valoresCasos.length == casosEtiquetas.length){
+						//3 Generar todas las condiciones  para la lista de casos
+						var valorTemporal, etiqVTemp, etiqF;
+						for(var i =0; i<valoresCasos.length; i++){
+							valorTemporal = valoresCasos[i];
+							etiqVTemp = casosEtiquetas[i];
+							etiqF= this.c3d.getEtiqueta();
+							this.c3d.addCodigo("je, "+ retExpresion.valor+", "+valorTemporal+", "+etiqVTemp+"; // verdadero del caso "+ (i+1));
+							this.c3d.addCodigo("jmp, , , "+ etiqF+"; // falsa del caso "+ (i+1));
+							this.c3d.addCodigo(etiqF+":");
+						}
+						//4 escribir codigo para etiquetea defecto
+						var etiqDefecto= this.c3d.getEtiqueta();
+						this.c3d.addCodigo("jmp, , , "+etiqDefecto+"; // ir al por defecto");
+
+						//5. Escribir el codigo de los casos
+					    var cuerpoCaso, sentTemporal;
+						for(var i =0; i<listaCasos.length; i++){
+							casoTemporal = listaCasos[i];
+							etiqVTemp = casosEtiquetas[i];
+							cuerpoCaso = casoTemporal.cuerpo;
+							this.c3d.addCodigo(etiqVTemp+":");
+							ambitos.addCaso();
+							if(cuerpoCaso!=0){
+								for(var j=0; j<cuerpoCaso.length; j++){
+									sentTemporal = cuerpoCaso[j];
+									this.escribir3D(sentTemporal,ambitos,clase,metodo);
+								}
+							}
+							ambitos.ambitos.shift();	
+						}
+
+						// 6. escribir cuerpo de defecto
+						this.c3d.addCodigo(etiqDefecto+":");
+						ambitos.addDefecto();
+						if(casoDefecto!=0){
+							for(var j=0; j<casoDefecto.length; j++){
+								sentTemporal = casoDefecto[j];
+								this.escribir3D(sentTemporal,ambitos,clase,metodo);
+							}
+						}
+						ambitos.ambitos.shift();
+						this.c3d.addCodigo(etiqBreak+": // break de evaluar _si");
+						this.c3d.addCodigo("// --------------------- Fin evaluar_si --------------------------");
+					}else{
+						errores.insertarError("Semantico", "Tipos no valido para Evaluar_Si");
+					}
+
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expreion para Selecciona");
+				}
+			}else{
+				errores.insertarError("Semantico", "Expresion no valida para Selecciona");
+			}
+			break;
+		}
+
 		case "CONTINUAR":{
 			this.c3d.addCodigo("jmp, , , "+etiquetasContinuar.obtenerActual()+"; // haciendo un continuar ");
 			break;

@@ -5,6 +5,7 @@ function Selecciona(){
 }
 
 
+
 Selecciona.prototype.setValores = function(exp,cas, def) {
 	this.expresion =exp;
 	this.casos= cas;

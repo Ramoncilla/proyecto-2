@@ -37,7 +37,7 @@ Ambito.prototype.addElse = function() {
 	this.ambitos.unshift("ELSE"+this.valElse);
 };
 
-
+ 
 Ambito.prototype.addCaso = function() {
 	this.valCaso++;
 	this.ambitos.unshift("CASO"+this.valCaso);

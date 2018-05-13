@@ -1,19 +1,17 @@
 extends layout
 
 block content
-  
-  
-  
+
+  script(src='/javascripts/editor.js')
   <input type="file" id="openFile" />
   <input id="fileContent" type="hidden" value="">
   <button id="btnAnalize" type="button" >Analizar Entrada</button>
   
-
   <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="/new-Alesson">Crear Leccion A-Coach</a>
         <a href="/new-Glesson">Crear Leccion G-Coach</a>
-        <a href="#">Editor de Texto</a>
+        <a href="/editor">Editor de Texto</a>
   </div>
 
   <div id = "main" class="container">

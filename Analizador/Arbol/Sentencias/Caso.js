@@ -2,10 +2,10 @@
 function Caso(){
 	this.expresion = null;
 	this.cuerpo=[];
+	this.esValido = true;
 }
 
-
-
+ 
 Caso.prototype.setValores = function(exp,sent) {
 	this.expresion= exp;
 	this.cuerpo= sent;

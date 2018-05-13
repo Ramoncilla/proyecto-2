@@ -273,7 +273,7 @@ INICIO: ARCHIVO EOF
 
 	EJEMPLO: ejemplo abrellave FUNCION cierraLlave;
 	EJEMPLO2: ejemplo abreLlave SENTENCIAS cierraLlave;
-
+ 
 	
 	tipoLeccion: gcoach
     	|acoach;
