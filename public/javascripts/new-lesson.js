@@ -9,4 +9,4 @@ $(document).ready(function(){
         fr.readAsText(this.files[0]);
       });
 
-});
+}); 

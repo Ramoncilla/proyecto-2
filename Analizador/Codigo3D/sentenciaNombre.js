@@ -28,6 +28,7 @@ var contador = require("../Arbol/Sentencias/Contador");
 var repetirContado = require("../Arbol/Sentencias/Repetir_Contando");
 var ciclox = require("../Arbol/Sentencias/Ciclo_X");
 var selecciona = require("../Arbol/Sentencias/Selecciona");
+var leerTeclado = require("../Arbol/Sentencias/LeerTeclado");
 
 
 var decla_lista = require("../Arbol/Sentencias/DeclaLista");
@@ -231,6 +232,10 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
+
+    if(sent instanceof leerTeclado){
+        return "LEER_TECLADO";
+    }
 
     if(sent instanceof selecciona){
         return "SELECCIONA";

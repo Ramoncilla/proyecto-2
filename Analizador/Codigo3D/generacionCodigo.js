@@ -3388,7 +3388,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							rolSimbolo= this.tablaSimbolos.obtenerPosTipoSimboloAcceso(tipoElemento,nombreElemento);
 							if(posVar!=-1 && rolSimbolo!= ""){
 								var temp1_4= this.c3d.getTemporal();
-								var l1_4= "";
+								var l1_4= ""; 
 								if(!banderaED){
 									l1_4= "=>, "+posFinal+", "+temp1_4+", heap; // recuperando pos incial del objeto";
 									this.c3d.addCodigo(l1_4);
@@ -3424,16 +3424,25 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 						} 
 
 						if(elementoTemporal instanceof llamada_funcion){
-							banderaED=true;
+							
 							nombreElemento = elementoTemporal.nombreFuncion;
 							var parametros = elementoTemporal.parametros;
 							var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(tipoElemento,parametros.length,nombreElemento);
 							var sizeFunActual = this.tablaSimbolos.sizeFuncion(tipoElemento,firmaMetodo);
+							if(banderaED){
+									var temp1_4= this.c3d.getTemporal();
+									var l1_4= "=>, "+posFinal+", "+temp1_4+", stack; // recuperando pos incial del objeto 888";
+									var l1_5 = "=>, "+temp1_4+", "+temp1_4+", heap; // apuntador inciail del objeto ";
+									this.c3d.addCodigo(l1_4);
+									this.c3d.addCodigo(l1_5);
+									this.c3d.addCodigo("+, "+temp1_4+", 0, "+posFinal+";");
+							}
 							var retLlamada = this.llamada_funcion(elementoTemporal,ambitos,tipoElemento,firmaMetodo,posFinal,false);
 							var clase5 = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo);
 							if(retLlamada.tipo.toUpperCase() == clase5.toUpperCase()){
 								tipoElemento = retLlamada.tipo;
 								posFinal = retLlamada.referencia;
+								banderaED=true;
 							}else{
 								errores.insertarError("Semantico", "Tipos no coinciden para la funcion en un acceso "+ clase5+", con "+ retLlamada.tipo);
 								break;

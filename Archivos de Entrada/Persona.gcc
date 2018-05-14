@@ -36,6 +36,14 @@ clase carro {
         
     }
 
+
+publico entero obtenerValor(){
+    imprimir(valorCarro);
+    imprimir('L');
+
+    retorno valorCarro*5;
+}
+
      carro(caracter n){
        
        col = n;
@@ -82,82 +90,34 @@ entero obtenernUmero(){
     }
 
     publico caracter obtenerChar(){
-        caracter c = 'U';
-        IMPrimir(c);
-        retorno c;
-        imprimir('A');
-        imprimir('A');
+       
     }
+
+    privado carro retornoCarro (){
+
+        carro c = nuevo carro('R', (5+5)*2);
+
+    retorno c;
+    }
+
+    
 
     principal(){ 
 
-        /*repetir_CONTANDO(vaRIable:i; desde:10; hasta:20){
+       persona p1 = nuevo persona(25, 'P');
+       imprimir(p1.incrementarEdad());
 
-            si(i==13){
-                eS_VERDAdero{
-                    continuar;
-                }
-            }
-            si(i==18){
-                eS_VERDAdero{
-                    romper;
-                }
-            }
-            imprimir(i);
+       entero valor1 =p1.retornoCarro().obtenerValor();
+
+imprimir(valor1);
+
+
+       
         }
 
-
-
-       entero i= 8;
-        entero c;
-           c=0;
-       contador (i){
-           
-           imprimir(c);
-           c+=1;
-
-       }
-
-        
-        i= 0;
-        imprimir('A');
-
-        booleano bandera =true;
-        entero i = 0;
-       ciclo_doble_condicion(!bandera, i<10){
-           bandera = false;
-           imprimir(i);
-           i+=1;
-       }*/
-
-
-
-       ENtero a= 0;
-       entero b=10;
-       entero x=40;
-       entero z=90;
-
-       eVaLuaR_Si(a){
-
-           es_iguAl_A 20:
-                imprimir(20);
-                romper;
-            es_iguAl_A 'A':
-                imprimir(30);
-                romper;
-            es_iguAl_A "alina":
-                imprimir(x);
-            es_iguAl_A x+10:
-                imprimir(50);
-            es_iguAl_A z+(2*5):
-                imprimir(100);
-            es_iguAl_A 110:
-                imprimir(110);
-            defecto:
-                imprimir(1050);
-       }
-
-    }
+privado entero incrementarEdad(){
+    retorno(edad+1);
+}
 
 }
 

@@ -146,3 +146,73 @@ i=0;
     }
 
 }
+
+
+
+  /*repetir_CONTANDO(vaRIable:i; desde:10; hasta:20){
+
+            si(i==13){
+                eS_VERDAdero{
+                    continuar;
+                }
+            }
+            si(i==18){
+                eS_VERDAdero{
+                    romper;
+                }
+            }
+            imprimir(i);
+        }
+
+
+
+       entero i= 8;
+        entero c;
+           c=0;
+       contador (i){
+           
+           imprimir(c);
+           c+=1;
+
+       }
+
+        
+        i= 0;
+        imprimir('A');
+
+        booleano bandera =true;
+        entero i = 0;
+       ciclo_doble_condicion(!bandera, i<10){
+           bandera = false;
+           imprimir(i);
+           i+=1;
+       }
+
+
+
+       ENtero a= 0;
+       entero b=10;
+       entero x=40;
+       entero z=90;
+
+       eVaLuaR_Si(a){
+
+           es_iguAl_A 20:
+                imprimir(20);
+                romper;
+            es_iguAl_A 'A':
+                imprimir(30);
+                romper;
+            es_iguAl_A "alina":
+                imprimir(x);
+            es_iguAl_A x+10:
+                imprimir(50);
+            es_iguAl_A z+(2*5):
+                imprimir(100);
+            es_iguAl_A 110:
+                imprimir(110);
+            defecto:
+                imprimir(1050);
+       }
+*/
+  

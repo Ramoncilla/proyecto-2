@@ -61,6 +61,27 @@ $(document).ready(function(){
     )
  });
 
+
+ $('#buttonLoad').on('click',function(){
+  var cadenaArchivo = document.getElementById("fileContent").value;
+  //console.log(cadenaArchivo);
+  $.ajax(
+    {
+      type:"POST",
+      url:" /cargaMasiva",
+      data:{string_file: cadenaArchivo},
+      success: function(data){
+        console.dir(data);
+      },
+      error: function(data){
+        console.dir(data);
+      }
+
+    }
+  )
+});
+
+
  /*
     document.getElementById("openFile").addEventListener('change', function(){
         var fr = new FileReader();

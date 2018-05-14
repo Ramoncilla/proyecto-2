@@ -1,8 +1,11 @@
 var lessonList = require("../Analizador/Lecciones/listaLecciones");
 var lesson = require("../Analizador/Lecciones/Leccion");
-
+ 
 
 exports.createLesson = function(req, res) {
+
+    console.log("Crear una nueva leccion");
+    /*
     var listLesson = new lessonList();
     var newLesson = new lesson();
     var tipo ="g-coach"; 
@@ -16,8 +19,8 @@ exports.createLesson = function(req, res) {
     newLesson.tarea= req.body.homeworkStatement;
     newLesson.resultado= req.body.homeworkTest;
     newLesson.tipo = tipo;
-    var result = listLesson.saveLesson(newLesson);
-    res.send({res:result});
+    var result = listLesson.saveLesson(newLesson);*/
+    res.send("Crear na nueva leccion");
 };
 
 
