@@ -3,13 +3,10 @@ function Este(){
 
 }
 
-
-
 Este.prototype.setValores = function(valor) {
 	this.elemento=valor;
 
 };
-
 
 Este.prototype.getElemento = function() {
 	// body...

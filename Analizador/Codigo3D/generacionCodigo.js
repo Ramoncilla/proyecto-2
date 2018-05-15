@@ -23,6 +23,8 @@ var funNativa = require("../Arbol/Expresion/FuncionNativa");
 
 var listaEtiquetas = require("../Codigo3D/Etiquetas");
 
+var elementoAcceso = require("../Arbol/Expresion/Acceso");
+
 
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
@@ -1833,7 +1835,7 @@ generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,d
 		errores.insertarError("Semantico", "No existe el arreglo "+nombreArreglo);
 	}	
 };
-
+ 
 
 generacionCodigo.prototype.instanciarEstructura = function(nodo,ambitos,clase,metodo){
 
@@ -2195,6 +2197,31 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 
 
 /* ================================================ Resolver Expresiones ===================================================== */
+
+
+generacionCodigo.prototype.resolverEste = function(nodo,ambitos, clase, metodo){
+
+	var elemenetoEste = nodo.elemento;
+	var retorno = new EleRetorno();
+	retorno.setValoresNulos();
+
+	if(elemenetoEste instanceof t_id){
+
+	}
+
+	if(elemenetoEste instanceof llamada_funcion){
+
+	}
+
+	if(elemenetoEste instanceof posicion_arreglo){
+
+	}
+
+	if(elemenetoEste instanceof elementoAcceso){
+
+	}
+return retorno;
+};
 
 generacionCodigo.prototype.crearCondicionBooleano = function(valBool){
 	
