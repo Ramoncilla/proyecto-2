@@ -1,4 +1,4 @@
-var grammar = require("../Analizador/gramatica");
+var grammar = require("../Analizador/Lecciones/lecciones");
 var parseFile = require("../Analizador/Arbol/Archivo");
 var generacionCodigo = require("../Analizador/Codigo3D/generacionCodigo");
 var listaErrores = require("../Analizador/Errores/listaErrores");

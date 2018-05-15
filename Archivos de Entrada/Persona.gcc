@@ -107,7 +107,7 @@ entero obtenernUmero(){
        persona p1 = nuevo persona(25, 'P');
        imprimir(p1.incrementarEdad());
 
-       entero valor1 =p1.retornoCarro().obtenerValor();
+       entero valor1 =p1.retornoCarro().valorCarro;
 
 imprimir(valor1);
 

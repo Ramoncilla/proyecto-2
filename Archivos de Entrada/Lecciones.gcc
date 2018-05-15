@@ -1,56 +1,27 @@
 {%
-Titulo {Leccion 1}
-descRipCion {estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo}
-Tipo {g-coach}
-resultado{25}
-TArea{debe de realizar una tarea un ranto fea}
-ejemplo{
+Titulo {<<Leccion 1>>}
+descRipCion{<<estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo>>}
+Tipo {<<g-coach>>}
+resultado{<<25>>}
+TArea{<<debe de realizar una tarea un ranto fea>>}
+ejemplo{<<
     entero i =0;
     repetir_mientras(i<10){
         imprimir(i);
     }
-}
+>>}
 %}
 
 {%
-Titulo {Leccion 2}
-descRipCion {estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo}
-Tipo {g-coach}
-resultado{25}
-TArea{debe de realizar una tarea un ranto fea}
-ejemplo{
+Titulo {<<Leccion 1>>}
+descRipCion{<<estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo>>}
+Tipo {<<a-coach>>}
+resultado{<<25>>}
+TArea{<<debe de realizar una tarea un ranto fea>>}
+ejemplo{<<
     entero i =0;
     repetir_mientras(i<10){
         imprimir(i);
     }
-}
-%}
-
-
-{%
-Titulo {Leccion 3}
-descRipCion {estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo}
-Tipo {g-coach}
-resultado{25}
-TArea{debe de realizar una tarea un ranto fea}
-ejemplo{
-    entero i =0;
-    repetir_mientras(i<10){
-        imprimir(i);
-    }
-}
-%}
-
-{%
-Titulo {Leccion 4}
-descRipCion {estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo}
-Tipo {g-coach}
-resultado{25}
-TArea{debe de realizar una tarea un ranto fea}
-ejemplo{
-    entero i =0;
-    repetir_mientras(i<10){
-        imprimir(i);
-    }
-}
+>>}
 %}

@@ -10,14 +10,18 @@ function listaLecciones(){
 var errores = new lErrores();
 listaLecciones.prototype.lecciones=[];
 
-listaLecciones.prototype.existeLeccion = function(nombreLeccion){
+
+
+
+listaLecciones.prototype.existeLeccion = function(nombreLeccion, cadenaTipo){
     if(listaLecciones.prototype.lecciones == 0){
         return false;
     }else{
         var leccionTemporal;
         for(var i = 0; i<listaLecciones.prototype.lecciones.length; i++){
             leccionTemporal = listaLecciones.prototype.lecciones[i];
-            if(leccionTemporal.titulo.toUpperCase() == nombreLeccion.toUpperCase()){
+            if(leccionTemporal.titulo.toUpperCase() == nombreLeccion.toUpperCase() &&
+                leccionTemporal.tipo.toUpperCase() == cadenaTipo.toUpperCase()){
                 return true;
             }
         }
@@ -25,9 +29,8 @@ listaLecciones.prototype.existeLeccion = function(nombreLeccion){
     return false;
 };
 
-
 listaLecciones.prototype.saveLesson= function(leccion){
-    if(!this.existeLeccion(leccion.titulo)){
+    if(!this.existeLeccion(leccion.titulo, leccion.tipo)){
         listaLecciones.prototype.lecciones.push(leccion);
         this.writeLesson();
         console.log("La leccion "+ leccion.titulo+", ha sido guardada exitosamente");
@@ -39,15 +42,42 @@ listaLecciones.prototype.saveLesson= function(leccion){
 };
 
 listaLecciones.prototype.writeLesson= function(){
-    var cadena="";
+    var cadena=JSON.stringify(listaLecciones.prototype.lecciones,null, '\t');
     var leccionTemporal;
-    for(var i=0; i<listaLecciones.prototype.lecciones.length; i++){
+   /* for(var i=0; i<listaLecciones.prototype.lecciones.length; i++){
         leccionTemporal= listaLecciones.prototype.lecciones[i];
-        cadena+=leccionTemporal.cadenaLeccion();
-    }
+        cadena+=JSON.stringify(leccionTemporal,null, '\t');
+
+    }*/
     fs.writeFileSync('./lecciones.txt',cadena);
 };
 
 
+
+listaLecciones.prototype.getLessonType = function(type){
+    var leccionTemporal;
+    var listaHTML="";
+    //<a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+    for(var i =0; i<listaLecciones.prototype.lecciones.length; i++){
+        leccionTemporal = listaLecciones.prototype.lecciones[i];
+        if(type == 1 || type == 2){
+            if(leccionTemporal.tipo == type){
+                listaHTML+="<a href= \"#\" class = \"list-group-item \"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+            }
+        }else{
+            listaHTML+="<a href= \"#\" class = \"list-group-item \"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+        }
+    }
+    return listaHTML;
+};
+
+listaLecciones.prototype.cargarLecciones = function(){
+     var arrayLecciones = fs.readFileSync("./lecciones.txt");
+     var leccionTemporal;
+     for(var i = 0; i<arrayLecciones.length; i++){
+         leccionTemporal = arrayLecciones[i];
+         this.saveLesson(leccionTemporal);
+     }
+};
 
 module.exports= listaLecciones;

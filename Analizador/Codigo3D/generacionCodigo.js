@@ -147,7 +147,7 @@ generacionCodigo.prototype.generar3D= function(){
 	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
 
 	var a = new analizInterprete();
-	a.Ejecutar3D(this.c3d.codigo3D,"persona_PRINCIPAL");
+	a.Ejecutar3D(this.c3d.codigo3D,this.buscarPrincipal());
 	console.log("Impresion");
 	console.log(a.cadenaImpresion);
 	fs.writeFileSync('./Heap.html', a.imprimirHeap());
@@ -157,7 +157,17 @@ generacionCodigo.prototype.generar3D= function(){
 
 };
 
+generacionCodigo.prototype.buscarPrincipal = function(){
+	var claseTemporal;
+	for(var i = (this.listaClase.length-1); i>=0; i++){
+		claseTemporal = this.listaClase[i];
+		if(claseTemporal.principal_met!=null){
+			return claseTemporal.nombre+"_PRINCIPAL";
+		}
+	}
 
+	return "";
+};
 
 /* -------------------------- Generacion de las clases ---------------------- */
 
@@ -1592,6 +1602,15 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+		case "LEER_TECLADO":{
+			
+
+			break;
+		}// fin de leer teclado
+
+
+
+
 	}//fin switch sentencia
 };
 
@@ -2144,7 +2163,6 @@ generacionCodigo.prototype.llamada_funcion= function(nodo, ambitos, clase, metod
 		}
 		
 
-		
 
 		//van los parametros 
 		var l6 = "+, P, "+sizeFuncActual+", P;";

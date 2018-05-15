@@ -290,23 +290,15 @@ call, , , persona_carro_retornoCarro;
 +, P, 2, t124;
 =>, t124, t125, stack; // valor del return
 -, P, 3, P;
-=>, t124, t126, stack; // recuperando pos incial del objeto 888
+=>, t124, t126, stack; // recuperando pos incial del objeto
 =>, t126, t126, heap; // apuntador inciail del objeto 
-+, t126, 0, t124; //4
-+, P, 2, t127;
-+, t127, 0, t128;
-<=, t128, t124, stack; // pasadon como refeenria el valor del this
-+, P, 2, P;
-call, , , carro_entero_obtenerValor;
-+, P, 1, t129;
-=>, t129, t130, stack; // valor del return
--, P, 2, P;
-=>, t129, t131, stack; // valor a retoranar del acceso
-<=, t118, t131, stack; // asignando a valor1
++, t126, 2, t124;
+=>, t124, t127, heap; // valor a retoranar del acceso
+<=, t118, t127, stack; // asignando a valor1
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t132; // pos de valor1
-=>, t132, t133, stack; // valor de lo que trae en el stack valor1
-print("%d", t133);
++, p, 1, t128; // pos de valor1
+=>, t128, t129, stack; // valor de lo que trae en el stack valor1
+print("%d", t129);
 
 L9:
 end, , persona_PRINCIPAL
@@ -317,19 +309,19 @@ end, , persona_PRINCIPAL
 begin, , , persona_vacio_molestar
 
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t134; // pos this 
-=>, t134, t135, stack; // obtenido apuntador al heap 
-=>, t135, t136, heap; // apuntador 
-+, t136, 0, t137; // pos de edad
-=>, t137, t138, heap; // obtengo el valor que se encuentre en el heap 
-print("%d", t138);
++, p, 0, t130; // pos this 
+=>, t130, t131, stack; // obtenido apuntador al heap 
+=>, t131, t132, heap; // apuntador 
++, t132, 0, t133; // pos de edad
+=>, t133, t134, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t134);
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 1, t139; // pos de a
-<=, t139, 189, stack; // asignando a a
++, p, 1, t135; // pos de a
+<=, t135, 189, stack; // asignando a a
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t140; // pos de a
-=>, t140, t141, stack; // valor de lo que trae en el stack a
-print("%d", t141);
++, p, 1, t136; // pos de a
+=>, t136, t137, stack; // valor de lo que trae en el stack a
+print("%d", t137);
 // RESOLVIENDO UN RETORNO
 jmp, , , L10;
 print("%c", 84);
@@ -343,32 +335,32 @@ end, , persona_vacio_molestar
 begin, , , persona_carro_obtenerCarro
 
 // ----------- Instancia a una variable local --------------
-+, p, 1, t142; // pos de c
-<=, t142, h, stack; //guardando referencia del heap para el objeto c
-+, h, 1, t143; // guardo la posicion donde inicia el objeto 
-<=, h, t143, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 1, t138; // pos de c
+<=, t138, h, stack; //guardando referencia del heap para el objeto c
++, h, 1, t139; // guardo la posicion donde inicia el objeto 
+<=, h, t139, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 3, h; // reservando espacio para el objeto c
 //Ingresando referencia al this del objeto c
-+, p, 1, t144; // pos de c
-=>, t144, t145, stack; // obteniendo apuntador de c
-+, p, 3, t146; // simulando cambio de ambito
-+, t146, 0, t147; //pos del this de c
-<=, t147, t145, stack; // insertando apuntador del heap al stack del obeto c
++, p, 1, t140; // pos de c
+=>, t140, t141, stack; // obteniendo apuntador de c
++, p, 3, t142; // simulando cambio de ambito
++, t142, 0, t143; //pos del this de c
+<=, t143, t141, stack; // insertando apuntador del heap al stack del obeto c
 // Asignando parametros  
-+, p, 3, t148; // size de funcion actual
-+, t148, 1, t149; //pos del parametro 1
-<=, t149, 72, stack; // asignado al stack el parametro
++, p, 3, t144; // size de funcion actual
++, t144, 1, t145; //pos del parametro 1
+<=, t145, 72, stack; // asignado al stack el parametro
 +, p, 3, p; // simulando cambio de ambito
 call, , , carro_vacio_carro_caracter;
 -, p, 3, p; // regresando al ambito acutal
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t150; // pos de c
-=>, t150, t151, stack; // valor de lo que trae en el stack c
-+, P, 2, t152; // pos de retorno de a funcion persona_carro_obtenerCarro
-<=, t152, t151, stack; //asignando el retorno con su valor
++, p, 1, t146; // pos de c
+=>, t146, t147, stack; // valor de lo que trae en el stack c
++, P, 2, t148; // pos de retorno de a funcion persona_carro_obtenerCarro
+<=, t148, t147, stack; //asignando el retorno con su valor
 jmp, , , L11;
 
 L11:
@@ -380,9 +372,9 @@ end, , persona_carro_obtenerCarro
 begin, , , persona_entero_obtenernUmero
 
 // RESOLVIENDO UN RETORNO
-*, 5, 8, t153;
-+, P, 1, t154; // pos de retorno de a funcion persona_entero_obtenernUmero
-<=, t154, t153, stack; //asignando el retorno con su valor
+*, 5, 8, t149;
++, P, 1, t150; // pos de retorno de a funcion persona_entero_obtenernUmero
+<=, t150, t149, stack; //asignando el retorno con su valor
 jmp, , , L12;
 
 L12:
@@ -394,14 +386,14 @@ end, , persona_entero_obtenernUmero
 begin, , , persona_vacio_persona_entero_caracter
 
 // Asignando atributo edad
-+, p, 0, t155; //pos this 
-=>, t155, t156, stack; // apuntador al heap
-=>, t156, t157, heap; // apuntador donde inicia el objeto
-+, t157, 0, t158; // pos real  de edad
++, p, 0, t151; //pos this 
+=>, t151, t152, stack; // apuntador al heap
+=>, t152, t153, heap; // apuntador donde inicia el objeto
++, t153, 0, t154; // pos real  de edad
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t159; // pos de val
-=>, t159, t160, stack; // valor de lo que trae en el stack val
-<=, t158, t160, heap; //guardando en el heap el valor del atributo
++, p, 1, t155; // pos de val
+=>, t155, t156, stack; // valor de lo que trae en el stack val
+<=, t154, t156, heap; //guardando en el heap el valor del atributo
 
 L13:
 end, , persona_vacio_persona_entero_caracter
@@ -421,37 +413,37 @@ end, , persona_caracter_obtenerChar
 begin, , , persona_carro_retornoCarro
 
 // ----------- Instancia a una variable local --------------
-+, p, 1, t161; // pos de c
-<=, t161, h, stack; //guardando referencia del heap para el objeto c
-+, h, 1, t162; // guardo la posicion donde inicia el objeto 
-<=, h, t162, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 1, t157; // pos de c
+<=, t157, h, stack; //guardando referencia del heap para el objeto c
++, h, 1, t158; // guardo la posicion donde inicia el objeto 
+<=, h, t158, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 3, h; // reservando espacio para el objeto c
 //Ingresando referencia al this del objeto c
-+, p, 1, t163; // pos de c
-=>, t163, t164, stack; // obteniendo apuntador de c
-+, p, 3, t165; // simulando cambio de ambito
-+, t165, 0, t166; //pos del this de c
-<=, t166, t164, stack; // insertando apuntador del heap al stack del obeto c
++, p, 1, t159; // pos de c
+=>, t159, t160, stack; // obteniendo apuntador de c
++, p, 3, t161; // simulando cambio de ambito
++, t161, 0, t162; //pos del this de c
+<=, t162, t160, stack; // insertando apuntador del heap al stack del obeto c
 // Asignando parametros  
-+, p, 3, t167; // size de funcion actual
-+, t167, 1, t168; //pos del parametro 1
-<=, t168, 82, stack; // asignado al stack el parametro
-+, 5, 5, t171;
-*, t171, 2, t172;
-+, p, 3, t169; // size de funcion actual
-+, t169, 2, t170; //pos del parametro 2
-<=, t170, t172, stack; // asignado al stack el parametro
++, p, 3, t163; // size de funcion actual
++, t163, 1, t164; //pos del parametro 1
+<=, t164, 82, stack; // asignado al stack el parametro
++, 5, 5, t167;
+*, t167, 2, t168;
++, p, 3, t165; // size de funcion actual
++, t165, 2, t166; //pos del parametro 2
+<=, t166, t168, stack; // asignado al stack el parametro
 +, p, 3, p; // simulando cambio de ambito
 call, , , carro_vacio_carro_caracter_entero;
 -, p, 3, p; // regresando al ambito acutal
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t173; // pos de c
-=>, t173, t174, stack; // valor de lo que trae en el stack c
-+, P, 2, t175; // pos de retorno de a funcion persona_carro_retornoCarro
-<=, t175, t174, stack; //asignando el retorno con su valor
++, p, 1, t169; // pos de c
+=>, t169, t170, stack; // valor de lo que trae en el stack c
++, P, 2, t171; // pos de retorno de a funcion persona_carro_retornoCarro
+<=, t171, t170, stack; //asignando el retorno con su valor
 jmp, , , L15;
 
 L15:
@@ -464,14 +456,14 @@ begin, , , persona_entero_incrementarEdad
 
 // RESOLVIENDO UN RETORNO
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t176; // pos this 
-=>, t176, t177, stack; // obtenido apuntador al heap 
-=>, t177, t178, heap; // apuntador 
-+, t178, 0, t179; // pos de edad
-=>, t179, t180, heap; // obtengo el valor que se encuentre en el heap 
-+, t180, 1, t181;
-+, P, 1, t182; // pos de retorno de a funcion persona_entero_incrementarEdad
-<=, t182, t181, stack; //asignando el retorno con su valor
++, p, 0, t172; // pos this 
+=>, t172, t173, stack; // obtenido apuntador al heap 
+=>, t173, t174, heap; // apuntador 
++, t174, 0, t175; // pos de edad
+=>, t175, t176, heap; // obtengo el valor que se encuentre en el heap 
++, t176, 1, t177;
++, P, 1, t178; // pos de retorno de a funcion persona_entero_incrementarEdad
+<=, t178, t177, stack; //asignando el retorno con su valor
 jmp, , , L16;
 
 L16:

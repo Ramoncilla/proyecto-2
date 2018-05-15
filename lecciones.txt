@@ -1,9 +1,20 @@
-{%
-titulo { "gdfd"}
-descripcionE { "dgfd"}
-tipo { "a-coach"}
-ejemplo { "gfdg"}
-tarea { "dgfd"}
-resultado{ "dgfd"}
-%}
-
+[
+	{
+		"titulo": "Leccion 1",
+		"descripcion": "estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo",
+		"tipo": "g-coach",
+		"ejemplo": "entero i = 0 ; repetir_mientras ( i < 10 ) { imprimir ( i ) ; }",
+		"tarea": "debe de realizar una tarea un ranto fea",
+		"resultado": "25",
+		"tipoLeccion": 2
+	},
+	{
+		"titulo": "Leccion 1",
+		"descripcion": "estE2 es un ejemplo2 de leccion se llamara leccion 1 y pues solo",
+		"tipo": "a-coach",
+		"ejemplo": "entero i = 0 ; repetir_mientras ( i < 10 ) { imprimir ( i ) ; }",
+		"tarea": "debe de realizar una tarea un ranto fea",
+		"resultado": "25",
+		"tipoLeccion": 1
+	}
+]

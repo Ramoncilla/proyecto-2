@@ -72,14 +72,7 @@
     var  Si= require("./Arbol/Sentencias/Si");
 
 
-	var tituloLeccion = require("./Lecciones/ArbolLecciones/titulo");
-    var tipoLeccion = require("./Lecciones/ArbolLecciones/tipoLeccion");
-    var tareaLeccion = require("./Lecciones/ArbolLecciones/tareaLeccion");
-    var resultadoLeccion = require("./Lecciones/ArbolLecciones/resultadoLeccion");
-    var ejemploLeccion = require("./Lecciones/ArbolLecciones/ejemploLeccion");
-    var descripcionLeccion = require("./Lecciones/ArbolLecciones/descripcionLeccion");
-	var Leccion = require("./Lecciones/Leccion");
-	var listaLecciones = require("./Lecciones/listaLecciones");
+	
    
 %}
 
@@ -104,16 +97,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
 "/="				return 'divIgual'
 "/"                   return 'division'
-"{%"     return 'abreLeccion'
-"%}"     return 'cierraLeccion'
-"a-coach" return 'acoach'
-"g-coach" return 'gcoach'
-"titulo"     return 'titulo'
-"descripcion"       return 'descripcion'
-"tipo"                return 'tipo'
-"ejemplo"             return 'ejemplo'
-"tarea"     return 'tarea'
-"resultado"     return 'resultado'
+
 
 "crearPuntero" return 'crearPuntero'
 "obtenerDireccion" return 'obtenerDireccion'
@@ -260,75 +244,7 @@ INICIO: ARCHIVO EOF
 		a.setValores($1);
 		console.log("llegue hasta aqui");
 		return a;
-	}
-	|LECCIONES EOF
-		{
-			return $1;
-		};
-/*--------------------------------- Lecciones  ---------------------------------------------------*/
-
-    VAL_TERM_TITULO: id{$$=$1;}
-		|entero{$$=$1;}
-		|decimal{$$=$1;};
-
-	TERM_TITULO: TERM_TITULO VAL_TERM_TITULO{$$=$1+" "+$2;}
-		|VAL_TERM_TITULO{$$=$1;};
-
-	TITULO: titulo abreLlave TERM_TITULO cierraLlave{$$ = new tituloLeccion($3);};
-
-	DESCRIPCION: descripcion abreLlave TERM_TITULO cierraLlave{$$ = new descripcionLeccion($3);};
-	
-	TAREA: tarea abreLlave TERM_TITULO cierraLlave{$$ = new tareaLeccion($3); };
-
-	RESULTADO: resultado abreLlave TERM_TITULO cierraLlave{$$ = new resultadoLeccion($3); };
-
-	TIPO_LECCION: tipo abreLlave tipoLeccion cierraLlave{$$ = new tipoLeccion($3); };
-
-	EJEMPLO: ejemplo abreLlave FUNCION cierraLlave{$$ = new ejemploLeccion($3); };
-
-	EJEMPLO2: ejemplo abreLlave SENTENCIAS cierraLlave{$$ = new ejemploLeccion($3); };
- 
-	
-	tipoLeccion: gcoach{$$=$1;}
-    	|acoach{$$=$1;};
-
-		LECCIONES: LECCION 
-				{
-					$$ =new listaLecciones(); 
-					$$.saveLesson($1);
-				}
-			|LECCIONES LECCION
-			{
-				$$= $1;
-				$$.saveLesson($2);
-			};
-
-		LECCION: abreLeccion VALORES_LECCION cierraLeccion {$$= $2;};
-
-		VALORES_LECCION: VALOR_LECCION 
-				{
-					$$ = new Leccion(); 
-					$$.insertarValor($1);
-				}
-			|VALORES_LECCION VALOR_LECCION
-			{
-				$$ = $1;
-				$$.insertarValor($2);
-			};
-
-
-
-		VALOR_LECCION: TITULO{$$=$1;}
-			|DESCRIPCION{$$=$1;}
-			|TAREA{$$=$1;}
-			|RESULTADO{$$=$1;}
-			|TIPO_LECCION{$$=$1;}
-			|EJEMPLO{$$=$1;}
-			|EJEMPLO2{$$=$1;}; 
-
-	/*------------------------------- fin lecciones --------------------------------------------------*/
-
-	
+	};
 
 ARCHIVO: SENT_ARCHIVO 
 		{
@@ -572,7 +488,7 @@ PRINCIPAL: principal abrePar cierraPar CUERPO_FUNCION
 LISTA_PARAMETROS : abrePar PARAMETROS cierraPar {$$=$2;}
 	|abrePar  cierraPar {$$=[];};
 
-PARENTESIS: abrePar cierraPar {$$ = [];}
+
 
 PARAMETRO: TIPO_DECLARACION id 
 		{
