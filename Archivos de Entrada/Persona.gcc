@@ -36,7 +36,13 @@ clase carro {
         
     }
 
+caracter obtenerNombreCarro(){
 
+    caracter h [30];
+    h="Carro bonito";
+imprimir(h[4]);
+    retorno h[8]; 
+}
 publico caracter obtenerColor(){
     retorno este.col;
 }
@@ -89,6 +95,8 @@ clase persona {
 entero obtenernUmero(){
     retorno 5*8;
 }
+
+
     publico persona(entero val, caracter val2){
      edad = val;
      imprimir(este.edad+10);
@@ -124,9 +132,9 @@ entero i =0;
        persona p1 = nuevo persona(25, 'P');
        imprimir(p1.incrementarEdad());
 
-       entero valor1 =p1.retornoCarro().valorCarro;
+       caracter valor1 =p1.retornoCarro().obtenerNombreCarro();
 
-imprimir(valor1);
+imprimir(valor1[3]);
        caracter nombre[20];
        nombre="Alina Urbina";
        imprimir(nombre[8]);

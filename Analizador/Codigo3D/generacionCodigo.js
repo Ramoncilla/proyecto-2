@@ -3586,9 +3586,9 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 							if(banderaED){
 									var temp1_4= this.c3d.getTemporal();
 									var l1_4= "=>, "+posFinal+", "+temp1_4+", stack; // recuperando pos incial del objeto 888";
-									var l1_5 = "=>, "+temp1_4+", "+temp1_4+", heap; // apuntador inciail del objeto ";
+									//var l1_5 = "=>, "+temp1_4+", "+temp1_4+", heap; // apuntador inciail del objeto ";
 									this.c3d.addCodigo(l1_4);
-									this.c3d.addCodigo(l1_5);
+									//this.c3d.addCodigo(l1_5);
 									this.c3d.addCodigo("+, "+temp1_4+", 0, "+posFinal+";");
 							}
 							var retLlamada = this.llamada_funcion(elementoTemporal,ambitos,tipoElemento,firmaMetodo,posFinal,false);
