@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+ 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -78,4 +78,14 @@ a {
 @media screen and (max-height: 450px) {
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
+}
+
+#navbarSupportedContent{
+  
+  text-align: center;
+}
+.navbar-nav.mr-auto{
+
+ 
+
 }

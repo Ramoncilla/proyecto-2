@@ -1,8 +1,20 @@
-extends layout
+extends editor_layout
 
 block content
 
-  script(src='/javascripts/editor.js')
-  <input type="file" id="openFile" />
-  <input id="fileContent" type="hidden" value="">
-  <button id="btnAnalize" type="button" >Analizar Entrada</button>
+	<div class="container-editor">
+		<div class="split-pane-editor">
+			<div class="row">
+				<div class="col-md-6">
+					<div id="editor" style="">
+
+					</div>
+				</div>
+				<div class="col-md-6">
+					
+				</div>
+			</div>
+		</div>
+		<div class="output-area">
+		</div>
+	</div>
