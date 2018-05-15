@@ -76,7 +76,7 @@ clase persona {
 
   entero edad;
   carro car;
-   caracter nombre[30]="Pedro Cruz de Urbina";
+  caracter nombre[30]="Pedro Cruz de Urbina";
 
    vacio molestar(){
          imprimir(edad);
@@ -138,8 +138,9 @@ imprimir(valor1[3]);
        caracter nombre[20];
        nombre="Alina Urbina";
        imprimir(nombre[8]);
+       imprimir(nombre[4]);
 
-       
+       imprimir(p1.nombre[4]);
         }
 
 privado entero incrementarEdad(){

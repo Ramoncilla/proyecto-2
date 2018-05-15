@@ -302,6 +302,35 @@ return -1;
 };
 
 
+TablaSimbolos.prototype.esAtributoAcceso = function(nombre, ambitos){
+  var ambitoTemporal = new Ambito();
+  var arr= ambitos.ambitos.slice();
+  ambitoTemporal.setAmbitos(arr);
+
+  var cont =0;
+  var temporal;
+  var cadenaAmbito="";
+   
+  
+  if(this.listaSimbolos == 0){
+      cont+=0;
+  }
+  else{
+    for(var i =0; i<ambitos.ambitos.length; i++){
+        cadenaAmbito = ambitoTemporal.getAmbitos();
+        cont=cont + this.existeListaGlobal(cadenaAmbito,nombre);
+        if(cont>0){
+          return true;
+        }
+        ambitoTemporal.ambitos.shift();
+    }
+}
+
+
+return null;
+
+};
+
 TablaSimbolos.prototype.esAtributo= function(nombre, ambitos){
   var ambitoTemporal = new Ambito();
   var arr= ambitos.ambitos.slice();

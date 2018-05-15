@@ -355,7 +355,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			var tiAsig = nodo.tipoAsignacionArreglo;
 			if(tiAsig!=17){
 				this.c3d.addCodigo("// Asignar un posicion del arreglo ");
-				var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+				var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo,0,false);
 				if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
 					var ret = this.resolverExpresion(expresionArreglo,ambitos,clase,metodo);
 					if(ret.tipo.toUpperCase()== tipoArreglo.toUpperCase() || ret.tipo.toUpperCase() == "NULO2"){
@@ -1930,11 +1930,20 @@ generacionCodigo.prototype.instanciarEstructura = function(nodo,ambitos,clase,me
 };
 
 
-generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, posicionesArreglo, ambitos, clase, metodo){
+
+generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, posicionesArreglo, ambitos, clase, metodo, posFinal, modo){
+	 //posFinal donde incia el objet  modo falso normal true acceso
 		var ret2 = new EleRetorno();
 		ret2.setValoresNulos();
-		var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
+		var esAtributo;
 		var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
+		if(modo == true){
+			//viene de una acceso la prioridad son los atributos no las variables locales
+			esAtributo = this.tablaSimbolos.esAtributoAcceso(nombreArreglo, ambitos);
+		}else{
+			esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo, ambitos);
+		}
+
 		if(esAtributo!= null){
 			var simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
 			if(simb!=null){
@@ -1943,25 +1952,34 @@ generacionCodigo.prototype.obtenerApuntadorPosArreglo = function(nombreArreglo, 
 						//arreglo atributo
 						var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo, ambitos);
 						if(posArreglo!=-1){
-							var temp1 = this.c3d.getTemporal();
-							var temp2 = this.c3d.getTemporal();
-							var temp3 = this.c3d.getTemporal();
+							this.c3d.addCodigo("//------------- Asignancio posicion de un arreglo Atributo  "+nombreArreglo);
 							var temp4 = this.c3d.getTemporal();
+							if(modo==true){
+								var temp_ = this.c3d.getTemporal();
+								this.c3d.addCodigo("=>, "+posFinal+", "+temp_+", heap; // obteniendo apuntador al heap del arreglo ");
+								var l4 = "+, "+temp_+", "+posArreglo+", "+temp4+"; // pos del arreglo dentro del heap acceso ";
+								this.c3d.addCodigo(l4);
+							}else{
+								var temp1 = this.c3d.getTemporal();
+								var temp2 = this.c3d.getTemporal();
+								var temp3 = this.c3d.getTemporal();
+								var l1 = "+, P, 0, "+temp1+"; // pos this del objeto ";
+								var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt del heap para le objeto";
+								var l3 = "=>, "+temp2+", "+temp3+", heap; // apunt donde inicia el objeto";
+								var l4 = "+, "+temp3+", "+posArreglo+", "+temp4+"; // pos del arreglo dentro del heap ";
+								this.c3d.addCodigo(l1);
+								this.c3d.addCodigo(l2);
+								this.c3d.addCodigo(l3);
+								this.c3d.addCodigo(l4);
+
+							}
 							var temp5 = this.c3d.getTemporal();
 							var temp6 = this.c3d.getTemporal();
 							var temp7 = this.c3d.getTemporal();
-							var l1 = "+, P, 0, "+temp1+"; // pos this del objeto ";
-							var l2 = "=>, "+temp1+", "+temp2+", stack; // apunt del heap para le objeto";
-							var l3 = "=>, "+temp2+", "+temp3+", heap; // apunt donde inicia el objeto";
-							var l4 = "+, "+temp3+", "+posArreglo+", "+temp4+"; // pos del arreglo dentro del heap ";
 							var l5 = "=>, "+temp4+", "+temp5+", heap; // apuntador donde inicia el arreglo";
 							var l6 = "=>, "+temp5+", "+temp6+", heap; // size del arreglo "+ nombreArreglo;
 							var l7 = "+, "+temp5+", 1, "+temp7+"; //pos 0 del arreglo "+ nombreArreglo;
-							this.c3d.addCodigo("//------------- Asignancio posicion de un arreglo Atributo  "+nombreArreglo);
-							this.c3d.addCodigo(l1);
-							this.c3d.addCodigo(l2);
-							this.c3d.addCodigo(l3);
-							this.c3d.addCodigo(l4);
+							
 							this.c3d.addCodigo(l5);
 							this.c3d.addCodigo(l6);
 							this.c3d.addCodigo(l7);
@@ -2280,7 +2298,7 @@ generacionCodigo.prototype.resolverEste = function(nodo,ambitos, clase, metodo){
 
 		if(esAtributo!=null){
 			if(esAtributo){
-				var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+				var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo,0,false);
 				if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
 					var temp2_5 = this.c3d.getTemporal();
 					var l2_5= "=>, "+apuntadorArreglo.valor+", "+temp2_5+", heap; //valor que trae el objeto";
@@ -2871,7 +2889,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			var nombreArreglo = nodo.nombreArreglo;
 			var posicionesArreglo = nodo.posicionesArreglo;
 			var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
-			var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+			var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo,0,false);
 			if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
 				var temp2_5 = this.c3d.getTemporal();
 				var l2_5= "=>, "+apuntadorArreglo.valor+", "+temp2_5+", heap; //valor que trae el objeto";
@@ -3563,6 +3581,7 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 								//this.c3d.addCodigo(l5);
 								tipoElemento = this.tablaSimbolos.obtenerTipoAtributoAcceso(tipoElemento, nombreElemento);
 								banderaED=false;
+								bandera= this.esObjeto(tipoElemento);
 								//esObj= this.esObjeto(tipoElemento);	
 							}else{
 								errores.insertarError("Semantico", "No existe el elemento "+nombreElemento);
@@ -3572,9 +3591,33 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 
 						if(elementoTemporal instanceof posicion_arreglo){
 							nombreElemento = elementoTemporal.nombreArreglo;
-							var posiciones = elementoTemporal.posicionesArreglo;
+							var posicionesArreglo = elementoTemporal.posicionesArreglo;
+							var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreElemento,ambitos);
+							if(banderaED){
+								var temp1_4= this.c3d.getTemporal();
+								var l1_4= "=>, "+posFinal+", "+temp1_4+", stack; // recuperando pos incial del objeto 888";
+								this.c3d.addCodigo(l1_4);
+								this.c3d.addCodigo("+, "+temp1_4+", 0, "+posFinal+";");
+							}
+							var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreElemento,posicionesArreglo,ambitos,clase,metodo,posFinal,true);
+							if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
+								//var temp2_5 = this.c3d.getTemporal();
+								//var l2_5= "=>, "+apuntadorArreglo.valor+", "+temp2_5+", heap; //valor que trae el objeto";
+								//this.c3d.addCodigo(l2_5);
+								banderaED = false;
+							//	var retornVal = new EleRetorno();
+							tipoElemento = tipoArreglo;
+							posFinal= apuntadorArreglo.valor;
+							bandera = this.esObjeto(tipoElemento);
+								//retornVal.tipo = tipoArreglo;
+								//retornVal.valor = temp2_5;
+								//retornVal.setReferencia("HEAP",apuntadorArreglo.valor);
+								//return retornVal;
+							}else{
+								errores.insertarError("Semantica", "Ha ocurrido un error al resolver la posicion del arreglo "+ nombreElemento+", en una acceso");
 
-
+							}
+								
 						} 
 
 						if(elementoTemporal instanceof llamada_funcion){
