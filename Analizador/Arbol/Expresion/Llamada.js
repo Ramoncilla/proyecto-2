@@ -4,7 +4,7 @@ function Llamada(){
 	this.nombreFuncion="";
 	this.parametros =[];
 }
-
+ 
 
 
 Llamada.prototype.setValoresLlamada= function(nombre, parametros) {

@@ -157,6 +157,17 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "convertirEntero";
     }
 
+    
+    if(sent instanceof convertirCadena){
+        return "convertirCadena";
+    }
+
+
+
+
+
+    
+
     if(sent instanceof Este){
         return "este";
     }
@@ -169,11 +180,6 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     if(sent instanceof Acceso){
         return "acceso";
     }
-
-    if(sent instanceof convertirCadena){
-        return "convertirCadena";
-    }
-
 
 
 
@@ -206,18 +212,22 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "DECIMAL";
     } 
 
+
     if(sent instanceof booleano ){
         return "booleano";
     } 
+
 
 
     if(sent instanceof caracter){
         return "caracter";
     } 
 
+
     if(sent instanceof aritmerica){
         return "aritmetica";
     } 
+
 
     if(sent instanceof Relacional){
         return "relacional";

@@ -1,3 +1,5 @@
+
+
 var fs = require("fs");
 var elementoSentencia = require("./sentenciaNombre");
 var elementoCodigo = require("./Codigo");
@@ -2206,20 +2208,106 @@ generacionCodigo.prototype.resolverEste = function(nodo,ambitos, clase, metodo){
 	retorno.setValoresNulos();
 
 	if(elemenetoEste instanceof t_id){
+		var terminoId = elemenetoEste.nombreId;
+		var esAtributo = this.tablaSimbolos.esAtributo(terminoId,ambitos);
+		if(esAtributo!=null){
+			if(esAtributo){
+				var posVar = this.tablaSimbolos.obtenerPosAtributo(terminoId,ambitos);
+				var tipoV = this.tablaSimbolos.obtenerTipo(terminoId,ambitos);
+				if(posVar!=-1){
+					var temp1 = this.c3d.getTemporal();
+						var l1 = "+, p, 0, "+temp1+"; // pos this ";
+						var temp2 = this.c3d.getTemporal();
+						var l2 = "=>, "+temp1+", "+temp2+", stack; // obtenido apuntador al heap ";
+						var temp3 = this.c3d.getTemporal();
+						var l3 = "=>, "+temp2+", "+temp3+", heap; // apuntador ";
+						var temp4 = this.c3d.getTemporal(); 
+						var l4 = "+, "+temp3+", "+posVar+", "+temp4+"; // pos de "+ terminoId;
+						var temp5 = this.c3d.getTemporal();
+						var l5 = "=>, "+temp4+", "+temp5+", heap; // obtengo el valor que se encuentre en el heap ";
+						this.c3d.addCodigo("// ------------ Resolviendo un ID (atributo) -----------");
+						this.c3d.addCodigo(l1);
+						this.c3d.addCodigo(l2);
+						this.c3d.addCodigo(l3);
+						this.c3d.addCodigo(l4);
+						this.c3d.addCodigo(l5);
+						var retExpresion = new EleRetorno();
+						retExpresion.setValores(tipoV,temp5);
+						return retExpresion;
+				}else{
+					errores.insertarError("Semantico", "La vairable "+ terminoId+" no existe");
+					return retorno;
+				}
+
+			}else{
+				errores.insertarError("Semantico", "No se puede resolver la sentencia Este, debido a que "+ terminoId+", no es un atributo de "+clase);
+				return retorno;
+			}
+
+		}else{
+			errores.insertarError("Semantico", "La variable de nombre "+ terminoId+", no existe, fallo al resolver Este");
+			return retorno;
+		}
+
 
 	}
 
 	if(elemenetoEste instanceof llamada_funcion){
-
+		var v = this.llamada_funcion(elemenetoEste,ambitos,clase,metodo, 0, true);
+		console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+		return v;
 	}
 
 	if(elemenetoEste instanceof posicion_arreglo){
+		var nombreArreglo = elemenetoEste.nombreArreglo;
+		var posicionesArreglo = elemenetoEste.posicionesArreglo;
+		var tipoArreglo= this.tablaSimbolos.obtenerTipo(nombreArreglo,ambitos);
+		var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo,ambitos);
 
+		if(esAtributo!=null){
+			if(esAtributo){
+				var apuntadorArreglo = this.obtenerApuntadorPosArreglo(nombreArreglo,posicionesArreglo,ambitos,clase,metodo);
+				if(apuntadorArreglo.tipo.toUpperCase() != "NULO"){
+					var temp2_5 = this.c3d.getTemporal();
+					var l2_5= "=>, "+apuntadorArreglo.valor+", "+temp2_5+", heap; //valor que trae el objeto";
+					this.c3d.addCodigo(l2_5);
+					var retornVal = new EleRetorno();
+					retornVal.tipo = tipoArreglo;
+					retornVal.valor = temp2_5;
+					retornVal.setReferencia("HEAP",apuntadorArreglo.valor);
+					return retornVal;
+				}
+			}else{
+				errores.insertarError("Semantico", "El arreglo "+ nombreArreglo+", no es un atributo");
+				return retorno;
+			}
+
+		}else{
+			errores.insertarError("Semantico", "El arreglo "+nombreArreglo+", no existe");
+			return retorno;
+
+		}
 	}
 
 	if(elemenetoEste instanceof elementoAcceso){
+		var nombreVar = elemenetoEste .objeto; //nodo id
+		var nombreVariable= nombreVar.nombreId;
+		var elementosAcceso = elemenetoEste .elementosAcceso;
+		var esAtributo = this.tablaSimbolos.esAtributo(nombreVariable, ambitos);
+		if(esAtributo!=null){
+			if(esAtributo){
+				var a = this.resolverAcceso(elemenetoEste, ambitos,clase, metodo);
+				return a;
+			}else{
+				errores.insertarError("Semantico", "El atributo de tipo "+ nombreVariable+",debe de ser arreglo");
+				return retorno;
+			}
+		}else{
+			errores.insertarError("Semantico", "El atributo de tipo "+ nombreVariable+", no es valido");
+			return retorno;
+		}
+}
 
-	}
 return retorno;
 };
 
@@ -2241,6 +2329,13 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
 	
 	switch(nombreSentecia){
+
+		case "ESTE":{
+
+			var ret = this.resolverEste(nodo, ambitos, clase, metodo);
+			return ret;
+			break;
+		}
 
 		case "NULO2":{
 			var ret = new EleRetorno();

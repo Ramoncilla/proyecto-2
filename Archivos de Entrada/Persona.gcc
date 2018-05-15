@@ -37,6 +37,9 @@ clase carro {
     }
 
 
+publico caracter obtenerColor(){
+    retorno este.col;
+}
 publico entero obtenerValor(){
     imprimir(valorCarro);
     imprimir('L');
@@ -52,6 +55,7 @@ publico entero obtenerValor(){
    }
      
 
+
     publico caracter obtenerColor(){
         retorno col;
     }
@@ -66,7 +70,7 @@ clase persona {
 
   entero edad;
   carro car;
-   
+   caracter nombre[30]="Pedro Cruz de Urbina";
 
    vacio molestar(){
          imprimir(edad);
@@ -86,10 +90,23 @@ entero obtenernUmero(){
     retorno 5*8;
 }
     publico persona(entero val, caracter val2){
-      edad = val;
+     edad = val;
+     imprimir(este.edad+10);
+     car = nuevo carro('F',126);
+     caracter color = este.car.obtenerColor();
+     imprimir(color);
+entero i =0;
+     repetir_mientras(i<este.nombre.tamanio){
+         imprimir(este.nombre[i]);
+         i+=1;
+     }
+
+     caracter g = este.obtenerChar();
+     imprimir(g);
     }
 
     publico caracter obtenerChar(){
+        retorno 'K';
        
     }
 
