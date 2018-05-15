@@ -127,7 +127,9 @@ entero i =0;
        entero valor1 =p1.retornoCarro().valorCarro;
 
 imprimir(valor1);
-
+       caracter nombre[20];
+       nombre="Alina Urbina";
+       imprimir(nombre[8]);
 
        
         }

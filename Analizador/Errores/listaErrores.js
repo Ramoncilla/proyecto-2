@@ -14,6 +14,14 @@ listaErrores.prototype.insertarError= function(tipo, desc){
     listaErrores.prototype.errores.push(nuevoError);
 };
 
+listaErrores.prototype.insertarErrorPos = function(tipo, desc, linea){
+    var nuevoError = new Error();
+    nuevoError.setValores(tipo,desc);
+    nuevoError.fila = linea;
+    listaErrores.prototype.errores.push(nuevoError);
+    
+};
+
 listaErrores.prototype.obtenerLista= function(){
     return listaErrores.prototype.errores;
 };

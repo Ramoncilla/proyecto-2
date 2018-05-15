@@ -6,6 +6,7 @@ function Estructura(){
 
  
 
+
 Estructura.prototype.setValores = function(nombre, declas) {
 	this.nombreEstructura= nombre;
 	this.declaracionesEstructura= declas;

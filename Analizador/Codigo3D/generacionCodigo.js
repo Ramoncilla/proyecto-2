@@ -306,8 +306,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 				var valorPuntero = a.valor;
 				var estructuraPuntero = a.estructura;
 				var referenciaPuntero = a.referencia;
-
-
 			}
 			break;
 		}// fin decla_puntero
@@ -505,9 +503,26 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 					var expresionVar = nodo.getValor();
 					var simboloIgual = nodo.getSimbolo();
 					var esAtributo = this.tablaSimbolos.esAtributo(nombreVar,ambitos);
+					var retExpresion
 					if(esAtributo!= null){
+						var simboloElemento = this.tablaSimbolos.obtenerSimbolo(nombreVar,ambitos,esAtributo);
+						if(simboloElemento.tipoSimbolo.toUpperCase()=="ARREGLO"){
+							 retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+									if(retExpresion instanceof EleRetorno){
+										if(retExpresion.tipo.toUpperCase() == "CADENA"){
+											this.asignarCadenaArreglo(nombreVar,retExpresion,ambitos,clase, metodo);
+										}else{
+											errores.insertarError("Semantico", "Tipo no valido para asingar a una arreglo "+ retExpresion.tipo);
+										}
+									}else{
+										errores.insertarError("Semantico", "Hubo un error al resolver expresion para asignar arreglo");
+									}
+						return;
+						}
 						if(esAtributo){
 							// es un atributo
+                            
+
 							var posVar = this.tablaSimbolos.obtenerPosAtributo(nombreVar, ambitos);
 							if(posVar!= -1){
 								var temp1 = this.c3d.getTemporal();
@@ -525,7 +540,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 								this.c3d.addCodigo(l4);
 
 								if(simboloIgual == "="){
-									var retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
+									retExpresion = this.resolverExpresion(expresionVar,ambitos,clase,metodo);
 									if(retExpresion instanceof EleRetorno){
 										if(retExpresion.tipo.toUpperCase() != "NULO"){
 											if(retExpresion.tipo.toUpperCase() == "NULO2" || retExpresion.tipo.toUpperCase() == tipoVar.toUpperCase()){
@@ -2254,7 +2269,6 @@ generacionCodigo.prototype.resolverEste = function(nodo,ambitos, clase, metodo){
 
 	if(elemenetoEste instanceof llamada_funcion){
 		var v = this.llamada_funcion(elemenetoEste,ambitos,clase,metodo, 0, true);
-		console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
 		return v;
 	}
 
