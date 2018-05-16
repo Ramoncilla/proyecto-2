@@ -28,6 +28,8 @@ var listaEtiquetas = require("../Codigo3D/Etiquetas");
 
 var elementoAcceso = require("../Arbol/Expresion/Acceso");
 
+var numeroEntero = require("../Arbol/Expresion/Entero");
+
 
 var errores= new listaErrores();
 var sentNombre = new elementoSentencia();
@@ -317,6 +319,52 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}// fin decla asigna putnero
 		
+
+		case "ASIGNACION_UNARIO":{
+			var elementoUnario = nodo.elementoAsignacionUnario;
+			var simbOperacion = nodo.simboloUnario;
+			var tipoAsigUnario = nodo.tipoAsignacionArreglo;
+			var resElmentoUnario = new EleRetorno();
+			resElmentoUnario.setValoresNulos();
+
+			if(elementoUnario instanceof t_id){
+				resElmentoUnario = this.resolverExpresion(elementoUnario,ambitos,clase,metodo);
+			}
+			if(elementoUnario instanceof objetoEste){
+				resElmentoUnario = this.resolverEste(elementoUnario,ambitos,clase,metodo);
+			}
+			if(elementoUnario instanceof elementoAcceso){
+				resElmentoUnario = this.resolverAcceso(elementoUnario,ambitos,clase,metodo);
+			}
+
+			if(resElmentoUnario.tipo.toUpperCase() != "NULO"){
+				var numeroUno = new numeroEntero();
+				numeroUno.setNumero(1);
+				var expUno = this.resolverExpresion(numeroUno, ambitos, clase,metodo);
+				var resOperacion = new EleRetorno();
+				resOperacion.setValoresNulos();
+
+				if(simbOperacion == "++"){
+					resOperacion = this.validarSumaOperacion(resElmentoUnario, expUno);
+				}else{
+					resOperacion = this.validarRestaOperacion(resElmentoUnario,expUno);
+				}
+
+				if(resOperacion.tipo.toUpperCase() !=  "NULO"){
+					if(resOperacion.tipo.toUpperCase() == resElmentoUnario.tipo.toUpperCase()){
+						this.c3d.addCodigo("<=, "+ resElmentoUnario.referencia+", "+resOperacion.valor+", "+ resElmentoUnario.estructura+"; // asignando operaicon con unario");
+					}else{
+						errores.insertarError("Semantico", "Incompatibilidad de tipos entre "+ resElmentoUnario.tipo+", con "+ resOperacion.tipo);
+					}
+
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver la operacion con el unario");
+				}
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un erro al resolver la asignacion de un unario");
+			}
+			break;
+		}
 
 		case "DECLA_PILA":{
 			this.instanciarEstructura(nodo,ambitos,clase, metodo);
@@ -3182,6 +3230,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						this.c3d.addCodigo(l5);
 						var retExpresion = new EleRetorno();
 						retExpresion.setValores(tipoV,temp5);
+						retExpresion.setReferencia("HEAP", temp4);
 						return retExpresion;
 					}else{
 						errores.insertarError("Semantico", "La variable "+ nombreId +", no existe");
@@ -3203,6 +3252,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 						this.c3d.addCodigo(l2);
 						var retExpresion = new EleRetorno();
 						retExpresion.setValores(tipoV,temp2);
+						retExpresion.setReferencia("STACK", temp1);
 						return retExpresion;
 
 					}else{
@@ -5472,8 +5522,8 @@ generacionCodigo.prototype.concatenarCadenas = function(cad1, cad2){
 generacionCodigo.prototype.validarSumaOperacion= function(val1, val2){
 
 		var ret; 
-		console.dir(val1);
-		console.dir(val2);
+		//console.dir(val1);
+		//console.dir(val2);
 		if((val1 instanceof EleRetorno) && (val2 instanceof EleRetorno)){
 			if(!this.esNulo(val1.tipo) && !this.esNulo(val2.tipo)){
 				

@@ -256,8 +256,8 @@ INICIO: ARCHIVO EOF
 		a.setValores($1);
 		console.log("llegue hasta aqui");
 		return a;
-	}
-	|error EOF{ console.log($1+"69456"); console.log("dfdsfdf" +yytext); console.log("sfsdfdsf" + yylineno);   errorSintactico(yytext, yylineno); };
+	};
+	/*|error EOF{ console.log($1+"69456"); console.log("dfdsfdf" +yytext); console.log("sfsdfdsf" + yylineno);   errorSintactico(yytext, yylineno); };*/
 
 ARCHIVO: SENT_ARCHIVO 
 		{
@@ -681,8 +681,23 @@ ASIGNACION:
 	|este punto id COL_ARREGLO igual INSTANCIA 
 
 
-	|id masMas {var a = new AsignacionUnario(); a.setValores($1,"++",5); $$=a; }//5
-	|id menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",5); $$=a; }//5
+	|id masMas 
+		{
+			 var b = new t_id();
+			 b.setValorId($1);
+			 var a = new AsignacionUnario(); 
+			 a.setValores(b,"++",5);
+			 $$=a;
+		 }//5
+
+	|id menosMenos
+		 {
+			 var b = new t_id();
+			 b.setValorId($1);
+			 var a = new AsignacionUnario(); 
+			 a.setValores(b,"--",5);
+			 $$=a;
+		 }//5
 
 	|ACCESO masMas {var a = new AsignacionUnario(); a.setValores($1,"++",6); $$=a; }//6
 	|ACCESO menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",6); $$=a; } //6

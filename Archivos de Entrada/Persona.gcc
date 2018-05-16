@@ -119,7 +119,20 @@ entero i =0;
      este.edad= 1024*2;
      este.edad *=3;
      imprimir(este.edad);
-     
+     imprimir('E');
+     este.edad--;
+     IMPRIMIr(edad);
+     edad--;
+     imprimir(edad);
+     imprimir('C');
+     imprimir(este.car.valorCarro);
+     este.car.valorCarro--;
+     imprimir(este.car.valorCarro);
+     imprimir('L');
+     imprimir(car.lla1.valor1Llanta);
+     car.lla1.valor1Llanta--;
+     imprimir(car.lla1.valor1Llanta);
+     imprimir(este.car.lla1.valor1Llanta);
     }
 
     publico caracter obtenerChar(){
@@ -139,7 +152,7 @@ entero i =0;
     principal(){ 
 
        persona p1 = nuevo persona(25, 'P');
-       imprimir(p1.incrementarEdad());
+      /* imprimir(p1.incrementarEdad());
        p1.car.valorCarro*=10;
 imprimir(p1.car.valorCarro);
 imprimir('J');
@@ -161,7 +174,7 @@ entero i=0;
        repetir_mientras(i<p1.nombre.tamanio){
            imprimir(p1.nombre[i]);
            i+=1;
-       }
+       }*/
         }
 
 privado entero incrementarEdad(){

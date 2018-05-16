@@ -5,7 +5,7 @@ function AsignacionUnario(){
 	this.tipoAsignacionUnario =0;
 }
 
-
+ 
 
 AsignacionUnario.prototype.setValores = function(elemento, igual,tipo) {
 	this.elementoAsignacionUnario= elemento;

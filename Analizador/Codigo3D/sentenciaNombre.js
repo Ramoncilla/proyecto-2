@@ -30,6 +30,8 @@ var ciclox = require("../Arbol/Sentencias/Ciclo_X");
 var selecciona = require("../Arbol/Sentencias/Selecciona");
 var leerTeclado = require("../Arbol/Sentencias/LeerTeclado");
 
+var asignaUnario = require("../Arbol/Sentencias/AsignacionUnario");
+
 
 var decla_lista = require("../Arbol/Sentencias/DeclaLista");
 var decla_cola = require("../Arbol/Sentencias/DeclaCola");
@@ -111,10 +113,10 @@ sentenciaNombre.prototype.obtenerNombre3D= function(sent){
 
 
 
-
+ 
 sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
-     
+   
 
     if(sent instanceof obtenerDireccion){
         return "obtenerDireccion";
@@ -242,6 +244,9 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
+    if(sent instanceof asignaUnario){
+        return "ASIGNACION_UNARIO";
+    }
 
     if(sent instanceof leerTeclado){
         return "LEER_TECLADO";
