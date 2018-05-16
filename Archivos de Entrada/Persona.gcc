@@ -151,8 +151,28 @@ entero i =0;
 
     principal(){ 
 
+
+entero a = -50;
+imprimir(-25);
+imprimir(a);
+
+imprimir(a++);
+imprimir(a--);
+a++;
+imprimir(a);
+a--;
+imprimir(a);
+
        persona p1 = nuevo persona(25, 'P');
-      /* imprimir(p1.incrementarEdad());
+       imprimir('H');
+       imprimir(p1.car.lla1.valor1Llanta);
+       imprimir(p1.car.lla1.valor1Llanta++);
+       imprimir(p1.car.lla1.valor1Llanta--);
+       imprimir(p1.car.lla1.valor1Llanta);
+       
+
+       /*
+       imprimir(p1.incrementarEdad());
        p1.car.valorCarro*=10;
 imprimir(p1.car.valorCarro);
 imprimir('J');

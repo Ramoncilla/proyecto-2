@@ -61,6 +61,7 @@ var Identificador = require("../Arbol/Expresion/t_id");
 
 
 
+
 var expresion3D = require("../Interprete/ArbolInterprete/Aritmetica");
 var get_asig_ed_3d = require("../Interprete/ArbolInterprete/Get_Asig_ED");
 var asig_3d = require("../Interprete/ArbolInterprete/Asig");
@@ -131,9 +132,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "reservarMemoria";
     }
 
-    if(sent instanceof unario){
-        return "unario";
-    }
+    
 
     if(sent instanceof valorPuntero){
         return "valorPuntero";
@@ -144,17 +143,6 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
         return "LLAMADA";
     }
     
-
-    if(sent instanceof Negativo){
-        return "negativo";
-    }
-
-    if(sent instanceof notLogica){
-        return "NOT_LOGICA";
-    }
-
-    
-
     if(sent instanceof convertirEntero){
         return "convertirEntero";
     }
@@ -168,7 +156,21 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 
-    
+
+
+    if(sent instanceof unario){
+        return "unario";
+    }
+
+    if(sent instanceof Negativo){
+        return "negativo";
+    }
+
+
+    if(sent instanceof notLogica){
+        return "NOT_LOGICA";
+    }
+
 
     if(sent instanceof Este){
         return "este";

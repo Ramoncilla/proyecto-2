@@ -3,7 +3,7 @@ function Negativo(){
 }
 
 
-
+ 
 
 Negativo.prototype.setExpresion = function(valor) {
 	// body...

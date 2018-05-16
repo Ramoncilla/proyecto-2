@@ -15,9 +15,6 @@ Unario.prototype.getExpresion= function(){
 	return this.expresion;
 };
 
-
-
-
 Unario.prototype.getOperador= function(){
 	return this.operador;
 };

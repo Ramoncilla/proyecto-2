@@ -2751,6 +2751,40 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	
 	switch(nombreSentecia){
 
+		case "NEGATIVO":{
+			var expNegativo = nodo.expresion;
+			var retExpUnario = this.resolverExpresion(expNegativo, ambitos, clase, metodo);
+			var num = new numeroEntero();
+			num.setNumero(-1);
+			var retNum = this.resolverExpresion(num,ambitos,clase,metodo);
+			if(retExpUnario.tipo.toUpperCase()!= "NULO"){
+				var c= this.validarMultiplicacionOperacion(retExpUnario,retNum);
+				return c;
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al trtar de resolver un negativo ");
+			}
+			break;
+		}
+
+		case "UNARIO":{
+			var expUnario = nodo.expresion;
+			var simbUnario = nodo.operador;
+			var retExpUnario = this.resolverExpresion(expUnario, ambitos, clase, metodo);
+			var num = new numeroEntero();
+			num.setNumero(1);
+			var retUno= this.resolverExpresion(num,ambitos,clase,metodo);
+			if(retExpUnario.tipo.toUpperCase()!= "NULO"){
+				if(simbUnario == "++"){
+					return this.validarSumaOperacion(retExpUnario,retUno);
+				}else{
+					return this.validarRestaOperacion(retExpUnario,retUno);
+				}
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un erro la tratar de resolver la operacoin de un unario");
+			}
+			break;
+		}
+
 		case "ESTE":{
 
 			var ret = this.resolverEste(nodo, ambitos, clase, metodo);
