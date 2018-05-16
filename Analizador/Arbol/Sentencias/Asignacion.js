@@ -5,7 +5,7 @@ function Asignacion(){
 	this.valorAsignacion=null;
 	this.tipoAsignacion =0;
 }
-
+ 
 
 Asignacion.prototype.setValores = function(elemento, igual,valor,tipo) {
 	this.elementoAsignacion= elemento;

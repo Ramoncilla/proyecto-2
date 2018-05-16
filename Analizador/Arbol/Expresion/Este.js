@@ -2,7 +2,7 @@ function Este(){
 	this.elemento =null;
 
 }
-
+ 
 Este.prototype.setValores = function(valor) {
 	this.elemento=valor;
 

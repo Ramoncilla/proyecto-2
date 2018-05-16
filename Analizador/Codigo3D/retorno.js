@@ -5,6 +5,15 @@ function retorno(){
     this.referencia = "nulo";
 }
  
+
+retorno.prototype.esReferenciaNula= function(){
+    if(this.estructura.toUpperCase() == "NULO" &&
+    this.referencia.toUpperCase() == "NULO"){
+        return true;
+    }
+    return false;
+};
+
 retorno.prototype.setValorCadena = function(valor){
     this.tipo= "CADENA";
     this.valor = valor;
@@ -15,7 +24,7 @@ retorno.prototype.setValorVacio = function(){
     this.tipo= "NULO2";
     this.tipo = 36;
 };
-
+ 
 retorno.prototype.setValorEntero = function(valor){
     this.tipo = "ENTERO";
     this.valor = valor;

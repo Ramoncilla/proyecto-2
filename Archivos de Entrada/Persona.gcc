@@ -33,6 +33,10 @@ clase carro {
         imprimir(rinLlanta);
         valorCarro = rinLlanta;
         lla1 = nuevo llaNTA(rinLlanta*2, rinLlanta*3);
+        imprimir('M');
+        imprimir(este.lla1.valor1Llanta);
+        este.lla1.valor1Llanta*=8;
+        imprimir(este.lla1.valor1Llanta);
         
     }
 
@@ -109,8 +113,13 @@ entero i =0;
          i+=1;
      }
 
+
      caracter g = este.obtenerChar();
      imprimir(g);
+     este.edad= 1024*2;
+     este.edad *=3;
+     imprimir(este.edad);
+     
     }
 
     publico caracter obtenerChar(){
@@ -131,6 +140,9 @@ entero i =0;
 
        persona p1 = nuevo persona(25, 'P');
        imprimir(p1.incrementarEdad());
+       p1.car.valorCarro*=10;
+imprimir(p1.car.valorCarro);
+imprimir('J');
 
        caracter valor1 =p1.retornoCarro().obtenerNombreCarro();
 
@@ -141,6 +153,15 @@ imprimir(valor1[3]);
        imprimir(nombre[4]);
 
        imprimir(p1.nombre[4]);
+
+       p1.nombre[4]= 'E';
+imprimir('E');
+imprimir(p1.nombre.tamanio);
+entero i=0;
+       repetir_mientras(i<p1.nombre.tamanio){
+           imprimir(p1.nombre[i]);
+           i+=1;
+       }
         }
 
 privado entero incrementarEdad(){

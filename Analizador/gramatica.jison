@@ -659,26 +659,41 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 		$$= asigDec;
 	};
 
-ASIGNACION: id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
+ASIGNACION: 
+	id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
+	|id igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
 
-	|id igual INSTANCIA 
-	{ var a = new Asignacion(); a.setValores($1,$2,$3,2); $$=a;}//2
+	|id COL_ARREGLO SIMB_IGUAL EXPRESION {var a = new AsignacionArreglo(); a.setValores($1,$2,$3,$4,7); $$=a;} //7
+	|id COL_ARREGLO igual INSTANCIA
+
+
 	|ACCESO SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,3); $$=a;} //3
 	|ACCESO igual INSTANCIA { var a = new Asignacion(); a.setValores($1,$2,$3,4); $$=a;}//4
-	|id masMas {var a = new AsignacionUnario(); a.setValores($1,"++",5); $$=a; }//5
-	|id menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",5); $$=a; }//5
-	|ACCESO masMas {var a = new AsignacionUnario(); a.setValores($1,"++",6); $$=a; }//6
-	|ACCESO menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",6); $$=a; } //6
-	|id COL_ARREGLO SIMB_IGUAL EXPRESION {var a = new AsignacionArreglo(); a.setValores($1,$2,$3,$4,7); $$=a;} //7 
-	|este punto id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($3,$4,$5,8); $$=a;}//8
+
+    |este punto id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($3,$4,$5,8); $$=a;}//8
 	|este punto id igual INSTANCIA { var a = new Asignacion(); a.setValores($3,$4,$5,9); $$=a;}//9
+
 	|este punto ACCESO SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($3,$4,$5,10); $$=a;}//10
 	|este punto ACCESO igual INSTANCIA { var a = new Asignacion(); a.setValores($3,$4,$5,11); $$=a;}//11
+
+
+	|este punto id COL_ARREGLO SIMB_IGUAL EXPRESION{var a = new AsignacionArreglo(); a.setValores($1,$2,$3,$4,14); $$=a;}//14
+	|este punto id COL_ARREGLO igual INSTANCIA 
+
+
+	|id masMas {var a = new AsignacionUnario(); a.setValores($1,"++",5); $$=a; }//5
+	|id menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",5); $$=a; }//5
+
+	|ACCESO masMas {var a = new AsignacionUnario(); a.setValores($1,"++",6); $$=a; }//6
+	|ACCESO menosMenos {var a = new AsignacionUnario(); a.setValores($1,"--",6); $$=a; } //6
+	 
+	
 	|este punto id masMas {var a = new AsignacionUnario(); a.setValores($3,"++",12); $$=a; }//12
 	|este punto id menosMenos{var a = new AsignacionUnario(); a.setValores($3,"--",12); $$=a; }//12
+
 	|este punto ACCESO masMas{var a = new AsignacionUnario(); a.setValores($3,"++",13); $$=a; }//13
 	|este punto ACCESO menosMenos{var a = new AsignacionUnario(); a.setValores($3,"--",13); $$=a; }//13
-	|este punto id COL_ARREGLO SIMB_IGUAL EXPRESION{var a = new AsignacionArreglo(); a.setValores($1,$2,$3,$4,14); $$=a;}//14
+	
 	|VALOR_PUNTERO igual EXPRESION //15
 	{ var a = new Asignacion(); a.setValores($1,$2,$3,15); $$=a;} ;
 
