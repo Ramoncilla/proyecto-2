@@ -124,7 +124,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
     if(sent instanceof obtenerTamanio){
-        return "obtenerTamanio";
+        return "CONSULTAR_TAMANIO";
     }
 
    

@@ -1234,7 +1234,7 @@ RESERVAR_MEMORIA: reservarMemoria abrePar EXPRESION cierraPar
 		$$=a;
 	}; 
 
-OBTENER_TAMANIO: consultarTamanio abrePar EXPRESION cierraPar
+OBTENER_TAMANIO: consultarTamanio abrePar id cierraPar
 	{
 		var a = new ObtenerTamanio();
 		a.setValores($3);

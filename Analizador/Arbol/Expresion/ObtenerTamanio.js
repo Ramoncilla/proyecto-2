@@ -3,7 +3,7 @@ function ObtenerTamanio(){
 }
 
 
-
+ 
 ObtenerTamanio.prototype.setValores = function(exp) {
 	// body...
 
