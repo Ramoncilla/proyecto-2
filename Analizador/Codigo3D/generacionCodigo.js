@@ -3431,12 +3431,9 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 };
 
 
+
+
  generacionCodigo.prototype.vaciarArreglo = function(nombreArreglo, ambitos,clase,metodo){
-
- };
-
-
- generacionCodigo.prototype.vaciarArreglo = function(){
  var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo,ambitos);
 				if(esAtributo!=null){
 					var tempSize=this.c3d.getTemporal();
