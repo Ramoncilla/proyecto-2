@@ -2,55 +2,38 @@ doctype html
 html
   head
     title= title
-    script(src='/javascripts/jquery-3.3.1.min.js')
     
-    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css')
+    
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='/javascripts/jquery-3.3.1.min.js')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js", integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm", crossorigin="anonymous")
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js", integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M", crossorigin="anonymous")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+    
     script(src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js")
     script(src='/javascripts/http.js')
     script(src='/javascripts/main.js')
     script(src='/javascripts/ace_script.js')    
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
   body
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
-    <a class="navbar-brand" href="#">Gcc Compiler</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Compilar<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Debuguear<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Continuar<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Siguiente<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Saltar<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Automatico<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Exportar<span class="sr-only">(current)</span></a>
-    </li>
-    
-    
-    
-    
-    </ul>
+    <nav class="navbar navbar-inverse navbar-fixed-top center">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GCC Compiler</a>
+        </div>
+        <div class="navbar-inner">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Compilar</a></li>
+          <li><a href="#">Debuguear</a></li>
+          <li><a href="#">Continuar</a></li>
+          <li><a href="#">Siguiente</a></li>
+          <li><a href="#">Saltar</a></li>
+          <li><a href="#">Automático</a></li>
+          <li><a href="#">Exportar</a></li>
+        </ul>
+        </div>
         
-    </div>
+      </div>
     </nav>
 
     block content
