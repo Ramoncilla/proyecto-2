@@ -140,6 +140,27 @@ AnalizadorInterprete.prototype.inicializarEstructuras = function(){
 
 };
 
+
+
+AnalizadorInterprete.prototype.imprimir_str= function(pos){
+
+    var posicion = parseInt(pos+"");
+    posicion++;
+    posicion++;
+    var cadena="";
+    var caracter;
+    while(true){
+        caracter= this.heap[posicion];
+        if(caracter == 34){
+            break;
+        }else{
+            cadena += String.fromCharCode(caracter);
+            posicion++;
+        }
+    }
+    return cadena;
+};
+
 AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
     var nombreInstruccion = nombres.obtenerNombre3D(instruccion).toUpperCase();
@@ -207,6 +228,12 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
                 if(tipo == "\"%f\"") {
                     //decimal
                     var res = parseFloat(vVal);
+                    this.agregarImpresion(res);
+                }
+
+                if(tipo == "\"%s\"") {
+                    //decimal
+                    var res = this.imprimir_str(vVal);
                     this.agregarImpresion(res);
                 }
 

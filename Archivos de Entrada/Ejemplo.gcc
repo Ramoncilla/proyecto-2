@@ -11,6 +11,12 @@ clase ejemplos{
 
 
   principal(){
+
+
+
+    imprimir("Pedrito hermoso te amo muchisimo   <3 ");
+
+    /*
     entero b = 5*10;
     p hola = nuevo p(12);
     crearPuntero(entero, a) = obtenerDireccion(hola.edad);
@@ -18,7 +24,7 @@ clase ejemplos{
     entero x = a+23;
     imprimir(x);
     imprimir('C');
-    imprimir(b);
+    imprimir(b);*/
   }
 
 }

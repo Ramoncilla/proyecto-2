@@ -1180,7 +1180,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 
 		case "IMPRIMIR":{
-
 			var resultado = this.resolverExpresion(nodo.expresionImprimir,ambitos,clase, metodo);
 			if(resultado instanceof EleRetorno){
 				if(resultado.tipo.toUpperCase() != "NULO"){
@@ -1195,9 +1194,10 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 						var l1 = "print(\"%c\", "+ resultado.valor +");";
 						this.c3d.addCodigo(l1);
 
+					}else if(resultado.tipo.toUpperCase() == "CADENA"){
+						this.c3d.addCodigo("print(\"%s\", "+resultado.valor+");");
 					}
 				}
- 
 			}else{
 				errores.insertarError("Semantico","Ha ocurrido un error al resolver para imprimir");
 			}

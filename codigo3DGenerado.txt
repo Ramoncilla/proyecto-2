@@ -21,59 +21,93 @@ end, , p_vacio_p_entero
 
 begin, , , ejemplos_PRINCIPAL
 
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 0, t8; // pos de b
-*, 5, 10, t9;
-<=, t8, t9, stack; // asignando a b
-// ----------- Instancia a una variable local --------------
-+, p, 1, t10; // pos de hola
-<=, t10, h, stack; //guardando referencia del heap para el objeto hola
-+, h, 1, t11; // guardo la posicion donde inicia el objeto 
-<=, h, t11, heap; // guardando donde es que inicia el objeto dentro del heap
-+, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 1, h; // reservando espacio para el objeto hola
-//Ingresando referencia al this del objeto hola
-+, p, 1, t12; // pos de hola
-=>, t12, t13, stack; // obteniendo apuntador de hola
-+, p, 4, t14; // simulando cambio de ambito
-+, t14, 0, t15; //pos del this de hola
-<=, t15, t13, stack; // insertando apuntador del heap al stack del obeto hola
-// Asignando parametros  
-+, p, 4, t16; // size de funcion actual
-+, t16, 1, t17; //pos del parametro 1
-<=, t17, 12, stack; // asignado al stack el parametro
-+, p, 4, p; // simulando cambio de ambito
-call, , , p_vacio_p_entero;
--, p, 4, p; // regresando al ambito acutal
-
-+, P, 2, t18; // pos donde se encuenta el punero a
-// ----------------- Resolviendo acceso local 
-+, P, 1, t19; // pos del objeto
-=>, t19, t21, stack; //apuntador al heap del obejto
-=>, t21, t22, heap; // recuperando pos incial del objeto
-+, t22, 0, t21;
-=>, t21, t23, heap; // valor a retoranar del acceso
-<=, t18, t23, stack; // asignando al puntero a
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t24; // pos de a
-=>, t24, t25, stack; // valor de lo que trae en el stack a
-print("%d", t25);
-// -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 3, t26; // pos de x
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t27; // pos de a
-=>, t27, t28, stack; // valor de lo que trae en el stack a
-+, t28, 23, t29;
-<=, t26, t29, stack; // asignando a x
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 3, t30; // pos de x
-=>, t30, t31, stack; // valor de lo que trae en el stack x
-print("%d", t31);
-print("%c", 67);
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 0, t32; // pos de b
-=>, t32, t33, stack; // valor de lo que trae en el stack b
-print("%d", t33);
+// Resolviendo una cadena 
++, H, 0, t8; //apuntaodr a cadena 
++, H, 1, t9; //apu donde inicia la cadena
+<=, t8, t9, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 38, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t10; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 80, heap; //guardadndo P
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 100, heap; //guardadndo d
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 116, heap; //guardadndo t
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 104, heap; //guardadndo h
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 115, heap; //guardadndo s
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 116, heap; //guardadndo t
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 117, heap; //guardadndo u
++, H, 1, H;
+<=, H, 99, heap; //guardadndo c
++, H, 1, H;
+<=, H, 104, heap; //guardadndo h
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 115, heap; //guardadndo s
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 60, heap; //guardadndo <
++, H, 1, H;
+<=, H, 51, heap; //guardadndo 3
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t8);
 
 L2:
 end, , ejemplos_PRINCIPAL
