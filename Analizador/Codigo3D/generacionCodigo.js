@@ -302,7 +302,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 
 	
 		case "DECLA_PUNTERO":{
-			var a = this.crearPunteroNulo(nodo, ambitos,clase, metodo);
+			/*var a = this.crearPunteroNulo(nodo, ambitos,clase, metodo);
 			if(a.tipo.toUpperCase() == "NULO"){
 				errores.insertarError("SEmantico", "Ha ocurrido un error al crear el puntero");
 			}else{
@@ -310,12 +310,70 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 				var valorPuntero = a.valor;
 				var estructuraPuntero = a.estructura;
 				var referenciaPuntero = a.referencia;
-			}
+			}*/
 			break;
 		}// fin decla_puntero
 		
 		case "DECLA_ASIGNA_PUNTERO":{
 
+			var punteroDecla = nodo.puntero;
+			var expresionDecla = nodo.expresion;
+			var nombrePuntero = punteroDecla.nombrePuntero;
+			var valorPuntero = punteroDecla.valorPuntero;
+			var tipoPuntero = punteroDecla.tipoPuntero;
+			var esAtributo = this.tablaSimbolos.esAtributo(nombrePuntero,ambitos);
+			if(esAtributo!=null){
+				var tempPosFinal="";
+				var estructura="";
+				if(esAtributo){
+					var posVar = this.tablaSimbolos.obtenerPosAtributo(nombrePuntero, ambitos);
+					if(posVar!=-1){
+						estructura="heap";
+						var temp1 = this.c3d.getTemporal();
+						var temp2= this.c3d.getTemporal();
+						var temp3 = this.c3d.getTemporal();
+						tempPosFinal= this.c3d.getTemporal();
+						this.c3d.addCodigo("+, P, 0, "+temp1+";");
+						this.c3d.addCodigo("=>, "+temp1+", "+temp2+", stack; ");
+						this.c3d.addCodigo("=>, "+temp2+", "+temp3+", heap; ");
+						this.c3d.addCodigo("+, "+temp3+", "+posVar+", "+tempPosFinal+"; // pos final donde se encuentra el puntero "+ nombrePuntero);
+					}else{
+						errores.insertarError("Semantico", "El puntero global"+ nombrePuntero+", no existe");
+					}
+				}else{
+
+					var posVar = this.tablaSimbolos.obtenerPosLocal(nombrePuntero,ambitos);
+					if(posVar!=-1){
+						estructura="stack";
+						tempPosFinal = this.c3d.getTemporal();
+						this.c3d.addCodigo("+, P, "+posVar+", "+tempPosFinal+"; // pos donde se encuenta el punero "+ nombrePuntero);
+					}else{
+						errores.insertarError("Semantico", "El puntero local"+ nombrePuntero+", no existe");
+
+					}
+				}
+				if(tempPosFinal!=""){
+					 var retExpresion = this.resolverExpresion(expresionDecla, ambitos, clase, metodo);
+					 if(retExpresion instanceof EleRetorno){
+						 if(retExpresion.tipo.toUpperCase() != "NULO"){
+							 if(retExpresion.tipo.toUpperCase() == tipoPuntero.toUpperCase()){
+								 this.c3d.addCodigo("<=, "+tempPosFinal+", "+ retExpresion.valor+", "+estructura+"; // asignando al puntero "+ nombrePuntero);
+							 }else{
+								 errores.insertarError("Semantico", "Incompatibilidad de tipos, puntero de tipo, "+tipoPuntero+", con "+ retExpresion.tipo);
+							 }
+						 }else{
+							errores.insertarError("Semantico", "Resuptado de tipo nulo, ha ocurrido un error en resolver para puntero "+ nombrePuntero);
+						 }
+					 }else{
+						 errores.insertarError("Semantco", "Ha ocurrido un error para resolver operacion de puntero "+ nombrePuntero);
+					 }
+					
+				}else{
+					errores.insertarError("Semantico", "Ha ocurrido un error al resolver para puntero "+nombrePuntero);
+				}
+			}else{
+				errores.insertarError("Semantico", "No existe el elemento "+ nombrePuntero+", de tipo puntero ");
+			}
 			break;
 		}// fin decla asigna putnero
 		
@@ -2766,6 +2824,8 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			break;
 		}
 
+		
+
 		case "UNARIO":{
 			var expUnario = nodo.expresion;
 			var simbUnario = nodo.operador;
@@ -3332,16 +3392,15 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			
 		}//fin pos_arreglo
 
-		case "OBTENER_DIRECCION":{
-			
-
+		case "OBTENERDIRECCION":{
+			var a = this.obtenerDireccion(nodo, ambitos, clase, metodo);
+			return a;
 			break;
 		}
 
 		case "ACCESO":{
 			var v = this.resolverAcceso(nodo,ambitos,clase,metodo);
 			return v;
-
 			break;
 		}
 
@@ -3795,6 +3854,9 @@ generacionCodigo.prototype.convertirCadena = function(val1){
 };
 
 
+/* ===================== Punteros ============================== */
+
+/*
 generacionCodigo.prototype.obtenerDireccion = function(nodo, ambito,clase,metodo){
 
 	var el = new EleRetorno();
@@ -3907,6 +3969,84 @@ generacionCodigo.prototype.obtenerDireccion = function(nodo, ambito,clase,metodo
 
 
 };
+*/
+
+generacionCodigo.prototype.obtenerDireccion = function(nodo, ambitos, clase, metodo){
+	var ret = new EleRetorno();
+	ret.setValoresNulos();
+	var expObtenerDireccion = nodo.expresion;
+	var retExpresion = this.resolverExpresion(expObtenerDireccion, ambitos, clase, metodo);
+	if(retExpresion instanceof EleRetorno){
+		if(retExpresion.tipo.toUpperCase() != "NULO"){
+			if(retExpresion.referencia.toUpperCase() != "NULO"){
+				return retExpresion;
+			}else{
+				errores.insertarError("Semantico", "Expresion no valida para un obtenerDireccion");
+				return ret;
+			}
+		}else{
+			errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion de obtenerDireccion");
+			return ret;
+		}
+	}else{
+		errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expresion de ObtenerDireccion");
+		return ret;
+	}
+return ret;
+};
+
+generacionCodigo.prototype.obtenerSizeED = function(tipoClase){
+  var nombreClase = tipoClase.toUpperCase();
+	switch(nombreClase){
+
+		case "ENTERO":{
+			return 1;
+		}
+
+		case "CARACTER":{
+			return 1;
+		}
+
+		case "BOOLEANO":{
+			return 1;
+		}
+
+		case "DOBLE":{
+			return 1;
+		}
+
+		default:{
+			return this.tablaSimbolos.obtenerSizeClase(nombreClase);
+		}
+	}
+}; 
+
+
+generacionCodigo.prototype.reservarMemoria = function(nodo, ambitos, clase, metodo){
+
+	var retNulo = new EleRetorno();
+	retNulo.setValoresNulos();
+	var resEspacio = this.resolverExpresion(nodo, ambitos, clase, metodo);
+	if (resEspacio instanceof EleRetorno){
+		if(resEspacio.tipo.toUpperCase()!="NULO"){
+			if(resEspacio.tipo.toUpperCase() == "ENTERO"){
+
+
+			}else{
+				errores.insertarError("Semantico", "No coinciden los tipos, "+ resEspacio.tipo+", debe de ser entero");
+				return retNulo;
+			}
+		}else{
+			errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion en ReservarMemoria, nulo");
+			return retNulo;
+		}
+	}else{
+		errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion en reservarMemoria");
+		return retNulo;
+	}
+	return retNulo;
+};
+
 
 generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metodo){
 	var nombreVar = nodo.objeto; //nodo id

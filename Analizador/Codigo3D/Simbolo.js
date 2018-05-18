@@ -54,7 +54,7 @@ Simbolo.prototype.getAmbito= function(){
 
  };
 
-
+ 
  Simbolo.prototype.setValoresArreglo = function(nombreC, tipoSimb, tipoElemento, ambito, rol, apu, size, noDimensiones, listaDim) {
      this.nombreCorto = nombreC;
      this.tipoSimbolo= tipoSimb;

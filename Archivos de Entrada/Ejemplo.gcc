@@ -1,0 +1,24 @@
+clase p{
+
+entero edad;
+p(entero b){
+    este.edad = b;
+}
+
+}
+
+clase ejemplos{
+
+
+  principal(){
+    entero b = 5*10;
+    p hola = nuevo p(12);
+    crearPuntero(entero, a) = obtenerDireccion(hola.edad);
+    imprimir(a);
+    entero x = a+23;
+    imprimir(x);
+    imprimir('C');
+    imprimir(b);
+  }
+
+}

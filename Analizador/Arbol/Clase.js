@@ -746,7 +746,24 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
     }
 
     if (sent instanceof DeclaAsignaPuntero) {
-        return 3;
+        var puntero = sent.getPuntero();
+        var nombrePuntero = puntero.getNombrePuntero();
+        var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePuntero,parametros);
+        if (cont==0) {
+            var tipoPuntero = puntero.getTipoPuntero();
+            var nuevoSimbolo = new Simbolo();
+            nuevoSimbolo.setValoresPuntero(nombrePuntero, "PUNTERO", tipoPuntero, this.nombre, "PUNTERO_LOCAL", apuntador, 1);
+            nuevoSimbolo.setExpresionAtributo(sent.expresion);
+            lista2.push(nuevoSimbolo);
+            apuntador++;
+
+        } else {
+            lErrores.insertarError("Semantico","Ha ocurrido un error, ya existe un simbolo local  con el nombre de "+ nombrePuntero);
+            //console.log("Ha ocurrido un error, ya existe un atributo con el nombre de " + nombrePuntero);
+
+        }
+
+        //return 3;
     }
 
     if (sent instanceof DeclaCola) {
@@ -802,13 +819,13 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
         }
     }
 
+    /*
   if(sent instanceof DeclaAsignaPuntero){
     var asignPunt = sent.getPuntero();
     var expPuntero = sent.getExpresion();
 
-
-    var puntero = asignPunt.getPuntero();
-    var nombrePuntero = puntero.getNombrePuntero();
+    //var puntero = asignPunt.getPuntero();
+    var nombrePuntero = asignPunt.getNombrePuntero();
 
     var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombrePuntero, parametros);
     
@@ -823,7 +840,7 @@ Clase.prototype.simbMet= function(sent, ambitos, parametros){
     lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
     ////console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
 }
-  }
+  }*/
 
 
     if (sent instanceof DeclaPuntero) {

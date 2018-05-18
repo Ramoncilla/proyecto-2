@@ -1218,7 +1218,7 @@ CREAR_PUNTERO: crearPuntero abrePar TIPO_DECLARACION coma id cierraPar //apunta 
 	};
 
 
-OBTENER_DIRECCION: obtenerDireccion abrePar id cierraPar
+OBTENER_DIRECCION: obtenerDireccion abrePar EXPRESION cierraPar
 	{
 		var a = new obtenerDireccion();
 		a.setValores($3);

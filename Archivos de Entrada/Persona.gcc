@@ -151,7 +151,7 @@ entero i =0;
 
     principal(){ 
 
-
+ 
 entero a = -50;
 imprimir(-25);
 imprimir(a);

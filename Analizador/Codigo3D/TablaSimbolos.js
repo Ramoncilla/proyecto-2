@@ -5,6 +5,21 @@ function TablaSimbolos(){
 
 
 
+TablaSimbolos.prototype.obtenerSizeClase = function(clase){
+
+  var claseTemporal;
+  for(var i =0; i<this.listaSimbolos.length; i++){
+    claseTemporal = this.listaSimbolos[i];
+    if(claseTemporal.nombreCorto.toUpperCase() == clase.toUpperCase() &&
+       claseTemporal.rol.toUpperCase() == "CLASE" &&
+       claseTemporal.tipoSimbolo.toUpperCase() == "CLASE"){
+         return claseTemporal.tamanio;
+       }
+  }
+  return -1;
+
+};
+
 TablaSimbolos.prototype.obtenerParametros = function(firmaFuncion){
 
   var simboloTemporal;
