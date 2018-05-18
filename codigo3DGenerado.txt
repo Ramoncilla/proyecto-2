@@ -1,67 +1,180 @@
 
 
-begin, , , p_vacio_p_entero
+begin, , , individuo_vacio_individuo_entero_caracter
 
+// ----------------------- Creando arreglo atributo nombre
++, P, 0, t1; //pos this del arreglo
+=>, t1, t2, stack; //obteniendo apuntador de arreglo en eel heap
+=>, t2, t3, heap;//apuntando donde en verdad inicia el arreglo
++, t3, 0, t4; //pos del heap que guarda apuntador del heap para el arreglo nombre
+<=, t4, H, heap; //escribiendo apunt del heap donde inicia el arreglo 
+// REsolvemos tamanio del arreglo
+-, 10, 1, t5; //calculando el n real
+-, t5, 0, t6; //iReal columna 0
++, t6, 1, t6; //size del arreglo nombre
+<=, H, t6, heap; // insertando el tamanio del arreglo linealizado nombre
++, H, 1, H;
++, t6, 0, t7; // anhadiendo una posicion mas
++, h, t7, h; // reservnado el espacio del arreglo nombre
 // ------------ Resolviendo un ID (atributo) -----------
-+, p, 0, t1; // pos this 
-=>, t1, t2, stack; // obtenido apuntador al heap 
-=>, t2, t3, heap; // apuntador 
-+, t3, 0, t4; // pos de edad
-=>, t4, t5, heap; // obtengo el valor que se encuentre en el heap 
++, p, 0, t8; // pos this 
+=>, t8, t9, stack; // obtenido apuntador al heap 
+=>, t9, t10, heap; // apuntador 
++, t10, 0, t11; // pos de nombre
+=>, t11, t12, heap; // obtengo el valor que se encuentre en el heap 
++, P, 2, t13;
+=>, t13, t14, stack; 
+=>, t14, t15, heap; 
+=>, t15, t16, heap; // valor de size del arreglo nom
++, t15, 1, t17; // apuntador donde inicia el arreglo nom
+=>, t17, t18, heap; // primer caracter del arreglo nom
++, H, 0, t19;
++, H, 1, t20;
+<=, t19, t20, heap; 
++, H, 1, H;
++, 0, 0, t21;
+<=, H, t21, heap; //asignanando temporalemnte size 0 de la cadena
++, H, 1, H;
+L2:
+jne, t18, 36, L3;
+jmp, , , L4;
+L3:
+<=, H, t18, heap; // ingresando el caracter 
++, H, 1, H;
++, t21, 1, t21; // incrementando en uno el size de la nueva cadena
++, t17, 1, t17;
+=>, t17, t18, heap; // obteniendio el nuevo caractere del arreglo
+jmp, , , L2;
+L4:
+<=, t20, t21, heap; // ingresando el size de la nueva cadena 
+<=, H, 34, heap; // ingresando el caracter de escape de la nueva cadena
++, H, 1, H;
+-, t11, 1, t22;
+// -------------------- Arreglo global asignar :) 
+=>, t11, t23, heap; // inicia el arreglo
+=>, t23, t24, heap; // size del arreglo 
++, t23, 1, t25; //Pos 0 del arreglo
+=>, t19, t26, heap; // pos que apunta al size de la cadena
+=>, t26, t27, heap; // size de la cadena
++, t26, 1, t28; // Pos 0 de la cadena
+=>, t28, t29, heap; // sacandor el caracter del heap cadena
+jle, t27, t24, L5;
+jmp, , , L6;
+jmp, , , L5;
+L5:
+jne, t29, 34, L7;
+jmp, , , L8;
+jmp, , , L7;
+L7:
+<=, t25, t29, heap; // guardando el caracter 
++, t25, 1, t25; // incremnetnado la pos del arreglo
++, t28, 1, t28; // incrementando la pos de la cadena
+=>, t28, t29, heap; // sacandor el caracter del heap cadena
+jmp, , , L5;
+jmp, , , L8;
+L8:
+jmp, , , L6;
+L6:
+// ------------ Resolviendo un ID (atributo) -----------
++, p, 0, t30; // pos this 
+=>, t30, t31, stack; // obtenido apuntador al heap 
+=>, t31, t32, heap; // apuntador 
++, t32, 1, t33; // pos de edad
+=>, t33, t34, heap; // obtengo el valor que se encuentre en el heap 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t6; // pos de b
-=>, t6, t7, stack; // valor de lo que trae en el stack b
-<=, t4, t7, HEAP; // asignando variable 
-
-L1:
-end, , p_vacio_p_entero
-
-
-
-
-begin, , , ejemplos_PRINCIPAL
-
++, p, 1, t35; // pos de edad
+=>, t35, t36, stack; // valor de lo que trae en el stack edad
+<=, t33, t36, HEAP; // asignando variable 
 // Resolviendo una cadena 
-+, H, 0, t8; //apuntaodr a cadena 
-+, H, 1, t9; //apu donde inicia la cadena
-<=, t8, t9, heap; //guaradnod donde inicia la cadena 
++, H, 0, t37; //apuntaodr a cadena 
++, H, 1, t38; //apu donde inicia la cadena
+<=, t37, t38, heap; //guaradnod donde inicia la cadena 
 +, H, 1, H;
-<=, H, 38, heap; //guardando el tamanio de la cadena
+<=, H, 17, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
-+, H, 0, t10; // referencia de donde iniciar el primer caracter de la cadena
-<=, H, 80, heap; //guardadndo P
-+, H, 1, H;
-<=, H, 101, heap; //guardadndo e
-+, H, 1, H;
-<=, H, 100, heap; //guardadndo d
-+, H, 1, H;
-<=, H, 114, heap; //guardadndo r
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 116, heap; //guardadndo t
++, H, 0, t39; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 110, heap; //guardadndo n
 +, H, 1, H;
 <=, H, 111, heap; //guardadndo o
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 104, heap; //guardadndo h
-+, H, 1, H;
-<=, H, 101, heap; //guardadndo e
-+, H, 1, H;
-<=, H, 114, heap; //guardadndo r
 +, H, 1, H;
 <=, H, 109, heap; //guardadndo m
 +, H, 1, H;
-<=, H, 111, heap; //guardadndo o
+<=, H, 98, heap; //guardadndo b
 +, H, 1, H;
-<=, H, 115, heap; //guardadndo s
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 32, heap; //guardadndo  
++, H, 1, H;
+<=, H, 112, heap; //guardadndo p
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 116, heap; //guardadndo t
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
 +, H, 1, H;
 <=, H, 111, heap; //guardadndo o
 +, H, 1, H;
 <=, H, 32, heap; //guardadndo  
 +, H, 1, H;
-<=, H, 116, heap; //guardadndo t
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t37);
++, P, 2, t40;
+=>, t40, t41, stack; 
+=>, t41, t42, heap; 
+=>, t42, t43, heap; // valor de size del arreglo nom
++, t42, 1, t44; // apuntador donde inicia el arreglo nom
+=>, t44, t45, heap; // primer caracter del arreglo nom
++, H, 0, t46;
++, H, 1, t47;
+<=, t46, t47, heap; 
++, H, 1, H;
++, 0, 0, t48;
+<=, H, t48, heap; //asignanando temporalemnte size 0 de la cadena
++, H, 1, H;
+L9:
+jne, t45, 36, L10;
+jmp, , , L11;
+L10:
+<=, H, t45, heap; // ingresando el caracter 
++, H, 1, H;
++, t48, 1, t48; // incrementando en uno el size de la nueva cadena
++, t44, 1, t44;
+=>, t44, t45, heap; // obteniendio el nuevo caractere del arreglo
+jmp, , , L9;
+L11:
+<=, t47, t48, heap; // ingresando el size de la nueva cadena 
+<=, H, 34, heap; // ingresando el caracter de escape de la nueva cadena
++, H, 1, H;
+print("%s", t46);
+// Resolviendo una cadena 
++, H, 0, t49; //apuntaodr a cadena 
++, H, 1, t50; //apu donde inicia la cadena
+<=, t49, t50, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 14, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t51; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 109, heap; //guardadndo m
++, H, 1, H;
+<=, H, 98, heap; //guardadndo b
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
 +, H, 1, H;
 <=, H, 101, heap; //guardadndo e
 +, H, 1, H;
@@ -69,47 +182,427 @@ begin, , , ejemplos_PRINCIPAL
 +, H, 1, H;
 <=, H, 97, heap; //guardadndo a
 +, H, 1, H;
-<=, H, 109, heap; //guardadndo m
+<=, H, 82, heap; //guardadndo R
++, H, 1, H;
+<=, H, 114, heap; //guardadndo r
++, H, 1, H;
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 103, heap; //guardadndo g
++, H, 1, H;
+<=, H, 108, heap; //guardadndo l
 +, H, 1, H;
 <=, H, 111, heap; //guardadndo o
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 109, heap; //guardadndo m
-+, H, 1, H;
-<=, H, 117, heap; //guardadndo u
-+, H, 1, H;
-<=, H, 99, heap; //guardadndo c
-+, H, 1, H;
-<=, H, 104, heap; //guardadndo h
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 115, heap; //guardadndo s
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 109, heap; //guardadndo m
-+, H, 1, H;
-<=, H, 111, heap; //guardadndo o
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
-+, H, 1, H;
-<=, H, 60, heap; //guardadndo <
-+, H, 1, H;
-<=, H, 51, heap; //guardadndo 3
-+, H, 1, H;
-<=, H, 32, heap; //guardadndo  
 +, H, 1, H;
 <=, H, 34, heap; // ingresando caracter de escape de la cadena
 +, H, 1, H;
-print("%s", t8);
+print("%s", t49);
+// ------------ Resolviendo un ID (atributo) -----------
++, p, 0, t52; // pos this 
+=>, t52, t53, stack; // obtenido apuntador al heap 
+=>, t53, t54, heap; // apuntador 
++, t54, 0, t55; // pos de nombre
+=>, t55, t56, heap; // obtengo el valor que se encuentre en el heap 
+print("%a", t55);
+// Resolviendo una cadena 
++, H, 0, t57; //apuntaodr a cadena 
++, H, 1, t58; //apu donde inicia la cadena
+<=, t57, t58, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 4, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t59; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 101, heap; //guardadndo e
++, H, 1, H;
+<=, H, 100, heap; //guardadndo d
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 100, heap; //guardadndo d
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t57);
+// ------------ Resolviendo un ID (atributo) -----------
++, p, 0, t60; // pos this 
+=>, t60, t61, stack; // obtenido apuntador al heap 
+=>, t61, t62, heap; // apuntador 
++, t62, 1, t63; // pos de edad
+=>, t63, t64, heap; // obtengo el valor que se encuentre en el heap 
+print("%d", t64);
 
-L2:
+L1:
+end, , individuo_vacio_individuo_entero_caracter
+
+
+
+
+begin, , , ejemplos_PRINCIPAL
+
+// ------------------------ Creando arreglo local h
++, P, 0, t65; //pos de arreglo h
+<=, t65, H, stack; // ingrensando al stack apunt del heap para h
++, H, 1, t66;
+<=, H, t66, heap; //insetnado donde inicia el arreglo h
++, H, 1, H;
+// calculando el tamanho del arreglo
+-, 10, 1, t67; //calculando el n real
+-, t67, 0, t68; //iReal columna 0
++, t68, 1, t68; //size del arreglo h
+<=, H, t68, heap; // insertando el tamanio del arreglo linealizado h
++, H, 1, H;
++, h, t68, h; // reservnado el espacio del arreglo h
++, P, 0, t71; // pos del arreglo 
+=>, t71, t72, stack; //apuntador al heap del arreglo
+=>, t72, t73, heap; // apuntador del heap al heap donde inicia la cadena
+=>, t73, t69, heap; // size del arreglo h
++, t73, 1, t70; // pos 0 donde inicia el arreglo h
+// Resolviendo una cadena 
++, H, 0, t74; //apuntaodr a cadena 
++, H, 1, t75; //apu donde inicia la cadena
+<=, t74, t75, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 5, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t76; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 65, heap; //guardadndo A
++, H, 1, H;
+<=, H, 108, heap; //guardadndo l
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+=>, t74, t77, heap; // pos que apunta al size de la cadena
+=>, t77, t78, heap; // size de la cadena
++, t77, 1, t79; // Pos 0 de la cadena
+=>, t79, t80, heap; // sacandor el caracter del heap cadena
+jle, t78, t69, L13;
+jmp, , , L14;
+jmp, , , L13;
+L13:
+jne, t80, 34, L15;
+jmp, , , L16;
+jmp, , , L15;
+L15:
+<=, t70, t80, heap; // guardando el caracter 
++, t70, 1, t70; // incremnetnado la pos del arreglo
++, t79, 1, t79; // incrementando la pos de la cadena
+=>, t79, t80, heap; // sacandor el caracter del heap cadena
+jmp, , , L13;
+jmp, , , L16;
+L16:
+jmp, , , L14;
+L14:
++, P, 0, t81;
+=>, t81, t82, stack; 
+=>, t82, t83, heap; 
+=>, t83, t84, heap; // valor de size del arreglo h
++, t83, 1, t85; // apuntador donde inicia el arreglo h
+=>, t85, t86, heap; // primer caracter del arreglo h
++, H, 0, t87;
++, H, 1, t88;
+<=, t87, t88, heap; 
++, H, 1, H;
++, 0, 0, t89;
+<=, H, t89, heap; //asignanando temporalemnte size 0 de la cadena
++, H, 1, H;
+L17:
+jne, t86, 36, L18;
+jmp, , , L19;
+L18:
+<=, H, t86, heap; // ingresando el caracter 
++, H, 1, H;
++, t89, 1, t89; // incrementando en uno el size de la nueva cadena
++, t85, 1, t85;
+=>, t85, t86, heap; // obteniendio el nuevo caractere del arreglo
+jmp, , , L17;
+L19:
+<=, t88, t89, heap; // ingresando el size de la nueva cadena 
+<=, H, 34, heap; // ingresando el caracter de escape de la nueva cadena
++, H, 1, H;
+print("%s", t87);
+// ----------- Instancia a una variable local --------------
++, p, 1, t90; // pos de j
+<=, t90, h, stack; //guardando referencia del heap para el objeto j
++, h, 1, t91; // guardo la posicion donde inicia el objeto 
+<=, h, t91, heap; // guardando donde es que inicia el objeto dentro del heap
++, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
++, h, 2, h; // reservando espacio para el objeto j
+//Ingresando referencia al this del objeto j
++, p, 1, t92; // pos de j
+=>, t92, t93, stack; // obteniendo apuntador de j
++, p, 3, t94; // simulando cambio de ambito
++, t94, 0, t95; //pos del this de j
+<=, t95, t93, stack; // insertando apuntador del heap al stack del obeto j
+// Asignando parametros  
++, p, 3, t96; // size de funcion actual
++, t96, 1, t97; //pos del parametro 1
+<=, t97, 25, stack; // asignado al stack el parametro
+// declarando parametros  arreglo de tipo nom
++, p, 3, t98; // size de funcion actual
++, t98, 2, t99; //pos del parametro 2
+// Resolviendo una cadena 
++, H, 0, t100; //apuntaodr a cadena 
++, H, 1, t101; //apu donde inicia la cadena
+<=, t100, t101, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 4, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t102; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 112, heap; //guardadndo p
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 80, heap; //guardadndo P
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+<=, t99, t100, stack; // asignado al stack el parametro
++, p, 3, p; // simulando cambio de ambito
+call, , , individuo_vacio_individuo_entero_caracter;
+-, p, 3, p; // regresando al ambito acutal
+
+// ----------- Instancia a una variable local --------------
++, p, 2, t103; // pos de p
+<=, t103, h, stack; //guardando referencia del heap para el objeto p
++, h, 1, t104; // guardo la posicion donde inicia el objeto 
+<=, h, t104, heap; // guardando donde es que inicia el objeto dentro del heap
++, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
++, h, 0, h; // reservando espacio para el objeto p
+//Ingresando referencia al this del objeto p
++, p, 2, t105; // pos de p
+=>, t105, t106, stack; // obteniendo apuntador de p
++, p, 3, t107; // simulando cambio de ambito
++, t107, 0, t108; //pos del this de p
+<=, t108, t106, stack; // insertando apuntador del heap al stack del obeto p
+// Asignando parametros  
++, p, 3, t109; // size de funcion actual
++, t109, 1, t110; //pos del parametro 1
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t111; // pos de j
+=>, t111, t112, stack; // valor de lo que trae en el stack j
+<=, t110, t112, stack; // asignado al stack el parametro
++, p, 3, p; // simulando cambio de ambito
+call, , , ejemplos_vacio_ejemplos_individuo;
+-, p, 3, p; // regresando al ambito acutal
+
+
+L12:
 end, , ejemplos_PRINCIPAL
+
+
+
+
+begin, , , ejemplos_vacio_ejemplos_individuo
+
+// Resolviendo una cadena 
++, H, 0, t113; //apuntaodr a cadena 
++, H, 1, t114; //apu donde inicia la cadena
+<=, t113, t114, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 5, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t115; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 104, heap; //guardadndo h
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 108, heap; //guardadndo l
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t113);
+// ----------------- Resolviendo acceso local 
++, P, 1, t116; // pos del objeto
+=>, t116, t118, stack; //apuntador al heap del obejto
+=>, t118, t119, heap; // recuperando pos incial del objeto
++, t119, 1, t118;
+=>, t118, t120, heap; // valor a retoranar del acceso
+print("%d", t120);
+// ----------------- Resolviendo acceso local 
++, P, 1, t121; // pos del objeto
+=>, t121, t123, stack; //apuntador al heap del obejto
+=>, t123, t124, heap; // recuperando pos incial del objeto
++, t124, 0, t123;
+=>, t123, t125, heap; // valor a retoranar del acceso
+print("%a", t123);
+// ------------------------ Creando arreglo local k
++, P, 2, t126; //pos de arreglo k
+<=, t126, H, stack; // ingrensando al stack apunt del heap para k
++, H, 1, t127;
+<=, H, t127, heap; //insetnado donde inicia el arreglo k
++, H, 1, H;
+// calculando el tamanho del arreglo
+-, 10, 1, t128; //calculando el n real
+-, t128, 0, t129; //iReal columna 0
++, t129, 1, t129; //size del arreglo k
+<=, H, t129, heap; // insertando el tamanio del arreglo linealizado k
++, H, 1, H;
++, h, t129, h; // reservnado el espacio del arreglo k
+// ----------------- Resolviendo acceso local 
++, P, 1, t130; // pos del objeto
+=>, t130, t132, stack; //apuntador al heap del obejto
+=>, t132, t133, heap; // recuperando pos incial del objeto
++, t133, 0, t132;
+=>, t132, t134, heap; // valor a retoranar del acceso
+// -------------- Resolviendo para un ID (var local) Asignacion ------------
++, p, 2, t135; // pos de k
+<=, t135, t132, stack; // cosa de direccion arreglo
+// Resolviendo una cadena 
++, H, 0, t136; //apuntaodr a cadena 
++, H, 1, t137; //apu donde inicia la cadena
+<=, t136, t137, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 4, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t138; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 108, heap; //guardadndo l
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 108, heap; //guardadndo l
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t136);
++, P, 2, t139;
+=>, t139, t140, stack; 
+=>, t140, t141, heap; 
+=>, t141, t142, heap; // valor de size del arreglo k
++, t141, 1, t143; // apuntador donde inicia el arreglo k
+=>, t143, t144, heap; // primer caracter del arreglo k
++, H, 0, t145;
++, H, 1, t146;
+<=, t145, t146, heap; 
++, H, 1, H;
++, 0, 0, t147;
+<=, H, t147, heap; //asignanando temporalemnte size 0 de la cadena
++, H, 1, H;
+L21:
+jne, t144, 36, L22;
+jmp, , , L23;
+L22:
+<=, H, t144, heap; // ingresando el caracter 
++, H, 1, H;
++, t147, 1, t147; // incrementando en uno el size de la nueva cadena
++, t143, 1, t143;
+=>, t143, t144, heap; // obteniendio el nuevo caractere del arreglo
+jmp, , , L21;
+L23:
+<=, t146, t147, heap; // ingresando el size de la nueva cadena 
+<=, H, 34, heap; // ingresando el caracter de escape de la nueva cadena
++, H, 1, H;
+print("%s", t145);
+// ----------- Instancia a una variable local --------------
++, p, 3, t148; // pos de l
+<=, t148, h, stack; //guardando referencia del heap para el objeto l
++, h, 1, t149; // guardo la posicion donde inicia el objeto 
+<=, h, t149, heap; // guardando donde es que inicia el objeto dentro del heap
++, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
++, h, 2, h; // reservando espacio para el objeto l
+//Ingresando referencia al this del objeto l
++, p, 3, t150; // pos de l
+=>, t150, t151, stack; // obteniendo apuntador de l
++, p, 5, t152; // simulando cambio de ambito
++, t152, 0, t153; //pos del this de l
+<=, t153, t151, stack; // insertando apuntador del heap al stack del obeto l
+// Asignando parametros  
++, p, 5, t154; // size de funcion actual
++, t154, 1, t155; //pos del parametro 1
+<=, t155, 12, stack; // asignado al stack el parametro
+// declarando parametros  arreglo de tipo nom
++, p, 5, t156; // size de funcion actual
++, t156, 2, t157; //pos del parametro 2
++, P, 2, t158;
+=>, t158, t159, stack; 
+=>, t159, t160, heap; 
+=>, t160, t161, heap; // valor de size del arreglo k
++, t160, 1, t162; // apuntador donde inicia el arreglo k
+=>, t162, t163, heap; // primer caracter del arreglo k
++, H, 0, t164;
++, H, 1, t165;
+<=, t164, t165, heap; 
++, H, 1, H;
++, 0, 0, t166;
+<=, H, t166, heap; //asignanando temporalemnte size 0 de la cadena
++, H, 1, H;
+L24:
+jne, t163, 36, L25;
+jmp, , , L26;
+L25:
+<=, H, t163, heap; // ingresando el caracter 
++, H, 1, H;
++, t166, 1, t166; // incrementando en uno el size de la nueva cadena
++, t162, 1, t162;
+=>, t162, t163, heap; // obteniendio el nuevo caractere del arreglo
+jmp, , , L24;
+L26:
+<=, t165, t166, heap; // ingresando el size de la nueva cadena 
+<=, H, 34, heap; // ingresando el caracter de escape de la nueva cadena
++, H, 1, H;
+<=, t157, t164, stack; // asignado al stack el parametro
++, p, 5, p; // simulando cambio de ambito
+call, , , individuo_vacio_individuo_entero_caracter;
+-, p, 5, p; // regresando al ambito acutal
+
+// Resolviendo una cadena 
++, H, 0, t167; //apuntaodr a cadena 
++, H, 1, t168; //apu donde inicia la cadena
+<=, t167, t168, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 9, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t169; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 115, heap; //guardadndo s
++, H, 1, H;
+<=, H, 116, heap; //guardadndo t
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 99, heap; //guardadndo c
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 97, heap; //guardadndo a
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t167);
+// ----------------- Resolviendo acceso local 
++, P, 3, t170; // pos del objeto
+=>, t170, t172, stack; //apuntador al heap del obejto
+=>, t172, t173, heap; // recuperando pos incial del objeto
++, t173, 1, t172;
+=>, t172, t174, heap; // valor a retoranar del acceso
+print("%d", t174);
+// ----------------- Resolviendo acceso local 
++, P, 3, t175; // pos del objeto
+=>, t175, t177, stack; //apuntador al heap del obejto
+=>, t177, t178, heap; // recuperando pos incial del objeto
++, t178, 0, t177;
+=>, t177, t179, heap; // valor a retoranar del acceso
+print("%a", t177);
+
+L20:
+end, , ejemplos_vacio_ejemplos_individuo
 
 

@@ -7,7 +7,7 @@ function PosArreglo(){
 
  
   
-
+ 
 
 PosArreglo.prototype.setValores = function(nombre, posiciones) {
 	// body...

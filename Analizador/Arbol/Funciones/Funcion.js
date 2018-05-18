@@ -99,6 +99,7 @@ Funcion.prototype.getNombreFuncion = function() {
 	return this.nombreFuncion;
 };
 
+ 
 Funcion.prototype.getParametros = function() {
 	// body...
 	return this.parametros;

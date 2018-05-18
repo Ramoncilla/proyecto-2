@@ -140,9 +140,27 @@ AnalizadorInterprete.prototype.inicializarEstructuras = function(){
 
 };
 
+AnalizadorInterprete.prototype.imprimir_str2= function(pos, num){
+
+    var posicion = parseInt(pos+"");
+    var cadena="";
+    var caracter;
+    var pos = this.heap[posicion];
+    pos++;
+    while(true){
+        caracter= this.heap[pos];
+        if(caracter == num){
+            break;
+        }else{
+            cadena += String.fromCharCode(caracter);
+            pos++;
+        }
+    }
+    return cadena;
+};
 
 
-AnalizadorInterprete.prototype.imprimir_str= function(pos){
+AnalizadorInterprete.prototype.imprimir_str= function(pos, num){
 
     var posicion = parseInt(pos+"");
     posicion++;
@@ -151,7 +169,7 @@ AnalizadorInterprete.prototype.imprimir_str= function(pos){
     var caracter;
     while(true){
         caracter= this.heap[posicion];
-        if(caracter == 34){
+        if(caracter == num){
             break;
         }else{
             cadena += String.fromCharCode(caracter);
@@ -230,13 +248,18 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
                     var res = parseFloat(vVal);
                     this.agregarImpresion(res);
                 }
-
+                
                 if(tipo == "\"%s\"") {
                     //decimal
-                    var res = this.imprimir_str(vVal);
+                    var res = this.imprimir_str(vVal, 34);
                     this.agregarImpresion(res);
                 }
 
+                if(tipo == "\"%a\"") {
+                    //decimal
+                    var res = this.imprimir_str2(vVal, 36);
+                    this.agregarImpresion(res);
+                }
             }
 
             //}else{

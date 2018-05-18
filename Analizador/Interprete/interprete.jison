@@ -42,6 +42,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "\"%d\""    return 'impre_entero'
 "\"%f\""    return 'impre_decimal'
 "\"%s\""    return 'impre_cadena'
+"\"%a\""    return 'impre_arreglo'
 "="         return 'igual'
 "je"        return 'je'
 "jne"       return 'jne'
@@ -104,7 +105,8 @@ INSTRUCCION: EXP {$$=$1;}
 TIPO: impre_char{$$=$1;}
     |impre_decimal{$$=$1;}
     |impre_entero{$$=$1;}
-    |impre_cadena{$$=$1;};
+    |impre_cadena{$$=$1;}
+    |impre_arreglo{$$=$1;};
 
 
 IMPRIMIR: print abrePar TIPO coma VAL cierrPar puntoComa {$$= new imprimir($3,$5);};

@@ -1,30 +1,55 @@
-clase p{
+clase individuo {
 
+caracter nombre[10];
 entero edad;
-p(entero b){
-    este.edad = b;
+
+
+publico individuo(entero edad, caracter nom[10]){
+  este.nombre= nom;
+  este.edad= edad;
+  
+  imprimir("nombre parametro ");
+   imprimir(nom);
+   imprimir ("nombre aRreglo");
+  imprimir(este.nombre);
+  imprimir("edad");
+  imprimir (este.edad);
+  
+ 
 }
 
+
+
 }
+
+
+
+
 
 clase ejemplos{
 
 
   principal(){
 
+    caracter h[10]= "Alina";
+    imprimir(h);
+    individuo j = nuevo individuo(25, "poPo");
+    ejemplos p = nuevo ejemplos(j);
+  }
 
 
-    imprimir("Pedrito hermoso te amo muchisimo   <3 ");
-
-    /*
-    entero b = 5*10;
-    p hola = nuevo p(12);
-    crearPuntero(entero, a) = obtenerDireccion(hola.edad);
-    imprimir(a);
-    entero x = a+23;
-    imprimir(x);
-    imprimir('C');
-    imprimir(b);*/
+  ejemplos(individuo i){
+    imprimir("holaa");
+    imprimir(i.edad);
+    imprimir(i.nombre);
+    caracter k [10];
+    k= i.nombre;
+    imprimir("lool");
+    imprimir(k);
+    individuo l = nuevo individuo(12, k);
+    imprimir("instancia");
+    imprimir(l.edad);
+    imprimir(l.nombre);
   }
 
 }
