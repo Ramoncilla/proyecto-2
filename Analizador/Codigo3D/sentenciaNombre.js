@@ -148,15 +148,13 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
     }
 
     
+
+
+
+    
     if(sent instanceof convertirCadena){
-        return "convertirCadena";
+        return "CONVERTIR_CADENA";
     }
-
-
-
-
-
-
 
     if(sent instanceof unario){
         return "unario";

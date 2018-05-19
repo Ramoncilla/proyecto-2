@@ -595,6 +595,80 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
 
     switch(operador){
 
+        case "!#":{
+            console.log("parte decimal de un numero   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = (v1+"").valueOf(); 
+                var posPunto = res.indexOf(".");
+                var decimal =  res.substring(posPunto+1, res.length);
+                var ret = parseInt(decimal);
+                var temp = new temporal(varAsig,ret);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "%#":{
+            console.log("parte parte entera  de un numero   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.floor(v1);
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "log10":{
+            console.log("ENTRE  un LOGARITMO   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.floor(Math.log10(Math.abs(v1))+1);
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "%%":{
+            console.log("ENTRE  un modODULOE   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = v1 % 10;
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "##":{
+
+            console.log("ENTRE  un TRUNCCC  ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.trunc(v1/10);;
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
         case "+":{
             var v1 = this.resolverValor(val1);
             var v2 = this.resolverValor(val2);

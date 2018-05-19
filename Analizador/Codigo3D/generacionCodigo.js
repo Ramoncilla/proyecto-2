@@ -2812,6 +2812,40 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 	
 	switch(nombreSentecia){
 
+		case "CONVERTIR_CADENA":{
+			var exp = nodo.expresionACadena;
+			var ret = this.resolverExpresion(exp, ambitos, clase, metodo);
+			var retN = new EleRetorno();
+			retN.setValoresNulos();
+			if(ret.tipo.toUpperCase() != "NULO"){
+				if(ret.tipo.toUpperCase() == "ENTERO"){
+					var cad = this.castearACadena(ret.valor);
+					return cad;
+				}else if(ret.tipo.toUpperCase() == "DECIMAL"){
+					var cad = this.DecimalToCadena(ret.valor);
+					return cad;
+				}else if(ret.tipo.toUpperCase() == "BOOLEANO"){
+					var cad = this.castearACadena(ret.valor);
+					return cad;
+				}else if(ret.tipo.toUpperCase() == "CADENA"){
+					var sum = this.sumarAsciiCadena(ret.valor);
+					var cad = this.castearACadena(sum);
+					return cad;
+				}else if(ret.tipo.toUpperCase() == "CARACTER" && ret.tipoSimbolo.toUpperCase()!= "ARREGLO"){
+					var cad = this.castearACadena(ret.valor);
+					return cad;
+				}else{
+					errores.insertarError("Semantico", "Incompatibilidad de tipos para convertir "+ ret.tipo+", simbolo "+ ret.tipoSimbolo);
+					return retN;
+				}
+			}else{
+				errores.insertarError("Semantico", "No es valida la expresion para castear a cadena");
+				return retN;
+			}
+			return retN;
+			break;
+		}
+
 		case "CONSULTAR_TAMANIO":{
 			var nombreEd = nodo.expresion;
 			var ret = EleRetorno();
@@ -4080,14 +4114,115 @@ generacionCodigo.prototype.convertirCadena = function(val1){
 		var ret = new EleRetorno();
 		ret.setValorCadena(temp1);
 		return ret;
-	}else if(val1.tipo.toUpperCase()== "ENTERO" || 
-		val1.tipo.toUpperCase() == "DECIMAL" || 
-		val1.tipo.toUpperCase() == "BOOLEANO"){
-
-		}
+	}
 
 
 
+};
+
+
+
+
+generacionCodigo.prototype.DecimalToCadena = function (numero){
+
+	var tEntero = this.c3d.getTemporal();
+	var tDecimal = this.c3d.getTemporal();
+	this.c3d.addCodigo("// ---------------------------  Convertir a caden aun decimal ----");
+	this.c3d.addCodigo("%#, "+numero+", 0, "+tEntero+"; // parte entera del numero "+numero);
+	this.c3d.addCodigo("!#, "+numero+", 0, "+tDecimal+"; // parte decimal del numero "+numero);
+	this.c3d.addCodigo("// ---------------------------- Convertir parte entera a cadena ----------------");
+	var cadenaEntero = this.castearACadena(tEntero);
+	var punto = new EleRetorno();
+	punto.setValorChar(46);
+	this.c3d.addCodigo("// ----------------------  Crear cadena para el punto ------------------");
+	var cadenaPunto = this.convertirCadena(punto);
+	this.c3d.addCodigo("// ----------------------- Concatenar parte entera con punto -----------------------");
+	var cadEnteroPunto = this.concatenarCadenas(cadenaEntero,cadenaPunto);
+	this.c3d.addCodigo("// ------------------------------ Crear Cadena para parte decimal -------------------------");
+	var cadDecimal = this.castearACadena(tDecimal);
+	this.c3d.addCodigo("// -------------------------- Concatenar parte entera con punto y parte decimal --------------------");
+	var cadResultaonte = this.concatenarCadenas(cadEnteroPunto, cadDecimal);
+	return cadResultaonte;	
+};
+
+generacionCodigo.prototype.castearACadena= function (numero)
+{
+var tIniciCad1 = this.c3d.getTemporal();
+var tPosSizeCad1 = this.c3d.getTemporal();
+this.c3d.addCodigo("// -------------------------------- Inicio un casteo a entero ----------------");
+this.c3d.addCodigo("+, H, 0, "+tIniciCad1+"; // inicio cad1 (inversa)");
+this.c3d.addCodigo("+, H, 1, "+tPosSizeCad1+";");
+this.c3d.addCodigo("<=, "+tIniciCad1+", "+tPosSizeCad1+", heap;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("//----- convertir a entero");
+var tIteraciones= this.c3d.getTemporal();
+var tCont= this.c3d.getTemporal();
+var tModulo = this.c3d.getTemporal();
+var tDivision = this.c3d.getTemporal(); 
+var tNumero = this.c3d.getTemporal(); 
+var temp = this.c3d.getTemporal();
+this.c3d.addCodigo("log10, "+numero+", 0, "+tIteraciones+";");
+this.c3d.addCodigo("+, 0, 0, "+tCont+";");
+this.c3d.addCodigo("+, 0, 0, "+tModulo+";");
+this.c3d.addCodigo("+, 0, 0, "+tDivision+";");
+this.c3d.addCodigo("+, "+numero+", 0, "+tNumero+";");
+var etiq0 = this.c3d.getEtiqueta();
+var etiq1 = this.c3d.getEtiqueta();
+var etiq2 = this.c3d.getEtiqueta();
+this.c3d.addCodigo(etiq0+":");
+this.c3d.addCodigo("jl, "+tCont+", "+tIteraciones+", "+etiq1+";");
+this.c3d.addCodigo("jmp, , , "+etiq2+";");
+this.c3d.addCodigo(etiq1+":");
+this.c3d.addCodigo("%%, "+tNumero+", 0, "+tModulo+";");
+this.c3d.addCodigo("+, "+tModulo+", 48, "+temp+";")
+this.c3d.addCodigo("<=, H, "+temp+", heap;");
+this.c3d.addCodigo("+, H, 1, H; ");
+this.c3d.addCodigo("##, "+tNumero+", 0, "+tNumero+";");
+this.c3d.addCodigo("+, "+tCont+", 1, "+tCont+";");
+this.c3d.addCodigo("jmp, , , "+etiq0+";");
+this.c3d.addCodigo(etiq2+":");
+this.c3d.addCodigo("<=, H, 34, heap; ");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("<=, "+tPosSizeCad1+", "+tIteraciones+", heap; // size de la cadena del numero numero");
+this.c3d.addCodigo("// ---------- Voltear la cadena resultante---------");
+var tSizeCad = this.c3d.getTemporal();
+var tCont2 = this.c3d.getTemporal();
+var tPosActual = this.c3d.getTemporal();
+var tCaracterActual = this.c3d.getTemporal();
+this.c3d.addCodigo("+, "+tIteraciones+", 0, "+tSizeCad+";");
+this.c3d.addCodigo("+, "+tSizeCad+", 0, "+tCont2+";");
+this.c3d.addCodigo("+, "+tPosSizeCad1+", "+tSizeCad+", "+tPosActual+"; // pos inicial del primero caracter de la cadena");
+this.c3d.addCodigo("=>, "+tPosActual+", "+tCaracterActual+", heap; // caracter acutla de la cadena");
+this.c3d.addCodigo("// ----------- Inicinado cadena resultante ---------");
+var tIniciCad2 = this.c3d.getTemporal();
+var tPosSizeCad2 = this.c3d.getTemporal();
+this.c3d.addCodigo("+, H, 0, "+tIniciCad2+";");
+this.c3d.addCodigo("+, H, 1, "+tPosSizeCad2+";");
+this.c3d.addCodigo("<=, "+tIniciCad2+", "+tPosSizeCad2+", heap; ");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("+, H, 1, H;");
+var etiq3 = this.c3d.getEtiqueta();
+var etiq4 = this.c3d.getEtiqueta();
+var etiq5 = this.c3d.getEtiqueta();
+this.c3d.addCodigo(etiq3+":");
+this.c3d.addCodigo("jl, 0, "+tCont2+", "+etiq4+";");
+this.c3d.addCodigo("jmp, , , "+etiq5+";");
+this.c3d.addCodigo(etiq4+":");
+this.c3d.addCodigo("<=, H, "+tCaracterActual+", heap; // guardando caracterr actual");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("-, "+tPosActual+", 1, "+tPosActual+";");
+this.c3d.addCodigo("=>, "+tPosActual+", "+tCaracterActual+", heap;");
+this.c3d.addCodigo("-, "+tCont2+", 1, "+tCont2+";");
+this.c3d.addCodigo("jmp, , , "+etiq3+";");
+this.c3d.addCodigo(etiq5+":");
+this.c3d.addCodigo("<=, H, 34, heap; // caracter de escape de la cadena resultante ");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("<=, "+tPosSizeCad2+", "+tSizeCad+", heap;");
+
+var ret = new EleRetorno();
+ret.setValorCadena(tIniciCad2);
+return ret;
 };
 
 

@@ -1,3 +1,5 @@
+/*
+
 clase holis {
 
 caracter nombre[20];
@@ -35,7 +37,7 @@ publico individuo(entero edad, caracter nom[20]){
 }
 
 
-
+*/
 
 
 clase ejemplos{
@@ -43,6 +45,16 @@ clase ejemplos{
 
   principal(){
 
+    entero h = 125;
+
+    imprimir(convertirACadena("alina"));
+    imprimir(convertirACadena('b'));
+    caracter valores[20] = convertirACadena('a');
+    imprimir(valores[0]);
+    imprimir(valores);
+
+
+/*
     caracter h[20]= "Alina";
     imprimir(h);
     individuo j ;
@@ -54,10 +66,10 @@ clase ejemplos{
     imprimir(j.nombre);
 
     
-   ejemplos p = nuevo ejemplos(j);
+   ejemplos p = nuevo ejemplos(j);*/
   }
 
-
+/*
   ejemplos(individuo i){
     imprimir(i.edad);
     imprimir(i.nombre);
@@ -82,5 +94,5 @@ clase ejemplos{
     }
     fin-si
   }
-
+*/
 }

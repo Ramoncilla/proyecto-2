@@ -51,6 +51,11 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "jl"        return 'jl'
 "jle"       return 'jle'
 "jmp"       return 'jmp'
+"%#"                   return 'parte1'
+"!#"                   return 'parte2'
+"log10"                   return 'log10'
+"%%"                   return 'modulo'
+"##"                   return 'trunc'
 "*"                   return 'por'
 "/"                   return 'div'
 "-"                   return 'menos'
@@ -129,7 +134,12 @@ OPE_ARITMETICO: suma {$$="+";}
     |menos{$$="-";}   
     |por{$$="*";}   
     |div{$$="/";}   
-    |pot{$$="^";};
+    |pot{$$="^";}
+    |modulo{$$ = "%%";}
+    |trunc{$$= "##";}
+    |log10{$$="log10";}
+    |parte1{$$ = "%#";}
+    |parte2{$$ = "!#";};
 
 OPE_RELACIONAL: je{$$="==";}   
     |jne{$$="!=";}   
