@@ -14,8 +14,5 @@ router.get('/new-Glesson', function(req,res,next){
   res.render('new-lesson',{type:2});
 });
 
-router.get('/editor', function(req,res,next){
-  res.render('editor');
-});
 
 module.exports = router;
