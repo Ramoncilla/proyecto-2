@@ -584,17 +584,45 @@ Clase.prototype.obtenerSimbolosMetodo = function(sents, ambitos, parametros){
 };
 
 
+
+Clase.prototype.simbolosEstructura = function(sent, ambitos, parametros){
+
+};
+
 Clase.prototype.simbMet= function(sent, ambitos, parametros){
 
     
     if(sent instanceof Estructura){
         var declaraciones = sent.Declas();
         var nombreEd = sent.geNombre();
+
+/////
+var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
+        
+        if(cont==0){
+            var simboloED = new Simbolo();
+            simboloED.setValoresVariable(nombreEd,"ESTRUCTURA", nombreEd,ambitos.getAmbitos(),"ESTRUCTURA", -1, declaraciones.length);
+            lista2.push(simboloED);
+            apuntador++;
+            ambitos.addAmbito(nombreEd);
+            for(var i =0; i<declaraciones.length; i++){
+                this.simbMet(declaraciones[i],ambitos,parametros);
+            }
+            ambitos.ambito.shift();
+        }else{
+            lErrores.insertarError("Semantico","No se ha podido crear la Estructura  "+ nombreEd+", debido a que existe en el ambito actual");
+           // //console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
+        }
+         
+////
+
+        /*var simboloED = new Simbolo();
+        simboloED.setValoresVariable(nombreEd,"ESTRUCTURA", nombreEd,ambitos.getAmbitos(),"ESTRUCTURA", -1, declaraciones.length);
         ambitos.addAmbito(nombreEd);
         for(var i =0; i<declaraciones.length; i++){
             this.simbMet(declaraciones[i],ambitos,parametros);
         }
-        ambitos.ambito.shift();
+        ambitos.ambito.shift();*/
     }
     
     if(sent instanceof Si){

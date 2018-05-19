@@ -2803,11 +2803,27 @@ generacionCodigo.prototype.crearCondicionBooleano = function(valBool){
 };
 
 generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
-	console.dir(nodo);
+	//console.dir(nodo);
 
 	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
 	
 	switch(nombreSentecia){
+
+		case "CONSULTAR_TAMANIO":{
+			var nombreEd = nodo.expresion;
+			var ret = EleRetorno();
+			ret.setValoresNulos();
+
+			var size = this.tablaSimbolos.obtenerSizeED(nombreEd);
+			 if(size!=-1){
+				 ret.setValorEntero(size);
+				 return ret;
+			 }else{
+				 errores.insertarError("Semantico", "No existe la estructura de nombre "+nombreEd);
+				 return ret;
+			 }
+			break;
+		}
 
 		case "NEGATIVO":{
 			var expNegativo = nodo.expresion;
@@ -2823,8 +2839,6 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			}
 			break;
 		}
-
-		
 
 		case "UNARIO":{
 			var expUnario = nodo.expresion;
@@ -3417,9 +3431,121 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 };
 
 
- generacionCodigo.prototype.vaciarArreglo = function(nombreArreglo, ambitos,clase,metodo){
 
- };
+
+ generacionCodigo.prototype.vaciarArreglo = function(nombreArreglo, ambitos,clase,metodo){
+ var esAtributo = this.tablaSimbolos.esAtributo(nombreArreglo,ambitos);
+				if(esAtributo!=null){
+					var tempSize=this.c3d.getTemporal();
+					var tempPos0 = this.c3d.getTemporal();
+					if(esAtributo){
+						var posArreglo = this.tablaSimbolos.obtenerPosAtributo(nombreArreglo,ambitos);
+						if(posArreglo!=1){
+							var temp1= this.c3d.getTemporal();
+							var temp2= this.c3d.getTemporal();
+							var temp3= this.c3d.getTemporal();
+							var temp4= this.c3d.getTemporal();
+							var temp5= this.c3d.getTemporal();
+							var l1= "+, P, 0, "+temp1+"; // pos this del objeto ";
+							var l2= "=>, "+temp1+", "+temp2+", stack; // apuntador al heap del objeto ";
+							var l3= "=>, "+temp2+", "+temp3+", heap; // apunt al heap donde inica el objeto";
+							var l4 = "+, "+temp3+", "+posArreglo+", "+temp4+"; //apuntador a posicion donde incia el arreglo";
+							var l5 = "=>, "+temp4+", "+temp5+", heap; // inicia el arreglo";
+							var l6 = "=>, "+temp5+", "+tempSize+", heap; // size del arreglo "+ nombreArreglo;
+							var l7 = "+, "+temp5+", 1, "+tempPos0+"; //Pos 0 del arreglo";
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo(l3);
+							this.c3d.addCodigo(l4);
+							this.c3d.addCodigo(l5);
+							this.c3d.addCodigo(l6);
+							this.c3d.addCodigo(l7);	
+						}
+					}else{
+						//es un arreglo local
+						var posArreglo = this.tablaSimbolos.obtenerPosLocal(nombreArreglo,ambitos);
+						if(posArreglo!=-1){
+							var temp1= this.c3d.getTemporal();
+							var temp2= this.c3d.getTemporal();
+							var temp3= this.c3d.getTemporal();
+
+							var l1 = "+, P, "+posArreglo+", "+temp1+"; // pos del arreglo ";
+							var l2 = "=>, "+temp1+", "+temp2+", stack; //apuntador al heap del arreglo";
+							var l3 = "=>, "+temp2+", "+temp3+", heap; // apuntador del heap al heap donde inicia la cadena";
+							var l4 = "=>, "+temp3+", "+tempSize+", heap; // size del arreglo "+ nombreArreglo;
+							var l5 = "+, "+temp3+", 1, "+tempPos0+"; // pos 0 donde inicia el arreglo "+nombreArreglo;
+							this.c3d.addCodigo(l1);
+							this.c3d.addCodigo(l2);
+							this.c3d.addCodigo(l3);
+							this.c3d.addCodigo(l4);
+							this.c3d.addCodigo(l5);
+							
+						}
+					}
+
+					//var retExp = this.resolverExpresion(expresionArreglo,ambitos,clase,metodo);
+					if(cadena.tipo.toUpperCase()== "CADENA"){
+						var tempApuntCadena= cadena.valor;
+						var temp1= this.c3d.getTemporal();
+						var tempSizeCadena = this.c3d.getTemporal();
+						var tempPos0Cadena= this.c3d.getTemporal();
+						var tempoCaracterCadena = this.c3d.getTemporal();
+						var l1_1= "=>, "+tempApuntCadena+", "+temp1+", heap; // pos que apunta al size de la cadena";
+						var l1_2= "=>, "+temp1+", "+tempSizeCadena+", heap; // size de la cadena";
+						var l1_3= "+, "+temp1+", 1, "+tempPos0Cadena+"; // Pos 0 de la cadena";
+						var l1_4= "=>, "+tempPos0Cadena+", "+tempoCaracterCadena+", heap; // sacandor el caracter del heap cadena";
+						this.c3d.addCodigo(l1_1);
+						this.c3d.addCodigo(l1_2);
+						this.c3d.addCodigo(l1_3);
+						this.c3d.addCodigo(l1_4);
+
+						var etiq1V= this.c3d.getEtiqueta();
+						var etiq1F= this.c3d.getEtiqueta();
+						var etiq2V= this.c3d.getEtiqueta();
+						var etiq2F = this.c3d.getEtiqueta();
+						
+						var l1_5="jle, "+tempSizeCadena+", "+tempSize+", "+etiq1V+";";
+						var l1_6= "jmp, , , "+ etiq1F+";";
+						var l1_18= "jmp, , , "+ etiq1V+";";
+						var l1_7= etiq1V+":";
+						var l1_8="jne, "+tempoCaracterCadena+", 34, "+etiq2V+";";
+						var l1_9="jmp, , , "+etiq2F+";";
+						var l1_19= "jmp, , , "+ etiq2V+";";
+						var l1_10=etiq2V+":";
+						var l1_11="<=, "+tempPos0+", "+tempoCaracterCadena+", heap; // guardando el caracter ";
+						var l1_12="+, "+tempPos0+", 1, "+tempPos0+"; // incremnetnado la pos del arreglo";
+						var l1_13="+, "+tempPos0Cadena+", 1, "+tempPos0Cadena+"; // incrementando la pos de la cadena";
+						var l1_14= "=>, "+tempPos0Cadena+", "+tempoCaracterCadena+", heap; // sacandor el caracter del heap cadena";
+						var l1_15= "jmp, , , "+ etiq1V+";";
+						var l1_20= "jmp, , , "+ etiq2F+";";
+						var l1_16=etiq2F+":";
+						var l1_21= "jmp, , , "+ etiq1F+";";
+						var l1_17 = etiq1F+":";
+						this.c3d.addCodigo(l1_5);
+						this.c3d.addCodigo(l1_6);
+						this.c3d.addCodigo(l1_18);
+						this.c3d.addCodigo(l1_7);
+						this.c3d.addCodigo(l1_8);
+						this.c3d.addCodigo(l1_9);
+						this.c3d.addCodigo(l1_19);
+						this.c3d.addCodigo(l1_10);
+						this.c3d.addCodigo(l1_11);
+						this.c3d.addCodigo(l1_12);
+						this.c3d.addCodigo(l1_13);
+						this.c3d.addCodigo(l1_14);
+						this.c3d.addCodigo(l1_15);
+						this.c3d.addCodigo(l1_20);
+						this.c3d.addCodigo(l1_16);
+						this.c3d.addCodigo(l1_21);
+						this.c3d.addCodigo(l1_17);
+						
+					
+					}	
+				}
+
+};
+
+
 
 generacionCodigo.prototype.asignarCadenaArreglo= function(nombreArreglo, cadena, ambitos, clase, metodo){
 
@@ -3995,31 +4121,7 @@ generacionCodigo.prototype.obtenerDireccion = function(nodo, ambitos, clase, met
 return ret;
 };
 
-generacionCodigo.prototype.obtenerSizeED = function(tipoClase){
-  var nombreClase = tipoClase.toUpperCase();
-	switch(nombreClase){
 
-		case "ENTERO":{
-			return 1;
-		}
-
-		case "CARACTER":{
-			return 1;
-		}
-
-		case "BOOLEANO":{
-			return 1;
-		}
-
-		case "DOBLE":{
-			return 1;
-		}
-
-		default:{
-			return this.tablaSimbolos.obtenerSizeClase(nombreClase);
-		}
-	}
-}; 
 
 
 generacionCodigo.prototype.reservarMemoria = function(nodo, ambitos, clase, metodo){

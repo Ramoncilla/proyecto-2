@@ -61,7 +61,7 @@
     var  Hacer_Mientras= require("./Arbol/Sentencias/Hacer_Mientras");
     var  Importar= require("./Arbol/Sentencias/Importar");
     var  Imprimir= require("./Arbol/Sentencias/Imprimir");
-    var  Leer_Teclado= require("./Arbol/Sentencias/LeerTeclado");
+    var  LeerTeclado= require("./Arbol/Sentencias/LeerTeclado");
     var  Puntero= require("./Arbol/Sentencias/Puntero");
     var  Repetir= require("./Arbol/Sentencias/Repetir");
     var  Repetir_Contando= require("./Arbol/Sentencias/Repetir_Contando");
@@ -117,7 +117,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 "consultarTamnio" return 'consultarTamanio'
 "->" return 'flecha'
 "destruirPuntero" return 'destruirPuntero'
-
+"fin-si" return 'finSi'
 "tamanio" return 'tamanio'
 "Repetir_Mientras"  return 'Repetir_Mientras'
 "hacer" return 'hacer'
@@ -311,36 +311,12 @@ SENTENCIAS_CLASE: SENTENCIA_CLASE
 			
 			$$=[];
 			$$.push($1);
-				/*for(var i=0; i<$$.length;i++){
-				var t =$$[i];
-				if(t instanceof Atributo){
-					console.log("Atributo--> "+ t.getVisibilidad());
-				}
-				if(t instanceof Funcion){
-					console.log("Funcion-->" + t.getVisibilidad() +" "+ t.getNombreFuncion());
-				}
-
-
-			}*/
-			
 		} 
 	|SENTENCIAS_CLASE SENTENCIA_CLASE
 		{
 			$$=$1;
 			$$.push($2);
-			
 
-		/*	for(var i=0; i<$$.length;i++){
-				var t =$$[i];
-				if(t instanceof Atributo){
-					console.log("Atributo--> "+ t.getVisibilidad());
-				}
-				if(t instanceof Funcion){
-					console.log("Funcion-->" + t.getVisibilidad() +" "+ t.getNombreFuncion());
-				}
-
-
-			}*/
 		};
 
 
@@ -641,6 +617,8 @@ DECLARACION:  TIPO_DECLARACION id igual EXPRESION puntoComa //1
 			a.setValores($1, $2, $3); 
 			$$=a;
 		}
+
+		
 	|TIPO_DECLARACION id COL_ARREGLO igual EXPRESION puntoComa //2
 	{
 		var decla = new  DeclaArreglo(); decla.setValores($1,$2, $3);
@@ -748,7 +726,7 @@ SI_FALSO: Es_falso CUERPO_FUNCION {$$= $2;};
 
 SI_VERDADERO: Es_verdadero CUERPO_FUNCION{$$= $2;};
 
-SI: Si abrePar EXPRESION cierraPar abreLlave cierraLlave
+SI: Si abrePar EXPRESION cierraPar abreLlave cierraLlave finSi
 		{
 			var a = [];
 			var b = [];
@@ -756,27 +734,27 @@ SI: Si abrePar EXPRESION cierraPar abreLlave cierraLlave
 			c.setValores($3,a,b);
 			$$=c;
 		}
-	|Si abrePar EXPRESION cierraPar abreLlave SI_VERDADERO SI_FALSO cierraLlave
+	|Si abrePar EXPRESION cierraPar abreLlave SI_VERDADERO SI_FALSO cierraLlave finSi
 		{
 			var c = new Si();
 			c.setValores($3,$6,$7);
 			$$=c;
 		}
-    |Si abrePar EXPRESION cierraPar abreLlave SI_VERDADERO cierraLlave
+    |Si abrePar EXPRESION cierraPar abreLlave SI_VERDADERO cierraLlave finSi
     	{
 			var b = [];
 			var c = new Si();
 			c.setValores($3,$6,b);
 			$$=c;
 		}
-    |Si abrePar EXPRESION cierraPar abreLlave SI_FALSO cierraLlave
+    |Si abrePar EXPRESION cierraPar abreLlave SI_FALSO cierraLlave finSi
     	{
 			var a = [];
 			var c = new Si();
 			c.setValores($3,a,$6);
 			$$=c;
 		}
-    |Si abrePar EXPRESION cierraPar abreLlave SI_FALSO SI_VERDADERO cierraLlave
+    |Si abrePar EXPRESION cierraPar abreLlave SI_FALSO SI_VERDADERO cierraLlave finSi
     	{
 			var c = new Si();
 			c.setValores($3,$7,$6);
@@ -1021,7 +999,7 @@ VALOR: entero{var num = new Entero(); num.setNumero($1); $$= num;}
 	|abrePar EXPRESION cierraPar{ $$=$2;}
 	|cadena {var n = new Cadena(); n.setCadena($1); $$=n;}
 	|nulo {var n = new Nulo(); n.setNulo(); $$=n;}
-	|CONVERTIR_CADENA{$$=S1;}
+	|CONVERTIR_CADENA{$$=$1;}
 	|CONVERTIR_ENTERO{$$=$1;}
 	|id { var idNuevo = new t_id(); idNuevo.setValorId($1); $$= idNuevo;}
 	|id COL_ARREGLO{var i = new PosArreglo(); i.setValores($1, $2); $$=i;}
@@ -1182,12 +1160,12 @@ ATRI: ATRI_
 
 LISTA_EXPRESIONES: EXPRESION { var arreglo = []; var g= arreglo.push($1); $$= arreglo;}
 	|LISTA_EXPRESIONES coma EXPRESION{var arreglo = $1; var g= arreglo.push($3);  $$= arreglo;};
-}
+
 
 
 PARAMETROS_LLAMADA : abrePar cierraPar{$$= [];}
 	|abrePar LISTA_EXPRESIONES cierraPar{$$=$2; console.log($2);};
-}
+
 
 
 CUERPO_ARREGLO: abreLlave LISTA_CUERPO_ARREGLO cierraLlave{$$=$2;};
@@ -1195,15 +1173,15 @@ CUERPO_ARREGLO: abreLlave LISTA_CUERPO_ARREGLO cierraLlave{$$=$2;};
 
 LISTA_CUERPO_ARREGLO: ELEMENTO_FILA{var arreglo = []; arreglo.push($1); $$= arreglo;}
 	|LISTA_CUERPO_ARREGLO coma ELEMENTO_FILA{var arreglo= $1; arreglo.push($3); $$=arreglo;};
-}
+
 
 
 ELEMENTO_FILA : abreLlave LISTA_EXPRESIONES cierraLlave{$$= $2;};
 	
 
-CONVERTIR_A_CADENA: convertirACadena abrePar EXPRESION cierraPar puntoComa{var a = new convertirCadena(); a.setExpresionCadena($3); $$= a;};
+CONVERTIR_CADENA: convertirACadena abrePar EXPRESION cierraPar{var a = new convertirCadena(); a.setExpresionCadena($3); $$= a;};
 
-CONVERTIR_A_ENTERO: convertirAEntero abrePar EXPRESION cierraPar puntoComa{var a = new convertirEntero(); a.setExpresionEntero($3); $$=a;};
+CONVERTIR_ENTERO: convertirAEntero abrePar EXPRESION cierraPar{var a = new convertirEntero(); a.setExpresionEntero($3); $$=a;};
 
 
 /*--------------------- Punteros ------------------------*/
@@ -1234,7 +1212,7 @@ RESERVAR_MEMORIA: reservarMemoria abrePar EXPRESION cierraPar
 		$$=a;
 	}; 
 
-OBTENER_TAMANIO: consultarTamanio abrePar EXPRESION cierraPar
+OBTENER_TAMANIO: consultarTamanio abrePar id cierraPar
 	{
 		var a = new ObtenerTamanio();
 		a.setValores($3);

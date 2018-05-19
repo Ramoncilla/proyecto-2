@@ -5,20 +5,48 @@ function TablaSimbolos(){
 
 
 
-TablaSimbolos.prototype.obtenerSizeClase = function(clase){
+TablaSimbolos.prototype.obtenerSizeEstructura= function(clase){
 
   var claseTemporal;
   for(var i =0; i<this.listaSimbolos.length; i++){
     claseTemporal = this.listaSimbolos[i];
     if(claseTemporal.nombreCorto.toUpperCase() == clase.toUpperCase() &&
-       claseTemporal.rol.toUpperCase() == "CLASE" &&
-       claseTemporal.tipoSimbolo.toUpperCase() == "CLASE"){
+       claseTemporal.rol.toUpperCase() == "ESTRUCTURA" &&
+       claseTemporal.tipoSimbolo.toUpperCase() == "ESTRUCTURA"){
          return claseTemporal.tamanio;
        }
   }
   return -1;
 
 };
+
+
+TablaSimbolos.prototype.obtenerSizeED = function(tipoClase){
+  var nombreClase = tipoClase.toUpperCase();
+	switch(nombreClase){
+
+		case "ENTERO":{
+			return 1;
+		}
+
+		case "CARACTER":{
+			return 1;
+		}
+
+		case "BOOLEANO":{
+			return 1;
+		}
+
+		case "DOBLE":{
+			return 1;
+    }
+    
+		default:{
+			return this.obtenerSizeEstructura(nombreClase);
+		}
+	}
+}; 
+
 
 TablaSimbolos.prototype.obtenerParametros = function(firmaFuncion){
 
@@ -369,7 +397,7 @@ TablaSimbolos.prototype.esAtributo= function(nombre, ambitos){
     }
 }
 
-
+ 
   ambitoTemporal = new Ambito();
   arr= ambitos.ambitos.slice();
   ambitoTemporal.setAmbitos(arr);
