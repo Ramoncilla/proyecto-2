@@ -328,6 +328,12 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 	 
 	switch(nombreSentecia.toUpperCase()){
 
+
+
+		case "LEER_TECLADO":{
+			this.leerTeclado(nodo, ambitos, clase, metodo);
+			break;
+		}
 	
 		case "DECLA_PUNTERO":{
 			/*var a = this.crearPunteroNulo(nodo, ambitos,clase, metodo);
@@ -2806,7 +2812,7 @@ generacionCodigo.prototype.crearCondicionBooleano = function(valBool){
 };
 
 
-generacionCodigo.prototype.convertirCadena = function(ret){
+generacionCodigo.prototype.convertirCadena2 = function(ret){
 	var retN = new EleRetorno();
 			retN.setValoresNulos();
 			if(ret.tipo.toUpperCase() != "NULO"){
@@ -2848,7 +2854,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 		case "CONVERTIR_CADENA":{
 			var exp = nodo.expresionACadena;
 			var ret = this.resolverExpresion(exp, ambitos, clase, metodo);
-			var c = this.convertirCadena(ret);
+			var c = this.convertirCadena2(ret);
 			break;
 		}
 
@@ -4057,13 +4063,13 @@ generacionCodigo.prototype.funcionConcatenar = function(nodo, ambitos, clase, me
 								var comodin="";
 								var bandera = false;
 								
-								if (resExp2.tipo.toUpperCase() == "ENTERO"){
+								if (retExp2.tipo.toUpperCase() == "ENTERO"){
 									comodin = "#E";
 									bandera= true;
-								}else if(resExp2.tipo.toUpperCase() == "DECIMAL"){
+								}else if(retExp2.tipo.toUpperCase() == "DECIMAL"){
 									comodin = "#D";
 									bandera= true;
-								}else if(resExp2.tipo.toUpperCase() == "BOOLENAO"){
+								}else if(retExp2.tipo.toUpperCase() == "BOOLENAO"){
 									comodin = "#B";
 									bandera= true;
 								}else{
@@ -4085,14 +4091,18 @@ generacionCodigo.prototype.funcionConcatenar = function(nodo, ambitos, clase, me
 											 var retC2 = this.resolverExpresion(elemento2, ambitos, clase, metodo);
 											 if(retC1.tipo.toUpperCase() == "CADENA"){
 												 if(retC2.tipo.toUpperCase() == "CADENA"){
-													 var c = this.convertirCadena(retExp2);
+													 var c = this.convertirCadena2(retExp2);
 													 if(c.tipo.toUpperCase()== "CADENA"){
 														 var x = this.concatenarCadenas(retC1, c);
+														 //jjjjjjjjjjjjaqui tiene que ver.. 
 														 if(x.tipo.toUpperCase() == "CADENA"){
 															 var y = this.concatenarCadenas(x, retC2);
-															 //if(y.tipo.toUpperCase()== )
+															 if(y.tipo.toUpperCase()== "CADENA"){
+																this.asignarCadenaArreglo(nombreVar,y,ambitos,clase,metodo);
 
-
+															 }else{
+																 errores.insertarError("Semantico", "No se ha podido realizar la concatenacion final");
+															 }
 														 }else{
 														 errores.insertarError("Semantico", "No se pudo realizar la primera concatencicon del concatenar");
 													 }
@@ -6584,6 +6594,18 @@ return true;
 
 
 
+
+generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
+
+	var mensajeMostrar = nodo.expresionCadena; 
+	var nombreVarAsignar = nodo.nombreVariable;
+	console.log("TE AMO PREDITO LINDO     <3");
+	console.log(mensajeMostrar);
+	console.log(nombreVarAsignar);
+    	
+
+
+};
 
 
 

@@ -40,6 +40,7 @@ var decla_pila = require("../Arbol/Sentencias/DeclaPila");
 
 
 
+
 var Acceso = require("../Arbol/Expresion/Acceso");
 var convertirCadena = require("../Arbol/Expresion/convertirCadena");
 var convertirEntero = require("../Arbol/Expresion/convertirEntero");
@@ -151,7 +152,7 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 
-    
+
     if(sent instanceof convertirCadena){
         return "CONVERTIR_CADENA";
     }
@@ -244,6 +245,11 @@ sentenciaNombre.prototype.obtenerNombreExpresion = function(sent){
 
 
 sentenciaNombre.prototype.obtenerNombreSentencia= function(sent){
+
+if(sent instanceof leerTeclado){
+    return "LEER_TECLADO";
+}
+
     if(sent instanceof asignaUnario){
         return "ASIGNACION_UNARIO";
     }

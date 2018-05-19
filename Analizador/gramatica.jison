@@ -871,7 +871,7 @@ CONTADOR: Contador abrePar EXPRESION cierraPar CUERPO_FUNCION
 		$$=a;
 	};
 
-LEER_TECLADO: Leer_Teclado abrePar EXPRESION coma id cierraPar puntoComa
+LEER_TECLADO: Leer_Teclado abrePar cadena coma id cierraPar puntoComa
 	{
 		var a = new LeerTeclado();
 		a.setValores($3,$5);
