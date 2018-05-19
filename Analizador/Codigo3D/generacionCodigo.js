@@ -2805,17 +2805,9 @@ generacionCodigo.prototype.crearCondicionBooleano = function(valBool){
 	return cond;
 };
 
-generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
-	//console.dir(nodo);
 
-	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
-	
-	switch(nombreSentecia){
-
-		case "CONVERTIR_CADENA":{
-			var exp = nodo.expresionACadena;
-			var ret = this.resolverExpresion(exp, ambitos, clase, metodo);
-			var retN = new EleRetorno();
+generacionCodigo.prototype.convertirCadena = function(ret){
+	var retN = new EleRetorno();
 			retN.setValoresNulos();
 			if(ret.tipo.toUpperCase() != "NULO"){
 				if(ret.tipo.toUpperCase() == "ENTERO"){
@@ -2843,6 +2835,20 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 				return retN;
 			}
 			return retN;
+
+};
+
+generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, metodo) {
+	//console.dir(nodo);
+
+	var nombreSentecia = sentNombre.obtenerNombreExpresion(nodo).toUpperCase();
+	
+	switch(nombreSentecia){
+
+		case "CONVERTIR_CADENA":{
+			var exp = nodo.expresionACadena;
+			var ret = this.resolverExpresion(exp, ambitos, clase, metodo);
+			var c = this.convertirCadena(ret);
 			break;
 		}
 
@@ -3960,7 +3966,197 @@ generacionCodigo.prototype.convertirArregloCadena = function(nombreVar, ambitos,
 
 }
 
+
+generacionCodigo.prototype.convertirCadenaReferenciaArreglo = function(nodoOperado){
+
+	this.c3d.addCodigo("//------------------------------ Conversion cadena de la referencia ------------------------");
+	var tempInicioCad = this.c3d.getTemporal();
+	var tempPosSize = this.c3d.getTemporal();
+	this.c3d.addCodigo("+, H, 0, "+ tempInicioCad+";");
+	this.c3d.addCodigo("+, H, 1, "+tempPosSize+";");
+	this.c3d.addCodigo("<=, "+tempInicioCad+", "+tempPosSize+", heap;");
+	this.c3d.addCodigo("+, H, 1, H;");
+	this.c3d.addCodigo("+, H, 1, H;");
+    var temp = this.c3d.getTemporal();
+	var posActual = this.c3d.getTemporal();
+	var caracterActual = this.c3d.getTemporal();
+	var cont= this.c3d.getTemporal();
+	this.c3d.addCodigo("=>, "+nodoOperado.referencia+", "+temp+", heap; ");
+	this.c3d.addCodigo("+, "+temp+", 1, "+posActual+";");
+	this.c3d.addCodigo("=>, "+posActual+", "+caracterActual+", heap; // caracter actual");
+	this.c3d.addCodigo("+, 0, 0, "+cont+";");
+	var etiq0 = this.c3d.getEtiqueta();
+	var etiq1 = this.c3d.getEtiqueta();
+	var etiq2 = this.c3d.getEtiqueta();
+
+	this.c3d.addCodigo(etiq0+":");
+	this.c3d.addCodigo("jne, "+ caracterActual+", 36, "+etiq1+";");
+	this.c3d.addCodigo("jmp, , , "+etiq2+";");
+
+	this.c3d.addCodigo(etiq1+":");
+	this.c3d.addCodigo("+, "+cont+", 1, "+cont+";");
+	this.c3d.addCodigo("<=, H, "+caracterActual+", heap;");
+	this.c3d.addCodigo("+, H, 1, H;");
+	this.c3d.addCodigo("+, "+posActual+", 1, "+posActual+";");
+	this.c3d.addCodigo("=>, "+posActual+", "+caracterActual+", heap; // caracter actual");
+	this.c3d.addCodigo("jmp, , , "+etiq0+";");
+	this.c3d.addCodigo(etiq2+":");
+	this.c3d.addCodigo("<=, H, 34, heap;");
+	this.c3d.addCodigo("+, H, 1, H;");
+	this.c3d.addCodigo("<=, "+tempPosSize+", "+cont+", heap;");
+	var ere = new EleRetorno();
+	ere.setValorCadena(tempInicioCad);
+	return ere;
+
+};
+
 generacionCodigo.prototype.funcionConcatenar = function(nodo, ambitos, clase, metodo){
+
+	var nombreVar = nodo.nombreVariable;
+	var exp1 = nodo.expresion1;
+	var exp2 = nodo.expresion2;
+	var tipoConcat = nodo.tipo;
+	var cadenaArreglo = this.convertirArregloCadena(nombreVar, ambitos, clase,metodo);
+	if(cadenaArreglo instanceof EleRetorno){
+		if(cadenaArreglo.tipo.toUpperCase() == "CADENA"){
+			if(tipoConcat == 2){
+				//|concatenar abrePar id coma EXPRESION cierraPar puntoComa //2 a.setValores($3,$5,null,2);
+				var ret = this.resolverExpresion(exp1,ambitos,clase,metodo);
+				if(ret instanceof EleRetorno){
+					var cadenaResultante;
+					if(ret.tipo.toUpperCase() == "CADENA"){
+						cadenaResultante= this.concatenarCadenas(cadenaArreglo,ret);
+						if(cadenaResultante.tipo.toUpperCase() == "CADENA"){
+							this.asignarCadenaArreglo(nombreVar,cadenaResultante,ambitos,clase,metodo);
+						}else{
+							errores.insertarError("Semantico", "Parametros no validos para realizar concatenacion de cadenas, error en concatenacion");
+						}
+					}else if(ret.tipo.toUpperCase() == "CARACTER" && ret.tipoSimbolo.toUpperCase() == "ARREGLO"){
+						   var cad = this.convertirCadenaReferenciaArreglo(ret);
+						   cadenaResultante= this.concatenarCadenas(cadenaArreglo,cad);
+						   if(cadenaResultante.tipo.toUpperCase() == "CADENA"){
+							this.asignarCadenaArreglo(nombreVar,cadenaResultante,ambitos,clase,metodo);
+						}else{
+							errores.insertarError("Semantico", "Parametros no validos para realizar concatenacion de cadenas, error en concatenacion");
+						}
+					}else{
+						errores.insertarError("Semantico", "Tipo no validos para realizar concatenacion "+ ret.tipo+", error en concatenacion");
+					}
+
+				}else{
+					errores.insertarError("Semantico", "La expresion para concatenar no es valida, error en concatenacion");
+				}
+
+			}else{
+				////concatenar abrePar id coma EXPRESION coma EXPRESION cierraPar puntoComa  //1 .setValores($3,$5,$7,1);
+				if(exp1!= null){
+					if(exp2!= null){
+						var retExp2 = this.resolverExpresion(exp2, ambitos, clase, metodo);
+							///
+							if(retExp2 instanceof EleRetorno){
+								var comodin="";
+								var bandera = false;
+								
+								if (resExp2.tipo.toUpperCase() == "ENTERO"){
+									comodin = "#E";
+									bandera= true;
+								}else if(resExp2.tipo.toUpperCase() == "DECIMAL"){
+									comodin = "#D";
+									bandera= true;
+								}else if(resExp2.tipo.toUpperCase() == "BOOLENAO"){
+									comodin = "#B";
+									bandera= true;
+								}else{
+									errores.insertarError("Semantico", "El tipo del tercer parametros debe de ser entero, decimal o booleano, no de tipo "+ resExp2.tipo);
+								}
+
+								if(bandera == true){
+									if(exp1 instanceof term_cadena){
+										 var cadenaB = exp1.valorCadena;
+										 var posComodin = cadenaB.indexOf(comodin);
+										 if(posComodin!=-1){
+											 var parte1 = cadenaB.substring(0,posComodin);
+											 var parte2 = cadenaB.substring(posComodin+2, cadenaB.length);
+											 var elemento1 = new term_cadena();
+											 elemento1.valorCadena = parte1;
+											 var elemento2 = new term_cadena();
+											 elemento2.valorCadena = parte2;
+											 var retC1 = this.resolverExpresion(elemento1, ambitos, clase, metodo);
+											 var retC2 = this.resolverExpresion(elemento2, ambitos, clase, metodo);
+											 if(retC1.tipo.toUpperCase() == "CADENA"){
+												 if(retC2.tipo.toUpperCase() == "CADENA"){
+													 var c = this.convertirCadena(retExp2);
+													 if(c.tipo.toUpperCase()== "CADENA"){
+														 var x = this.concatenarCadenas(retC1, c);
+														 if(x.tipo.toUpperCase() == "CADENA"){
+															 var y = this.concatenarCadenas(x, retC2);
+															 //if(y.tipo.toUpperCase()== )
+
+
+														 }else{
+														 errores.insertarError("Semantico", "No se pudo realizar la primera concatencicon del concatenar");
+													 }
+
+
+													 }else{
+														 errores.insertarError("Semantico", "No se pudo convertir a cadena el parametro a incsutrar");
+													 }
+
+
+												 }else{
+													 errores.insertarError("Semantico", "No se pudo convertir el parametro 2 concatenar");
+												 }
+											 }else{
+												errores.insertarError("Semantico", "No se pudo convertir el parametro 1 concatenar");
+
+											 }	
+										 }else{
+
+										 }
+
+										 
+
+
+									}else{
+										errores.insertarError("semantico", "Para este tipo de Concatenacion unicamente puede venir una cadena como segndo parametro");
+									}
+
+								}else{
+									errores.insertarError("Semantico", "Error, expresion no validad para poder inscrutar tipo no valido, "+retExp2.tipo);
+
+								}
+///
+						}else{
+							errores.insertarError("Semantico", "Ha ocurrido un error al resolver expresion a incrustar dentro de la cadena");
+						}
+					}else{
+						errores.insertarError("Semantico", "Expresion dos no valida para concatenar");
+					}
+				}else{
+					errores.insertarError("Semantico", "Expresion uno no valida para concatenar");
+
+				}
+
+
+
+
+			}
+
+		
+		}else{
+			errores.insertarError("Sematncio", "No se puede realizar concatenacion, el primer parametro no es valido para la concatenacion");
+		}
+
+	}else{
+		errores.insertarError("Semantico", "No existe el arreglo de nombre "+ nombreVar+", error en concatenar");
+	}
+
+
+	
+};
+
+
+generacionCodigo.prototype.funcionConcatenarj = function(nodo, ambitos, clase, metodo){
 
 	var nombreVar =nodo.nombreVariable;
 	var exp1=nodo.expresion1;

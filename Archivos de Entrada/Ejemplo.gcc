@@ -1,4 +1,4 @@
-/*
+
 
 clase holis {
 
@@ -37,7 +37,7 @@ publico individuo(entero edad, caracter nom[20]){
 }
 
 
-*/
+
 
 
 clase ejemplos{
@@ -46,12 +46,16 @@ clase ejemplos{
   principal(){
 
     entero h = 125;
-
-    imprimir(convertirACadena("alina"));
+    imprimir(convertirACadena(true));
     imprimir(convertirACadena('b'));
     caracter valores[20] = convertirACadena('a');
     imprimir(valores[0]);
     imprimir(valores);
+     individuo j ;
+    j = nuevo individuo(25, "poPo");
+    caracter acumulador[100]= "holis";
+    concatenar(acumulador, j.nombre);
+    imprimir(acumulador);
 
 
 /*
