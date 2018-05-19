@@ -5,7 +5,7 @@ var lErrores = new listaErrores();
 function listaParametros(){
     this.parametros =[];
 }
-
+ 
 listaParametros.prototype.existeParametro=function(nuevo){
     var temporal;
     for(var i = 0; i<this.parametros.length; i++){

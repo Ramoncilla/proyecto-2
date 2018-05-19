@@ -4,7 +4,7 @@ function Concatenar(){
 	this.expresion2=null;
 	this.tipo=0;
 }
- 
+  
 
 Concatenar.prototype.setValores = function(nombre,exp1,exp2,tipo) {
 	this.nombreVariable= nombre;

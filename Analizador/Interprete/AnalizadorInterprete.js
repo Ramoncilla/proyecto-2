@@ -140,6 +140,45 @@ AnalizadorInterprete.prototype.inicializarEstructuras = function(){
 
 };
 
+AnalizadorInterprete.prototype.imprimir_str2= function(pos, num){
+
+    var posicion = parseInt(pos+"");
+    var cadena="";
+    var caracter;
+    var pos = this.heap[posicion];
+    pos++;
+    while(true){
+        caracter= this.heap[pos];
+        if(caracter == num){
+            break;
+        }else{
+            cadena += String.fromCharCode(caracter);
+            pos++;
+        }
+    }
+    return cadena;
+};
+ 
+
+AnalizadorInterprete.prototype.imprimir_str= function(pos, num){
+
+    var posicion = parseInt(pos+"");
+    posicion++;
+    posicion++;
+    var cadena="";
+    var caracter;
+    while(true){
+        caracter= this.heap[posicion];
+        if(caracter == num){
+            break;
+        }else{
+            cadena += String.fromCharCode(caracter);
+            posicion++;
+        }
+    }
+    return cadena;
+};
+
 AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
 
     var nombreInstruccion = nombres.obtenerNombre3D(instruccion).toUpperCase();
@@ -209,7 +248,18 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
                     var res = parseFloat(vVal);
                     this.agregarImpresion(res);
                 }
+                
+                if(tipo == "\"%s\"") {
+                    //decimal
+                    var res = this.imprimir_str(vVal, 34);
+                    this.agregarImpresion(res);
+                }
 
+                if(tipo == "\"%a\"") {
+                    //decimal
+                    var res = this.imprimir_str2(vVal, 36);
+                    this.agregarImpresion(res);
+                }
             }
 
             //}else{
@@ -544,6 +594,80 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
     var valCont = sent.varContenedor;
 
     switch(operador){
+
+        case "!#":{
+            console.log("parte decimal de un numero   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = (v1+"").valueOf(); 
+                var posPunto = res.indexOf(".");
+                var decimal =  res.substring(posPunto+1, res.length);
+                var ret = parseInt(decimal);
+                var temp = new temporal(varAsig,ret);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "%#":{
+            console.log("parte parte entera  de un numero   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.floor(v1);
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "log10":{
+            console.log("ENTRE  un LOGARITMO   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.floor(Math.log10(Math.abs(v1))+1);
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "%%":{
+            console.log("ENTRE  un modODULOE   ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = v1 % 10;
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
+
+        case "##":{
+
+            console.log("ENTRE  un TRUNCCC  ");
+            var v1 = this.resolverValor(val1);
+            var varAsig = valCont.valor;
+            if(v1!= "nulo"){
+                var res = Math.trunc(v1/10);;
+                var temp = new temporal(varAsig,res);
+                this.temporales.insertarTemporal(temp);
+            }else{
+
+            }
+            break;
+        }
 
         case "+":{
             var v1 = this.resolverValor(val1);

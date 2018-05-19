@@ -1,3 +1,5 @@
+var t_id = require("./t_id");
+
 function Acceso(){
 
 	this.objeto=null;
@@ -7,7 +9,16 @@ function Acceso(){
 
   
 
+Acceso.prototype.obtenerIdUltimo = function(){
+	var n = this.elementosAcceso.length-1;
+	var t = this.elementosAcceso[n];
+	if(t instanceof t_id){
+		return t.nombreId;
+	}
 
+	return "";
+
+}
 
 Acceso.prototype.setValores= function(obj, elementosAcceso) {
 	// body...

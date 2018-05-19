@@ -1,24 +1,102 @@
-clase p{
 
+
+clase holis {
+
+caracter nombre[20];
+
+  holis(caracter n[20]){
+
+    este.nombre = n;
+    imprimir(este.nombre);
+imprimir(n);
+ 
+  }
+}
+
+
+clase individuo {
+
+caracter nombre[20];
 entero edad;
-p(entero b){
-    este.edad = b;
+holis g;
+
+
+publico individuo(entero edad, caracter nom[20]){
+  este.nombre= nom;
+  este.edad= edad;
+  imprimir(este.nombre);
+  imprimir(este.edad);
+  g = nuevo holis(este.nombre);
+ 
+  
+ 
 }
 
+
+
 }
+
+
+
+
 
 clase ejemplos{
 
 
   principal(){
-    entero b = 5*10;
-    p hola = nuevo p(12);
-    crearPuntero(entero, a) = obtenerDireccion(hola.edad);
-    imprimir(a);
-    entero x = a+23;
-    imprimir(x);
-    imprimir('C');
-    imprimir(b);
+
+    entero h = 125;
+    imprimir(convertirACadena(true));
+    imprimir(convertirACadena('b'));
+    caracter valores[20] = convertirACadena('a');
+    imprimir(valores[0]);
+    imprimir(valores);
+     individuo j ;
+    j = nuevo individuo(25, "poPo");
+    caracter acumulador[100]= "holis";
+    concatenar(acumulador, j.nombre);
+    imprimir(acumulador);
+
+
+/*
+    caracter h[20]= "Alina";
+    imprimir(h);
+    individuo j ;
+    j = nuevo individuo(25, "poPo");
+
+    imprimir(j.nombre);
+    imprimir(j.edad);
+    j.nombre = "luzzz";
+    imprimir(j.nombre);
+
+    
+   ejemplos p = nuevo ejemplos(j);*/
   }
 
+/*
+  ejemplos(individuo i){
+    imprimir(i.edad);
+    imprimir(i.nombre);
+    caracter k [20];
+    k= i.nombre;
+    imprimir(k);
+    k="pruebas.<><";
+
+    imprimir(k);
+    individuo l = nuevo individuo(12+i.edad, k);
+
+    imprimir(l.edad);
+    imprimir(l.nombre);
+    imprimir(i.g.nombre);
+    si(l.nombre != "poPo"){
+      es_verdadero{
+        imprimir("Correcto");
+      }es_falso{
+        imprimir("cadena diferentes ");
+      }
+
+    }
+    fin-si
+  }
+*/
 }

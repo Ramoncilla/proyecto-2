@@ -3,6 +3,7 @@ function retorno(){
     this.valor;
     this.estructura = "nulo";
     this.referencia = "nulo";
+    this.tipoSimbolo = "nulo";
 }
  
 
@@ -59,6 +60,8 @@ retorno.prototype.setReferencia = function(ed, ref){
     this.estructura= ed;
     this.referencia = ref;
 };
+
+
 
 
 module.exports = retorno;

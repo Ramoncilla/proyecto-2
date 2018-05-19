@@ -4,6 +4,24 @@ function TablaSimbolos(){
 }
 
 
+TablaSimbolos.prototype.obtenerNombreParametro = function(ambito, pos){
+
+  var simbTemporal;
+  for(var i =0; i< this.listaSimbolos.length; i++){
+    simbTemporal = this.listaSimbolos[i];
+    if(simbTemporal.rol.toUpperCase()== "PARAMETRO" &&
+      simbTemporal.apuntador== pos &&
+      simbTemporal.ambito.toUpperCase() == ambito.toUpperCase()){
+        return simbTemporal;
+      }
+  }
+  return "";
+
+};
+
+
+
+
 
 TablaSimbolos.prototype.obtenerSizeEstructura= function(clase){
 
