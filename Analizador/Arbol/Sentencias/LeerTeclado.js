@@ -1,6 +1,6 @@
 
 function LeerTeclado(){
-	this.expresionCadena = null;
+	this.expresionCadena = "";
 	this.nombreVarible="";
 }
 

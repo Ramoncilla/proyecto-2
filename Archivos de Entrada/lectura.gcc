@@ -1,0 +1,11 @@
+clase prueba {
+
+
+principal(){
+
+leer_teclado("Debo ingresar un numero ", a);
+
+
+}
+
+}
