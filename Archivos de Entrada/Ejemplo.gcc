@@ -1,19 +1,32 @@
+clase holis {
+
+caracter nombre[10];
+
+  holis(caracter n[10]){
+
+    este.nombre = n;
+    imprimir("atributos de holis");
+    imprimir(este.nombre);
+ 
+  }
+}
+
+
 clase individuo {
 
 caracter nombre[10];
 entero edad;
+holis g;
 
 
 publico individuo(entero edad, caracter nom[10]){
   este.nombre= nom;
   este.edad= edad;
-  
-  imprimir("nombre parametro ");
-   imprimir(nom);
-   imprimir ("nombre aRreglo");
+  imprimir("imprimiendo atributos de individuo");
   imprimir(este.nombre);
-  imprimir("edad");
-  imprimir (este.edad);
+  imprimir(este.edad);
+  g = nuevo holis(este.nombre);
+ 
   
  
 }
@@ -33,8 +46,14 @@ clase ejemplos{
 
     caracter h[10]= "Alina";
     imprimir(h);
-    individuo j = nuevo individuo(25, "poPo");
-    ejemplos p = nuevo ejemplos(j);
+    individuo j ;
+    j = nuevo individuo(25, "poPo");
+imprimir("Atributos de individuo----  ");
+    imprimir(j.nombre);
+    imprimir(j.edad);
+
+    
+   // ejemplos p = nuevo ejemplos(j);
   }
 
 
@@ -50,6 +69,17 @@ clase ejemplos{
     imprimir("instancia");
     imprimir(l.edad);
     imprimir(l.nombre);
+    imprimir("Pueba de si   ");
+    imprimir(i.g.nombre);
+    si(l.nombre != "poPo"){
+      es_verdadero{
+        imprimir("Correcto");
+      }es_falso{
+        imprimir("cadena diferentes ");
+      }
+
+    }
+    fin-si
   }
 
 }
