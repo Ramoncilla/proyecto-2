@@ -623,7 +623,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			var tipoArreglo = nodo.tipoArreglo;
 			var nombreArreglo = nodo.nombreArreglo;
 			var dimensionesArreglo = nodo.dimensionesArreglo;
-			this.declararArreglo(tipoArreglo,nombreArreglo,dimensionesArreglo,ambitos,clase,metodo, false , 0, "");
+			this.declararArreglo(tipoArreglo,nombreArreglo,dimensionesArreglo,ambitos,clase,metodo, false , 0, "","");
 			break;
 		}
 		
@@ -989,19 +989,26 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											
 												
 												if(simb!= null){
-													if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
-														this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
-														this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, cont, nombreClaseInstanciar+"_"+firmMetodo);
-													}
-
-													expresionTemporal = parametrosInstancia[j];
-											var temp1_1 = this.c3d.getTemporal();
+													var temp1_1 = this.c3d.getTemporal();
 											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
 											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
 											cont++;
 											this.c3d.addCodigo(l1_1);
 											this.c3d.addCodigo(l2_1);
+													if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+														this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
+														this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, temp2_1, nombreClaseInstanciar+"_"+firmMetodo, simb);
+													}
+
+													expresionTemporal = parametrosInstancia[j];
+											/*var temp1_1 = this.c3d.getTemporal();
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+											cont++;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);*/
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
 											var l3_1="";
 											if(retExpresion.tipo.toUpperCase() != "NULO"){
@@ -1104,19 +1111,26 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 											
 												
 												if(simb!= null){
-													if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
-														this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
-														this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, cont, nombreClaseInstanciar+"_"+firmMetodo);
-													}
-
-													expresionTemporal = parametrosInstancia[j];
-											var temp1_1 = this.c3d.getTemporal();
+													var temp1_1 = this.c3d.getTemporal();
 											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
 											var temp2_1= this.c3d.getTemporal();
 											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
 											cont++;
 											this.c3d.addCodigo(l1_1);
 											this.c3d.addCodigo(l2_1);
+													if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+														this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
+														this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, temp2_1, nombreClaseInstanciar+"_"+firmMetodo, simb);
+													}
+
+													expresionTemporal = parametrosInstancia[j];
+											/*var temp1_1 = this.c3d.getTemporal();
+											var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
+											var temp2_1= this.c3d.getTemporal();
+											var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+											cont++;
+											this.c3d.addCodigo(l1_1);
+											this.c3d.addCodigo(l2_1);*/
 											var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
 											var l3_1="";
 											
@@ -2077,14 +2091,14 @@ generacionCodigo.prototype.operarRetorno = function (nodo, ambitos,clase, metodo
     
 };
 
-generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,dimensionesArreglo,ambitos,clase,metodo, modo, pos, nombreBuscado){
+generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,dimensionesArreglo,ambitos,clase,metodo, modo, pos, nombreBuscado,simbolo){
 	var esAtributo = null; 
     var simb= null;
 
 	// modo true viene de un parametro false normal 
 
 	if(modo == true){
-		simb= this.tablaSimbolos.obtenerNombreParametro(nombreBuscado, pos);
+		simb= simbolo;
 		if(simb!= null){
 			if(simb.rol.toUpperCase() == "ATRIBUTO"){
 				esAtributo = true;
@@ -2172,6 +2186,7 @@ generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,d
 								this.c3d.addCodigo(l2_2);
 								this.c3d.addCodigo(l3_2);
 								this.c3d.addCodigo(l4_2);
+								//this.c3d.addCodigo("+, h, 1, h; // poscion de espcape para arreglo ");
 							}
 
 
@@ -2255,6 +2270,7 @@ generacionCodigo.prototype.declararArreglo= function(tipoArreglo,nombreArreglo,d
 								this.c3d.addCodigo(l2_2);
 								//this.c3d.addCodigo(l3_2);
 								this.c3d.addCodigo(l4_2);
+								//this.c3d.addCodigo("+, h, 1, h; // poscion de espcape para arreglo ");
 								//simb= this.tablaSimbolos.obtenerSimbolo(nombreArreglo,ambitos,esAtributo);
 								//console.dir(simb);
 

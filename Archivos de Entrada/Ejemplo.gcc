@@ -1,12 +1,12 @@
 clase holis {
 
-caracter nombre[10];
+caracter nombre[20];
 
-  holis(caracter n[10]){
+  holis(caracter n[20]){
 
     este.nombre = n;
-    imprimir("atributos de holis");
     imprimir(este.nombre);
+imprimir(n);
  
   }
 }
@@ -14,15 +14,14 @@ caracter nombre[10];
 
 clase individuo {
 
-caracter nombre[10];
+caracter nombre[20];
 entero edad;
 holis g;
 
 
-publico individuo(entero edad, caracter nom[10]){
+publico individuo(entero edad, caracter nom[20]){
   este.nombre= nom;
   este.edad= edad;
-  imprimir("imprimiendo atributos de individuo");
   imprimir(este.nombre);
   imprimir(este.edad);
   g = nuevo holis(este.nombre);
@@ -44,32 +43,34 @@ clase ejemplos{
 
   principal(){
 
-    caracter h[10]= "Alina";
+    caracter h[20]= "Alina";
     imprimir(h);
     individuo j ;
     j = nuevo individuo(25, "poPo");
-imprimir("Atributos de individuo----  ");
+
     imprimir(j.nombre);
     imprimir(j.edad);
+    j.nombre = "luzzz";
+    imprimir(j.nombre);
 
     
-   // ejemplos p = nuevo ejemplos(j);
+   ejemplos p = nuevo ejemplos(j);
   }
 
 
   ejemplos(individuo i){
-    imprimir("holaa");
     imprimir(i.edad);
     imprimir(i.nombre);
-    caracter k [10];
+    caracter k [20];
     k= i.nombre;
-    imprimir("lool");
     imprimir(k);
-    individuo l = nuevo individuo(12, k);
-    imprimir("instancia");
+    k="pruebas.<><";
+
+    imprimir(k);
+    individuo l = nuevo individuo(12+i.edad, k);
+
     imprimir(l.edad);
     imprimir(l.nombre);
-    imprimir("Pueba de si   ");
     imprimir(i.g.nombre);
     si(l.nombre != "poPo"){
       es_verdadero{

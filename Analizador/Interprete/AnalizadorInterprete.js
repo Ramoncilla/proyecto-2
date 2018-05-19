@@ -158,7 +158,7 @@ AnalizadorInterprete.prototype.imprimir_str2= function(pos, num){
     }
     return cadena;
 };
-
+ 
 
 AnalizadorInterprete.prototype.imprimir_str= function(pos, num){
 
