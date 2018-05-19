@@ -3,6 +3,10 @@ extends editor_layout
 block content
 
 	<div class="container-editor">
+		<div class="input-code" style="display: none">
+			<input type="file" id="openFile" />
+			<input id="fileContent" type="hidden" value="">
+		</div>
 		<div class="split-pane-editor" style="padding-top: 56px">
 			<div class="row">
 				<div class="col-md-6" style="background: #272822">
