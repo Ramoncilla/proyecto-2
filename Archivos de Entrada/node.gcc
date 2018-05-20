@@ -1,0 +1,222 @@
+
+/**
+ *
+ * @author Compiladores Calificacion
+ */
+
+ clase Node {
+    entero key;
+    ENTERO height;
+    Node left;
+    Node right;
+ 
+    publico Node(entero d) {
+        key = d;
+        height = 1;
+
+    }
+}
+
+
+
+
+
+  clase Avl {
+
+    
+    PRINCIPAL(){
+        // TODO code application logic here
+
+
+        Tree tree = nuevo Tree();
+       
+       tree.root = tree.insert(tree.root, 10);
+        
+
+        imprimir(9);
+        imprimir(tree.root.key);
+        imprimir(tree.root.height);
+        imprimir("Alina");
+
+        /*
+        tree.root = tree.insert(tree.root, 20);
+        
+        tree.root = tree.insert(tree.root, 30);
+        tree.root = tree.insert(tree.root, 40);
+        tree.root = tree.insert(tree.root, 50);
+        tree.root = tree.insert(tree.root, 25);
+        
+ 
+//             30
+//            /  \
+//          20   40
+//         /  \     \
+//        10  25    50
+        
+        imprimir("Preorder traversal of constructed tree is : ");
+        tree.postOrder(tree.root);*/
+    }
+    
+}
+
+
+
+clase Tree {
+    
+    Node root;
+
+    tree(){
+
+    }
+    
+
+   
+    // A utility function to get height of the tree
+
+    entero height(Node N) {
+        si (N == nada) {Es_verdadero{
+            retorno 0;
+        }}
+        Fin-Si
+        retorno N.height;
+    }
+
+    // A utility function to get maximum of two integers
+
+    entero max(entero a, entero b) {
+        si(a > b) {es_verdadero {
+            retorno a;
+        }
+        es_falso {
+            retorno b;
+        }}
+        fin-si
+        //retorno (a > b) ? a : b;
+    }
+
+
+    // A utility function to right rotate subtree rooted with y
+    // See the diagram given above.
+
+
+    Node rightRotate(Node y) {
+        Node x = y.left;
+        Node T2 = x.right;
+        // Perform rotation
+        x.right = y;
+        y.left = T2;
+        // Update heights
+        y.height = max(height(y.left), height(y.right)) + 1;
+        x.height = max(height(x.left), height(x.right)) + 1;
+        // retorno new root
+        retorno x;
+    }
+
+    // A utility function to left rotate subtree rooted with x
+    // See the diagram given above.
+
+    Node leftRotate(Node x) {
+        Node y = x.right;
+        Node T2 = y.left;
+        // Perform rotation
+        y.left = x;
+        x.right = T2;
+        //  Update heights
+        x.height = max(height(x.left), height(x.right)) + 1;
+        y.height = max(height(y.left), height(y.right)) + 1;
+        // retorno new root
+        retorno y;
+    }
+
+    // Get Balance factor of node N
+
+
+    entero getBalance(Node N) {
+        si (N == nada){ Es_verdadero {
+            retorno 0;
+        }}
+        fin-si
+        retorno height(N.left) - height(N.right);
+    }
+    
+
+    Node insert(Node node2, entero key) {
+
+        si (node2 == nada) {
+        Es_verdadero {
+        	 imprimir(66);
+             node o = nuevo node(key);
+             imprimir(o.key);
+             retorno o;
+        }
+		}
+        fin-si
+
+
+        si (key < node2.key) {
+        Es_verdadero{
+            imprimir("aqui");
+            node2.left = insert(node2.left, key);
+        } 
+        es_falso {
+        imprimir("aqui2");
+            si (key > node2.key) {Es_verdadero{
+                node2.right = insert(node2.right, key);
+            } 
+            es_falso // Duplicate keys not allowed
+            {
+                retorno node2;
+            }}
+            fin-si
+        }}
+        fin-si
+
+        // 2. Update height of this ancestor node 
+        node2.height = 1 + max(height(node2.left), height(node2.right));
+
+        entero balance = getBalance(node2);
+
+        // si this node becomes unbalanced, then there
+        // are 4 cases Left Left Case
+
+        si (balance > 1 && key < node2.left.key){ Es_verdadero{
+            retorno rightRotate(node2);
+        }}
+        fin-si
+
+        // Right Right Case
+        si (balance < -1 && key > node2.right.key) {Es_verdadero{
+            retorno leftRotate(node2);
+        }}
+        fin-si
+
+        // Left Right Case
+        si (balance > 1 && key > node2.left.key) {Es_verdadero{
+            node2left = leftRotate(node2.left);
+            retorno rightRotate(node2);
+        }}
+        fin-si
+
+        // Right Left Case
+        si (balance < -1 && key < node2.right.key) {Es_verdadero{
+            node2.right = rightRotate(node2.right);
+            retorno leftRotate(node2);
+        }}
+        fin-si
+        imprimir("aquii :(");
+
+        retorno node2;
+    }
+
+
+    vacio postOrder(Node node2) {
+
+        si (node2 != {'\0'}) {Es_verdadero{
+            postOrder(node2.left);
+            postOrder(node2.right);
+            imprimir(node2.key);
+           // imprimir(concatenar(convertirACadena(node2.key), " "));
+        }}
+        Fin-SI
+    }
+}

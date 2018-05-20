@@ -5,6 +5,7 @@ var fs = require("fs");
 
 function listaLecciones(){
     this.lecciones = [];
+    this.cargarLecciones();
 }
 
 var errores = new lErrores();
@@ -44,14 +45,8 @@ listaLecciones.prototype.saveLesson= function(leccion){
 listaLecciones.prototype.writeLesson= function(){
     var cadena=JSON.stringify(listaLecciones.prototype.lecciones,null, '\t');
     var leccionTemporal;
-   /* for(var i=0; i<listaLecciones.prototype.lecciones.length; i++){
-        leccionTemporal= listaLecciones.prototype.lecciones[i];
-        cadena+=JSON.stringify(leccionTemporal,null, '\t');
-
-    }*/
     fs.writeFileSync('./lecciones.txt',cadena);
 };
-
 
 
 listaLecciones.prototype.getLessonType = function(type){
@@ -72,7 +67,8 @@ listaLecciones.prototype.getLessonType = function(type){
 };
 
 listaLecciones.prototype.cargarLecciones = function(){
-     var arrayLecciones = fs.readFileSync("./lecciones.txt");
+     var cadenaLecciones = fs.readFileSync("./lecciones.txt");
+     var arrayLecciones = JSON.parse(cadenaLecciones);
      var leccionTemporal;
      for(var i = 0; i<arrayLecciones.length; i++){
          leccionTemporal = arrayLecciones[i];

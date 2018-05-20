@@ -77,20 +77,20 @@ generacionCodigo.prototype.generar3D= function(){
 	var sentTemporal;
 	var nombreClase="";
 	var nombreFuncion="";
-	var ambitos; // = new Ambito();
-	//ambitos.inciarValores();
+	var ambitos = new Ambito();
+	ambitos.inciarValores();
   var funTemporal;
 	for(var i=0; i<this.listaClase.length; i++){
 		claseTemporal = this.listaClase[i];
 		nombreClase = claseTemporal.nombre;
-		//ambitos.addAmbito(nombreClase);
+		ambitos.addAmbito(nombreClase);
    
 		
 		//2. Traducimos funcion por funcion
   
 		for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
-			ambitos = new Ambito();
-			ambitos.addAmbito(nombreClase);
+			//ambitos = new Ambito();
+			//ambitos.addAmbito(nombreClase);
 			funTemporal = claseTemporal.funciones.funciones[j];
 			ambitos.addAmbito(funTemporal.obtenerFirma());
 			nombreFuncion = funTemporal.obtenerFirma();
@@ -125,14 +125,14 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
-			ambitos.ambitos.shift();
+			//ambitos.ambitos.shift();
 		}
 
 
 		//1. Traducimos el principal si es que posee
 		if(claseTemporal.principal_met!=null){
-			ambitos = new Ambito();
-			ambitos.addAmbito(nombreClase);
+			//ambitos = new Ambito();
+			//ambitos.addAmbito(nombreClase);
 			nombreFuncion = nombreClase+"_PRINCIPAL";
 			var nombreAmb= nombreClase+"_PRINCIPAL";
 			ambitos.addAmbito(nombreAmb);
@@ -153,11 +153,11 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
-			ambitos.ambitos.shift();
+			//ambitos.ambitos.shift();
 			
 		}
 
-		//ambitos.ambitos.shift();
+		ambitos.ambitos.shift();
 	}
 
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
@@ -1964,7 +1964,7 @@ generacionCodigo.prototype.asignarPorSimboloIgual= function(nodoOperando, simbIg
     if(retExpresion instanceof EleRetorno){
 		if(retExpresion.tipo.toUpperCase() != "NULO"){
 			if(simbIgual== "="){
-				if(retExpresion.tipo.toUpperCase() == nodoOperando.tipo.toUpperCase()){
+				if((retExpresion.tipo.toUpperCase() == nodoOperando.tipo.toUpperCase())||(retExpresion.tipo.toUpperCase()== "NULO2")){
 					var l2 = "<=, "+nodoOperando.referencia+", "+ retExpresion.valor+", "+nodoOperando.estructura+"; // asignando variable ";
 					this.c3d.addCodigo(l2);
 				}else if(nodoOperando.tipo.toUpperCase() == "CARACTER" && retExpresion.tipo.toUpperCase()== "CADENA")
@@ -3729,7 +3729,7 @@ generacionCodigo.prototype.asignarCadenaArregloPorPosicion = function(nodoOperan
 		var l1_15= "jmp, , , "+ etiq1V+";";
 		var l1_20= "jmp, , , "+ etiq2F+";";
 		var l1_16=etiq2F+":";
-		var l1_177 = "<= , "+tempPos0+", 36, heap; // extraaaaaaaaaaa";
+	//	var l1_177 = "<= , "+tempPos0+", 36, heap; // extraaaaaaaaaaa";
 		var l1_21= "jmp, , , "+ etiq1F+";";
 		var l1_17 = etiq1F+":";
 		this.c3d.addCodigo(l1_5);
@@ -3747,7 +3747,7 @@ generacionCodigo.prototype.asignarCadenaArregloPorPosicion = function(nodoOperan
 		this.c3d.addCodigo(l1_15);
 		this.c3d.addCodigo(l1_20);
 		this.c3d.addCodigo(l1_16);
-		this.c3d.addCodigo(l1_177);
+		//this.c3d.addCodigo(l1_177);
 		this.c3d.addCodigo(l1_21);
 		this.c3d.addCodigo(l1_17);
 		
@@ -3844,7 +3844,7 @@ generacionCodigo.prototype.asignarCadenaArreglo= function(nombreArreglo, cadena,
 						var l1_15= "jmp, , , "+ etiq1V+";";
 						var l1_20= "jmp, , , "+ etiq2F+";";
 						var l1_16=etiq2F+":";
-						var l1_177 = "<= , "+tempPos0+", 36, heap; // extraaaaaaaaaaa";
+						//var l1_177 = "<= , "+tempPos0+", 36, heap; // extraaaaaaaaaaa";
 						var l1_21= "jmp, , , "+ etiq1F+";";
 						var l1_17 = etiq1F+":";
 						this.c3d.addCodigo(l1_5);
@@ -3862,7 +3862,7 @@ generacionCodigo.prototype.asignarCadenaArreglo= function(nombreArreglo, cadena,
 						this.c3d.addCodigo(l1_15);
 						this.c3d.addCodigo(l1_20);
 						this.c3d.addCodigo(l1_16);
-						this.c3d.addCodigo(l1_177); ////////////////////////////////////////////
+						//this.c3d.addCodigo(l1_177); ////////////////////////////////////////////
 						this.c3d.addCodigo(l1_21);
 						this.c3d.addCodigo(l1_17);
 						
@@ -5565,12 +5565,35 @@ generacionCodigo.prototype.validarRelacional = function(val1, val2, signo){
 	retNulo.setValoresNulos();
 
 	if(!(this.esNulo(val1.tipo) || this.esNulo(val2.tipo))){
-		if(!(this.esVacio(val1.tipo) || this.esVacio(val2.tipo))){
+		//if(!(this.esVacio(val1.tipo) || this.esVacio(val2.tipo))){
 			if(!(this.esBool(val1.tipo) || this.esBool(val2.tipo))){
 				var etiqV = this.c3d.getEtiqueta();
 				var etiqF = this.c3d.getEtiqueta();
 				var cod="";
 				var res;
+
+				if((val1.tipo.toUpperCase() == "NULO2")){
+										  
+															cod=signo+", "+val1.valor+", "+val2.valor+", "+etiqV+";\njmp, , , "+etiqF+";";
+															res = new nodoCondicion(cod);
+															res.addFalsa(etiqF);
+															res.addVerdadera(etiqV);
+															return res;									 
+														
+														
+				}
+
+
+				if((val2.tipo.toUpperCase() == "NULO2")){
+										  
+															cod=signo+", "+val1.valor+", "+val2.valor+", "+etiqV+";\njmp, , , "+etiqF+";";
+															res = new nodoCondicion(cod);
+															res.addFalsa(etiqF);
+															res.addVerdadera(etiqV);
+															return res;									 
+														
+														
+				}
 
 				if((val1.tipo.toUpperCase() == "CARACTER" && val1.tipoSimbolo.toUpperCase() == "ARREGLO") && 
 			        val2.tipo.toUpperCase() == "CARACTER" && val2.tipoSimbolo.toUpperCase() == "ARREGLO"){
@@ -5599,10 +5622,7 @@ generacionCodigo.prototype.validarRelacional = function(val1, val2, signo){
 						cod=signo+", "+suma1+", "+suma2+", "+etiqV+";\njmp, , , "+etiqF+";";
 						res = new nodoCondicion(cod);
 						res.addFalsa(etiqF);
-						res.addVerdadera(etiqV);
-						console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-						console.dir(val1);
-						console.dir(res);
+						res.addVerdadera(etiqV);y
 						return res;
 
 				   }
@@ -5651,10 +5671,10 @@ generacionCodigo.prototype.validarRelacional = function(val1, val2, signo){
 				return retNulo;
 			}
 
-		}else{
+		/*}else{
 			errores.insertarError("Semantico","No es valido realizar una operacion relacional con nulos, "+ signo);
 			return retNulo;
-		}
+		}*/
 
 	}else{
 		errores.insertarError("Semantico", "Hubo un error al realizar las operaciones para relacional "+signo);
