@@ -66,7 +66,7 @@ listaLecciones.prototype.getLessonType = function(type){
     return listaHTML;
 };
 
-listaLecciones.prototype.cargarLecciones = function(){
+listaLecciones.prototype.cargarLecciones = function(){ 
      var cadenaLecciones = fs.readFileSync("./lecciones.txt");
      var arrayLecciones = JSON.parse(cadenaLecciones);
      var leccionTemporal;

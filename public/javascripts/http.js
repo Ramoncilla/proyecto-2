@@ -26,7 +26,7 @@ $(document).ready(function(){
           },
           success: function(data){
             console.log(data);
-            if(data.res == true){
+            if(data == true){
               alert("La leccion ha sido creada con exito");
               location.href ="/";
             }else{
@@ -71,7 +71,7 @@ $(document).ready(function(){
       url:" /cargaMasiva",
       data:{string_file: cadenaArchivo},
       success: function(data){
-        if(data.res == true){
+        if(data == true){
           alert("Lecciones han sido cargadas con exito");
           location.href ="/";
         }else{

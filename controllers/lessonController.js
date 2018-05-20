@@ -11,7 +11,7 @@ exports.createLesson = function(req, res) {
     var g = req.body.typeLesson;
     if(g  == "1"){
         tipo="a-coach";
-    }
+    } 
     newLesson.titulo= req.body.lessonTitle;
     newLesson.descripcion = req.body.lessonExplanation;
     newLesson.ejemplo= req.body.codeExample;

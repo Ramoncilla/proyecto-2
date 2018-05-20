@@ -106,61 +106,34 @@ ARCHIVO_LECCIONES : LECCIONES EOF {
 
 	EJEMPLO: ejemplo abrellave abreSentencia TEXTO  cierraSentencia cierraLlave{$$ = new ejemploLeccion($4); };
 
-
-
-
-/*
-
-valor: titulo	
-	|descripcion
-	|tarea
-	|resultado
-	|ejemplo;
-
-SENT : valor TEXTO
-	|tipo abrellave tipoLeccion cierraLlave;
-
-
-
-
-TITULO: titulo  abrellave TEXTO cierraLlave  {$$ = new tituloLeccion($2);};
-
-	DESCRIPCION: descripcion  abrellave TEXTO cierraLlave {$$ = new descripcionLeccion($2);};
-	
-	TAREA: tarea abrellave TEXTO cierraLlave {$$ = new tareaLeccion($2); };
-
-	RESULTADO: resultado abrellave TEXTO cierraLlave {$$ = new resultadoLeccion($2); };
-
-	TIPO_LECCION: tipo abrellave  tipoLeccion cierraLlave{$$ = new tipoLeccion($3); };
-
-	EJEMPLO: ejemplo abrellave  TEXTO cierraLlave  {$$ = new ejemploLeccion($2); };*/
 	 
 	tipoLeccion: gcoach{$$=$1;}
     	|acoach{$$=$1;};
 
 		LECCIONES: LECCION 
 				{
-					console.dir($1);
-					$$ =new listaLecciones(); 
-					$$.saveLesson($1);
+					$$ = [];
+					$$.push($1);
+					/*$$ =new listaLecciones(); 
+					$$.saveLesson($1);*/
 				}
 			|LECCIONES LECCION
 			{
-				$$= $1;
-				$$.saveLesson($2);
+				$$=$1;
+				$$.push[$2];
+				/*$$= $1;
+				$$.saveLesson($2);*/
 			};
 
 		LECCION: abreLeccion VALORES_LECCION cierraLeccion {$$= $2;};
 
 		VALORES_LECCION: VALOR_LECCION 
 				{
-					console.dir($1);
 					$$ = new leccion(); 
 					$$.insertarValor($1);
 				}
 			|VALORES_LECCION VALOR_LECCION
 			{
-				console.dir($2);
 				$$ = $1;
 				$$.insertarValor($2);
 			};

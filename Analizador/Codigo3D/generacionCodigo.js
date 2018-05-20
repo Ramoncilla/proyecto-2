@@ -83,16 +83,18 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 		var sentTemporal;
 		var nombreClase="";
 		var nombreFuncion="";
-		var ambitos = new Ambito();
-		ambitos.inciarValores();
+		var ambitos;// = new Ambito();
+		//ambitos.inciarValores();
 	  var funTemporal;
 		for(var i=0; i<gcObject.listaClase.length; i++){
 			claseTemporal = gcObject.listaClase[i];
 			nombreClase = claseTemporal.nombre;
-			ambitos.addAmbito(nombreClase);
+			//ambitos.addAmbito(nombreClase);
 	   
 			//1. Traducimos el principal si es que posee
 			if(claseTemporal.principal_met!=null){
+				ambitos = new Ambito();
+				ambitos.addAmbito(nombreClase);
 				nombreFuncion = nombreClase+"_PRINCIPAL";
 				var nombreAmb= nombreClase+"_PRINCIPAL";
 				ambitos.addAmbito(nombreAmb);
@@ -113,12 +115,15 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				gcObject.c3d.addCodigo("");
 				gcObject.c3d.addCodigo("");
 				ambitos.ambitos.shift();
+				ambitos.ambitos.shift();
 				
 			}
 			//2. Traducimos funcion por funcion
 	  
 			for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
 				funTemporal = claseTemporal.funciones.funciones[j];
+				ambitos = new Ambito();
+				ambitos.addAmbito(nombreClase);
 				ambitos.addAmbito(funTemporal.obtenerFirma());
 				nombreFuncion = funTemporal.obtenerFirma();
 				gcObject.c3d.addCodigo("");
@@ -187,6 +192,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 		}
 
 
+		/*
 		//1. Traducimos el principal si es que posee
 		if(claseTemporal.principal_met!=null){
 			//ambitos = new Ambito();
@@ -213,7 +219,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 			ambitos.ambitos.shift();
 			//ambitos.ambitos.shift();
 			
-		}
+		}*/
 		callback();
 	}
 	var writeCode = function(callback, gcObject){
@@ -6668,13 +6674,9 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 	var mensajeMostrar = nodo.expresionCadena; 
 	var nombreVarAsignar = nodo.nombreVariable;
 	
-	
 	global.io.emit('news', { msgToShow: mensajeMostrar });	
 	console.log(mensajeMostrar);
 	console.log(nombreVarAsignar);
-
-    
-    
 
     var contents = "";
 	while(contents === ""){

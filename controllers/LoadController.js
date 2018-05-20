@@ -7,15 +7,17 @@ var errores= new listaErrores();
   
 exports.load_file = function(req, res) {
     var cadenaArchivo = req.body.string_file;
-    var a = grammar.parse(cadenaArchivo);
-   
-    var result;
-    if(a instanceof lessonList){
-      result = true;
-    }else{
-      result = false;
+    var lecciones  = grammar.parse(cadenaArchivo);
+    var listaLecciones = new lessonList();
+    if(lecciones!=0){
+      var leccionTemporal; 
+      for(var i =0; i<lecciones.length; i++){
+        leccionTemporal = lecciones[i];
+        listaLecciones.saveLesson(leccionTemporal);
+      }
     }
-    res.send(result);
+    var bandera = lecciones!=0;
+    res.send(bandera);
 };
 
 

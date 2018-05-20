@@ -383,17 +383,17 @@ Clase.prototype.generarSimbolosClase = function() {
 	var thisTemporal;
 	var returnTemporal;
     var ambitos ;
-    ambitos = new Ambito();
-    ambitos.addAmbito(this.nombre);
+    //ambitos = new Ambito();
+    //ambitos.addAmbito(this.nombre);
     apuntador =0;
  
 	for(var i = 0; i<this.funciones.funciones.length;i++){
 		funTemporal = this.funciones.funciones[i];
 		var noPametros =0;
         var banderaConstructor=funTemporal.esConstructor;
-		//////////////////ambitos = new Ambito();
+		ambitos = new Ambito();
         //console.log(funTemporal.obtenerFirma());
-       /// ambitos.addAmbito(this.nombre);
+        ambitos.addAmbito(this.nombre);
 		ambitos.addAmbito(funTemporal.obtenerFirma());
 		apuntador=0;
 
@@ -474,7 +474,7 @@ Clase.prototype.generarSimbolosClase = function() {
 
 		retornoSimbolos.push(returnTemporal);
         ambitos.ambitos.shift();
-       // ambitos.ambitos.shift();
+       ambitos.ambitos.shift();
 
 
     }
@@ -482,8 +482,8 @@ Clase.prototype.generarSimbolosClase = function() {
     //insertamos los simbolos del principal
 
     if(this.principal_met!=null){
-        //ambitos= new Ambito();
-        //ambitos.addAmbito(this.nombre);
+        ambitos= new Ambito();
+        ambitos.addAmbito(this.nombre);
         ambitos.addAmbito(this.nombre+"_PRINCIPAL");
         apuntador=0;
         lista2=[];
@@ -502,10 +502,10 @@ Clase.prototype.generarSimbolosClase = function() {
             }
         }
     ambitos.ambitos.shift();
-    //ambitos.ambitos.shift();
+    ambitos.ambitos.shift();
 
     }
-    ambitos.ambitos.shift();
+    //ambitos.ambitos.shift();
     return retornoSimbolos;
 
 };

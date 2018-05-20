@@ -34,5 +34,23 @@
 		"tarea": "Realizar un Ejemplo de Estructura , que reciba un numero y un enlace a otra estructura , cada parametro es una estructura , deberan estar enlazadas , debera de impirmir en consola el cada valor de la estructura . al finalizar debera de retornar Terminado .",
 		"resultado": "EDD ( 1 , 2 ) = \"Terminado\"",
 		"tipoLeccion": 2
+	},
+	{
+		"titulo": "Leccion de Pruebas :D ",
+		"descripcion": "Estas es una explicacion de pruebas dfdsfdgfdgfdgfdg",
+		"tipo": "a-coach",
+		"ejemplo": "clase{\n\nprincipal(){\nentero i;\nrepetir_mientras(i< 10){\n  imprimir(i);\n}\n\n}\n}",
+		"tarea": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
+		"resultado": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
+		"tipoLeccion": "1"
+	},
+	{
+		"titulo": "jjjjjjj",
+		"descripcion": "Estas es una explicacion de pruebas dfdsfdgfdgfdgfdg",
+		"tipo": "a-coach",
+		"ejemplo": "clase{\n\nprincipal(){\nentero i;\nrepetir_mientras(i< 10){\n  imprimir(i);\n}\n\n}\n}",
+		"tarea": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
+		"resultado": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
+		"tipoLeccion": "1"
 	}
 ]
