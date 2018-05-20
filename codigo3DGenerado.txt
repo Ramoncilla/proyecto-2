@@ -27,18 +27,18 @@ end, , Node_vacio_Node_entero
 begin, , , Avl_PRINCIPAL
 
 // ----------- Instancia a una variable local --------------
-+, p, 0, t11; // pos de tree
-<=, t11, h, stack; //guardando referencia del heap para el objeto tree
++, p, 0, t11; // pos de arbol
+<=, t11, h, stack; //guardando referencia del heap para el objeto arbol
 +, h, 1, t12; // guardo la posicion donde inicia el objeto 
 <=, h, t12, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
-+, h, 1, h; // reservando espacio para el objeto tree
-//Ingresando referencia al this del objeto tree
-+, p, 0, t13; // pos de tree
-=>, t13, t14, stack; // obteniendo apuntador de tree
++, h, 1, h; // reservando espacio para el objeto arbol
+//Ingresando referencia al this del objeto arbol
++, p, 0, t13; // pos de arbol
+=>, t13, t14, stack; // obteniendo apuntador de arbol
 +, p, 1, t15; // simulando cambio de ambito
-+, t15, 0, t16; //pos del this de tree
-<=, t16, t14, stack; // insertando apuntador del heap al stack del obeto tree
++, t15, 0, t16; //pos del this de arbol
+<=, t16, t14, stack; // insertando apuntador del heap al stack del obeto arbol
 // No posee parametros 
 +, p, 1, p; // simulando cambio de ambito
 call, , , Tree_vacio_tree;
@@ -76,46 +76,6 @@ call, , , Tree_Node_insert_Node_entero;
 -, P, 6, P;
 =>, t36, t38, stack; // valor a retoranar del acceso
 <=, t19, t38, heap; // asignando variable 
-print("%d", 9);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t39; // pos del objeto
-=>, t39, t41, stack; //apuntador al heap del obejto
-=>, t41, t42, heap; // recuperando pos incial del objeto
-+, t42, 0, t41;
-=>, t41, t43, heap; // recuperando pos incial del objeto
-+, t43, 0, t41;
-=>, t41, t44, heap; // valor a retoranar del acceso
-print("%d", t44);
-// ----------------- Resolviendo acceso local 
-+, P, 0, t45; // pos del objeto
-=>, t45, t47, stack; //apuntador al heap del obejto
-=>, t47, t48, heap; // recuperando pos incial del objeto
-+, t48, 0, t47;
-=>, t47, t49, heap; // recuperando pos incial del objeto
-+, t49, 1, t47;
-=>, t47, t50, heap; // valor a retoranar del acceso
-print("%d", t50);
-// Resolviendo una cadena 
-+, H, 0, t51; //apuntaodr a cadena 
-+, H, 1, t52; //apu donde inicia la cadena
-<=, t51, t52, heap; //guaradnod donde inicia la cadena 
-+, H, 1, H;
-<=, H, 5, heap; //guardando el tamanio de la cadena
-+, H, 1, H;
-+, H, 0, t53; // referencia de donde iniciar el primer caracter de la cadena
-<=, H, 65, heap; //guardadndo A
-+, H, 1, H;
-<=, H, 108, heap; //guardadndo l
-+, H, 1, H;
-<=, H, 105, heap; //guardadndo i
-+, H, 1, H;
-<=, H, 110, heap; //guardadndo n
-+, H, 1, H;
-<=, H, 97, heap; //guardadndo a
-+, H, 1, H;
-<=, H, 36, heap; // ingresando caracter de escape de la cadena
-+, H, 1, H;
-print("%s", t51);
 
 L2:
 end, , Avl_PRINCIPAL
@@ -135,15 +95,15 @@ end, , Tree_vacio_tree
 begin, , , Tree_entero_height_Node
 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t54; // pos de N
-=>, t54, t55, stack; // valor de lo que trae en el stack N
-je, t55, 36, L6;
++, p, 1, t39; // pos de N
+=>, t39, t40, stack; // valor de lo que trae en el stack N
+je, t40, 36, L6;
 jmp, , , L7;
 L6:
 
 // RESOLVIENDO UN RETORNO
-+, P, 2, t56; // pos de retorno de a funcion Tree_entero_height_Node
-<=, t56, 0, stack; //asignando el retorno con su valor
++, P, 2, t41; // pos de retorno de a funcion Tree_entero_height_Node
+<=, t41, 0, stack; //asignando el retorno con su valor
 jmp, , , L4;
 jmp, , , L5; // salida del if
 L7:
@@ -151,13 +111,13 @@ L7:
 L5:
 // RESOLVIENDO UN RETORNO
 // ----------------- Resolviendo acceso local 
-+, P, 1, t57; // pos del objeto
-=>, t57, t59, stack; //apuntador al heap del obejto
-=>, t59, t60, heap; // recuperando pos incial del objeto
-+, t60, 1, t59;
-=>, t59, t61, heap; // valor a retoranar del acceso
-+, P, 2, t62; // pos de retorno de a funcion Tree_entero_height_Node
-<=, t62, t61, stack; //asignando el retorno con su valor
++, P, 1, t42; // pos del objeto
+=>, t42, t44, stack; //apuntador al heap del obejto
+=>, t44, t45, heap; // recuperando pos incial del objeto
++, t45, 1, t44;
+=>, t44, t46, heap; // valor a retoranar del acceso
++, P, 2, t47; // pos de retorno de a funcion Tree_entero_height_Node
+<=, t47, t46, stack; //asignando el retorno con su valor
 jmp, , , L4;
 
 L4:
@@ -169,31 +129,31 @@ end, , Tree_entero_height_Node
 begin, , , Tree_entero_max_entero_entero
 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t63; // pos de a
-=>, t63, t64, stack; // valor de lo que trae en el stack a
++, p, 1, t48; // pos de a
+=>, t48, t49, stack; // valor de lo que trae en el stack a
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t65; // pos de b
-=>, t65, t66, stack; // valor de lo que trae en el stack b
-jg, t64, t66, L10;
++, p, 2, t50; // pos de b
+=>, t50, t51, stack; // valor de lo que trae en el stack b
+jg, t49, t51, L10;
 jmp, , , L11;
 L10:
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t67; // pos de a
-=>, t67, t68, stack; // valor de lo que trae en el stack a
-+, P, 3, t69; // pos de retorno de a funcion Tree_entero_max_entero_entero
-<=, t69, t68, stack; //asignando el retorno con su valor
++, p, 1, t52; // pos de a
+=>, t52, t53, stack; // valor de lo que trae en el stack a
++, P, 3, t54; // pos de retorno de a funcion Tree_entero_max_entero_entero
+<=, t54, t53, stack; //asignando el retorno con su valor
 jmp, , , L8;
 jmp, , , L9; // salida del if
 L11:
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t70; // pos de b
-=>, t70, t71, stack; // valor de lo que trae en el stack b
-+, P, 3, t72; // pos de retorno de a funcion Tree_entero_max_entero_entero
-<=, t72, t71, stack; //asignando el retorno con su valor
++, p, 2, t55; // pos de b
+=>, t55, t56, stack; // valor de lo que trae en el stack b
++, P, 3, t57; // pos de retorno de a funcion Tree_entero_max_entero_entero
+<=, t57, t56, stack; //asignando el retorno con su valor
 jmp, , , L8;
 L9:
 
@@ -206,57 +166,80 @@ end, , Tree_entero_max_entero_entero
 begin, , , Tree_Node_rightRotate_Node
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t73; // pos de x
++, p, 2, t58; // pos de x
 // ----------------- Resolviendo acceso local 
-+, P, 1, t74; // pos del objeto
-=>, t74, t76, stack; //apuntador al heap del obejto
-=>, t76, t77, heap; // recuperando pos incial del objeto
-+, t77, 2, t76;
-=>, t76, t78, heap; // valor a retoranar del acceso
-<=, t73, t78, stack; // asignando a x
++, P, 1, t59; // pos del objeto
+=>, t59, t61, stack; //apuntador al heap del obejto
+=>, t61, t62, heap; // recuperando pos incial del objeto
++, t62, 2, t61;
+=>, t61, t63, heap; // valor a retoranar del acceso
+<=, t58, t63, stack; // asignando a x
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 3, t79; // pos de T2
++, p, 3, t64; // pos de T2
 // ----------------- Resolviendo acceso local 
-+, P, 2, t80; // pos del objeto
-=>, t80, t82, stack; //apuntador al heap del obejto
-=>, t82, t83, heap; // recuperando pos incial del objeto
-+, t83, 3, t82;
-=>, t82, t84, heap; // valor a retoranar del acceso
-<=, t79, t84, stack; // asignando a T2
++, P, 2, t65; // pos del objeto
+=>, t65, t67, stack; //apuntador al heap del obejto
+=>, t67, t68, heap; // recuperando pos incial del objeto
++, t68, 3, t67;
+=>, t67, t69, heap; // valor a retoranar del acceso
+<=, t64, t69, stack; // asignando a T2
 // ----------------- Resolviendo acceso local 
-+, P, 2, t85; // pos del objeto
-=>, t85, t87, stack; //apuntador al heap del obejto
-=>, t87, t88, heap; // recuperando pos incial del objeto
-+, t88, 3, t87;
-=>, t87, t89, heap; // valor a retoranar del acceso
++, P, 2, t70; // pos del objeto
+=>, t70, t72, stack; //apuntador al heap del obejto
+=>, t72, t73, heap; // recuperando pos incial del objeto
++, t73, 3, t72;
+=>, t72, t74, heap; // valor a retoranar del acceso
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t90; // pos de y
-=>, t90, t91, stack; // valor de lo que trae en el stack y
-<=, t87, t91, heap; // asignando variable 
++, p, 1, t75; // pos de y
+=>, t75, t76, stack; // valor de lo que trae en el stack y
+<=, t72, t76, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t92; // pos del objeto
-=>, t92, t94, stack; //apuntador al heap del obejto
-=>, t94, t95, heap; // recuperando pos incial del objeto
-+, t95, 2, t94;
-=>, t94, t96, heap; // valor a retoranar del acceso
++, P, 1, t77; // pos del objeto
+=>, t77, t79, stack; //apuntador al heap del obejto
+=>, t79, t80, heap; // recuperando pos incial del objeto
++, t80, 2, t79;
+=>, t79, t81, heap; // valor a retoranar del acceso
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 3, t97; // pos de T2
-=>, t97, t98, stack; // valor de lo que trae en el stack T2
-<=, t94, t98, heap; // asignando variable 
++, p, 3, t82; // pos de T2
+=>, t82, t83, stack; // valor de lo que trae en el stack T2
+<=, t79, t83, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t99; // pos del objeto
-=>, t99, t101, stack; //apuntador al heap del obejto
-=>, t101, t102, heap; // recuperando pos incial del objeto
-+, t102, 1, t101;
-=>, t101, t103, heap; // valor a retoranar del acceso
-+, P, 0, t104;
-=>, t104, t105, stack; 
-+, P, 5, t106;
-+, t105, 0, t107;
-<=, t106, t105, stack; 
++, P, 1, t84; // pos del objeto
+=>, t84, t86, stack; //apuntador al heap del obejto
+=>, t86, t87, heap; // recuperando pos incial del objeto
++, t87, 1, t86;
+=>, t86, t88, heap; // valor a retoranar del acceso
++, P, 0, t89;
+=>, t89, t90, stack; 
++, P, 5, t91;
++, t90, 0, t92;
+<=, t91, t90, stack; 
 // Asignando parametros de llamada a funcion  
++, p, 5, t93; // size de funcion actual
++, t93, 1, t94; //pos del parametro 1
++, P, 0, t95;
+=>, t95, t96, stack; 
++, P, 5, t97;
++, t96, 0, t98;
+<=, t97, t96, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 5, t99; // size de funcion actual
++, t99, 1, t100; //pos del parametro 1
+// ----------------- Resolviendo acceso local 
++, P, 1, t101; // pos del objeto
+=>, t101, t103, stack; //apuntador al heap del obejto
+=>, t103, t104, heap; // recuperando pos incial del objeto
++, t104, 2, t103;
+=>, t103, t105, heap; // valor a retoranar del acceso
+<=, t100, t105, stack; // asignado al stack el parametro
++, P, 5, P;
+call, , , Tree_entero_height_Node;
++, P, 2, t106;
+=>, t106, t107, stack; // valor del return
+-, P, 5, P;
+<=, t94, t107, stack; // asignado al stack el parametro
 +, p, 5, t108; // size de funcion actual
-+, t108, 1, t109; //pos del parametro 1
++, t108, 2, t109; //pos del parametro 2
 +, P, 0, t110;
 =>, t110, t111, stack; 
 +, P, 5, t112;
@@ -269,7 +252,7 @@ begin, , , Tree_Node_rightRotate_Node
 +, P, 1, t116; // pos del objeto
 =>, t116, t118, stack; //apuntador al heap del obejto
 =>, t118, t119, heap; // recuperando pos incial del objeto
-+, t119, 2, t118;
++, t119, 3, t118;
 =>, t118, t120, heap; // valor a retoranar del acceso
 <=, t115, t120, stack; // asignado al stack el parametro
 +, P, 5, P;
@@ -278,50 +261,50 @@ call, , , Tree_entero_height_Node;
 =>, t121, t122, stack; // valor del return
 -, P, 5, P;
 <=, t109, t122, stack; // asignado al stack el parametro
-+, p, 5, t123; // size de funcion actual
-+, t123, 2, t124; //pos del parametro 2
-+, P, 0, t125;
-=>, t125, t126, stack; 
-+, P, 5, t127;
-+, t126, 0, t128;
-<=, t127, t126, stack; 
-// Asignando parametros de llamada a funcion  
-+, p, 5, t129; // size de funcion actual
-+, t129, 1, t130; //pos del parametro 1
-// ----------------- Resolviendo acceso local 
-+, P, 1, t131; // pos del objeto
-=>, t131, t133, stack; //apuntador al heap del obejto
-=>, t133, t134, heap; // recuperando pos incial del objeto
-+, t134, 3, t133;
-=>, t133, t135, heap; // valor a retoranar del acceso
-<=, t130, t135, stack; // asignado al stack el parametro
-+, P, 5, P;
-call, , , Tree_entero_height_Node;
-+, P, 2, t136;
-=>, t136, t137, stack; // valor del return
--, P, 5, P;
-<=, t124, t137, stack; // asignado al stack el parametro
 +, P, 5, P;
 call, , , Tree_entero_max_entero_entero;
-+, P, 3, t138;
-=>, t138, t139, stack; // valor del return
++, P, 3, t123;
+=>, t123, t124, stack; // valor del return
 -, P, 5, P;
-+, t139, 1, t140;
-<=, t101, t140, heap; // asignando variable 
++, t124, 1, t125;
+<=, t86, t125, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 2, t141; // pos del objeto
-=>, t141, t143, stack; //apuntador al heap del obejto
-=>, t143, t144, heap; // recuperando pos incial del objeto
-+, t144, 1, t143;
-=>, t143, t145, heap; // valor a retoranar del acceso
-+, P, 0, t146;
-=>, t146, t147, stack; 
-+, P, 5, t148;
-+, t147, 0, t149;
-<=, t148, t147, stack; 
++, P, 2, t126; // pos del objeto
+=>, t126, t128, stack; //apuntador al heap del obejto
+=>, t128, t129, heap; // recuperando pos incial del objeto
++, t129, 1, t128;
+=>, t128, t130, heap; // valor a retoranar del acceso
++, P, 0, t131;
+=>, t131, t132, stack; 
++, P, 5, t133;
++, t132, 0, t134;
+<=, t133, t132, stack; 
 // Asignando parametros de llamada a funcion  
++, p, 5, t135; // size de funcion actual
++, t135, 1, t136; //pos del parametro 1
++, P, 0, t137;
+=>, t137, t138, stack; 
++, P, 5, t139;
++, t138, 0, t140;
+<=, t139, t138, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 5, t141; // size de funcion actual
++, t141, 1, t142; //pos del parametro 1
+// ----------------- Resolviendo acceso local 
++, P, 2, t143; // pos del objeto
+=>, t143, t145, stack; //apuntador al heap del obejto
+=>, t145, t146, heap; // recuperando pos incial del objeto
++, t146, 2, t145;
+=>, t145, t147, heap; // valor a retoranar del acceso
+<=, t142, t147, stack; // asignado al stack el parametro
++, P, 5, P;
+call, , , Tree_entero_height_Node;
++, P, 2, t148;
+=>, t148, t149, stack; // valor del return
+-, P, 5, P;
+<=, t136, t149, stack; // asignado al stack el parametro
 +, p, 5, t150; // size de funcion actual
-+, t150, 1, t151; //pos del parametro 1
++, t150, 2, t151; //pos del parametro 2
 +, P, 0, t152;
 =>, t152, t153, stack; 
 +, P, 5, t154;
@@ -334,7 +317,7 @@ call, , , Tree_entero_max_entero_entero;
 +, P, 2, t158; // pos del objeto
 =>, t158, t160, stack; //apuntador al heap del obejto
 =>, t160, t161, heap; // recuperando pos incial del objeto
-+, t161, 2, t160;
++, t161, 3, t160;
 =>, t160, t162, heap; // valor a retoranar del acceso
 <=, t157, t162, stack; // asignado al stack el parametro
 +, P, 5, P;
@@ -343,42 +326,19 @@ call, , , Tree_entero_height_Node;
 =>, t163, t164, stack; // valor del return
 -, P, 5, P;
 <=, t151, t164, stack; // asignado al stack el parametro
-+, p, 5, t165; // size de funcion actual
-+, t165, 2, t166; //pos del parametro 2
-+, P, 0, t167;
-=>, t167, t168, stack; 
-+, P, 5, t169;
-+, t168, 0, t170;
-<=, t169, t168, stack; 
-// Asignando parametros de llamada a funcion  
-+, p, 5, t171; // size de funcion actual
-+, t171, 1, t172; //pos del parametro 1
-// ----------------- Resolviendo acceso local 
-+, P, 2, t173; // pos del objeto
-=>, t173, t175, stack; //apuntador al heap del obejto
-=>, t175, t176, heap; // recuperando pos incial del objeto
-+, t176, 3, t175;
-=>, t175, t177, heap; // valor a retoranar del acceso
-<=, t172, t177, stack; // asignado al stack el parametro
-+, P, 5, P;
-call, , , Tree_entero_height_Node;
-+, P, 2, t178;
-=>, t178, t179, stack; // valor del return
--, P, 5, P;
-<=, t166, t179, stack; // asignado al stack el parametro
 +, P, 5, P;
 call, , , Tree_entero_max_entero_entero;
-+, P, 3, t180;
-=>, t180, t181, stack; // valor del return
++, P, 3, t165;
+=>, t165, t166, stack; // valor del return
 -, P, 5, P;
-+, t181, 1, t182;
-<=, t143, t182, heap; // asignando variable 
++, t166, 1, t167;
+<=, t128, t167, heap; // asignando variable 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t183; // pos de x
-=>, t183, t184, stack; // valor de lo que trae en el stack x
-+, P, 4, t185; // pos de retorno de a funcion Tree_Node_rightRotate_Node
-<=, t185, t184, stack; //asignando el retorno con su valor
++, p, 2, t168; // pos de x
+=>, t168, t169, stack; // valor de lo que trae en el stack x
++, P, 4, t170; // pos de retorno de a funcion Tree_Node_rightRotate_Node
+<=, t170, t169, stack; //asignando el retorno con su valor
 jmp, , , L12;
 
 L12:
@@ -390,57 +350,80 @@ end, , Tree_Node_rightRotate_Node
 begin, , , Tree_Node_leftRotate_Node
 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 2, t186; // pos de y
++, p, 2, t171; // pos de y
 // ----------------- Resolviendo acceso local 
-+, P, 1, t187; // pos del objeto
-=>, t187, t189, stack; //apuntador al heap del obejto
-=>, t189, t190, heap; // recuperando pos incial del objeto
-+, t190, 3, t189;
-=>, t189, t191, heap; // valor a retoranar del acceso
-<=, t186, t191, stack; // asignando a y
++, P, 1, t172; // pos del objeto
+=>, t172, t174, stack; //apuntador al heap del obejto
+=>, t174, t175, heap; // recuperando pos incial del objeto
++, t175, 3, t174;
+=>, t174, t176, heap; // valor a retoranar del acceso
+<=, t171, t176, stack; // asignando a y
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 3, t192; // pos de T2
++, p, 3, t177; // pos de T2
 // ----------------- Resolviendo acceso local 
-+, P, 2, t193; // pos del objeto
-=>, t193, t195, stack; //apuntador al heap del obejto
-=>, t195, t196, heap; // recuperando pos incial del objeto
-+, t196, 2, t195;
-=>, t195, t197, heap; // valor a retoranar del acceso
-<=, t192, t197, stack; // asignando a T2
++, P, 2, t178; // pos del objeto
+=>, t178, t180, stack; //apuntador al heap del obejto
+=>, t180, t181, heap; // recuperando pos incial del objeto
++, t181, 2, t180;
+=>, t180, t182, heap; // valor a retoranar del acceso
+<=, t177, t182, stack; // asignando a T2
 // ----------------- Resolviendo acceso local 
-+, P, 2, t198; // pos del objeto
-=>, t198, t200, stack; //apuntador al heap del obejto
-=>, t200, t201, heap; // recuperando pos incial del objeto
-+, t201, 2, t200;
-=>, t200, t202, heap; // valor a retoranar del acceso
++, P, 2, t183; // pos del objeto
+=>, t183, t185, stack; //apuntador al heap del obejto
+=>, t185, t186, heap; // recuperando pos incial del objeto
++, t186, 2, t185;
+=>, t185, t187, heap; // valor a retoranar del acceso
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t203; // pos de x
-=>, t203, t204, stack; // valor de lo que trae en el stack x
-<=, t200, t204, heap; // asignando variable 
++, p, 1, t188; // pos de x
+=>, t188, t189, stack; // valor de lo que trae en el stack x
+<=, t185, t189, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t205; // pos del objeto
-=>, t205, t207, stack; //apuntador al heap del obejto
-=>, t207, t208, heap; // recuperando pos incial del objeto
-+, t208, 3, t207;
-=>, t207, t209, heap; // valor a retoranar del acceso
++, P, 1, t190; // pos del objeto
+=>, t190, t192, stack; //apuntador al heap del obejto
+=>, t192, t193, heap; // recuperando pos incial del objeto
++, t193, 3, t192;
+=>, t192, t194, heap; // valor a retoranar del acceso
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 3, t210; // pos de T2
-=>, t210, t211, stack; // valor de lo que trae en el stack T2
-<=, t207, t211, heap; // asignando variable 
++, p, 3, t195; // pos de T2
+=>, t195, t196, stack; // valor de lo que trae en el stack T2
+<=, t192, t196, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t212; // pos del objeto
-=>, t212, t214, stack; //apuntador al heap del obejto
-=>, t214, t215, heap; // recuperando pos incial del objeto
-+, t215, 1, t214;
-=>, t214, t216, heap; // valor a retoranar del acceso
-+, P, 0, t217;
-=>, t217, t218, stack; 
-+, P, 5, t219;
-+, t218, 0, t220;
-<=, t219, t218, stack; 
++, P, 1, t197; // pos del objeto
+=>, t197, t199, stack; //apuntador al heap del obejto
+=>, t199, t200, heap; // recuperando pos incial del objeto
++, t200, 1, t199;
+=>, t199, t201, heap; // valor a retoranar del acceso
++, P, 0, t202;
+=>, t202, t203, stack; 
++, P, 5, t204;
++, t203, 0, t205;
+<=, t204, t203, stack; 
 // Asignando parametros de llamada a funcion  
++, p, 5, t206; // size de funcion actual
++, t206, 1, t207; //pos del parametro 1
++, P, 0, t208;
+=>, t208, t209, stack; 
++, P, 5, t210;
++, t209, 0, t211;
+<=, t210, t209, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 5, t212; // size de funcion actual
++, t212, 1, t213; //pos del parametro 1
+// ----------------- Resolviendo acceso local 
++, P, 1, t214; // pos del objeto
+=>, t214, t216, stack; //apuntador al heap del obejto
+=>, t216, t217, heap; // recuperando pos incial del objeto
++, t217, 2, t216;
+=>, t216, t218, heap; // valor a retoranar del acceso
+<=, t213, t218, stack; // asignado al stack el parametro
++, P, 5, P;
+call, , , Tree_entero_height_Node;
++, P, 2, t219;
+=>, t219, t220, stack; // valor del return
+-, P, 5, P;
+<=, t207, t220, stack; // asignado al stack el parametro
 +, p, 5, t221; // size de funcion actual
-+, t221, 1, t222; //pos del parametro 1
++, t221, 2, t222; //pos del parametro 2
 +, P, 0, t223;
 =>, t223, t224, stack; 
 +, P, 5, t225;
@@ -453,7 +436,7 @@ begin, , , Tree_Node_leftRotate_Node
 +, P, 1, t229; // pos del objeto
 =>, t229, t231, stack; //apuntador al heap del obejto
 =>, t231, t232, heap; // recuperando pos incial del objeto
-+, t232, 2, t231;
++, t232, 3, t231;
 =>, t231, t233, heap; // valor a retoranar del acceso
 <=, t228, t233, stack; // asignado al stack el parametro
 +, P, 5, P;
@@ -462,50 +445,50 @@ call, , , Tree_entero_height_Node;
 =>, t234, t235, stack; // valor del return
 -, P, 5, P;
 <=, t222, t235, stack; // asignado al stack el parametro
-+, p, 5, t236; // size de funcion actual
-+, t236, 2, t237; //pos del parametro 2
-+, P, 0, t238;
-=>, t238, t239, stack; 
-+, P, 5, t240;
-+, t239, 0, t241;
-<=, t240, t239, stack; 
-// Asignando parametros de llamada a funcion  
-+, p, 5, t242; // size de funcion actual
-+, t242, 1, t243; //pos del parametro 1
-// ----------------- Resolviendo acceso local 
-+, P, 1, t244; // pos del objeto
-=>, t244, t246, stack; //apuntador al heap del obejto
-=>, t246, t247, heap; // recuperando pos incial del objeto
-+, t247, 3, t246;
-=>, t246, t248, heap; // valor a retoranar del acceso
-<=, t243, t248, stack; // asignado al stack el parametro
-+, P, 5, P;
-call, , , Tree_entero_height_Node;
-+, P, 2, t249;
-=>, t249, t250, stack; // valor del return
--, P, 5, P;
-<=, t237, t250, stack; // asignado al stack el parametro
 +, P, 5, P;
 call, , , Tree_entero_max_entero_entero;
-+, P, 3, t251;
-=>, t251, t252, stack; // valor del return
++, P, 3, t236;
+=>, t236, t237, stack; // valor del return
 -, P, 5, P;
-+, t252, 1, t253;
-<=, t214, t253, heap; // asignando variable 
++, t237, 1, t238;
+<=, t199, t238, heap; // asignando variable 
 // ----------------- Resolviendo acceso local 
-+, P, 2, t254; // pos del objeto
-=>, t254, t256, stack; //apuntador al heap del obejto
-=>, t256, t257, heap; // recuperando pos incial del objeto
-+, t257, 1, t256;
-=>, t256, t258, heap; // valor a retoranar del acceso
-+, P, 0, t259;
-=>, t259, t260, stack; 
-+, P, 5, t261;
-+, t260, 0, t262;
-<=, t261, t260, stack; 
++, P, 2, t239; // pos del objeto
+=>, t239, t241, stack; //apuntador al heap del obejto
+=>, t241, t242, heap; // recuperando pos incial del objeto
++, t242, 1, t241;
+=>, t241, t243, heap; // valor a retoranar del acceso
++, P, 0, t244;
+=>, t244, t245, stack; 
++, P, 5, t246;
++, t245, 0, t247;
+<=, t246, t245, stack; 
 // Asignando parametros de llamada a funcion  
++, p, 5, t248; // size de funcion actual
++, t248, 1, t249; //pos del parametro 1
++, P, 0, t250;
+=>, t250, t251, stack; 
++, P, 5, t252;
++, t251, 0, t253;
+<=, t252, t251, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 5, t254; // size de funcion actual
++, t254, 1, t255; //pos del parametro 1
+// ----------------- Resolviendo acceso local 
++, P, 2, t256; // pos del objeto
+=>, t256, t258, stack; //apuntador al heap del obejto
+=>, t258, t259, heap; // recuperando pos incial del objeto
++, t259, 2, t258;
+=>, t258, t260, heap; // valor a retoranar del acceso
+<=, t255, t260, stack; // asignado al stack el parametro
++, P, 5, P;
+call, , , Tree_entero_height_Node;
++, P, 2, t261;
+=>, t261, t262, stack; // valor del return
+-, P, 5, P;
+<=, t249, t262, stack; // asignado al stack el parametro
 +, p, 5, t263; // size de funcion actual
-+, t263, 1, t264; //pos del parametro 1
++, t263, 2, t264; //pos del parametro 2
 +, P, 0, t265;
 =>, t265, t266, stack; 
 +, P, 5, t267;
@@ -518,7 +501,7 @@ call, , , Tree_entero_max_entero_entero;
 +, P, 2, t271; // pos del objeto
 =>, t271, t273, stack; //apuntador al heap del obejto
 =>, t273, t274, heap; // recuperando pos incial del objeto
-+, t274, 2, t273;
++, t274, 3, t273;
 =>, t273, t275, heap; // valor a retoranar del acceso
 <=, t270, t275, stack; // asignado al stack el parametro
 +, P, 5, P;
@@ -527,42 +510,19 @@ call, , , Tree_entero_height_Node;
 =>, t276, t277, stack; // valor del return
 -, P, 5, P;
 <=, t264, t277, stack; // asignado al stack el parametro
-+, p, 5, t278; // size de funcion actual
-+, t278, 2, t279; //pos del parametro 2
-+, P, 0, t280;
-=>, t280, t281, stack; 
-+, P, 5, t282;
-+, t281, 0, t283;
-<=, t282, t281, stack; 
-// Asignando parametros de llamada a funcion  
-+, p, 5, t284; // size de funcion actual
-+, t284, 1, t285; //pos del parametro 1
-// ----------------- Resolviendo acceso local 
-+, P, 2, t286; // pos del objeto
-=>, t286, t288, stack; //apuntador al heap del obejto
-=>, t288, t289, heap; // recuperando pos incial del objeto
-+, t289, 3, t288;
-=>, t288, t290, heap; // valor a retoranar del acceso
-<=, t285, t290, stack; // asignado al stack el parametro
-+, P, 5, P;
-call, , , Tree_entero_height_Node;
-+, P, 2, t291;
-=>, t291, t292, stack; // valor del return
--, P, 5, P;
-<=, t279, t292, stack; // asignado al stack el parametro
 +, P, 5, P;
 call, , , Tree_entero_max_entero_entero;
-+, P, 3, t293;
-=>, t293, t294, stack; // valor del return
++, P, 3, t278;
+=>, t278, t279, stack; // valor del return
 -, P, 5, P;
-+, t294, 1, t295;
-<=, t256, t295, heap; // asignando variable 
++, t279, 1, t280;
+<=, t241, t280, heap; // asignando variable 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t296; // pos de y
-=>, t296, t297, stack; // valor de lo que trae en el stack y
-+, P, 4, t298; // pos de retorno de a funcion Tree_Node_leftRotate_Node
-<=, t298, t297, stack; //asignando el retorno con su valor
++, p, 2, t281; // pos de y
+=>, t281, t282, stack; // valor de lo que trae en el stack y
++, P, 4, t283; // pos de retorno de a funcion Tree_Node_leftRotate_Node
+<=, t283, t282, stack; //asignando el retorno con su valor
 jmp, , , L13;
 
 L13:
@@ -574,64 +534,64 @@ end, , Tree_Node_leftRotate_Node
 begin, , , Tree_entero_getBalance_Node
 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t299; // pos de N
-=>, t299, t300, stack; // valor de lo que trae en el stack N
-je, t300, 36, L16;
++, p, 1, t284; // pos de N
+=>, t284, t285, stack; // valor de lo que trae en el stack N
+je, t285, 36, L16;
 jmp, , , L17;
 L16:
 
 // RESOLVIENDO UN RETORNO
-+, P, 2, t301; // pos de retorno de a funcion Tree_entero_getBalance_Node
-<=, t301, 0, stack; //asignando el retorno con su valor
++, P, 2, t286; // pos de retorno de a funcion Tree_entero_getBalance_Node
+<=, t286, 0, stack; //asignando el retorno con su valor
 jmp, , , L14;
 jmp, , , L15; // salida del if
 L17:
 
 L15:
 // RESOLVIENDO UN RETORNO
-+, P, 0, t302;
-=>, t302, t303, stack; 
-+, P, 3, t304;
-+, t303, 0, t305;
-<=, t304, t303, stack; 
++, P, 0, t287;
+=>, t287, t288, stack; 
++, P, 3, t289;
++, t288, 0, t290;
+<=, t289, t288, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 3, t306; // size de funcion actual
-+, t306, 1, t307; //pos del parametro 1
++, p, 3, t291; // size de funcion actual
++, t291, 1, t292; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t308; // pos del objeto
-=>, t308, t310, stack; //apuntador al heap del obejto
-=>, t310, t311, heap; // recuperando pos incial del objeto
-+, t311, 2, t310;
-=>, t310, t312, heap; // valor a retoranar del acceso
-<=, t307, t312, stack; // asignado al stack el parametro
++, P, 1, t293; // pos del objeto
+=>, t293, t295, stack; //apuntador al heap del obejto
+=>, t295, t296, heap; // recuperando pos incial del objeto
++, t296, 2, t295;
+=>, t295, t297, heap; // valor a retoranar del acceso
+<=, t292, t297, stack; // asignado al stack el parametro
 +, P, 3, P;
 call, , , Tree_entero_height_Node;
-+, P, 2, t313;
-=>, t313, t314, stack; // valor del return
++, P, 2, t298;
+=>, t298, t299, stack; // valor del return
 -, P, 3, P;
-+, P, 0, t315;
-=>, t315, t316, stack; 
-+, P, 3, t317;
-+, t316, 0, t318;
-<=, t317, t316, stack; 
++, P, 0, t300;
+=>, t300, t301, stack; 
++, P, 3, t302;
++, t301, 0, t303;
+<=, t302, t301, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 3, t319; // size de funcion actual
-+, t319, 1, t320; //pos del parametro 1
++, p, 3, t304; // size de funcion actual
++, t304, 1, t305; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t321; // pos del objeto
-=>, t321, t323, stack; //apuntador al heap del obejto
-=>, t323, t324, heap; // recuperando pos incial del objeto
-+, t324, 3, t323;
-=>, t323, t325, heap; // valor a retoranar del acceso
-<=, t320, t325, stack; // asignado al stack el parametro
++, P, 1, t306; // pos del objeto
+=>, t306, t308, stack; //apuntador al heap del obejto
+=>, t308, t309, heap; // recuperando pos incial del objeto
++, t309, 3, t308;
+=>, t308, t310, heap; // valor a retoranar del acceso
+<=, t305, t310, stack; // asignado al stack el parametro
 +, P, 3, P;
 call, , , Tree_entero_height_Node;
-+, P, 2, t326;
-=>, t326, t327, stack; // valor del return
++, P, 2, t311;
+=>, t311, t312, stack; // valor del return
 -, P, 3, P;
--, t314, t327, t328;
-+, P, 2, t329; // pos de retorno de a funcion Tree_entero_getBalance_Node
-<=, t329, t328, stack; //asignando el retorno con su valor
+-, t299, t312, t313;
++, P, 2, t314; // pos de retorno de a funcion Tree_entero_getBalance_Node
+<=, t314, t313, stack; //asignando el retorno con su valor
 jmp, , , L14;
 
 L14:
@@ -643,76 +603,68 @@ end, , Tree_entero_getBalance_Node
 begin, , , Tree_Node_insert_Node_entero
 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t330; // pos de node2
-=>, t330, t331, stack; // valor de lo que trae en el stack node2
-je, t331, 36, L20;
++, p, 1, t315; // pos de node2
+=>, t315, t316, stack; // valor de lo que trae en el stack node2
+je, t316, 36, L20;
 jmp, , , L21;
 L20:
 
-print("%d", 66);
 // ----------- Instancia a una variable local --------------
-+, p, 3, t332; // pos de o
-<=, t332, h, stack; //guardando referencia del heap para el objeto o
-+, h, 1, t333; // guardo la posicion donde inicia el objeto 
-<=, h, t333, heap; // guardando donde es que inicia el objeto dentro del heap
++, p, 3, t317; // pos de o
+<=, t317, h, stack; //guardando referencia del heap para el objeto o
++, h, 1, t318; // guardo la posicion donde inicia el objeto 
+<=, h, t318, heap; // guardando donde es que inicia el objeto dentro del heap
 +, h, 1, h; // sumando al heap la posicion que usamos extra para el doble apuntador 
 +, h, 4, h; // reservando espacio para el objeto o
 //Ingresando referencia al this del objeto o
-+, p, 3, t334; // pos de o
-=>, t334, t335, stack; // obteniendo apuntador de o
-+, p, 6, t336; // simulando cambio de ambito
-+, t336, 0, t337; //pos del this de o
-<=, t337, t335, stack; // insertando apuntador del heap al stack del obeto o
++, p, 3, t319; // pos de o
+=>, t319, t320, stack; // obteniendo apuntador de o
++, p, 6, t321; // simulando cambio de ambito
++, t321, 0, t322; //pos del this de o
+<=, t322, t320, stack; // insertando apuntador del heap al stack del obeto o
 // Asignando parametros  
-+, p, 6, t338; // size de funcion actual
-+, t338, 1, t339; //pos del parametro 1
++, p, 6, t323; // size de funcion actual
++, t323, 1, t324; //pos del parametro 1
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t340; // pos de key
-=>, t340, t341, stack; // valor de lo que trae en el stack key
-<=, t339, t341, stack; // asignado al stack el parametro
++, p, 2, t325; // pos de key
+=>, t325, t326, stack; // valor de lo que trae en el stack key
+<=, t324, t326, stack; // asignado al stack el parametro
 +, p, 6, p; // simulando cambio de ambito
 call, , , Node_vacio_Node_entero;
 -, p, 6, p; // regresando al ambito acutal
 
-// ----------------- Resolviendo acceso local 
-+, P, 3, t342; // pos del objeto
-=>, t342, t344, stack; //apuntador al heap del obejto
-=>, t344, t345, heap; // recuperando pos incial del objeto
-+, t345, 0, t344;
-=>, t344, t346, heap; // valor a retoranar del acceso
-print("%d", t346);
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 3, t347; // pos de o
-=>, t347, t348, stack; // valor de lo que trae en el stack o
-+, P, 5, t349; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t349, t348, stack; //asignando el retorno con su valor
++, p, 3, t327; // pos de o
+=>, t327, t328, stack; // valor de lo que trae en el stack o
++, P, 5, t329; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t329, t328, stack; //asignando el retorno con su valor
 jmp, , , L18;
 jmp, , , L19; // salida del if
 L21:
 
 L19:
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t350; // pos de key
-=>, t350, t351, stack; // valor de lo que trae en el stack key
++, p, 2, t330; // pos de key
+=>, t330, t331, stack; // valor de lo que trae en el stack key
 // ----------------- Resolviendo acceso local 
-+, P, 1, t352; // pos del objeto
-=>, t352, t354, stack; //apuntador al heap del obejto
-=>, t354, t355, heap; // recuperando pos incial del objeto
-+, t355, 0, t354;
-=>, t354, t356, heap; // valor a retoranar del acceso
-jl, t351, t356, L23;
++, P, 1, t332; // pos del objeto
+=>, t332, t334, stack; //apuntador al heap del obejto
+=>, t334, t335, heap; // recuperando pos incial del objeto
++, t335, 0, t334;
+=>, t334, t336, heap; // valor a retoranar del acceso
+jl, t331, t336, L23;
 jmp, , , L24;
 L23:
 
 // Resolviendo una cadena 
-+, H, 0, t357; //apuntaodr a cadena 
-+, H, 1, t358; //apu donde inicia la cadena
-<=, t357, t358, heap; //guaradnod donde inicia la cadena 
++, H, 0, t337; //apuntaodr a cadena 
++, H, 1, t338; //apu donde inicia la cadena
+<=, t337, t338, heap; //guaradnod donde inicia la cadena 
 +, H, 1, H;
 <=, H, 4, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
-+, H, 0, t359; // referencia de donde iniciar el primer caracter de la cadena
++, H, 0, t339; // referencia de donde iniciar el primer caracter de la cadena
 <=, H, 97, heap; //guardadndo a
 +, H, 1, H;
 <=, H, 113, heap; //guardadndo q
@@ -723,51 +675,51 @@ L23:
 +, H, 1, H;
 <=, H, 36, heap; // ingresando caracter de escape de la cadena
 +, H, 1, H;
-print("%s", t357);
+print("%s", t337);
 // ----------------- Resolviendo acceso local 
-+, P, 1, t360; // pos del objeto
-=>, t360, t362, stack; //apuntador al heap del obejto
-=>, t362, t363, heap; // recuperando pos incial del objeto
-+, t363, 2, t362;
-=>, t362, t364, heap; // valor a retoranar del acceso
-+, P, 0, t365;
-=>, t365, t366, stack; 
-+, P, 6, t367;
-+, t366, 0, t368;
-<=, t367, t366, stack; 
++, P, 1, t340; // pos del objeto
+=>, t340, t342, stack; //apuntador al heap del obejto
+=>, t342, t343, heap; // recuperando pos incial del objeto
++, t343, 2, t342;
+=>, t342, t344, heap; // valor a retoranar del acceso
++, P, 0, t345;
+=>, t345, t346, stack; 
++, P, 6, t347;
++, t346, 0, t348;
+<=, t347, t346, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t369; // size de funcion actual
-+, t369, 1, t370; //pos del parametro 1
++, p, 6, t349; // size de funcion actual
++, t349, 1, t350; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t371; // pos del objeto
-=>, t371, t373, stack; //apuntador al heap del obejto
-=>, t373, t374, heap; // recuperando pos incial del objeto
-+, t374, 2, t373;
-=>, t373, t375, heap; // valor a retoranar del acceso
-<=, t370, t375, stack; // asignado al stack el parametro
-+, p, 6, t376; // size de funcion actual
-+, t376, 2, t377; //pos del parametro 2
++, P, 1, t351; // pos del objeto
+=>, t351, t353, stack; //apuntador al heap del obejto
+=>, t353, t354, heap; // recuperando pos incial del objeto
++, t354, 2, t353;
+=>, t353, t355, heap; // valor a retoranar del acceso
+<=, t350, t355, stack; // asignado al stack el parametro
++, p, 6, t356; // size de funcion actual
++, t356, 2, t357; //pos del parametro 2
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t378; // pos de key
-=>, t378, t379, stack; // valor de lo que trae en el stack key
-<=, t377, t379, stack; // asignado al stack el parametro
++, p, 2, t358; // pos de key
+=>, t358, t359, stack; // valor de lo que trae en el stack key
+<=, t357, t359, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_insert_Node_entero;
-+, P, 5, t380;
-=>, t380, t381, stack; // valor del return
++, P, 5, t360;
+=>, t360, t361, stack; // valor del return
 -, P, 6, P;
-<=, t362, t381, heap; // asignando variable 
+<=, t342, t361, heap; // asignando variable 
 jmp, , , L22; // salida del if
 L24:
 
 // Resolviendo una cadena 
-+, H, 0, t382; //apuntaodr a cadena 
-+, H, 1, t383; //apu donde inicia la cadena
-<=, t382, t383, heap; //guaradnod donde inicia la cadena 
++, H, 0, t362; //apuntaodr a cadena 
++, H, 1, t363; //apu donde inicia la cadena
+<=, t362, t363, heap; //guaradnod donde inicia la cadena 
 +, H, 1, H;
 <=, H, 5, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
-+, H, 0, t384; // referencia de donde iniciar el primer caracter de la cadena
++, H, 0, t364; // referencia de donde iniciar el primer caracter de la cadena
 <=, H, 97, heap; //guardadndo a
 +, H, 1, H;
 <=, H, 113, heap; //guardadndo q
@@ -780,132 +732,174 @@ L24:
 +, H, 1, H;
 <=, H, 36, heap; // ingresando caracter de escape de la cadena
 +, H, 1, H;
-print("%s", t382);
+print("%s", t362);
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t385; // pos de key
-=>, t385, t386, stack; // valor de lo que trae en el stack key
++, p, 2, t365; // pos de key
+=>, t365, t366, stack; // valor de lo que trae en el stack key
 // ----------------- Resolviendo acceso local 
-+, P, 1, t387; // pos del objeto
-=>, t387, t389, stack; //apuntador al heap del obejto
-=>, t389, t390, heap; // recuperando pos incial del objeto
-+, t390, 0, t389;
-=>, t389, t391, heap; // valor a retoranar del acceso
-jg, t386, t391, L26;
++, P, 1, t367; // pos del objeto
+=>, t367, t369, stack; //apuntador al heap del obejto
+=>, t369, t370, heap; // recuperando pos incial del objeto
++, t370, 0, t369;
+=>, t369, t371, heap; // valor a retoranar del acceso
+jg, t366, t371, L26;
 jmp, , , L27;
 L26:
 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t392; // pos del objeto
-=>, t392, t394, stack; //apuntador al heap del obejto
-=>, t394, t395, heap; // recuperando pos incial del objeto
-+, t395, 3, t394;
-=>, t394, t396, heap; // valor a retoranar del acceso
-+, P, 0, t397;
-=>, t397, t398, stack; 
-+, P, 6, t399;
-+, t398, 0, t400;
-<=, t399, t398, stack; 
++, P, 1, t372; // pos del objeto
+=>, t372, t374, stack; //apuntador al heap del obejto
+=>, t374, t375, heap; // recuperando pos incial del objeto
++, t375, 3, t374;
+=>, t374, t376, heap; // valor a retoranar del acceso
++, P, 0, t377;
+=>, t377, t378, stack; 
++, P, 6, t379;
++, t378, 0, t380;
+<=, t379, t378, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t401; // size de funcion actual
-+, t401, 1, t402; //pos del parametro 1
++, p, 6, t381; // size de funcion actual
++, t381, 1, t382; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t403; // pos del objeto
-=>, t403, t405, stack; //apuntador al heap del obejto
-=>, t405, t406, heap; // recuperando pos incial del objeto
-+, t406, 3, t405;
-=>, t405, t407, heap; // valor a retoranar del acceso
-<=, t402, t407, stack; // asignado al stack el parametro
-+, p, 6, t408; // size de funcion actual
-+, t408, 2, t409; //pos del parametro 2
++, P, 1, t383; // pos del objeto
+=>, t383, t385, stack; //apuntador al heap del obejto
+=>, t385, t386, heap; // recuperando pos incial del objeto
++, t386, 3, t385;
+=>, t385, t387, heap; // valor a retoranar del acceso
+<=, t382, t387, stack; // asignado al stack el parametro
++, p, 6, t388; // size de funcion actual
++, t388, 2, t389; //pos del parametro 2
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t410; // pos de key
-=>, t410, t411, stack; // valor de lo que trae en el stack key
-<=, t409, t411, stack; // asignado al stack el parametro
++, p, 2, t390; // pos de key
+=>, t390, t391, stack; // valor de lo que trae en el stack key
+<=, t389, t391, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_insert_Node_entero;
-+, P, 5, t412;
-=>, t412, t413, stack; // valor del return
++, P, 5, t392;
+=>, t392, t393, stack; // valor del return
 -, P, 6, P;
-<=, t394, t413, heap; // asignando variable 
+<=, t374, t393, heap; // asignando variable 
 jmp, , , L25; // salida del if
 L27:
 
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t414; // pos de node2
-=>, t414, t415, stack; // valor de lo que trae en el stack node2
-+, P, 5, t416; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t416, t415, stack; //asignando el retorno con su valor
++, p, 1, t394; // pos de node2
+=>, t394, t395, stack; // valor de lo que trae en el stack node2
++, P, 5, t396; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t396, t395, stack; //asignando el retorno con su valor
 jmp, , , L18;
 L25:
 L22:
 // ----------------- Resolviendo acceso local 
-+, P, 1, t417; // pos del objeto
-=>, t417, t419, stack; //apuntador al heap del obejto
-=>, t419, t420, heap; // recuperando pos incial del objeto
-+, t420, 1, t419;
-=>, t419, t421, heap; // valor a retoranar del acceso
-+, P, 0, t422;
-=>, t422, t423, stack; 
-+, P, 6, t424;
-+, t423, 0, t425;
-<=, t424, t423, stack; 
++, P, 1, t397; // pos del objeto
+=>, t397, t399, stack; //apuntador al heap del obejto
+=>, t399, t400, heap; // recuperando pos incial del objeto
++, t400, 1, t399;
+=>, t399, t401, heap; // valor a retoranar del acceso
++, P, 0, t402;
+=>, t402, t403, stack; 
++, P, 6, t404;
++, t403, 0, t405;
+<=, t404, t403, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t426; // size de funcion actual
-+, t426, 1, t427; //pos del parametro 1
-+, P, 0, t428;
-=>, t428, t429, stack; 
-+, P, 6, t430;
-+, t429, 0, t431;
-<=, t430, t429, stack; 
++, p, 6, t406; // size de funcion actual
++, t406, 1, t407; //pos del parametro 1
++, P, 0, t408;
+=>, t408, t409, stack; 
++, P, 6, t410;
++, t409, 0, t411;
+<=, t410, t409, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t432; // size de funcion actual
-+, t432, 1, t433; //pos del parametro 1
++, p, 6, t412; // size de funcion actual
++, t412, 1, t413; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t434; // pos del objeto
-=>, t434, t436, stack; //apuntador al heap del obejto
-=>, t436, t437, heap; // recuperando pos incial del objeto
-+, t437, 2, t436;
-=>, t436, t438, heap; // valor a retoranar del acceso
-<=, t433, t438, stack; // asignado al stack el parametro
++, P, 1, t414; // pos del objeto
+=>, t414, t416, stack; //apuntador al heap del obejto
+=>, t416, t417, heap; // recuperando pos incial del objeto
++, t417, 2, t416;
+=>, t416, t418, heap; // valor a retoranar del acceso
+<=, t413, t418, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_entero_height_Node;
-+, P, 2, t439;
-=>, t439, t440, stack; // valor del return
++, P, 2, t419;
+=>, t419, t420, stack; // valor del return
 -, P, 6, P;
-<=, t427, t440, stack; // asignado al stack el parametro
-+, p, 6, t441; // size de funcion actual
-+, t441, 2, t442; //pos del parametro 2
-+, P, 0, t443;
-=>, t443, t444, stack; 
-+, P, 6, t445;
-+, t444, 0, t446;
-<=, t445, t444, stack; 
+<=, t407, t420, stack; // asignado al stack el parametro
++, p, 6, t421; // size de funcion actual
++, t421, 2, t422; //pos del parametro 2
++, P, 0, t423;
+=>, t423, t424, stack; 
++, P, 6, t425;
++, t424, 0, t426;
+<=, t425, t424, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t447; // size de funcion actual
-+, t447, 1, t448; //pos del parametro 1
++, p, 6, t427; // size de funcion actual
++, t427, 1, t428; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t449; // pos del objeto
-=>, t449, t451, stack; //apuntador al heap del obejto
-=>, t451, t452, heap; // recuperando pos incial del objeto
-+, t452, 3, t451;
-=>, t451, t453, heap; // valor a retoranar del acceso
-<=, t448, t453, stack; // asignado al stack el parametro
++, P, 1, t429; // pos del objeto
+=>, t429, t431, stack; //apuntador al heap del obejto
+=>, t431, t432, heap; // recuperando pos incial del objeto
++, t432, 3, t431;
+=>, t431, t433, heap; // valor a retoranar del acceso
+<=, t428, t433, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_entero_height_Node;
-+, P, 2, t454;
-=>, t454, t455, stack; // valor del return
++, P, 2, t434;
+=>, t434, t435, stack; // valor del return
 -, P, 6, P;
-<=, t442, t455, stack; // asignado al stack el parametro
+<=, t422, t435, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_entero_max_entero_entero;
-+, P, 3, t456;
-=>, t456, t457, stack; // valor del return
++, P, 3, t436;
+=>, t436, t437, stack; // valor del return
 -, P, 6, P;
-+, 1, t457, t458;
-<=, t419, t458, heap; // asignando variable 
++, 1, t437, t438;
+<=, t399, t438, heap; // asignando variable 
 // -------------- Resolviendo para un ID (var local) Asignacion ------------
-+, p, 4, t459; // pos de balance
++, p, 4, t439; // pos de balance
++, P, 0, t440;
+=>, t440, t441, stack; 
++, P, 6, t442;
++, t441, 0, t443;
+<=, t442, t441, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 6, t444; // size de funcion actual
++, t444, 1, t445; //pos del parametro 1
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 1, t446; // pos de node2
+=>, t446, t447, stack; // valor de lo que trae en el stack node2
+<=, t445, t447, stack; // asignado al stack el parametro
++, P, 6, P;
+call, , , Tree_entero_getBalance_Node;
++, P, 2, t448;
+=>, t448, t449, stack; // valor del return
+-, P, 6, P;
+<=, t439, t449, stack; // asignando a balance
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 4, t450; // pos de balance
+=>, t450, t451, stack; // valor de lo que trae en el stack balance
+// -------------- Resolviendo para un ID (var local) ------------
++, p, 2, t452; // pos de key
+=>, t452, t453, stack; // valor de lo que trae en el stack key
+// ----------------- Resolviendo acceso local 
++, P, 1, t454; // pos del objeto
+=>, t454, t456, stack; //apuntador al heap del obejto
+=>, t456, t457, heap; // recuperando pos incial del objeto
++, t457, 2, t456;
+=>, t456, t458, heap; // recuperando pos incial del objeto
++, t458, 0, t456;
+=>, t456, t459, heap; // valor a retoranar del acceso
+jg, t451, 1, L29;
+jmp, , , L30;
+L29:
+
+jl, t453, t459, L31;
+jmp, , , L32;
+
+L31:
+
+// RESOLVIENDO UN RETORNO
 +, P, 0, t460;
 =>, t460, t461, stack; 
 +, P, 6, t462;
@@ -919,54 +913,12 @@ call, , , Tree_entero_max_entero_entero;
 =>, t466, t467, stack; // valor de lo que trae en el stack node2
 <=, t465, t467, stack; // asignado al stack el parametro
 +, P, 6, P;
-call, , , Tree_entero_getBalance_Node;
-+, P, 2, t468;
+call, , , Tree_Node_rightRotate_Node;
++, P, 4, t468;
 =>, t468, t469, stack; // valor del return
 -, P, 6, P;
-<=, t459, t469, stack; // asignando a balance
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 4, t470; // pos de balance
-=>, t470, t471, stack; // valor de lo que trae en el stack balance
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t472; // pos de key
-=>, t472, t473, stack; // valor de lo que trae en el stack key
-// ----------------- Resolviendo acceso local 
-+, P, 1, t474; // pos del objeto
-=>, t474, t476, stack; //apuntador al heap del obejto
-=>, t476, t477, heap; // recuperando pos incial del objeto
-+, t477, 2, t476;
-=>, t476, t478, heap; // recuperando pos incial del objeto
-+, t478, 0, t476;
-=>, t476, t479, heap; // valor a retoranar del acceso
-jg, t471, 1, L29;
-jmp, , , L30;
-L29:
-
-jl, t473, t479, L31;
-jmp, , , L32;
-
-L31:
-
-// RESOLVIENDO UN RETORNO
-+, P, 0, t480;
-=>, t480, t481, stack; 
-+, P, 6, t482;
-+, t481, 0, t483;
-<=, t482, t481, stack; 
-// Asignando parametros de llamada a funcion  
-+, p, 6, t484; // size de funcion actual
-+, t484, 1, t485; //pos del parametro 1
-// -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t486; // pos de node2
-=>, t486, t487, stack; // valor de lo que trae en el stack node2
-<=, t485, t487, stack; // asignado al stack el parametro
-+, P, 6, P;
-call, , , Tree_Node_rightRotate_Node;
-+, P, 4, t488;
-=>, t488, t489, stack; // valor del return
--, P, 6, P;
-+, P, 5, t490; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t490, t489, stack; //asignando el retorno con su valor
++, P, 5, t470; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t470, t469, stack; //asignando el retorno con su valor
 jmp, , , L18;
 jmp, , , L28; // salida del if
 L30:
@@ -974,49 +926,49 @@ L32:
 
 L28:
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 4, t491; // pos de balance
-=>, t491, t492, stack; // valor de lo que trae en el stack balance
-*, 1, -1, t493;
++, p, 4, t471; // pos de balance
+=>, t471, t472, stack; // valor de lo que trae en el stack balance
+*, 1, -1, t473;
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t494; // pos de key
-=>, t494, t495, stack; // valor de lo que trae en el stack key
++, p, 2, t474; // pos de key
+=>, t474, t475, stack; // valor de lo que trae en el stack key
 // ----------------- Resolviendo acceso local 
-+, P, 1, t496; // pos del objeto
-=>, t496, t498, stack; //apuntador al heap del obejto
-=>, t498, t499, heap; // recuperando pos incial del objeto
-+, t499, 3, t498;
-=>, t498, t500, heap; // recuperando pos incial del objeto
-+, t500, 0, t498;
-=>, t498, t501, heap; // valor a retoranar del acceso
-jl, t492, t493, L34;
++, P, 1, t476; // pos del objeto
+=>, t476, t478, stack; //apuntador al heap del obejto
+=>, t478, t479, heap; // recuperando pos incial del objeto
++, t479, 3, t478;
+=>, t478, t480, heap; // recuperando pos incial del objeto
++, t480, 0, t478;
+=>, t478, t481, heap; // valor a retoranar del acceso
+jl, t472, t473, L34;
 jmp, , , L35;
 L34:
 
-jg, t495, t501, L36;
+jg, t475, t481, L36;
 jmp, , , L37;
 
 L36:
 
 // RESOLVIENDO UN RETORNO
-+, P, 0, t502;
-=>, t502, t503, stack; 
-+, P, 6, t504;
-+, t503, 0, t505;
-<=, t504, t503, stack; 
++, P, 0, t482;
+=>, t482, t483, stack; 
++, P, 6, t484;
++, t483, 0, t485;
+<=, t484, t483, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t506; // size de funcion actual
-+, t506, 1, t507; //pos del parametro 1
++, p, 6, t486; // size de funcion actual
++, t486, 1, t487; //pos del parametro 1
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t508; // pos de node2
-=>, t508, t509, stack; // valor de lo que trae en el stack node2
-<=, t507, t509, stack; // asignado al stack el parametro
++, p, 1, t488; // pos de node2
+=>, t488, t489, stack; // valor de lo que trae en el stack node2
+<=, t487, t489, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_leftRotate_Node;
-+, P, 4, t510;
-=>, t510, t511, stack; // valor del return
++, P, 4, t490;
+=>, t490, t491, stack; // valor del return
 -, P, 6, P;
-+, P, 5, t512; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t512, t511, stack; //asignando el retorno con su valor
++, P, 5, t492; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t492, t491, stack; //asignando el retorno con su valor
 jmp, , , L18;
 jmp, , , L33; // salida del if
 L35:
@@ -1024,48 +976,75 @@ L37:
 
 L33:
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 4, t513; // pos de balance
-=>, t513, t514, stack; // valor de lo que trae en el stack balance
++, p, 4, t493; // pos de balance
+=>, t493, t494, stack; // valor de lo que trae en el stack balance
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t515; // pos de key
-=>, t515, t516, stack; // valor de lo que trae en el stack key
++, p, 2, t495; // pos de key
+=>, t495, t496, stack; // valor de lo que trae en el stack key
 // ----------------- Resolviendo acceso local 
-+, P, 1, t517; // pos del objeto
-=>, t517, t519, stack; //apuntador al heap del obejto
-=>, t519, t520, heap; // recuperando pos incial del objeto
-+, t520, 2, t519;
-=>, t519, t521, heap; // recuperando pos incial del objeto
-+, t521, 0, t519;
-=>, t519, t522, heap; // valor a retoranar del acceso
-jg, t514, 1, L39;
++, P, 1, t497; // pos del objeto
+=>, t497, t499, stack; //apuntador al heap del obejto
+=>, t499, t500, heap; // recuperando pos incial del objeto
++, t500, 2, t499;
+=>, t499, t501, heap; // recuperando pos incial del objeto
++, t501, 0, t499;
+=>, t499, t502, heap; // valor a retoranar del acceso
+jg, t494, 1, L39;
 jmp, , , L40;
 L39:
 
-jg, t516, t522, L41;
+jg, t496, t502, L41;
 jmp, , , L42;
 
 L41:
 
-// RESOLVIENDO UN RETORNO
-+, P, 0, t523;
-=>, t523, t524, stack; 
-+, P, 6, t525;
-+, t524, 0, t526;
-<=, t525, t524, stack; 
+// ----------------- Resolviendo acceso local 
++, P, 1, t503; // pos del objeto
+=>, t503, t505, stack; //apuntador al heap del obejto
+=>, t505, t506, heap; // recuperando pos incial del objeto
++, t506, 2, t505;
+=>, t505, t507, heap; // valor a retoranar del acceso
++, P, 0, t508;
+=>, t508, t509, stack; 
++, P, 6, t510;
++, t509, 0, t511;
+<=, t510, t509, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t527; // size de funcion actual
-+, t527, 1, t528; //pos del parametro 1
++, p, 6, t512; // size de funcion actual
++, t512, 1, t513; //pos del parametro 1
+// ----------------- Resolviendo acceso local 
++, P, 1, t514; // pos del objeto
+=>, t514, t516, stack; //apuntador al heap del obejto
+=>, t516, t517, heap; // recuperando pos incial del objeto
++, t517, 2, t516;
+=>, t516, t518, heap; // valor a retoranar del acceso
+<=, t513, t518, stack; // asignado al stack el parametro
++, P, 6, P;
+call, , , Tree_Node_leftRotate_Node;
++, P, 4, t519;
+=>, t519, t520, stack; // valor del return
+-, P, 6, P;
+<=, t505, t520, heap; // asignando variable 
+// RESOLVIENDO UN RETORNO
++, P, 0, t521;
+=>, t521, t522, stack; 
++, P, 6, t523;
++, t522, 0, t524;
+<=, t523, t522, stack; 
+// Asignando parametros de llamada a funcion  
++, p, 6, t525; // size de funcion actual
++, t525, 1, t526; //pos del parametro 1
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t529; // pos de node2
-=>, t529, t530, stack; // valor de lo que trae en el stack node2
-<=, t528, t530, stack; // asignado al stack el parametro
++, p, 1, t527; // pos de node2
+=>, t527, t528, stack; // valor de lo que trae en el stack node2
+<=, t526, t528, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_rightRotate_Node;
-+, P, 4, t531;
-=>, t531, t532, stack; // valor del return
++, P, 4, t529;
+=>, t529, t530, stack; // valor del return
 -, P, 6, P;
-+, P, 5, t533; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t533, t532, stack; //asignando el retorno con su valor
++, P, 5, t531; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t531, t530, stack; //asignando el retorno con su valor
 jmp, , , L18;
 jmp, , , L38; // salida del if
 L40:
@@ -1073,76 +1052,76 @@ L42:
 
 L38:
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 4, t534; // pos de balance
-=>, t534, t535, stack; // valor de lo que trae en el stack balance
-*, 1, -1, t536;
++, p, 4, t532; // pos de balance
+=>, t532, t533, stack; // valor de lo que trae en el stack balance
+*, 1, -1, t534;
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 2, t537; // pos de key
-=>, t537, t538, stack; // valor de lo que trae en el stack key
++, p, 2, t535; // pos de key
+=>, t535, t536, stack; // valor de lo que trae en el stack key
 // ----------------- Resolviendo acceso local 
-+, P, 1, t539; // pos del objeto
-=>, t539, t541, stack; //apuntador al heap del obejto
-=>, t541, t542, heap; // recuperando pos incial del objeto
-+, t542, 3, t541;
-=>, t541, t543, heap; // recuperando pos incial del objeto
-+, t543, 0, t541;
-=>, t541, t544, heap; // valor a retoranar del acceso
-jl, t535, t536, L44;
++, P, 1, t537; // pos del objeto
+=>, t537, t539, stack; //apuntador al heap del obejto
+=>, t539, t540, heap; // recuperando pos incial del objeto
++, t540, 3, t539;
+=>, t539, t541, heap; // recuperando pos incial del objeto
++, t541, 0, t539;
+=>, t539, t542, heap; // valor a retoranar del acceso
+jl, t533, t534, L44;
 jmp, , , L45;
 L44:
 
-jl, t538, t544, L46;
+jl, t536, t542, L46;
 jmp, , , L47;
 
 L46:
 
 // ----------------- Resolviendo acceso local 
-+, P, 1, t545; // pos del objeto
-=>, t545, t547, stack; //apuntador al heap del obejto
-=>, t547, t548, heap; // recuperando pos incial del objeto
-+, t548, 3, t547;
-=>, t547, t549, heap; // valor a retoranar del acceso
-+, P, 0, t550;
-=>, t550, t551, stack; 
-+, P, 6, t552;
-+, t551, 0, t553;
-<=, t552, t551, stack; 
++, P, 1, t543; // pos del objeto
+=>, t543, t545, stack; //apuntador al heap del obejto
+=>, t545, t546, heap; // recuperando pos incial del objeto
++, t546, 3, t545;
+=>, t545, t547, heap; // valor a retoranar del acceso
++, P, 0, t548;
+=>, t548, t549, stack; 
++, P, 6, t550;
++, t549, 0, t551;
+<=, t550, t549, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t554; // size de funcion actual
-+, t554, 1, t555; //pos del parametro 1
++, p, 6, t552; // size de funcion actual
++, t552, 1, t553; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t556; // pos del objeto
-=>, t556, t558, stack; //apuntador al heap del obejto
-=>, t558, t559, heap; // recuperando pos incial del objeto
-+, t559, 3, t558;
-=>, t558, t560, heap; // valor a retoranar del acceso
-<=, t555, t560, stack; // asignado al stack el parametro
++, P, 1, t554; // pos del objeto
+=>, t554, t556, stack; //apuntador al heap del obejto
+=>, t556, t557, heap; // recuperando pos incial del objeto
++, t557, 3, t556;
+=>, t556, t558, heap; // valor a retoranar del acceso
+<=, t553, t558, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_rightRotate_Node;
-+, P, 4, t561;
-=>, t561, t562, stack; // valor del return
++, P, 4, t559;
+=>, t559, t560, stack; // valor del return
 -, P, 6, P;
-<=, t547, t562, heap; // asignando variable 
+<=, t545, t560, heap; // asignando variable 
 // RESOLVIENDO UN RETORNO
-+, P, 0, t563;
-=>, t563, t564, stack; 
-+, P, 6, t565;
-+, t564, 0, t566;
-<=, t565, t564, stack; 
++, P, 0, t561;
+=>, t561, t562, stack; 
++, P, 6, t563;
++, t562, 0, t564;
+<=, t563, t562, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 6, t567; // size de funcion actual
-+, t567, 1, t568; //pos del parametro 1
++, p, 6, t565; // size de funcion actual
++, t565, 1, t566; //pos del parametro 1
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t569; // pos de node2
-=>, t569, t570, stack; // valor de lo que trae en el stack node2
-<=, t568, t570, stack; // asignado al stack el parametro
++, p, 1, t567; // pos de node2
+=>, t567, t568, stack; // valor de lo que trae en el stack node2
+<=, t566, t568, stack; // asignado al stack el parametro
 +, P, 6, P;
 call, , , Tree_Node_leftRotate_Node;
-+, P, 4, t571;
-=>, t571, t572, stack; // valor del return
++, P, 4, t569;
+=>, t569, t570, stack; // valor del return
 -, P, 6, P;
-+, P, 5, t573; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t573, t572, stack; //asignando el retorno con su valor
++, P, 5, t571; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t571, t570, stack; //asignando el retorno con su valor
 jmp, , , L18;
 jmp, , , L43; // salida del if
 L45:
@@ -1150,13 +1129,13 @@ L47:
 
 L43:
 // Resolviendo una cadena 
-+, H, 0, t574; //apuntaodr a cadena 
-+, H, 1, t575; //apu donde inicia la cadena
-<=, t574, t575, heap; //guaradnod donde inicia la cadena 
++, H, 0, t572; //apuntaodr a cadena 
++, H, 1, t573; //apu donde inicia la cadena
+<=, t572, t573, heap; //guaradnod donde inicia la cadena 
 +, H, 1, H;
 <=, H, 8, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
-+, H, 0, t576; // referencia de donde iniciar el primer caracter de la cadena
++, H, 0, t574; // referencia de donde iniciar el primer caracter de la cadena
 <=, H, 97, heap; //guardadndo a
 +, H, 1, H;
 <=, H, 113, heap; //guardadndo q
@@ -1175,13 +1154,13 @@ L43:
 +, H, 1, H;
 <=, H, 36, heap; // ingresando caracter de escape de la cadena
 +, H, 1, H;
-print("%s", t574);
+print("%s", t572);
 // RESOLVIENDO UN RETORNO
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t577; // pos de node2
-=>, t577, t578, stack; // valor de lo que trae en el stack node2
-+, P, 5, t579; // pos de retorno de a funcion Tree_Node_insert_Node_entero
-<=, t579, t578, stack; //asignando el retorno con su valor
++, p, 1, t575; // pos de node2
+=>, t575, t576, stack; // valor de lo que trae en el stack node2
++, P, 5, t577; // pos de retorno de a funcion Tree_Node_insert_Node_entero
+<=, t577, t576, stack; //asignando el retorno con su valor
 jmp, , , L18;
 
 L18:
@@ -1193,59 +1172,59 @@ end, , Tree_Node_insert_Node_entero
 begin, , , Tree_vacio_postOrder_Node
 
 // -------------- Resolviendo para un ID (var local) ------------
-+, p, 1, t580; // pos de node2
-=>, t580, t581, stack; // valor de lo que trae en el stack node2
-jne, t581, 36, L50;
++, p, 1, t578; // pos de node2
+=>, t578, t579, stack; // valor de lo que trae en el stack node2
+jne, t579, 36, L50;
 jmp, , , L51;
 L50:
 
-+, P, 0, t582;
-=>, t582, t583, stack; 
-+, P, 3, t584;
-+, t583, 0, t585;
-<=, t584, t583, stack; 
++, P, 0, t580;
+=>, t580, t581, stack; 
++, P, 3, t582;
++, t581, 0, t583;
+<=, t582, t581, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 3, t586; // size de funcion actual
-+, t586, 1, t587; //pos del parametro 1
++, p, 3, t584; // size de funcion actual
++, t584, 1, t585; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t588; // pos del objeto
-=>, t588, t590, stack; //apuntador al heap del obejto
-=>, t590, t591, heap; // recuperando pos incial del objeto
-+, t591, 2, t590;
-=>, t590, t592, heap; // valor a retoranar del acceso
-<=, t587, t592, stack; // asignado al stack el parametro
++, P, 1, t586; // pos del objeto
+=>, t586, t588, stack; //apuntador al heap del obejto
+=>, t588, t589, heap; // recuperando pos incial del objeto
++, t589, 2, t588;
+=>, t588, t590, heap; // valor a retoranar del acceso
+<=, t585, t590, stack; // asignado al stack el parametro
 +, P, 3, P;
 call, , , Tree_vacio_postOrder_Node;
-+, P, 2, t593;
-=>, t593, t594, stack; // valor del return
++, P, 2, t591;
+=>, t591, t592, stack; // valor del return
 -, P, 3, P;
-+, P, 0, t595;
-=>, t595, t596, stack; 
-+, P, 3, t597;
-+, t596, 0, t598;
-<=, t597, t596, stack; 
++, P, 0, t593;
+=>, t593, t594, stack; 
++, P, 3, t595;
++, t594, 0, t596;
+<=, t595, t594, stack; 
 // Asignando parametros de llamada a funcion  
-+, p, 3, t599; // size de funcion actual
-+, t599, 1, t600; //pos del parametro 1
++, p, 3, t597; // size de funcion actual
++, t597, 1, t598; //pos del parametro 1
 // ----------------- Resolviendo acceso local 
-+, P, 1, t601; // pos del objeto
-=>, t601, t603, stack; //apuntador al heap del obejto
-=>, t603, t604, heap; // recuperando pos incial del objeto
-+, t604, 3, t603;
-=>, t603, t605, heap; // valor a retoranar del acceso
-<=, t600, t605, stack; // asignado al stack el parametro
++, P, 1, t599; // pos del objeto
+=>, t599, t601, stack; //apuntador al heap del obejto
+=>, t601, t602, heap; // recuperando pos incial del objeto
++, t602, 3, t601;
+=>, t601, t603, heap; // valor a retoranar del acceso
+<=, t598, t603, stack; // asignado al stack el parametro
 +, P, 3, P;
 call, , , Tree_vacio_postOrder_Node;
-+, P, 2, t606;
-=>, t606, t607, stack; // valor del return
++, P, 2, t604;
+=>, t604, t605, stack; // valor del return
 -, P, 3, P;
 // ----------------- Resolviendo acceso local 
-+, P, 1, t608; // pos del objeto
-=>, t608, t610, stack; //apuntador al heap del obejto
-=>, t610, t611, heap; // recuperando pos incial del objeto
-+, t611, 0, t610;
-=>, t610, t612, heap; // valor a retoranar del acceso
-print("%d", t612);
++, P, 1, t606; // pos del objeto
+=>, t606, t608, stack; //apuntador al heap del obejto
+=>, t608, t609, heap; // recuperando pos incial del objeto
++, t609, 0, t608;
+=>, t608, t610, heap; // valor a retoranar del acceso
+print("%d", t610);
 jmp, , , L49; // salida del if
 L51:
 

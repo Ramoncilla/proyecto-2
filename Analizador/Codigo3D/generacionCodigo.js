@@ -83,7 +83,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 		var sentTemporal;
 		var nombreClase="";
 		var nombreFuncion="";
-		var ambitos;// = new Ambito();
+		//var ambitos;
 		//ambitos.inciarValores();
 	  var funTemporal;
 		for(var i=0; i<gcObject.listaClase.length; i++){
@@ -93,7 +93,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 	   
 			//1. Traducimos el principal si es que posee
 			if(claseTemporal.principal_met!=null){
-				ambitos = new Ambito();
+				var ambitos = new Ambito();
 				ambitos.addAmbito(nombreClase);
 				nombreFuncion = nombreClase+"_PRINCIPAL";
 				var nombreAmb= nombreClase+"_PRINCIPAL";
@@ -122,7 +122,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 	  
 			for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
 				funTemporal = claseTemporal.funciones.funciones[j];
-				ambitos = new Ambito();
+				var ambitos = new Ambito();
 				ambitos.addAmbito(nombreClase);
 				ambitos.addAmbito(funTemporal.obtenerFirma());
 				nombreFuncion = funTemporal.obtenerFirma();
@@ -132,35 +132,6 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				gcObject.c3d.addCodigo("");
 				var etiquetaRetorno = gcObject.c3d.getEtiqueta();
 				etiquetasRetorno.insertarEtiqueta(etiquetaRetorno);
-				// instanciamos parametros 
-	/*
-				var parametrosFuncion = funTemporal.parametros;
-				if(parametrosFuncion.parametros!=0){
-					var parametroTemporal ;
-	                var cont = 1;
-					for(var i =0; i<parametrosFuncion.parametros.length; i++){
-						parametroTemporal = parametrosFuncion.parametros[i];
-						var simb = gcObject.tablaSimbolos.obtenerSimbolo(parametroTemporal.getNombre(),ambitos, false);
-						//var simb = gcObject.tablaSimbolos.obtenerNombreParametro(nombreClase+"_"+nombreFuncion,cont);
-						if(simb!= null){
-							if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
-								gcObject.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
-								gcObject.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,nombreClase,nombreFuncion);
-							}
-
-
-							
-
-						}else{
-							errores.insertarError("Semabtico", "No se ha encontrado simbolo de parametro "+ cont);
-						}
-						cont++;
-					}
-
-
-				}*/
-
-
 				//hacemos la diferencia entre constructores y funciones normales 
 				if(funTemporal.esConstructor){
 					//buscamos los atributos que poseen asignacion
@@ -187,7 +158,7 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				ambitos.ambitos.shift();
 			}
 
-			ambitos.ambitos.shift();
+			//ambitos.ambitos.shift();
 			//ambitos.ambitos.shift();
 		}
 
@@ -1330,6 +1301,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 					if(retAcceso instanceof EleRetorno){
 						if(retAcceso.tipo.toUpperCase()!="NULO"){
 							if(!retAcceso.esReferenciaNula()){
+
 								this.asignarPorSimboloIgual(retAcceso,simbIgual,expresionAsig,ambitos,clase,metodo, elementoAsignar.obtenerIdUltimo());
 							}else{
 								errores.insertarError("Semantico", "Referencia nula, no se puede realizar asignacion al acceso");

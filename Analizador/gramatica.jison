@@ -71,16 +71,17 @@
     var  Selecciona= require("./Arbol/Sentencias/Selecciona");
     var  Si= require("./Arbol/Sentencias/Si");
 
- var errores = require("./Errores/listaErrores");
+       var errores = require("./Errores/listaErrores");
 
     function errorSintactico(valor, linea){
         var er = new errores();
         er.insertarErrorPos("Sintactico", "Ha ocurrido un error "+ valor,linea);
     }
 
-    function errosLexico (valor, linea){
+    function errosLexico (valor){
         var er= new errores();
-        er.insertarErrorPos("Lexico", "Ha ocurrido un error "+valor, linea);
+        er.insertarErrorPos("Lexico", "Ha ocurrido un error "+valor);
+		console.log("ERROR lexico");
     }
 
 
@@ -237,7 +238,7 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 
 
 <<EOF>>               return 'EOF'
-.                  errosLexico(yytext,yylineno);   return 'INVALID'
+.                  errosLexico(yytext);   return 'INVALID'
 
 /lex
 
@@ -256,8 +257,14 @@ INICIO: ARCHIVO EOF
 		a.setValores($1);
 		console.log("llegue hasta aqui");
 		return a;
-	};
-	/*|error EOF{ console.log($1+"69456"); console.log("dfdsfdf" +yytext); console.log("sfsdfdsf" + yylineno);   errorSintactico(yytext, yylineno); };*/
+	}
+	|error EOF
+	{
+		console.log("ERROR Sintanctico");
+		var er = new errores();
+        er.insertarErrorPos("Sintactico", "Ha ocurrido un error "+ yytext);
+		return null;
+	 };
 
 ARCHIVO: SENT_ARCHIVO 
 		{

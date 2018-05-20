@@ -28,17 +28,22 @@
         // TODO code application logic here
 
 
-        Tree tree = nuevo Tree();
+        Tree arbol = nuevo Tree();
        
-       tree.root = tree.insert(tree.root, 10);
+
+        arbol.root = arbol.insert(arbol.root, 10);
         
 
-        imprimir(9);
-        imprimir(tree.root.key);
-        imprimir(tree.root.height);
+        /*imprimir(temp.key);
+        imprimir(temp.height);
+
+        arbol.root = arbol.insert(arbol.root, 10);
+        imprimir("Alina");
+        imprimir(arbol.root.key);
+        imprimir(arbol.root.height);
         imprimir("Alina");
 
-        /*
+        
         tree.root = tree.insert(tree.root, 20);
         
         tree.root = tree.insert(tree.root, 30);
@@ -144,9 +149,7 @@ clase Tree {
 
         si (node2 == nada) {
         Es_verdadero {
-        	 imprimir(66);
              node o = nuevo node(key);
-             imprimir(o.key);
              retorno o;
         }
 		}
@@ -192,7 +195,7 @@ clase Tree {
 
         // Left Right Case
         si (balance > 1 && key > node2.left.key) {Es_verdadero{
-            node2left = leftRotate(node2.left);
+            node2.left = leftRotate(node2.left);
             retorno rightRotate(node2);
         }}
         fin-si

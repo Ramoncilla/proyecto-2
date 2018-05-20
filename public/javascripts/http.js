@@ -5,11 +5,7 @@ $(document).ready(function(){
       e.preventDefault();
     });
 
-/*
-    $('.btn-load').on('click',function(e){
-      e.preventDefault(); 
-    });*/
-
+    
     $('#post-lesson').on("submit", function(e){
       e.preventDefault();
       var formData = new FormData($('#post-lesson')[0]);
