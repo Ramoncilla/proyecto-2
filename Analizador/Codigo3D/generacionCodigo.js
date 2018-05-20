@@ -60,70 +60,128 @@ generacionCodigo.prototype.setValores = function(sentAr){
 
 /*---------------------------- Generacion del Codigo 3D ---------------------------- */
  
-generacionCodigo.prototype.generar3D= function(){
-	errores.reiniciar();
+generacionCodigo.prototype.generar3D= function(parentCallback){
 
-	// 1. se llena las estructuras de clases y de importaciones
-	this.generarClases();
 
-	//2. Generan los elementos que estemos importando
-	this.generarImportaciones();
 
-	//3. Se crea la tabla de simbolos
-	this.generarSimbolosClase();
+	var firstSteps = function(callback, gcObject){
 
-	//4. Generar Codigo 3D por cada clase
-	var claseTemporal;
-	var sentTemporal;
-	var nombreClase="";
-	var nombreFuncion="";
-	var ambitos = new Ambito();
-	ambitos.inciarValores();
-  var funTemporal;
-	for(var i=0; i<this.listaClase.length; i++){
-		claseTemporal = this.listaClase[i];
-		nombreClase = claseTemporal.nombre;
-		ambitos.addAmbito(nombreClase);
-   
-		
-		//2. Traducimos funcion por funcion
-  
-		for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
-			//ambitos = new Ambito();
-			//ambitos.addAmbito(nombreClase);
-			funTemporal = claseTemporal.funciones.funciones[j];
-			ambitos.addAmbito(funTemporal.obtenerFirma());
-			nombreFuncion = funTemporal.obtenerFirma();
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
-			this.c3d.addCodigo("");
-			var etiquetaRetorno = this.c3d.getEtiqueta();
-			etiquetasRetorno.insertarEtiqueta(etiquetaRetorno);
 
-			//hacemos la diferencia entre constructores y funciones normales 
-			if(funTemporal.esConstructor){
-				//buscamos los atributos que poseen asignacion
-				var atributosAsignar = this.tablaSimbolos.obteberAtributosClase(nombreClase);
-				if(atributosAsignar!=0){
-					// el arreglo trae mas de algun atributo para asignar
-					var atriTemporal;
-					for(var h =0; h< atributosAsignar.length; h++){
-						atriTemporal = atributosAsignar[h];
-						this.escribir3D(atriTemporal.expresionAtributo, ambitos,nombreClase,funTemporal.obtenerFirma());
+		errores.reiniciar();
+
+		// 1. se llena las estructuras de clases y de importaciones
+		gcObject.generarClases();
+
+		//2. Generan los elementos que estemos importando
+		gcObject.generarImportaciones();
+
+		//3. Se crea la tabla de simbolos
+		gcObject.generarSimbolosClase();
+
+		//4. Generar Codigo 3D por cada clase
+		var claseTemporal;
+		var sentTemporal;
+		var nombreClase="";
+		var nombreFuncion="";
+		var ambitos = new Ambito();
+		ambitos.inciarValores();
+	  var funTemporal;
+		for(var i=0; i<gcObject.listaClase.length; i++){
+			claseTemporal = gcObject.listaClase[i];
+			nombreClase = claseTemporal.nombre;
+			ambitos.addAmbito(nombreClase);
+	   
+			//1. Traducimos el principal si es que posee
+			if(claseTemporal.principal_met!=null){
+				nombreFuncion = nombreClase+"_PRINCIPAL";
+				var nombreAmb= nombreClase+"_PRINCIPAL";
+				ambitos.addAmbito(nombreAmb);
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("begin, , , "+nombreAmb);
+				gcObject.c3d.addCodigo("");
+				var etiquetaReturn = gcObject.c3d.getEtiqueta();
+				etiquetasRetorno.insertarEtiqueta(etiquetaReturn);
+				for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
+					sentTemporal = claseTemporal.principal_met.sentencias[j];
+					gcObject.escribir3D(sentTemporal, ambitos, nombreClase, nombreAmb);
+				}
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo(etiquetaReturn+":");
+				etiquetasRetorno.eliminarActual();
+				gcObject.c3d.addCodigo("end, , "+nombreAmb);
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("");
+				ambitos.ambitos.shift();
+				
+			}
+			//2. Traducimos funcion por funcion
+	  
+			for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
+				funTemporal = claseTemporal.funciones.funciones[j];
+				ambitos.addAmbito(funTemporal.obtenerFirma());
+				nombreFuncion = funTemporal.obtenerFirma();
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("begin, , , "+funTemporal.obtenerFirma());
+				gcObject.c3d.addCodigo("");
+				var etiquetaRetorno = gcObject.c3d.getEtiqueta();
+				etiquetasRetorno.insertarEtiqueta(etiquetaRetorno);
+				// instanciamos parametros 
+	/*
+				var parametrosFuncion = funTemporal.parametros;
+				if(parametrosFuncion.parametros!=0){
+					var parametroTemporal ;
+	                var cont = 1;
+					for(var i =0; i<parametrosFuncion.parametros.length; i++){
+						parametroTemporal = parametrosFuncion.parametros[i];
+						var simb = gcObject.tablaSimbolos.obtenerSimbolo(parametroTemporal.getNombre(),ambitos, false);
+						//var simb = gcObject.tablaSimbolos.obtenerNombreParametro(nombreClase+"_"+nombreFuncion,cont);
+						if(simb!= null){
+							if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+								gcObject.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
+								gcObject.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,nombreClase,nombreFuncion);
+							}
+
+
+							
+
+						}else{
+							errores.insertarError("Semabtico", "No se ha encontrado simbolo de parametro "+ cont);
+						}
+						cont++;
+					}
+
+
+				}*/
+
+
+				//hacemos la diferencia entre constructores y funciones normales 
+				if(funTemporal.esConstructor){
+					//buscamos los atributos que poseen asignacion
+					var atributosAsignar = gcObject.tablaSimbolos.obteberAtributosClase(nombreClase);
+					if(atributosAsignar!=0){
+						// el arreglo trae mas de algun atributo para asignar
+						var atriTemporal;
+						for(var h =0; h< atributosAsignar.length; h++){
+							atriTemporal = atributosAsignar[h];
+							gcObject.escribir3D(atriTemporal.expresionAtributo, ambitos,nombreClase,funTemporal.obtenerFirma());
+						}
 					}
 				}
+				for(var k =0; k<funTemporal.sentencias.length; k++){
+					sentTemporal = funTemporal.sentencias[k];
+					gcObject.escribir3D(sentTemporal,ambitos,nombreClase,funTemporal.obtenerFirma());
+				}
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo(etiquetaRetorno+":");
+				etiquetasRetorno.eliminarActual();
+				gcObject.c3d.addCodigo("end, , "+funTemporal.obtenerFirma());
+				gcObject.c3d.addCodigo("");
+				gcObject.c3d.addCodigo("");
+				ambitos.ambitos.shift();
 			}
-			for(var k =0; k<funTemporal.sentencias.length; k++){
-				sentTemporal = funTemporal.sentencias[k];
-				this.escribir3D(sentTemporal,ambitos,nombreClase,funTemporal.obtenerFirma());
-			}
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo(etiquetaRetorno+":");
-			etiquetasRetorno.eliminarActual();
-			this.c3d.addCodigo("end, , "+funTemporal.obtenerFirma());
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("");
+
 			ambitos.ambitos.shift();
 			//ambitos.ambitos.shift();
 		}
@@ -156,22 +214,80 @@ generacionCodigo.prototype.generar3D= function(){
 			//ambitos.ambitos.shift();
 			
 		}
-
-		ambitos.ambitos.shift();
+		callback();
+	}
+	var writeCode = function(callback, gcObject){
+		fs.writeFile('./codigo3DGenerado.txt', gcObject.c3d.codigo3D, function(err, data){
+    		if (err) console.log(err);
+    		callback();
+		});
+	}
+	var writeSymbolTable = function(callback, gcObject){
+		fs.writeFile('./TablaSimbolos.html',gcObject.tablaSimbolos.obtenerHTMLTabla(), function(err, data){
+    		if (err) console.log(err);
+    		callback();
+		});
+	};
+	var writeErrors = function(callback){
+		fs.writeFile('./Errores.html', errores.obtenerErroresHTML(), function(err, data){
+    		if (err) console.log(err);
+    		callback();
+		});
 	}
 
-	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
-	fs.writeFileSync('./TablaSimbolos.html',this.tablaSimbolos.obtenerHTMLTabla());
-	fs.writeFileSync('./Errores.html', errores.obtenerErroresHTML());
+	var init = function(callback, gcObject){
+		firstSteps(function(){
+			writeCode(function(){
+				writeSymbolTable(function(){
+					writeErrors(function(){
 
-	var a = new analizInterprete();
-	a.Ejecutar3D(this.c3d.codigo3D,this.buscarPrincipal());
-	console.log("Impresion");
-	console.log(a.cadenaImpresion);
-	fs.writeFileSync('./Heap.html', a.imprimirHeap());
-	fs.writeFileSync('./Stack.html', a.imprimirStack());
-	fs.writeFileSync('./temporales.html',a.temporales.imprimirHTML());
-	return this.tablaSimbolos.obtenerHTMLTabla();
+					});
+				}, gcObject);
+			}, gcObject);
+
+			var writeHeap = function(callback, a){
+				fs.writeFile('./Heap.html', a.imprimirHeap(), function(err, data){
+	    			if (err) console.log(err);
+	    			callback();
+				});
+			};
+
+			var writeStack = function(callback, a){
+				fs.writeFile('./Stack.html', a.imprimirStack(), function(err, data){
+	    			if (err) console.log(err);
+	    			callback();
+				});
+			}
+
+			var writeTemps = function(callback, a){
+				fs.writeFile('./temporales.html',a.temporales.imprimirHTML(), function(err, data){
+	    			if (err) console.log(err);
+	    			callback();
+				});
+			}
+
+			var a = new analizInterprete();
+			a.Ejecutar3D(gcObject.c3d.codigo3D,gcObject.buscarPrincipal());
+			console.log("Impresion");
+			console.log(a.cadenaImpresion);
+			writeHeap(function(){
+				writeStack(function(){
+					writeTemps(function(){
+
+					}, a);
+				}, a);
+			}, a);
+
+		}, gcObject);
+
+		callback(gcObject);
+
+	}
+	
+	init(function(gcObject){
+		parentCallback(gcObject.tablaSimbolos.obtenerHTMLTabla());
+	}, this);
+	
 
 };
 
@@ -6551,14 +6667,23 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 
 	var mensajeMostrar = nodo.expresionCadena; 
 	var nombreVarAsignar = nodo.nombreVariable;
-	console.log("TE AMO PREDITO LINDO     <3");
+	
+	
+	global.io.emit('news', { msgToShow: mensajeMostrar });	
 	console.log(mensajeMostrar);
 	console.log(nombreVarAsignar);
-/*	while(true){
 
+    
+    
+
+    var contents = "";
+	while(contents === ""){
+
+		contents = fs.readFileSync('/var/temp.txt', 'utf8');
 	}
-*/    	
 
+	//contents - valor que se le debe de asignar a la variable
+    fs.writeFileSync('/var/temp.txt', '', 'utf8');
 
 };
 

@@ -1,5 +1,6 @@
 
 
+<<<<<<< HEAD
 begin, , , Node_vacio_Node_entero
 
 // Asignando atributo key
@@ -1253,5 +1254,39 @@ L49:
 
 L48:
 end, , Tree_vacio_postOrder_Node
+=======
+begin, , , prueba_PRINCIPAL
+
+// Resolviendo una cadena 
++, H, 0, t1; //apuntaodr a cadena 
++, H, 1, t2; //apu donde inicia la cadena
+<=, t1, t2, heap; //guaradnod donde inicia la cadena 
++, H, 1, H;
+<=, H, 8, heap; //guardando el tamanio de la cadena
++, H, 1, H;
++, H, 0, t3; // referencia de donde iniciar el primer caracter de la cadena
+<=, H, 98, heap; //guardadndo b
++, H, 1, H;
+<=, H, 108, heap; //guardadndo l
++, H, 1, H;
+<=, H, 111, heap; //guardadndo o
++, H, 1, H;
+<=, H, 99, heap; //guardadndo c
++, H, 1, H;
+<=, H, 107, heap; //guardadndo k
++, H, 1, H;
+<=, H, 105, heap; //guardadndo i
++, H, 1, H;
+<=, H, 110, heap; //guardadndo n
++, H, 1, H;
+<=, H, 103, heap; //guardadndo g
++, H, 1, H;
+<=, H, 34, heap; // ingresando caracter de escape de la cadena
++, H, 1, H;
+print("%s", t1);
+
+L1:
+end, , prueba_PRINCIPAL
+>>>>>>> refactor
 
 

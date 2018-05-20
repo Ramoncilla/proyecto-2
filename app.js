@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 
 var analizerRouter = require('./routes/analizer');
 var indexRouter = require('./routes/index');
@@ -15,6 +16,7 @@ var app = express();
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var flag = false;
 io.on('connection', function(socket){ 
 	console.log("client connected");
 	socket.on('send.message', function(data){
@@ -27,10 +29,14 @@ io.on('connection', function(socket){
 		});
 
     });
+  socket.on('send.value', function(data){
+      flag = true;
+  });
 
 
 });
 global.io = io;
+global.flag = flag;
 server.listen(4200);
 
 
@@ -52,7 +58,37 @@ app.use('/new-Alesson',indexRouter);
 app.use('/postLesson',lessonRouter);
 app.use('/cargaMasiva',loadController);
 app.use('/editor', editorRouter);
- 
+
+app.get('/getHeap',function(req,res){
+       
+     res.sendFile(__dirname +'/Heap.html');
+
+});
+app.get('/getStack',function(req,res){
+       
+     res.sendFile(__dirname +'/Stack.html');
+
+});
+app.get('/getSymbolTable',function(req,res){
+       
+     res.sendFile(__dirname +'/TablaSimbolos.html');
+
+});
+app.get('/getErrors',function(req,res){
+       
+     res.sendFile(__dirname +'/Errores.html');
+
+});
+app.get('/getTemps',function(req,res){
+       
+     res.sendFile(__dirname +'/temporales.html');
+
+}); 
+app.get('/getGeneratedCode',function(req,res){
+       
+     res.sendFile(__dirname +'/codigo3DGenerado.txt');
+
+}); 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

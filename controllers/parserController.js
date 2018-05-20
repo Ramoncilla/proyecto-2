@@ -4,7 +4,7 @@ var generacionCodigo = require("../Analizador/Codigo3D/generacionCodigo");
 var listaErrores = require("../Analizador/Errores/listaErrores");
 var errores= new listaErrores();
 
- 
+
 exports.parse_string = function(req, res) {
     var cadenaArchivo = req.body.string_file;
     var a = grammar.parse(cadenaArchivo);
@@ -13,12 +13,14 @@ exports.parse_string = function(req, res) {
     {
       var generador3D = new generacionCodigo();
       generador3D.setValores(a);
-      cadena3D= generador3D.generar3D();
+      generador3D.generar3D(function(cadena3D){
+         res.send(cadena3D);
+      });
     }
     else{
       errores.insertarError("Semantico","Ha ocurrido algun error en la generacion del arbol, revisar sintaxis");
     }
-    res.send(cadena3D);
+   
 };
 
 
