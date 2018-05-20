@@ -1,0 +1,37 @@
+clase Entrada_1{ 
+			publico vacio Llenar_Arreglo(){
+		        Objeto obj[5];
+                objeto b1 =Insertar1(5, 1);
+                objeto b2 =Insertar1(4, 2);
+                objeto b3= Insertar1(3, 3);
+		        obj [0] = b1;
+		        obj [1] = b2;
+		        obj [2] = b3;
+		        caracter salida [100];
+		        Repetir_contando (variable: i; desde: 0; hasta: 2){
+		        	concatenar (salida, "Salida Posicion #E : X = ", i);
+		        	imprimir(obj[i].x);
+                    //concatenar (salida, convertirAcadena(obj[i].x));
+		        	imprimir (salida);
+		        }
+		    }
+		    privado Objeto Insertar1(entero x, entero y){
+		        objeto j = nuevo objeto(x);
+                retorno j; //nuevo Objeto(x);;
+		    }
+            Entrada_1(){
+
+            }
+            
+			principal()
+			{
+                Entrada_1 p = nuevo Entrada_1();
+				p.Llenar_Arreglo();
+			}
+		}
+		clase Objeto{
+		    publico entero x = 0;
+		    publico Objeto(entero x){
+		        este.x = x;
+		    }
+		}

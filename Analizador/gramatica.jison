@@ -257,14 +257,14 @@ INICIO: ARCHIVO EOF
 		a.setValores($1);
 		console.log("llegue hasta aqui");
 		return a;
-	}
-	|error EOF
+	};
+	/*|error EOF
 	{
 		console.log("ERROR Sintanctico");
 		var er = new errores();
         er.insertarErrorPos("Sintactico", "Ha ocurrido un error "+ yytext);
 		return null;
-	 };
+	 };*/
 
 ARCHIVO: SENT_ARCHIVO 
 		{

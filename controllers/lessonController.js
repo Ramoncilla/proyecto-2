@@ -25,3 +25,10 @@ exports.createLesson = function(req, res) {
 
 
 
+exports.mostrarLecciones = function(req, res){
+
+    var lecciones = listLesson.getLessonType(0);
+
+
+    res.send(lecciones);
+};

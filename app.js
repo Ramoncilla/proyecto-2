@@ -12,6 +12,8 @@ var lessonRouter = require('./routes/lesson');
 var loadController = require('./routes/loadFile');
 var editorRouter = require('./routes/editor');
 
+
+
 var app = express();
 
 var server = require('http').createServer(app);
@@ -58,6 +60,7 @@ app.use('/new-Alesson',indexRouter);
 app.use('/postLesson',lessonRouter);
 app.use('/cargaMasiva',loadController);
 app.use('/editor', editorRouter);
+//app.use('/showLesson',lessonRouter);
 
 app.get('/getHeap',function(req,res){
        

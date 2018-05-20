@@ -19,5 +19,8 @@ router.post('/save-value', function(req, res){
 	res.send(msg);
 });
 
+//router.post('/showLesson', lessonController.mostrarLecciones);
+
+
 
 module.exports = router;
