@@ -596,14 +596,19 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
     switch(operador){
 
         case "!#":{
-            console.log("parte decimal de un numero   ");
+           // console.log("parte decimal de un numero   ");
             var v1 = this.resolverValor(val1);
             var varAsig = valCont.valor;
             if(v1!= "nulo"){
                 var res = (v1+"").valueOf(); 
                 var posPunto = res.indexOf(".");
-                var decimal =  res.substring(posPunto+1, res.length);
-                var ret = parseInt(decimal);
+                var ret;
+                if(posPunto!=-1){
+                    var decimal =  res.substring(posPunto+1, res.length);
+                    ret = parseInt(decimal);
+                }else{
+                    ret = 1;
+                }
                 var temp = new temporal(varAsig,ret);
                 this.temporales.insertarTemporal(temp);
             }else{
@@ -613,7 +618,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
         }
 
         case "%#":{
-            console.log("parte parte entera  de un numero   ");
+            //console.log("parte parte entera  de un numero   ");
             var v1 = this.resolverValor(val1);
             var varAsig = valCont.valor;
             if(v1!= "nulo"){
@@ -627,7 +632,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
         }
 
         case "log10":{
-            console.log("ENTRE  un LOGARITMO   ");
+           // console.log("ENTRE  un LOGARITMO   ");
             var v1 = this.resolverValor(val1);
             var varAsig = valCont.valor;
             if(v1!= "nulo"){
@@ -641,7 +646,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
         }
 
         case "%%":{
-            console.log("ENTRE  un modODULOE   ");
+           // console.log("ENTRE  un modODULOE   ");
             var v1 = this.resolverValor(val1);
             var varAsig = valCont.valor;
             if(v1!= "nulo"){
@@ -656,7 +661,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
 
         case "##":{
 
-            console.log("ENTRE  un TRUNCCC  ");
+           // console.log("ENTRE  un TRUNCCC  ");
             var v1 = this.resolverValor(val1);
             var varAsig = valCont.valor;
             if(v1!= "nulo"){
@@ -777,7 +782,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                 if(v2== "vacio"){
                     v2=0;
                 }
-                var res = parseFloat(v1) ^ parseFloat(v2);
+                var res = Math.pow(parseFloat(v1) , parseFloat(v2));
                 var temp = new temporal(varAsig,res);
                 this.temporales.insertarTemporal(temp);
             }else{

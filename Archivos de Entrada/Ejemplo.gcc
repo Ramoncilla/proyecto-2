@@ -1,70 +1,48 @@
 
-
-clase holis {
-
-caracter nombre[20];
-
-  holis(caracter n[20]){
-
-    este.nombre = n;
-    imprimir(este.nombre);
-imprimir(n);
- 
-  }
-}
-
-
-clase individuo {
-
-caracter nombre[20];
-entero edad;
-holis g;
-
-
-publico individuo(entero edad, caracter nom[20]){
-  este.nombre= nom;
-  este.edad= edad;
-  imprimir(este.nombre);
-  imprimir(este.edad);
-  g = nuevo holis(este.nombre);
- 
-  
- 
-}
-
-
-
-}
-
-
-
-
-
 clase ejemplos{
 
 
   principal(){
 
-    decimal temp1 = 3*7-8/2-8*(5-10);
-        caracter texto[25] = "2.1) 30% >>> ";
-        imprimir(texto);
-        concatenar(texto, " #D", temp1);
-        imprimir(texto);
+     
 
+
+imprimir("7) Operaciones Conjuntas");
+        si(!(5*3-1 == 14) && !(!(15 == 6-1))){
+            es_verdadero{
+                imprimir("Salida incorrecta!!");
+            }
+            es_falso{
+                decimal var = -1*(58/6+9+9-1*8/2*17);
+                imprimir("var1");
+                imprimir(var);
+                imprimir(convertirAcadena(var));
+
+
+                decimal var2 = 48/4*79-2+8;
+                imprimir("var2");
+                imprimir(var2);
+                imprimir(convertirAcadena(var2));
 
 /*
-    caracter h[20]= "Alina";
-    imprimir(h);
-    individuo j ;
-    j = nuevo individuo(25, "poPo");
+                Caracter salida[20];
+              
+                concatenar(salida,"#D",var2);
+                imprimir(salida);
+                si(salida == "41954"){
+                    es_verdadero{
+                        imprimir("Resultado: 41954");
+                    }
+                    es_falso{
+                        imprimir("Salida incorrecta!!");
+                    }
+                    }
+                fin-si*/
+            }
+            }
+        fin-si
 
-    imprimir(j.nombre);
-    imprimir(j.edad);
-    j.nombre = "luzzz";
-    imprimir(j.nombre);
 
-    
-   ejemplos p = nuevo ejemplos(j);*/
   }
 
 /*

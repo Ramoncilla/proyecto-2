@@ -14,6 +14,26 @@ function Ambito(){
 	this.valContador=0;
 }
 
+
+
+
+Ambito.prototype.inciarValores = function(){
+	this.ambitos =[];
+	this.valEstructura=0;
+	this.valSi=0;
+	this.valElse=0;
+	this.valCaso=0;
+	this.valDefecto=0;
+	this.valRepetirMientras=0;
+	this.valHacerMientras=0;
+	this.valCicloX=0;
+	this.valRepetir=0;
+	this.valRepetirContando=0;
+	this.valEnciclar=0;
+	this.valContador=0;
+
+};
+
 Ambito.prototype.setAmbitos = function(arr){
 	this.ambitos=arr;
 };
@@ -26,7 +46,7 @@ Ambito.prototype.addEstructura = function() {
 	this.valEstructura++;
 	this.ambitos.unshift("ESTRUCTURA"+this.valEstructura);
 };
-
+ 
 Ambito.prototype.addSi = function() {
 	this.valSi++;
 	this.ambitos.unshift("SI"+this.valSi);
@@ -34,7 +54,7 @@ Ambito.prototype.addSi = function() {
 
 Ambito.prototype.addElse = function() {
 	this.valElse++;
-	this.ambitos.unshift("ELSE"+this.valElse);
+	this.ambitos.unshift("ELSE");
 };
 
  

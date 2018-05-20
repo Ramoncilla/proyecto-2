@@ -632,12 +632,18 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         for(var i=0; i<verdaderas.length;i++){
             this.simbMet(verdaderas[i],ambitos, parametros);
         }  
-        ambitos.ambitos.shift();
-        ambitos.addElse();
+       
+
+        if(falsas!=0){
+            ambitos.addElse();
         for(var i=0; i<falsas.length;i++){
             this.simbMet(falsas[i],ambitos, parametros);
         }  
         ambitos.ambitos.shift();
+
+        }
+        ambitos.ambitos.shift();
+        
     }
 
     if(sent instanceof Repetir_Mientras){

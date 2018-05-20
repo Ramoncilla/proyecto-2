@@ -77,40 +77,20 @@ generacionCodigo.prototype.generar3D= function(){
 	var sentTemporal;
 	var nombreClase="";
 	var nombreFuncion="";
-	var ambitos = new Ambito();
+	var ambitos; // = new Ambito();
+	//ambitos.inciarValores();
   var funTemporal;
 	for(var i=0; i<this.listaClase.length; i++){
 		claseTemporal = this.listaClase[i];
 		nombreClase = claseTemporal.nombre;
-		ambitos.addAmbito(nombreClase);
+		//ambitos.addAmbito(nombreClase);
    
-		//1. Traducimos el principal si es que posee
-		if(claseTemporal.principal_met!=null){
-			nombreFuncion = nombreClase+"_PRINCIPAL";
-			var nombreAmb= nombreClase+"_PRINCIPAL";
-			ambitos.addAmbito(nombreAmb);
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("begin, , , "+nombreAmb);
-			this.c3d.addCodigo("");
-			var etiquetaReturn = this.c3d.getEtiqueta();
-			etiquetasRetorno.insertarEtiqueta(etiquetaReturn);
-			for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
-				sentTemporal = claseTemporal.principal_met.sentencias[j];
-				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreAmb);
-			}
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo(etiquetaReturn+":");
-			etiquetasRetorno.eliminarActual();
-			this.c3d.addCodigo("end, , "+nombreAmb);
-			this.c3d.addCodigo("");
-			this.c3d.addCodigo("");
-			ambitos.ambitos.shift();
-			
-		}
+		
 		//2. Traducimos funcion por funcion
   
 		for(var j = 0; j<claseTemporal.funciones.funciones.length; j++){
+			ambitos = new Ambito();
+			ambitos.addAmbito(nombreClase);
 			funTemporal = claseTemporal.funciones.funciones[j];
 			ambitos.addAmbito(funTemporal.obtenerFirma());
 			nombreFuncion = funTemporal.obtenerFirma();
@@ -120,33 +100,6 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			var etiquetaRetorno = this.c3d.getEtiqueta();
 			etiquetasRetorno.insertarEtiqueta(etiquetaRetorno);
-			// instanciamos parametros 
-/*
-			var parametrosFuncion = funTemporal.parametros;
-			if(parametrosFuncion.parametros!=0){
-				var parametroTemporal ;
-                var cont = 1;
-				for(var i =0; i<parametrosFuncion.parametros.length; i++){
-					parametroTemporal = parametrosFuncion.parametros[i];
-					var simb = this.tablaSimbolos.obtenerSimbolo(parametroTemporal.getNombre(),ambitos, false);
-					//var simb = this.tablaSimbolos.obtenerNombreParametro(nombreClase+"_"+nombreFuncion,cont);
-					if(simb!= null){
-						if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
-							this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
-							this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,nombreClase,nombreFuncion);
-						}
-
-
-						
-
-					}else{
-						errores.insertarError("Semabtico", "No se ha encontrado simbolo de parametro "+ cont);
-					}
-					cont++;
-				}
-
-
-			}*/
 
 			//hacemos la diferencia entre constructores y funciones normales 
 			if(funTemporal.esConstructor){
@@ -172,9 +125,39 @@ generacionCodigo.prototype.generar3D= function(){
 			this.c3d.addCodigo("");
 			this.c3d.addCodigo("");
 			ambitos.ambitos.shift();
+			ambitos.ambitos.shift();
 		}
 
-		ambitos.ambitos.shift();
+
+		//1. Traducimos el principal si es que posee
+		if(claseTemporal.principal_met!=null){
+			ambitos = new Ambito();
+			ambitos.addAmbito(nombreClase);
+			nombreFuncion = nombreClase+"_PRINCIPAL";
+			var nombreAmb= nombreClase+"_PRINCIPAL";
+			ambitos.addAmbito(nombreAmb);
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("begin, , , "+nombreAmb);
+			this.c3d.addCodigo("");
+			var etiquetaReturn = this.c3d.getEtiqueta();
+			etiquetasRetorno.insertarEtiqueta(etiquetaReturn);
+			for(var j = 0; j< claseTemporal.principal_met.sentencias.length; j++){
+				sentTemporal = claseTemporal.principal_met.sentencias[j];
+				this.escribir3D(sentTemporal, ambitos, nombreClase, nombreAmb);
+			}
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo(etiquetaReturn+":");
+			etiquetasRetorno.eliminarActual();
+			this.c3d.addCodigo("end, , "+nombreAmb);
+			this.c3d.addCodigo("");
+			this.c3d.addCodigo("");
+			ambitos.ambitos.shift();
+			ambitos.ambitos.shift();
+			
+		}
+
+		//ambitos.ambitos.shift();
 	}
 
 	fs.writeFileSync('./codigo3DGenerado.txt',this.c3d.codigo3D);
@@ -193,8 +176,28 @@ generacionCodigo.prototype.generar3D= function(){
 };
 
 generacionCodigo.prototype.buscarPrincipal = function(){
+	console.log("PRINCIPALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 	var claseTemporal;
-	for(var i = (this.listaClase.length-1); i>=0; i++){
+	var j =0;
+	if(this.listaClase.length==1){
+		claseTemporal = this.listaClase[0];
+			if(claseTemporal.principal_met!=null){
+				return claseTemporal.nombre+"_PRINCIPAL";
+			}
+		
+	}if(this.listaClase.length>1){
+		for(var i = this.listaClase.length -1; 0<i; i--){
+			claseTemporal = this.listaClase[i];
+			if(claseTemporal.principal_met!=null){
+				return claseTemporal.nombre+"_PRINCIPAL";
+			}
+		}
+		
+	}
+
+
+
+	for(var i = this.listaClase.length -1; 0<i; i--){
 		claseTemporal = this.listaClase[i];
 		if(claseTemporal.principal_met!=null){
 			return claseTemporal.nombre+"_PRINCIPAL";
@@ -327,8 +330,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 	var nombreSentecia=sentNombre.obtenerNombreSentencia(nodo);
 	 
 	switch(nombreSentecia.toUpperCase()){
-
-
 
 		case "LEER_TECLADO":{
 			this.leerTeclado(nodo, ambitos, clase, metodo);
@@ -900,7 +901,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 						}
 
 					}else{
-						errores.insertarError("Semantico", "No existe la vairable "+ nombreVar);
+						errores.insertarError("Semantico", "No existe la vairable "+ nombreVar + ambitos.getAmbitos());
 					}
 					break;
 				}
@@ -1835,7 +1836,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 						sentTemp= sentVerdaderas[i];
 						this.escribir3D(sentTemp,ambitos,clase,metodo);
 					}
-					ambitos.ambitos.shift();
+					//ambitos.ambitos.shift();
 				}
 				this.c3d.addCodigo("jmp, , , "+ etiqSalida+"; // salida del if");
 				this.c3d.addCodigo(retExpresion.getEtiquetasFalsas());
@@ -1849,6 +1850,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 					ambitos.ambitos.shift();
 				}
 				this.c3d.addCodigo(etiqSalida+":");
+				ambitos.ambitos.shift();
 
 			}else{
 				errores.insertarError("Semantico", "Ha ocurrido un error al resolver la expreison para SI");
@@ -2855,6 +2857,7 @@ generacionCodigo.prototype.resolverExpresion = function(nodo, ambitos, clase, me
 			var exp = nodo.expresionACadena;
 			var ret = this.resolverExpresion(exp, ambitos, clase, metodo);
 			var c = this.convertirCadena2(ret);
+			return c;
 			break;
 		}
 
@@ -4094,11 +4097,15 @@ generacionCodigo.prototype.funcionConcatenar = function(nodo, ambitos, clase, me
 													 var c = this.convertirCadena2(retExp2);
 													 if(c.tipo.toUpperCase()== "CADENA"){
 														 var x = this.concatenarCadenas(retC1, c);
+														 /*this.asignarCadenaArreglo(nombreVar,x,ambitos,clase,metodo);
+														 console.log("hhhhhhhhhhhhhhhhhhhhhh");
+														 return;*/
 														 //jjjjjjjjjjjjaqui tiene que ver.. 
 														 if(x.tipo.toUpperCase() == "CADENA"){
 															 var y = this.concatenarCadenas(x, retC2);
 															 if(y.tipo.toUpperCase()== "CADENA"){
-																this.asignarCadenaArreglo(nombreVar,y,ambitos,clase,metodo);
+																 var h = this.concatenarCadenas(cadenaArreglo, y);
+																this.asignarCadenaArreglo(nombreVar,h,ambitos,clase,metodo);
 
 															 }else{
 																 errores.insertarError("Semantico", "No se ha podido realizar la concatenacion final");
@@ -6602,7 +6609,10 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 	console.log("TE AMO PREDITO LINDO     <3");
 	console.log(mensajeMostrar);
 	console.log(nombreVarAsignar);
-    	
+/*	while(true){
+
+	}
+*/    	
 
 
 };
