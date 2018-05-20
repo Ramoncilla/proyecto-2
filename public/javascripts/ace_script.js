@@ -16,24 +16,25 @@ $(document).ready(function(){
 
 	socket.on('news', function(data){
 
-		alert('Message recieved: ' + data.hello);
-		socket.emit('send.value', {
-			value : "value"
-		});
-		/*$.ajax(
-	      {
-	        type:"POST",
-	        url:" http://localhost:3000/save-value",
-	        data:{msg: "hi"},
-	        success: function(data){
-	          console.log("success!");
-	        },
-	        error: function(data){
-	          console.log("error!");
-	        }
-	  
-	      }
-    	);*/
+		var value = prompt(data.msgToShow, "");
+ 		if(value != null){
+ 			$.ajax(
+			      {
+			        type:"POST",
+			        url:" http://localhost:7000/set-value",
+			        data:{value: value},
+			        success: function(data){
+			          console.log("success!", data);
+			        },
+			        error: function(data){
+			          console.log("error!");
+			        }
+			  
+			      }
+    		);
+ 		}
+		
+		
 
 	});
 	document.getElementById("openFile").addEventListener('change', function(){
@@ -48,6 +49,94 @@ $(document).ready(function(){
 
 	$('.build-link').on('click', function(e){
 		e.preventDefault();
+
+		var getStats = function(){
+			$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getSymbolTable",
+			        
+			        success: function(data){
+			          	$('#menu1').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getErrors",
+			        
+			        success: function(data){
+			          	$('#menu2').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getStack",
+			        
+			        success: function(data){
+			          	$('#menu3').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getHeap",
+			        
+			        success: function(data){
+			          	$('#menu4').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getTemps",
+			        
+			        success: function(data){
+			          	$('#menu5').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getGeneratedCode",
+			        
+			        success: function(data){
+			          	editor_3d.setValue(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
+		}
+
 		var code = editor.getValue();
 		$.ajax(
 	      {
@@ -56,6 +145,7 @@ $(document).ready(function(){
 	        data:{string_file: code},
 	        success: function(data){
 	          console.dir(data);
+	          getStats();
 	        },
 	        error: function(data){
 	          console.dir(data);
@@ -63,11 +153,25 @@ $(document).ready(function(){
 	  
 	      }
     	);
+
 		
 	});
 	$('.debug-link').on('click', function(e){
 		e.preventDefault();
-		
+		$.ajax(
+	      {
+	        type:"POST",
+	        url:" http://localhost:7000/set-value",
+	        data:{value: "hi"},
+	        success: function(data){
+	          console.log("success!", data);
+	        },
+	        error: function(data){
+	          console.log("error!");
+	        }
+	  
+	      }
+    	);
 		
 	});
 	$('.resume-link').on('click', function(e){

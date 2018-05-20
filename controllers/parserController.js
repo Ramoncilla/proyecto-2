@@ -4,7 +4,7 @@ var generacionCodigo = require("../Analizador/Codigo3D/generacionCodigo");
 var listaErrores = require("../Analizador/Errores/listaErrores");
 var errores= new listaErrores();
 
- 
+
 exports.parse_string = function(req, res) {
     var cadenaArchivo = req.body.string_file;
     var a = grammar.parse(cadenaArchivo);

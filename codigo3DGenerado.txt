@@ -10,7 +10,7 @@ begin, , , prueba_PRINCIPAL
 <=, H, 8, heap; //guardando el tamanio de la cadena
 +, H, 1, H;
 +, H, 0, t3; // referencia de donde iniciar el primer caracter de la cadena
-<=, H, 66, heap; //guardadndo B
+<=, H, 98, heap; //guardadndo b
 +, H, 1, H;
 <=, H, 108, heap; //guardadndo l
 +, H, 1, H;

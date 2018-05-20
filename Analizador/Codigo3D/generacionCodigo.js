@@ -6665,20 +6665,23 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 
 	var mensajeMostrar = nodo.expresionCadena; 
 	var nombreVarAsignar = nodo.nombreVariable;
-	console.log("TE AMO PEDRITO LINDO     <3");
-	global.io.emit('news', { hello: 'world' });	
+	
+	
+	global.io.emit('news', { msgToShow: mensajeMostrar });	
 	console.log(mensajeMostrar);
 	console.log(nombreVarAsignar);
     
     
 
     var contents = "";
-	while(!global.flag){
+	while(contents === ""){
 
-		//contents = fs.readFileSync('temp.txt', 'utf8');
+		contents = fs.readFileSync('/var/temp.txt', 'utf8');
 	}
 
-   console.log("Continue execution");
+	//contents - valor que se le debe de asignar a la variable
+    fs.writeFileSync('/var/temp.txt', '', 'utf8');
+
 };
 
 

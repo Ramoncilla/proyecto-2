@@ -58,7 +58,37 @@ app.use('/new-Alesson',indexRouter);
 app.use('/postLesson',lessonRouter);
 app.use('/cargaMasiva',loadController);
 app.use('/editor', editorRouter);
- 
+
+app.get('/getHeap',function(req,res){
+       
+     res.sendFile(__dirname +'/Heap.html');
+
+});
+app.get('/getStack',function(req,res){
+       
+     res.sendFile(__dirname +'/Stack.html');
+
+});
+app.get('/getSymbolTable',function(req,res){
+       
+     res.sendFile(__dirname +'/TablaSimbolos.html');
+
+});
+app.get('/getErrors',function(req,res){
+       
+     res.sendFile(__dirname +'/Errores.html');
+
+});
+app.get('/getTemps',function(req,res){
+       
+     res.sendFile(__dirname +'/temporales.html');
+
+}); 
+app.get('/getGeneratedCode',function(req,res){
+       
+     res.sendFile(__dirname +'/codigo3DGenerado.txt');
+
+}); 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
