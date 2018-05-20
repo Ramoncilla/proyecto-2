@@ -17,10 +17,10 @@ $(document).ready(function(){
 	socket.on('news', function(data){
 
 		alert('Message recieved: ' + data.hello);
-		/*socket.emit('send.value', {
+		socket.emit('send.value', {
 			value : "value"
-		});*/
-		$.ajax(
+		});
+		/*$.ajax(
 	      {
 	        type:"POST",
 	        url:" http://localhost:3000/save-value",
@@ -33,7 +33,7 @@ $(document).ready(function(){
 	        }
 	  
 	      }
-    	);
+    	);*/
 
 	});
 	document.getElementById("openFile").addEventListener('change', function(){

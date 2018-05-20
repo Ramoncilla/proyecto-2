@@ -30,13 +30,7 @@ io.on('connection', function(socket){
 
     });
   socket.on('send.value', function(data){
-    fs.writeFile("temp.txt", "Hey there!", function(err) {
-    if(err) {
-        return console.log(err);
-    }
-
-    console.log("The file was saved!");
-}); 
+      flag = true;
   });
 
 
