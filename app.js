@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 
 var analizerRouter = require('./routes/analizer');
 var indexRouter = require('./routes/index');
@@ -15,6 +16,7 @@ var app = express();
 
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var flag = false;
 io.on('connection', function(socket){ 
 	console.log("client connected");
 	socket.on('send.message', function(data){
@@ -27,10 +29,20 @@ io.on('connection', function(socket){
 		});
 
     });
+  socket.on('send.value', function(data){
+    fs.writeFile("temp.txt", "Hey there!", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+}); 
+  });
 
 
 });
 global.io = io;
+global.flag = flag;
 server.listen(4200);
 
 

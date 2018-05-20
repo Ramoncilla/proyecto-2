@@ -14,5 +14,10 @@ router.get('/new-Glesson', function(req,res,next){
   res.render('new-lesson',{type:2});
 });
 
+router.post('/save-value', function(req, res){
+	var msg = req.body.msg;
+	res.send(msg);
+});
+
 
 module.exports = router;

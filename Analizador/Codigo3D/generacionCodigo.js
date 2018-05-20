@@ -6599,12 +6599,20 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 
 	var mensajeMostrar = nodo.expresionCadena; 
 	var nombreVarAsignar = nodo.nombreVariable;
-	console.log("TE AMO PREDITO LINDO     <3");
+	console.log("TE AMO PEDRITO LINDO     <3");
+	global.io.emit('news', { hello: 'world' });	
 	console.log(mensajeMostrar);
 	console.log(nombreVarAsignar);
-    	
+    
+    
 
+    var contents = "";
+	while(contents === ""){
 
+		contents = fs.readFileSync('temp.txt', 'utf8');
+	}
+
+   console.log("Continue execution");
 };
 
 

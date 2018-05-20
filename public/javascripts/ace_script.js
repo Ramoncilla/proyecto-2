@@ -14,6 +14,28 @@ $(document).ready(function(){
 		alert('Message recieved: ' + data.message);
 	});
 
+	socket.on('news', function(data){
+
+		alert('Message recieved: ' + data.hello);
+		/*socket.emit('send.value', {
+			value : "value"
+		});*/
+		$.ajax(
+	      {
+	        type:"POST",
+	        url:" http://localhost:3000/save-value",
+	        data:{msg: "hi"},
+	        success: function(data){
+	          console.log("success!");
+	        },
+	        error: function(data){
+	          console.log("error!");
+	        }
+	  
+	      }
+    	);
+
+	});
 	document.getElementById("openFile").addEventListener('change', function(){
         var fr = new FileReader();
         fr.onload=function(){
