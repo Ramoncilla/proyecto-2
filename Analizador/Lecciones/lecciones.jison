@@ -89,9 +89,9 @@ id  ([a-zA-Z_])(([a-zA-Z_])|([0-9]))*
 %% /* language grammar */
 
 ARCHIVO_LECCIONES : LECCIONES EOF {
-	console.dir($1);
 	return $1;
 	};
+
 
 
 	TITULO: titulo abrellave abreSentencia TEXTO  cierraSentencia cierraLlave{$$ = new tituloLeccion($4);};
@@ -106,6 +106,34 @@ ARCHIVO_LECCIONES : LECCIONES EOF {
 
 	EJEMPLO: ejemplo abrellave abreSentencia TEXTO  cierraSentencia cierraLlave{$$ = new ejemploLeccion($4); };
 
+
+
+
+/*
+
+valor: titulo	
+	|descripcion
+	|tarea
+	|resultado
+	|ejemplo;
+
+SENT : valor TEXTO
+	|tipo abrellave tipoLeccion cierraLlave;
+
+
+
+
+TITULO: titulo  abrellave TEXTO cierraLlave  {$$ = new tituloLeccion($2);};
+
+	DESCRIPCION: descripcion  abrellave TEXTO cierraLlave {$$ = new descripcionLeccion($2);};
+	
+	TAREA: tarea abrellave TEXTO cierraLlave {$$ = new tareaLeccion($2); };
+
+	RESULTADO: resultado abrellave TEXTO cierraLlave {$$ = new resultadoLeccion($2); };
+
+	TIPO_LECCION: tipo abrellave  tipoLeccion cierraLlave{$$ = new tipoLeccion($3); };
+
+	EJEMPLO: ejemplo abrellave  TEXTO cierraLlave  {$$ = new ejemploLeccion($2); };*/
 	 
 	tipoLeccion: gcoach{$$=$1;}
     	|acoach{$$=$1;};
@@ -137,8 +165,7 @@ ARCHIVO_LECCIONES : LECCIONES EOF {
 				$$.insertarValor($2);
 			};
 
-
-
+		
 		VALOR_LECCION: TITULO{$$=$1;}
 			|DESCRIPCION{$$=$1;}
 			|TAREA{$$=$1;}
@@ -146,6 +173,7 @@ ARCHIVO_LECCIONES : LECCIONES EOF {
 			|TIPO_LECCION{$$=$1;}
 			|EJEMPLO{$$=$1;}
 			|EJEMPLO2{$$=$1;}; 
+			
 
 
     TEXTO: ELEMENTO_TEXTO {$$ = $1;}

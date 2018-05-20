@@ -71,9 +71,15 @@ $(document).ready(function(){
       url:" /cargaMasiva",
       data:{string_file: cadenaArchivo},
       success: function(data){
-        console.dir(data);
+        if(data.res == true){
+          alert("Lecciones han sido cargadas con exito");
+          location.href ="/";
+        }else{
+          alert("Ha ocurrido un error con la carga de lecciones");
+        }
       },
       error: function(data){
+        console.log("errorr");
         console.dir(data);
       }
 

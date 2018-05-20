@@ -5,7 +5,7 @@ var fs = require("fs");
 
 function listaLecciones(){
     this.lecciones = [];
-    this.cargarLecciones();
+    //this.cargarLecciones();
 }
 
 var errores = new lErrores();
@@ -52,7 +52,7 @@ listaLecciones.prototype.writeLesson= function(){
 listaLecciones.prototype.getLessonType = function(type){
     var leccionTemporal;
     var listaHTML="";
-    //<a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+   
     for(var i =0; i<listaLecciones.prototype.lecciones.length; i++){
         leccionTemporal = listaLecciones.prototype.lecciones[i];
         if(type == 1 || type == 2){
