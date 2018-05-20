@@ -2059,8 +2059,16 @@ generacionCodigo.prototype.asignarPorSimboloIgual= function(nodoOperando, simbIg
 		if(retExpresion.tipo.toUpperCase() != "NULO"){
 			if(simbIgual== "="){
 				if((retExpresion.tipo.toUpperCase() == nodoOperando.tipo.toUpperCase())||(retExpresion.tipo.toUpperCase()== "NULO2")){
-					var l2 = "<=, "+nodoOperando.referencia+", "+ retExpresion.valor+", "+nodoOperando.estructura+"; // asignando variable ";
+					if(retExpresion.estructura.toUpperCase() == "STACK"){
+
+					}else{
+						var l2 = "<=, "+nodoOperando.referencia+", "+ retExpresion.valor+", "+nodoOperando.estructura+"; // asignando variable ";
 					this.c3d.addCodigo(l2);
+
+					}
+					
+					
+					
 				}else if(nodoOperando.tipo.toUpperCase() == "CARACTER" && retExpresion.tipo.toUpperCase()== "CADENA")
 				{
 					this.asignarCadenaArregloPorPosicion(nodoOperando,retExpresion,ambitos,clase,metodo);
