@@ -251,7 +251,7 @@ AnalizadorInterprete.prototype.ejecutarInstruccion= function(instruccion){
                 
                 if(tipo == "\"%s\"") {
                     //decimal
-                    var res = this.imprimir_str(vVal, 34);
+                    var res = this.imprimir_str(vVal, 36);
                     this.agregarImpresion(res);
                 }
 

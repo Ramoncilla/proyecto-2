@@ -633,7 +633,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
             this.simbMet(verdaderas[i],ambitos, parametros);
         }  
        
-
+        ambitos.ambitos.shift();
         if(falsas!=0){
             ambitos.addElse();
         for(var i=0; i<falsas.length;i++){
@@ -642,7 +642,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         ambitos.ambitos.shift();
 
         }
-        ambitos.ambitos.shift();
+        
         
     }
 
@@ -752,7 +752,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         apuntador++;
 
         }else{
-            lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
+            lErrores.insertarError("Semantico","No se ha podido crear el simbolo4 "+ nombreC+", debido a que existe en el ambito actual");
            // //console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
         }
          
@@ -773,7 +773,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         lista2.push(nuevoSimbolo);
         apuntador++;
     }else{
-        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo5 "+ nombreArreglo+", debido a que existe en el ambito actual");
        // //console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
     }
 
@@ -813,7 +813,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         lista2.push(nuevoSimbolo);
         apuntador++;
     }else{
-        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreCola+", debido a que existe en el ambito actual");
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo6 "+ nombreCola+", debido a que existe en el ambito actual");
 ////console.log("No se ha podido crear el simbolo "+nombreCola+", ya existe en el ambito actual");
     }
     }
@@ -831,7 +831,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         
         apuntador++;
     }else{
-        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreLista+", debido a que existe en el ambito actual");
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo 7"+ nombreLista+", debido a que existe en el ambito actual");
         //   //console.log("No se ha podido crear el simbolo "+nombreLista+", ya existe en el ambito actual");
         }
     }
@@ -848,7 +848,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         lista2.push(nuevoSimbolo);
         apuntador++;
     }else{
-        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePila+", debido a que existe en el ambito actual");
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo 8"+ nombrePila+", debido a que existe en el ambito actual");
           //  //console.log("No se ha podido crear el simbolo "+nombrePila+", ya existe en el ambito actual");
         }
     }
@@ -891,7 +891,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
         lista2.push(nuevoSimbolo);
         apuntador++;
     }else{
-        lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombrePuntero+", debido a que existe en el ambito actual");
+        lErrores.insertarError("Semantico","No se ha podido crear el simbolo1 "+ nombrePuntero+", debido a que existe en el ambito actual");
         ////console.log("No se ha podido crear el simbolo "+nombrePuntero+", ya existe en el ambito actual");
     }
     }
@@ -915,7 +915,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
                 lista2.push(nuevoSimbolo);
                 apuntador++;
             }else{
-                lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreC+", debido a que existe en el ambito actual");
+                lErrores.insertarError("Semantico","No se ha podido crear el simbolo2 "+ nombreC+", debido a que existe en el ambito actual");
                 //console.log("No se ha podido crear el simbolo "+nombreC+", ya existe en el ambito actual");
             }
         
@@ -936,7 +936,7 @@ var cont = this.existeEnAmbitoLocal(lista2, ambitos, nombreEd, parametros);
             lista2.push(nuevoSimbolo);
             apuntador++;
         }else{
-            lErrores.insertarError("Semantico","No se ha podido crear el simbolo "+ nombreArreglo+", debido a que existe en el ambito actual");
+            lErrores.insertarError("Semantico","No se ha podido crear el simbolo3 "+ nombreArreglo+", debido a que existe en el ambito actual");
             //console.log("No se ha podido crear el simbolo "+nombreArreglo+", ya existe en el ambito actual");
         }
         }

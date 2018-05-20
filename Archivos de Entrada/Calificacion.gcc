@@ -145,14 +145,14 @@ publico operaciones(){
 
         fun.ciclo_vida();
 
-        /*
+       imprimir(fun.factorial2(10));
 
-        Entero res = fun.fibonacci_recursivo(15);
-        imprimir("fibonacci_recursivo");
-        sal = "Salida Fibonacci Recursivo ";
-        concatenar(sal, res);
-        imprimir(sal);
-        
+       // Entero res = fun.fibonacci_recursivo(15);
+       // imprimir("fibonacci_recursivo");        
+        //caracter sal[50] = "Salida Fibonacci Recursivo ";
+        //concatenar(sal, " #E ",res);
+        //imprimir(sal);
+        /*
         fun.pedir_num();*/
     }
 
@@ -167,6 +167,60 @@ clase Funciones {
 funciones(){
     
 }
+
+
+
+
+publico decimal factorial2(entero n){
+
+
+si(n==0){
+    
+    es_verdadero{
+    retorno  1.0;
+
+    }
+    es_falso{
+    entero i = factorial2(n-1);
+    //imprimir(i);
+    retorno n*i;
+    
+    }
+}
+fin-si
+  
+}
+
+
+publico decimal factorial(entero n){
+    decimal fact=1.0;
+    entero i;
+    
+si(n==0){
+    
+    es_verdadero{
+    fact = 1.0;
+
+    }
+    es_falso{
+     repetir_contando(variable: k; desde:1; hasta:n){
+            fact=fact*k;
+     }
+
+    }
+}
+fin-si
+retorno fact;
+/*
+    if (n==0)
+        fact=1;
+    else
+        for(i=1;i<=n;i++)
+            fact=fact*i;
+ return fact;*/
+}
+
+
 
     publico vacio saludo(){
         imprimir("10) Saludo");
@@ -197,8 +251,6 @@ funciones(){
         imprimir("12) ciclo_vida");
         Persona Carlos;
         carlos = nuevo Persona(16, "Jose", "Martinez", 'M');
-        
-        
         Persona Josefina = nuevo Persona(15, "Luisa", "Tobar", 'F');
         Persona Carlitos = nuevo Persona();
         Entero cont = 0;
@@ -207,7 +259,6 @@ funciones(){
             si(cont ==4){
                 es_verdadero{
                     Carlitos = Carlos.reproducir(Josefina, "Carlitos");
-
                     Josefina.matrimonio(Carlos);
                     caracter text[80] = "Nombre Hijo: ";
                     imprimir(carlitos.nombre);
@@ -297,30 +348,25 @@ funciones(){
         Caracter ret[60] = nombre;
         concatenar(ret, " ");
         concatenar(ret, apellidos);
-        retornar ret;
+        retorno ret;
     }
     
     publico Persona reproducir(Persona pareja, Caracter nombre[30]){
     imprimir(nombre);
         si(este.genero != pareja.genero){
             es_verdadero{
-                imprimir("Nos podemos reproducir");
                 Persona bebe = nuevo Persona();
                 bebe.nombre = nombre;
                 bebe.apellido = este.apellido;
-                imprimir("bebe nombre");
-                imprimir(bebe.nombre);
-                imprimir("bebe apellido");
-                imprimir(bebe.apellido);
-                caracter ape[30]= bebe.apellido;
+                caracter ape[60]= bebe.apellido;
                 concatenar(ape, " ");
                 concatenar(ape, pareja.apellido);
                 bebe.apellido = ape;
-                retornar bebe;
+                retorno bebe;
             }
             }
         fin-si
-        retornar nulo;
+        retorno  nada;
     }
     
     publico vacio matrimonio(Persona conyuge){

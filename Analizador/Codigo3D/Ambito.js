@@ -54,7 +54,7 @@ Ambito.prototype.addSi = function() {
 
 Ambito.prototype.addElse = function() {
 	this.valElse++;
-	this.ambitos.unshift("ELSE");
+	this.ambitos.unshift("ELSE"+this.valElse);
 };
 
  

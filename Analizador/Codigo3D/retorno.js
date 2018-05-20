@@ -23,7 +23,7 @@ retorno.prototype.setValorCadena = function(valor){
 
 retorno.prototype.setValorVacio = function(){
     this.tipo= "NULO2";
-    this.tipo = 36;
+    this.valor = 36;
 };
  
 retorno.prototype.setValorEntero = function(valor){
