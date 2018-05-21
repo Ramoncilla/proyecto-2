@@ -29,28 +29,27 @@
 
 
         Tree arbol = nuevo Tree();
-       
-
-        arbol.root = arbol.insert(arbol.root, 10);
-        
-
-        /*imprimir(temp.key);
-        imprimir(temp.height);
-
-        arbol.root = arbol.insert(arbol.root, 10);
-        imprimir("Alina");
+        node n = arbol.insert(arbol.root, 10);
+        imprimir(4);
+        arbol.root = n;
         imprimir(arbol.root.key);
         imprimir(arbol.root.height);
-        imprimir("Alina");
+        imprimir(2);
 
+
+      
+
+        /*
         
-        tree.root = tree.insert(tree.root, 20);
-        
-        tree.root = tree.insert(tree.root, 30);
-        tree.root = tree.insert(tree.root, 40);
-        tree.root = tree.insert(tree.root, 50);
-        tree.root = tree.insert(tree.root, 25);
-        
+        arbol.root = arbol.insert(arbol.root, 10);
+        arbol.root = arbol.insert(arbol.root, 20);
+        arbol.root = arbol.insert(arbol.root, 30);
+        arbol.root = arbol.insert(arbol.root, 40);
+        arbol.root = arbol.insert(arbol.root, 50);
+        arbol.root = arbol.insert(arbol.root, 25);
+       
+          imprimir("Preorder traversal of constructed tree is : ");
+        arbol.postOrder(arbol.root);
  
 //             30
 //            /  \
@@ -214,10 +213,13 @@ clase Tree {
 
     vacio postOrder(Node node2) {
 
+
         si (node2 != {'\0'}) {Es_verdadero{
+            imprimir("si es nula la raiz");
+            imprimir(node2.key);
             postOrder(node2.left);
             postOrder(node2.right);
-            imprimir(node2.key);
+            
            // imprimir(concatenar(convertirACadena(node2.key), " "));
         }}
         Fin-SI

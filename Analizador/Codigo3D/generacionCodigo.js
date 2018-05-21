@@ -2059,13 +2059,14 @@ generacionCodigo.prototype.asignarPorSimboloIgual= function(nodoOperando, simbIg
 		if(retExpresion.tipo.toUpperCase() != "NULO"){
 			if(simbIgual== "="){
 				if((retExpresion.tipo.toUpperCase() == nodoOperando.tipo.toUpperCase())||(retExpresion.tipo.toUpperCase()== "NULO2")){
-					if(retExpresion.estructura.toUpperCase() == "STACK"){
+					
+						
 
-					}else{
-						var l2 = "<=, "+nodoOperando.referencia+", "+ retExpresion.valor+", "+nodoOperando.estructura+"; // asignando variable ";
-					this.c3d.addCodigo(l2);
+					
+					    var l2 = "<=, "+nodoOperando.referencia+", "+ retExpresion.valor+", "+nodoOperando.estructura+"; // asignando variable ";
+					    this.c3d.addCodigo(l2);
 
-					}
+					
 					
 					
 					
