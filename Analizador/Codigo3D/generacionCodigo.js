@@ -243,6 +243,13 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				});
 			}
 
+			var writeStrings = function(callback, a){
+				fs.writeFile('./resultado.txt',a.cadenaImpresion, function(err, data){
+	    			if (err) console.log(err);
+	    			callback();
+				});
+			}
+
 			var a = new analizInterprete();
 			a.Ejecutar3D(gcObject.c3d.codigo3D,gcObject.buscarPrincipal());
 			console.log("Impresion");
@@ -250,7 +257,8 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 			writeHeap(function(){
 				writeStack(function(){
 					writeTemps(function(){
-
+						writeStrings(function(){
+						},a);
 					}, a);
 				}, a);
 			}, a);
@@ -267,6 +275,12 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 	
 
 };
+
+
+
+
+
+
 
 generacionCodigo.prototype.buscarPrincipal = function(){
 	console.log("PRINCIPALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
@@ -6666,7 +6680,10 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 	}
 
 	//contents - valor que se le debe de asignar a la variable
-    fs.writeFileSync('/var/temp.txt', '', 'utf8');
+	fs.writeFileSync('/var/temp.txt', '', 'utf8');
+	 
+
+
 
 };
 

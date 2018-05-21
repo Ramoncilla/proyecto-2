@@ -29,9 +29,9 @@
 
 
         Tree arbol = nuevo Tree();
-        node n = arbol.insert(arbol.root, 10);
+
+        arbol.root =  arbol.insert(arbol.root, 10);
         imprimir(4);
-        arbol.root = n;
         imprimir(arbol.root.key);
         imprimir(arbol.root.height);
         imprimir(2);

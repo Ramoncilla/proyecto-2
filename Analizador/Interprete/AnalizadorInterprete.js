@@ -537,7 +537,12 @@ AnalizadorInterprete.prototype.resolverEDD= function(sent){
                 if(ed == 1){
                     //heap
                     this.heap[parseInt(vPos)]=parseFloat(vVal);
-                   // console.log("Voy a insertar en heap pos "+vPos+", el valor "+ vVal+" "+ val.valor);
+                    console.log("Voy a insertar en heap pos "+vPos+", el valor "+ vVal+" "+ val.valor);
+                   if(vPos == 2 && vVal ==3){
+                        console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+                        console.log(sent.posicion);
+                        console.log(sent.valor);
+                   } 
                 } 
             }else{
                 errores.insertarError("Semantico", "Ha ocurrido un erro al determinar el valor 3D");
