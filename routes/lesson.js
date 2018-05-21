@@ -5,9 +5,9 @@ var lessonController = require("../controllers/lessonController");
 
 
 /* GET home page. */
-//router.post('/showLesson', lessonController.mostrarLecciones);
+router.get('/bulkLoad', lessonController.mostrarLecciones);
 
-router.post('/', lessonController.createLesson); 
+router.post('/post', lessonController.createLesson); 
 
 
 

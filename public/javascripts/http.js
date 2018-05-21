@@ -1,6 +1,24 @@
 $(document).ready(function(){
     
 
+    var bulkLoad = function(){
+      $.ajax(
+        {
+          type:"GET",
+          url:" /lesson/bulkLoad",
+          success: function(data){
+            console.log(data);
+            $('.list-container-lection').html(data);
+          },
+          error: function(data){
+            console.log("errorr");
+                  
+          }
+          
+        }
+      );
+    }
+
     $('.btn-cancel').on('click',function(e){
       e.preventDefault();
     });
@@ -12,7 +30,7 @@ $(document).ready(function(){
       $.ajax(
         {
           type:"POST",
-          url:"/postLesson",
+          url:"/lesson/post",
           data:{lessonTitle: $('#lessonTitle').val(),
           lessonExplanation: $('#lessonExplanation').val(),
           codeExample: $('#codeExample').val(),
@@ -83,6 +101,19 @@ $(document).ready(function(){
   )
 });
 
+
+  $('.list-container-lection').on('click', '.lesson-item', function(e){
+
+      e.preventDefault();
+
+      console.log($(this).data('name'));
+
+      
+
+
+  });
+
+  bulkLoad();
 
  /*
     document.getElementById("openFile").addEventListener('change', function(){

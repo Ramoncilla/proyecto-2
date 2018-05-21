@@ -57,10 +57,10 @@ app.use('/users', usersRouter);
 app.use('/parser',analizerRouter);
 app.use('/new-Glesson',indexRouter);
 app.use('/new-Alesson',indexRouter);
-app.use('/postLesson',lessonRouter);
+app.use('/lesson',lessonRouter);
 app.use('/cargaMasiva',loadController);
 app.use('/editor', editorRouter);
-//app.use('/showLesson',lessonRouter);
+
 
 app.get('/getHeap',function(req,res){
        
