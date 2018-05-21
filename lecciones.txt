@@ -61,5 +61,14 @@
 		"tarea": "Prueba",
 		"resultado": "Prueba",
 		"tipoLeccion": "1"
+	},
+	{
+		"titulo": "Pruebas de Numeros Enteros",
+		"descripcion": "Funcion que realizara una sumatoria de dos parametros y retornara el valor ",
+		"tipo": "g-coach",
+		"ejemplo": "clase operaciones{\n\nprincipal(){\n entero a = 2*5;\ncaracter nombre[40]=\"Pedrito lindo <3\";\n\n}\n\n}",
+		"tarea": "Realice una funcion llamada tarea que reciba dos enteros como parametros y retorno su valor ",
+		"resultado": "Realice una funcion llamada tarea que reciba dos enteros como parametros y retorno su valor ",
+		"tipoLeccion": "2"
 	}
 ]

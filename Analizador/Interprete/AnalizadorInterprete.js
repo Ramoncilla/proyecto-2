@@ -508,7 +508,7 @@ return false;
 
 
 AnalizadorInterprete.prototype.agregarImpresion = function(cad){
-    this.cadenaImpresion+=cad+"\n";
+    this.cadenaImpresion+=cad+"<br>";
 };
 
 
@@ -539,7 +539,7 @@ AnalizadorInterprete.prototype.resolverEDD= function(sent){
                     this.heap[parseInt(vPos)]=parseFloat(vVal);
                     console.log("Voy a insertar en heap pos "+vPos+", el valor "+ vVal+" "+ val.valor);
                    if(vPos == 2 && vVal ==3){
-                        console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+                        
                         console.log(sent.posicion);
                         console.log(sent.valor);
                    } 

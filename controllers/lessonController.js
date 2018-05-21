@@ -1,5 +1,6 @@
 var lessonList = require("../Analizador/Lecciones/listaLecciones");
 var lesson = require("../Analizador/Lecciones/Leccion");
+var compilarTarea = require("../Analizador/Codigo3D/EjecutarTarea/CompilarTarea");
 var listLesson = new lessonList();
 
 exports.createLesson = function(req, res) {
@@ -49,6 +50,9 @@ exports.takeLesson = function(req, res){
 
     var code = req.body.code;
     var result = req.body.result;
+
+    var comp = new compilarTarea();
+    comp.analizar(code, result);
 
     res.send("ok");
 
