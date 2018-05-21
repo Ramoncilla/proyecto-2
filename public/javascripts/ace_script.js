@@ -139,6 +139,20 @@ $(document).ready(function(){
 			  
 			      }
     		);
+    		$.ajax(
+			      {
+			        type:"GET",
+			        url:" http://localhost:3000/getConsole",
+			        
+			        success: function(data){
+			          	$('#console').html(data);
+			        },
+			        error: function(data){
+			          console.dir(data);
+			        }
+			  
+			      }
+    		);
 		}
 
 		var code = editor.getValue();

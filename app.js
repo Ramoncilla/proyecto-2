@@ -92,6 +92,11 @@ app.get('/getGeneratedCode',function(req,res){
      res.sendFile(__dirname +'/codigo3DGenerado.txt');
 
 }); 
+app.get('/getConsole',function(req,res){
+       
+     res.sendFile(__dirname +'/resultado.txt');
+
+}); 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
