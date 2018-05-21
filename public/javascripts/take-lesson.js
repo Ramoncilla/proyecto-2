@@ -9,9 +9,7 @@ $(document).ready(function(){
 	
 	solveEditor.session.setMode("ace/mode/javascript");
 	
-	$('.build-lesson').on('click', function(){
-
-	});
+	
 	$('.solve-lesson').on('click', function(){
 
 		$.ajax(
