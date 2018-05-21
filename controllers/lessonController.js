@@ -51,8 +51,10 @@ exports.takeLesson = function(req, res){
     var code = req.body.code;
     var result = req.body.result;
 
-    var comp = new compilarTarea();
-    comp.analizar(code, result);
+    console.log(result);
+    console.log(code);
+    /*var comp = new compilarTarea();
+    comp.analizar(code, result);*/
 
     res.send("ok");
 

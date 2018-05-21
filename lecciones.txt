@@ -70,5 +70,14 @@
 		"tarea": "Realice una funcion llamada tarea que reciba dos enteros como parametros y retorno su valor ",
 		"resultado": "Realice una funcion llamada tarea que reciba dos enteros como parametros y retorno su valor ",
 		"tipoLeccion": "2"
+	},
+	{
+		"titulo": "tituttititit",
+		"descripcion": "fdgfgfgfgfgffh",
+		"tipo": "g-coach",
+		"ejemplo": "gfdgfgfgfgsf",
+		"tarea": "encunadio de la tarea ",
+		"resultado": "encunadio de la tarea ",
+		"tipoLeccion": "2"
 	}
 ]
