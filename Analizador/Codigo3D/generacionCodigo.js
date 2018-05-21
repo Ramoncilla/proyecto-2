@@ -440,6 +440,141 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 	 
 	switch(nombreSentecia.toUpperCase()){
 
+
+		case "INSTANCIA_ARREGLO":{
+
+			var posArr = nodo.posArreglo;
+			var nodoInstancia = nodo.instancia;
+			var nombreClaseInstanciar = nodoInstancia.getTipo();
+			var parametrosInstancia = nodoInstancia.getParametros();
+			var noParametros =0;
+			if(parametrosInstancia==0){
+				noParametros=0;
+			}else{
+				noParametros= parametrosInstancia.length;
+			}
+		    var nombreVar = "";
+			var posArreglo = this.resolverExpresion(posArr, ambitos, clase, metodo);
+
+
+			var firmMetodo = this.tablaSimbolos.obtenerFirmaMetodo(nombreClaseInstanciar,noParametros,nombreClaseInstanciar);
+			var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
+
+			if(posArreglo.tipo.toUpperCase() != "NULO"){
+
+
+				if(firmMetodo!= "" && sizeFuncActual!= -1){
+					var l5 ="<=, "+posArreglo.referencia+", "+posArreglo.estructura+", heap; //guardando la pos real donde inicia el objeto ";
+				var l6 ="+, h, "+sizeClase+", h; // reservando el espacio de memoria para el nuevo objeto ";
+	
+				var l7="// Guardando la referencia al this del objeto para la llamada al constructor "+nombreVar;
+				var temp5 = this.c3d.getTemporal();
+				var l8 = "+, p, 0, "+ temp5+";";
+				var temp6 = this.c3d.getTemporal();
+				var l9 = "=>, "+temp5+", "+ temp6+", stack; //apuntador al heap de "+ nombreVar;
+				var temp7 = this.c3d.getTemporal();
+				var l10 = "=>, "+temp6+", "+temp7+", heap; //posicion real donde incia el objeto "+nombreVar;
+				var temp8 = this.c3d.getTemporal();
+				var l11= "+, "+temp7+", "+posArreglo.referencia+", "+ temp8+"; // pos real donde incial el objeto "+ nombreVar;
+			
+				var temp9 = this.c3d.getTemporal();
+	
+				//var l12 = "+, p, "+temp8+", "+temp9+"; // tamanho de la funcion actual "+ metodo; ///aaaaaaaaaaaaa
+				var l12 = "+, p, "+sizeFuncActual+", "+temp9+"; // tamanho de la funcion actual "+ metodo; ///aaaaaaaaaaaaa
+				var temp10 = this.c3d.getTemporal();
+				var l13 = "+, "+temp9+", 0, "+temp10 +"; // pos del this para la nueva instancia de "+ nombreVar;
+				var l14 = "<=, "+temp10+", "+temp8+", stack; //guaradndo el puntero del this en el stack ";
+				
+				this.c3d.addCodigo("// ----------- Instancia a un atributo --------------");
+
+				this.c3d.addCodigo(l5);
+				this.c3d.addCodigo(l6);
+				this.c3d.addCodigo("");
+				this.c3d.addCodigo(l7);
+				this.c3d.addCodigo(l8);
+				this.c3d.addCodigo(l9);
+				this.c3d.addCodigo(l10);
+				this.c3d.addCodigo(l11);
+				this.c3d.addCodigo("");
+				this.c3d.addCodigo(l12);
+				this.c3d.addCodigo(l13);
+				this.c3d.addCodigo(l14);
+				this.c3d.addCodigo("");
+				if(noParametros!= 0){
+					this.c3d.addCodigo("// Asignando parametros  ");
+					var expresionTemporal;
+					var cont=1;
+					for(var j =0; j< parametrosInstancia.length; j++){
+						
+						var simb = this.tablaSimbolos.obtenerNombreParametro(nombreClaseInstanciar+"_"+firmMetodo,cont);
+							
+							if(simb!= null){
+								var temp1_1 = this.c3d.getTemporal();
+						var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
+						var temp2_1= this.c3d.getTemporal();
+						var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+						cont++;
+						this.c3d.addCodigo(l1_1);
+						this.c3d.addCodigo(l2_1);
+								if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+									this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
+									this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, temp2_1, nombreClaseInstanciar+"_"+firmMetodo, simb);
+								}
+								expresionTemporal = parametrosInstancia[j];
+						var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
+						var l3_1="";
+						if(retExpresion.tipo.toUpperCase() != "NULO"){
+							if(retExpresion.tipo.toUpperCase() == "CARACTER" && retExpresion.tipoSimbolo.toUpperCase() == "ARREGLO"){
+								l3_1= "<=, "+temp2_1+", "+retExpresion.referencia+", stack; //  reerencia del arreglo asignado al stack el parametro";
+							this.c3d.addCodigo(l3_1);
+							}else{
+								l3_1= "<=, "+temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
+							this.c3d.addCodigo(l3_1);
+	
+							}
+	
+						}else{
+							errores.insertarError("Semantico", "No se ha podido resolver expresion para parametro  "+ cont);
+						} 
+							}else{
+								errores.insertarError("Semantico", "No se ha encontrado el simbolo de "+ simb.nombreCorto);
+							}	
+					}
+	
+				}else{
+					this.c3d.addCodigo("// No posee parametros ");
+				}
+				
+				var l15= "+, p, "+sizeFuncActual+", p; // simulando cambio de ambito";
+				var l16 = "call, , , "+firmMetodo+";";
+				var l17 = "-, p, "+sizeFuncActual+", p; // regresando al ambito acutal";
+				this.c3d.addCodigo(l15);
+				this.c3d.addCodigo(l16);
+				this.c3d.addCodigo(l17);
+				this.c3d.addCodigo("");
+
+				}else{
+					errores.insertarError("Semantico", "Instanca no valida para el arreglo");
+				}
+
+				
+			}else{
+				errores.insertarError("Semantico", "Ha ocurrido un error al resolver para la posicion del arreglo donde se ralizar auna isntancia");
+			}
+
+			
+		
+
+
+
+
+
+
+
+break;
+
+		}
+
 		case "LEER_TECLADO":{
 			//this.leerTeclado(nodo, ambitos, clase, metodo);
 			break;
@@ -597,6 +732,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			break;
 		}
 
+
 		case "ASIGNACION_ARREGLO":{
 			console.log("------------------ Entre a una asignacion Arreglo  --------------------");
 			var nombreArreglo = nodo.elementoAsignacionArreglo;
@@ -748,6 +884,11 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 			var tipoAsignacion = nodo.getTipo();
 			switch (tipoAsignacion){
 
+
+
+
+
+
 				case 1:{
 					//id SIMB_IGUAL EXPRESION { var a = new Asignacion(); a.setValores($1,$2,$3,1); $$=a;} //1
 					var bandera = false;
@@ -774,7 +915,6 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 										bandera = true;
 										posArregloV = retExpresion.referencia;
 										console.dir(retExpresion);
-										console.log("PUTAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 									}else{
 											errores.insertarError("Semantico", "Tipo no valido para asingar a una arreglo "+ retExpresion.tipo);
 											return;
