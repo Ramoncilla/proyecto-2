@@ -1,0 +1,58 @@
+extends layout
+
+block content
+
+	script(src='/javascripts/take-lesson.js')
+	<div id="mySidenav" class="sidenav">
+		<a href="/">Inicio</a>
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="/new-Alesson">Crear Leccion A-Coach</a>
+		<a href="/new-Glesson">Crear Leccion G-Coach</a>
+		<a href="/editor">Editor de Texto</a>
+
+	</div>
+
+	<div class="container">
+
+		<div class = "row main-menu">
+		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Participar en Leccion</span>
+		</div>
+
+
+		
+		<div class="form-group">
+			<label for="lesson-title">Titulo</label>
+			<input type="text" class="form-control" id="lesson-title" placeholder="name@example.com" value="#{titulo}" readonly>
+		</div>
+		<div class="form-group">
+		<label for="lesson-explanation">Explicacion</label>
+		<textarea class="form-control" id="lesson-explanation" rows="3" readonly>#{descripcion}</textarea>
+		
+		</div>
+		<div class="form-group">
+			<label for="lesson-example">Ejemplo</label>
+			
+			<div id="lesson-example" class = "form-group" style="height: 200px; z-index: -1;">
+
+			</div>
+			<form method="post" action="/editor/build-example">
+				<input type="hidden" name= "code" id="lesson-example-hidden" value="#{ejemplo}">
+				<button class="btn btn-default build-lesson">Compilar Ejemplo</button>
+			</form>
+			
+		</div>
+		<div class="form-group">
+		<label for="lesson-statement">Enunciado</label>
+		<textarea class="form-control" id="lesson-statement" rows="3" readonly>#{tarea}</textarea>
+		
+		</div>
+		<div class="form-group">
+			<label for="lesson-solution">Ejemplo</label>
+			<input type="hidden" id="lesson-result" value="#{resultado}">
+			<div id="lesson-solution" class = "form-group" style="height: 200px; z-index: -1;">
+
+			</div>
+			<button class="btn btn-default solve-lesson">Finalizar tarea</button>
+		</div>
+		
+	</div>

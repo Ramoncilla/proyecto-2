@@ -34,3 +34,22 @@ exports.mostrarLecciones = function(req, res){
 
     res.send(lecciones);
 };
+
+exports.getLesson = function(req, res){
+
+    var title = req.query.title;
+
+    var lesson = listLesson.getLesson(title);
+    
+    res.render('lesson', lesson);
+
+};
+
+exports.takeLesson = function(req, res){
+
+    var code = req.body.code;
+    var result = req.body.result;
+
+    res.send("ok");
+
+}

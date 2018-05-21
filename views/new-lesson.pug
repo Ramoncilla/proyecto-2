@@ -4,6 +4,19 @@ block content
     script(src='/javascripts/new-lesson.js')
     <input id="fileContent" type="hidden" value="">
 
+    <div id="mySidenav" class="sidenav">
+        <a href="/">Inicio</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/new-Alesson">Crear Leccion A-Coach</a>
+        <a href="/new-Glesson">Crear Leccion G-Coach</a>
+        <a href="/editor">Editor de Texto</a>
+
+    </div>
+    <div class = "container">
+    <div class = "row main-menu">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Crear Leccion</span>
+        </div>
+
     <form id="post-lesson">
         <input type="hidden" id="typeLesson" name="typeLesson" value="#{type}"/>
         <input id="fileContent" type="hidden" value="">
@@ -42,3 +55,6 @@ block content
             </div>
         </div>    
     </form> 
+    </div>
+
+    
