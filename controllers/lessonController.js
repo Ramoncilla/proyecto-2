@@ -27,6 +27,8 @@ exports.createLesson = function(req, res) {
 
 exports.mostrarLecciones = function(req, res){
 
+    listLesson.cargarLecciones();
+
     var lecciones = listLesson.getLessonType(0);
 
 

@@ -52,5 +52,14 @@
 		"tarea": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
 		"resultado": "Realiza otro ciclo de pruebas de 1 al 10 imprime la salida ",
 		"tipoLeccion": "1"
+	},
+	{
+		"titulo": "Prueba",
+		"descripcion": "Pruba",
+		"tipo": "a-coach",
+		"ejemplo": "clase nombre {\n \nprincipal(){\n   imprimir(\"algo\");\n}\n\n}",
+		"tarea": "Prueba",
+		"resultado": "Prueba",
+		"tipoLeccion": "1"
 	}
 ]
