@@ -7,7 +7,7 @@ $(document).ready(function(){
           type:"GET",
           url:" /lesson/bulkLoad",
           success: function(data){
-            console.log(data);
+            
             $('.list-container-lection').html(data);
           },
           error: function(data){
@@ -111,6 +111,41 @@ $(document).ready(function(){
 
 
 
+  });
+
+
+  var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+      clearTimeout (timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+  $('#search-text').keyup(function () {
+    var needle = $(this).val();
+      delay(function(){
+          
+        $.ajax({
+          type : "GET",
+          url : "/lesson/search",
+          data : { 
+            needle : needle,
+            type : $('#choose-type').val()
+          },
+        
+          success: function(data){
+            console.log(data);
+            $('.list-container-lection').html(data);
+            
+          } ,
+          error: function(data){
+
+            console.log('error');
+          } 
+
+        });
+
+      }, 1000 );
   });
 
   bulkLoad();

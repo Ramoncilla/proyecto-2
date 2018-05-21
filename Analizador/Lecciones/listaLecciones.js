@@ -99,4 +99,39 @@ listaLecciones.prototype.getLesson = function(title){
 
 };
 
+
+listaLecciones.prototype.getLessonsByTitle = function(needle, type){
+    var leccionTemporal;
+    var listaHTML="";
+
+    type = parseInt(type);
+    for(var i =0; i<listaLecciones.prototype.lecciones.length; i++){
+        leccionTemporal = listaLecciones.prototype.lecciones[i];
+        if(type == 1 || type == 2){
+            if(parseInt(leccionTemporal.tipo) === type){
+                
+                var re = new RegExp(needle,"g");
+                if(leccionTemporal.titulo.toLowerCase().search(needle.toLowerCase()) >= 0){
+                    var urlEncoded = "/lesson/get?title=";
+                    urlEncoded += encodeURIComponent(leccionTemporal.titulo);
+
+                    listaHTML+="<a href= \""+urlEncoded+"\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+                }
+
+            }
+        }else{
+
+            var re = new RegExp(needle,"g");
+            if(leccionTemporal.titulo.toLowerCase().search(needle.toLowerCase()) >= 0){
+
+                var urlEncoded = "/lesson/get?title=";
+                urlEncoded += encodeURIComponent(leccionTemporal.titulo);
+                listaHTML+="<a href= \""+urlEncoded+"\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+
+            }
+            
+        }
+    }
+    return listaHTML; 
+};
 module.exports= listaLecciones;

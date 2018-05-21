@@ -53,3 +53,13 @@ exports.takeLesson = function(req, res){
     res.send("ok");
 
 }
+
+exports.search = function(req, res){
+
+   var needle = req.param('needle');
+   var type = req.param('title');
+   
+   var lessons = listLesson.getLessonsByTitle(needle, type);
+   res.send(lessons);
+
+}
