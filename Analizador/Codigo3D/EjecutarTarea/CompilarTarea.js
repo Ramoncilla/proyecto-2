@@ -34,7 +34,9 @@ ejecutarTarea.prototype.analizar = function (cadena, tarea){
       var ambito = new ambitosD();
       expNueva.setValores(exp1, exp2, "==");
       var v = g.resolverExpresion(expNueva, ambito, "CLASE", "FUNC");
-      var cadenaRes = ""
+      var cadenaRes = "begin, , , comprobar \n";
+      //cadenaRes+=g.c3d.g
+
 
 
   }
