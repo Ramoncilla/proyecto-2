@@ -13,6 +13,8 @@ router.get('/get', lessonController.getLesson);
 
 router.post('/take', lessonController.takeLesson);
 
+router.get('/search', lessonController.search);
+
 
 
 module.exports = router;
