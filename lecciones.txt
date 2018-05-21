@@ -79,5 +79,14 @@
 		"tarea": "encunadio de la tarea ",
 		"resultado": "encunadio de la tarea ",
 		"tipoLeccion": "2"
+	},
+	{
+		"titulo": "Suma",
+		"descripcion": "es una suma ",
+		"tipo": "g-coach",
+		"ejemplo": "clase perosna {\n\nprincipal(){\n\nimprimir(\"hola\");\n}\n\n}\n",
+		"tarea": "operacione d suma ",
+		"resultado": "suma(10,30)=40",
+		"tipoLeccion": "2"
 	}
 ]

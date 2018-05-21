@@ -24,7 +24,7 @@ ejecutarTarea.prototype.analizar = function (cadena, tarea){
     generador3D.generar3D(function(cadena3D){
        res.send(cadena3D);
     });
-
+/*
   var valoresLlamada = tarea.split("=");
   var exp1 = gramaticaExpresion.parse(tarea[0]);
   var exp2 = gramaticaExpresion.parse(taarea[1])
@@ -44,10 +44,10 @@ ejecutarTarea.prototype.analizar = function (cadena, tarea){
       codigo +=generador3D.c3d.getCodigo3D()+ cadenaRes;
 console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       console.log(codigo);
-      
+
   }
 
-    
+  */ 
   }
   else{
     errores.insertarError("Semantico","Ha ocurrido algun error en la generacion del arbol, revisar sintaxis");
