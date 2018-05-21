@@ -97,5 +97,14 @@
 		"tarea": "realizar una funcion de nombre tarea que reciba como parametro dos enteros y retorne la suma de ellos",
 		"resultado": "tarea(10,30)=40",
 		"tipoLeccion": "2"
+	},
+	{
+		"titulo": "Llamada Sin Principal",
+		"descripcion": "Una leccion de pruebas ",
+		"tipo": "g-coach",
+		"ejemplo": "clase ejemplo{\n\nentero sumar (entero a, entero b){\nretorno (a*2)+b;\n}\n\n\n}",
+		"tarea": "realiza una fucnio que se llame suma y pone los numeros como paametros ",
+		"resultado": "suma(3,5)=8",
+		"tipoLeccion": "2"
 	}
 ]

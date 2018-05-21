@@ -22,7 +22,14 @@ $(document).ready(function(){
           	result: $('#lesson-result').val()
           },
           success: function(data){
-            alert("Resultado Correcto");
+            if(data == true){
+              alert("Resultado Correcto");
+            }else{
+              alert("Resultado Incorrecto");
+            }
+
+
+            
             console.log(data);
             
           },

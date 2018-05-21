@@ -250,6 +250,13 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				});
 			}
 
+			var writeStrings2 = function(callback, a){
+				fs.writeFile('./resultado.html',a.cadenaImpresion, function(err, data){
+	    			if (err) console.log(err);
+	    			callback();
+				});
+			}
+
 			var a = new analizInterprete();
 			a.Ejecutar3D(gcObject.c3d.codigo3D,gcObject.buscarPrincipal());
 			console.log("Impresion");
@@ -258,6 +265,8 @@ generacionCodigo.prototype.generar3D= function(parentCallback){
 				writeStack(function(){
 					writeTemps(function(){
 						writeStrings(function(){
+							writeStrings2(function(){
+							},a);
 						},a);
 					}, a);
 				}, a);
@@ -6713,6 +6722,140 @@ generacionCodigo.prototype.leerTeclado= function(nodo, ambitos, clase, metodo){
 
 
 };
+
+
+generacionCodigo.prototype.llamada_funcionTarea= function(nodo, ambitos, clase, metodo, posFinal, modo){
+
+	// true expresion, false acceso modo
+	var nombreFunc = nodo.nombreFuncion;
+	var parametrosFunc = nodo.parametros;
+	var noParametros =0;
+	if(parametrosFunc == 0){
+		noParametros =0;
+	}else{
+		noParametros= parametrosFunc.length;
+	}
+	var ret = new EleRetorno();
+	ret.setValoresNulos();
+
+
+	
+	var sizeFuncActual = this.tablaSimbolos.sizeFuncion(clase,metodo);
+	var firmaMetodo = this.tablaSimbolos.obtenerFirmaMetodo(clase,parametrosFunc.length,nombreFunc);
+    var tipoFuncion = this.tablaSimbolos.obtenerTipoFuncion(firmaMetodo);	
+	if((sizeFuncActual!= -1) && (firmaMetodo!="")){
+		if(modo){
+			var temp1 = this.c3d.getTemporal();
+			var temp2 = this.c3d.getTemporal();
+			var temp3 = this.c3d.getTemporal();
+			var temp4 = this.c3d.getTemporal();
+			var l1 = "+, P, 0, "+temp1+";";
+			var l2 = "=>, "+temp1+", "+temp2+", stack; ";
+			var l3 = "+, P, "+sizeFuncActual+", "+temp3+";";
+			var l4 = "+, "+temp2+", 0, "+temp4+";";
+			var l5 = "<=, "+temp3+", "+temp2+", stack; ";
+			this.c3d.addCodigo(l1);
+			this.c3d.addCodigo(l2);
+			this.c3d.addCodigo(l3);
+			this.c3d.addCodigo(l4);
+			this.c3d.addCodigo(l5);
+		}else{
+			var temp1_1= this.c3d.getTemporal();
+			var temp1_2 = this.c3d.getTemporal();
+			var l1_1="+, P, "+sizeFuncActual+", "+temp1_1+";";
+			var l1_2="+, "+ temp1_1+", 0, "+temp1_2+";";
+			var l1_3="<=, "+temp1_2+", "+posFinal+", stack; // pasadon como refeenria el valor del this";
+			this.c3d.addCodigo(l1_1);
+			this.c3d.addCodigo(l1_2);
+			this.c3d.addCodigo(l1_3);
+		}
+
+		if(noParametros!= 0){
+			this.c3d.addCodigo("// Asignando parametros de llamada a funcion  ");
+			var expresionTemporal;
+			var cont=1;
+			for(var j =0; j< parametrosFunc.length; j++){
+				
+				var simb = this.tablaSimbolos.obtenerNombreParametro(clase+"_"+metodo,cont);
+					if(simb!= null){
+						var temp1_1 = this.c3d.getTemporal();
+				var l1_1= "+, p, "+sizeFuncActual+", "+temp1_1+"; // size de funcion actual";
+				var temp2_1= this.c3d.getTemporal();
+				var l2_1= "+, "+temp1_1+", "+cont+", "+temp2_1+"; //pos del parametro "+ cont;
+				cont++;
+				this.c3d.addCodigo(l1_1);
+				this.c3d.addCodigo(l2_1);
+						if(simb.expresionAtributo!= null && simb.tipoSimbolo.toUpperCase() == "ARREGLO"){
+							this.c3d.addCodigo("// declarando parametros  arreglo de tipo "+simb.nombreCorto);
+							this.declararArreglo(simb.tipoElemento,simb.nombreCorto,simb.expresionAtributo.posicionesArreglo,ambitos,clase,metodo, true, temp2_1, clase+"_"+metodo, simb);
+						}
+
+						expresionTemporal = parametrosFunc[j];
+				var retExpresion = this.resolverExpresion(expresionTemporal,ambitos,clase,metodo);
+				var l3_1="";
+				if(retExpresion.tipo.toUpperCase() != "NULO"){
+
+					if(retExpresion.tipo.toUpperCase() == "CARACTER" && retExpresion.tipoSimbolo.toUpperCase() == "ARREGLO"){
+
+						l3_1= "<=, "+temp2_1+", "+retExpresion.referencia+", stack; //  reerencia del arreglo asignado al stack el parametro";
+					this.c3d.addCodigo(l3_1);
+					}else{
+						l3_1= "<=, "+temp2_1+", "+retExpresion.valor+", stack; // asignado al stack el parametro";
+					this.c3d.addCodigo(l3_1);
+
+					}
+
+
+				}else{
+					errores.insertarError("Semantico", "No se ha podido resolver expresion para parametro  "+ cont);
+				} 
+
+
+
+					}else{
+						errores.insertarError("Semantico", "No se ha encontrado el simbolo de "+ simb.nombreCorto);
+					}
+
+				
+
+
+				
+				
+			}
+
+		}else{
+			this.c3d.addCodigo("// No posee parametros ");
+		}
+
+		//van los parametros 
+		var l6 = "+, P, "+sizeFuncActual+", P;";
+		var l7 = "call, , , "+ firmaMetodo+";";
+		var sizeFirma = this.tablaSimbolos.sizeFuncion(clase, firmaMetodo)-1;
+		var temp5 = this.c3d.getTemporal();
+		var temp6 = this.c3d.getTemporal();
+		var l8 = "+, P, "+sizeFirma+", "+temp5+";";
+		var l9 = "=>, "+temp5+", "+temp6+", stack; // valor del return";
+		var l10 = "-, P, "+sizeFuncActual+", P;";
+		this.c3d.addCodigo(l6);
+		this.c3d.addCodigo(l7);
+		//this.c3d.addCodigo(etiquetasRetorno.eliminarActual()+":");
+		this.c3d.addCodigo(l8);
+		this.c3d.addCodigo(l9);
+		this.c3d.addCodigo(l10);
+		
+		var retornoFuncion = new EleRetorno();
+		retornoFuncion.tipo= tipoFuncion;
+		retornoFuncion.valor = temp6;
+		retornoFuncion.setReferencia("STACK", temp5);
+		return retornoFuncion;
+	}else{
+		errores.insertarError("Semantico", "La funcion "+ nombreFunc+", no existe");
+		return ret;
+	}
+
+	return ret;
+};
+
 
 
 
