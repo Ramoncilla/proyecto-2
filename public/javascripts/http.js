@@ -35,7 +35,7 @@ $(document).ready(function(){
           lessonExplanation: $('#lessonExplanation').val(),
           codeExample: $('#codeExample').val(),
           homeworkStatement:$('#homeworkStatement').val(),
-          homeworkTest:$('#homeworkStatement').val(),
+          homeworkTest:$('#homeworkTest').val(),
           typeLesson : $('#typeLesson').val()
           },
           success: function(data){
