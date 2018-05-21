@@ -4,9 +4,14 @@ var editorController = require('../controllers/editorController');
 
 
 router.get('/', function(req,res,next){
-  res.render('editor');
+  	res.render('editor');
 });
+router.post('/build-example', function(req, res){
 
+	var code = req.body.code;
+
+	res.render('editor', {code : code});
+});
 router.post('/build', editorController.build);
 router.post('/debug', editorController.debug);
 router.post('/resume', editorController.resume);

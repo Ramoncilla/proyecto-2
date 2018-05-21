@@ -9,6 +9,10 @@ $(document).ready(function(){
 
 	var socket = io.connect('http://localhost:4200');
 
+	if($('#code').val() != undefined){
+		editor.setValue($('#code').val());
+	}
+
 	socket.on('message', function(data){
 
 		alert('Message recieved: ' + data.message);

@@ -104,11 +104,11 @@ $(document).ready(function(){
 
   $('.list-container-lection').on('click', '.lesson-item', function(e){
 
-      e.preventDefault();
+      //e.preventDefault();
 
-      console.log($(this).data('name'));
+      //console.log($(this).data('name'));
 
-      
+
 
 
   });

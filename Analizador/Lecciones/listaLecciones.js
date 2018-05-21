@@ -57,10 +57,17 @@ listaLecciones.prototype.getLessonType = function(type){
         leccionTemporal = listaLecciones.prototype.lecciones[i];
         if(type == 1 || type == 2){
             if(leccionTemporal.tipo == type){
-                listaHTML+="<a href= \"javascript:void(0)\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+
+                var urlEncoded = "/lesson/get?title=";
+                urlEncoded += encodeURIComponent(leccionTemporal.titulo);
+
+                listaHTML+="<a href= \""+urlEncoded+"\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
             }
         }else{
-            listaHTML+="<a href= \"javascript:void(0)\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
+
+            var urlEncoded = "/lesson/get?title=";
+            urlEncoded += encodeURIComponent(leccionTemporal.titulo);
+            listaHTML+="<a href= \""+urlEncoded+"\" data-name = \""+ leccionTemporal.titulo +"\" class = \"list-group-item list-group-item-action lesson-item\"> "+ leccionTemporal.titulo+" - Tipo "+leccionTemporal.tipo+"</a>";
         }
     }
     return listaHTML;
@@ -74,6 +81,22 @@ listaLecciones.prototype.cargarLecciones = function(){
          leccionTemporal = arrayLecciones[i];
          this.saveLesson(leccionTemporal);
      }
+};
+
+listaLecciones.prototype.getLesson = function(title){
+    
+    var stringLessons = fs.readFileSync("./lecciones.txt");
+    var array = JSON.parse(stringLessons);
+    
+    for(var i = 0; i<array.length; i++){
+
+        if(array[i].titulo === title ){
+            return array[i];
+        }
+    }
+    return undefined;
+     
+
 };
 
 module.exports= listaLecciones;
