@@ -8,6 +8,7 @@ $(document).ready(function(){
 	var solveEditor = ace.edit("lesson-solution");
 	
 	solveEditor.session.setMode("ace/mode/javascript");
+  solveEditor.setReadOnly(false);
 	
 	
 	$('.solve-lesson').on('click', function(){

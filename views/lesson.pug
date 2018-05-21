@@ -3,7 +3,7 @@ extends layout
 block content
 
 	script(src='/javascripts/take-lesson.js')
-	<div id="mySidenav" class="sidenav">
+	<div id="mySidenav" class="sidenav" style="z-index : 100">
 		<a href="/">Inicio</a>
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		<a href="/new-Alesson">Crear Leccion A-Coach</a>
@@ -32,7 +32,7 @@ block content
 		<div class="form-group">
 			<label for="lesson-example">Ejemplo</label>
 			
-			<div id="lesson-example" class = "form-group" style="height: 200px; z-index: -1;">
+			<div id="lesson-example"  style="height: 200px; z-index: -1;">
 
 			</div>
 			<form method="post" action="/editor/build-example">
@@ -43,13 +43,13 @@ block content
 		</div>
 		<div class="form-group">
 		<label for="lesson-statement">Enunciado</label>
-		<textarea class="form-control" id="lesson-statement" rows="3" readonly>#{tarea}</textarea>
+		<textarea class="form-control" id="lesson-statement" rows="3">#{tarea}</textarea>
 		
 		</div>
 		<div class="form-group">
 			<label for="lesson-solution">Ejemplo</label>
 			<input type="hidden" id="lesson-result" value="#{resultado}">
-			<div id="lesson-solution" class = "form-group" style="height: 200px; z-index: -1;">
+			<div id="lesson-solution" style="height: 200px;">
 
 			</div>
 			<button class="btn btn-default solve-lesson">Finalizar tarea</button>
