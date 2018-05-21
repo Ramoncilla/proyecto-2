@@ -256,7 +256,7 @@ INICIO: EXPRESION EOF
 		var a = new Archivo();
 		a.setValores($1);
 		console.log("llegue hasta aqui");
-		return a;
+		return $1;
 	}
 	|error EOF
 	{

@@ -3,10 +3,6 @@
 clase Operaciones {
 
 
-publico vacio cantar(){
-    
-    imprimir ("alinaaaaa");
-}
 
 publico operaciones(){
     
@@ -152,7 +148,9 @@ publico operaciones(){
         //caracter sal[50] = "Salida Fibonacci Recursivo ";
         //concatenar(sal, " #E ",res);
         //imprimir(sal);
-        /*
+
+         /*
+       
         fun.pedir_num();*/
     }
 
@@ -171,13 +169,13 @@ funciones(){
 
 
 
-publico decimal factorial2(entero n){
+publico entero factorial2(entero n){
 
 
 si(n==0){
     
     es_verdadero{
-    retorno  1.0;
+    retorno  1;
 
     }
     es_falso{
@@ -192,14 +190,13 @@ fin-si
 }
 
 
-publico decimal factorial(entero n){
-    decimal fact=1.0;
-    entero i;
-    
+publico entero factorial(entero n){
+    entero fact=1;
+  
 si(n==0){
     
     es_verdadero{
-    fact = 1.0;
+    fact = 1;
 
     }
     es_falso{
@@ -211,13 +208,7 @@ si(n==0){
 }
 fin-si
 retorno fact;
-/*
-    if (n==0)
-        fact=1;
-    else
-        for(i=1;i<=n;i++)
-            fact=fact*i;
- return fact;*/
+
 }
 
 

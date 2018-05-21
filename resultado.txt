@@ -1,4 +1,1 @@
-4
-3
-10
-2
+2) Operaciones Aritmeticas Avanzadas<br>2.1) 30% >>>  57.0<br>2.2) 30% >>>  57.0 36<br>2.3) 40% >>>  57.0 36 8.0<br>4)Operaciones Relacionales Avanzadas<br>Salida CORRECTA!!<br>6) Operaciones Logicas Avanzadas<br>Salida incorrecta!!<br>7) Operaciones Conjuntas<br>41954<br>Resultado: 41954<br>10) Saludo<br>Esta<br> salida<br> es<br> CORRECTA!!<br>12) ciclo_vida<br>estoy en nacer<br>Carlitos<br>estoy en nacer<br>Carlitos<br>Nombre Hijo: Carlitos Tobarez<br>Luisa<br>Nombre esposa: rlitos TobarezLuisaTobar<br>410<br>

@@ -432,7 +432,7 @@ generacionCodigo.prototype.escribir3D= function(nodo,ambitos,clase,metodo){
 	switch(nombreSentecia.toUpperCase()){
 
 		case "LEER_TECLADO":{
-			this.leerTeclado(nodo, ambitos, clase, metodo);
+			//this.leerTeclado(nodo, ambitos, clase, metodo);
 			break;
 		}
 	
@@ -4404,6 +4404,11 @@ generacionCodigo.prototype.castearACadena= function (numero)
 {
 var tIniciCad1 = this.c3d.getTemporal();
 var tPosSizeCad1 = this.c3d.getTemporal();
+var etiq1 = this.c3d.getEtiqueta();
+var etiq22 = this.c3d.getEtiqueta();
+this.c3d.addCodigo("jne, 0, "+numero+", "+etiq1+"; //1546545456");
+this.c3d.addCodigo("jmp, , , "+etiq22+";");
+this.c3d.addCodigo(etiq1+":");
 this.c3d.addCodigo("// -------------------------------- Inicio un casteo a entero ----------------");
 this.c3d.addCodigo("+, H, 0, "+tIniciCad1+"; // inicio cad1 (inversa)");
 this.c3d.addCodigo("+, H, 1, "+tPosSizeCad1+";");
@@ -4474,6 +4479,25 @@ this.c3d.addCodigo(etiq5+":");
 this.c3d.addCodigo("<=, H, 36, heap; // caracter de escape de la cadena resultante ");
 this.c3d.addCodigo("+, H, 1, H;");
 this.c3d.addCodigo("<=, "+tPosSizeCad2+", "+tSizeCad+", heap;");
+var etiqSal = this.c3d.getEtiqueta();
+this.c3d.addCodigo("jmp, , , "+etiqSal+";");
+
+this.c3d.addCodigo(etiq22+":");
+this.c3d.addCodigo("// -------------------------------- crear cadena de 0 ----------------");
+this.c3d.addCodigo("+, H, 0, "+tIniciCad2+"; // inicio cad1 (inversa)");
+this.c3d.addCodigo("+, H, 1, "+tPosSizeCad2+";");
+this.c3d.addCodigo("<=, "+tIniciCad2+", "+tPosSizeCad2+", heap;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("<=, "+tPosSizeCad2+", 0, heap;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("<=, H, 48, heap;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo("<=, H, 36, heap;");
+this.c3d.addCodigo("+, H, 1, H;");
+this.c3d.addCodigo(etiqSal+":");
+
+
+
 
 var ret = new EleRetorno();
 ret.setValorCadena(tIniciCad2);
@@ -4741,6 +4765,9 @@ generacionCodigo.prototype.resolverAcceso = function(nodo, ambitos, clase, metod
 								}
 								
 								
+ ///////////////////////
+								/*l1_4= "=>, "+temp1_4+", "+temp1_4+", heap; // recuperando pos incial del objeto 88888";
+									this.c3d.addCodigo(l1_4); ///////////////////*/
 								//
 								//var temp4 = this.c3d.getTemporal();
 								var l4 = "+, "+temp1_4 +", "+posVar+", "+posFinal+";";

@@ -145,7 +145,8 @@ $(document).ready(function(){
 			        url:" http://localhost:3000/getConsole",
 			        
 			        success: function(data){
-			          	$('#console').html(data);
+								
+									$('#console').html(data);
 			        },
 			        error: function(data){
 			          console.dir(data);

@@ -612,7 +612,7 @@ AnalizadorInterprete.prototype.resolverOperacion = function(sent){
                     var decimal =  res.substring(posPunto+1, res.length);
                     ret = parseInt(decimal);
                 }else{
-                    ret = 1;
+                    ret = 0;
                 }
                 var temp = new temporal(varAsig,ret);
                 this.temporales.insertarTemporal(temp);

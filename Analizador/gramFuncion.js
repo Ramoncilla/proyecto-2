@@ -88,7 +88,7 @@ case 1:
 		var a = new Archivo();
 		a.setValores($$[$0-1]);
 		console.log("llegue hasta aqui");
-		return a;
+		return $$[$0-1];
 	
 break;
 case 2:

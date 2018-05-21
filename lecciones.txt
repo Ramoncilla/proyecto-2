@@ -88,5 +88,14 @@
 		"tarea": "operacione d suma ",
 		"resultado": "suma(10,30)=40",
 		"tipoLeccion": "2"
+	},
+	{
+		"titulo": "Prueba llamadas",
+		"descripcion": "Esta es una leccion en la que se probara una llamada a una fucnion que retornara un enetero",
+		"tipo": "g-coach",
+		"ejemplo": "clase ejemplo {\nentero valor1;\nentero valor2;\n\nejemplo(){\neste.valor1 = 10;\neste.valor2=20;\n}\n\n\nprincipal(){\n   imprimir(10);\n}\n\n\n\n}",
+		"tarea": "realizar una funcion de nombre tarea que reciba como parametro dos enteros y retorne la suma de ellos",
+		"resultado": "tarea(10,30)=40",
+		"tipoLeccion": "2"
 	}
 ]
